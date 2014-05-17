@@ -84,18 +84,18 @@ h3 {
 }
 
 #explanation a {
-    color: #4B4B4B;
+    color: #D54600;
 }
 
 #explanation h2 {
     float: left;
     font-size: 24px;
     font-weight: normal;
-    margin: 0 0 30px;
+    margin: 0 0 20px;
 }
 
 #explanation h2.main {
-    color: #FFA900;
+    color: #696969;
     padding-right: 10px;
 }
 
@@ -104,7 +104,7 @@ h3 {
 }
 
 #explanation p {
-    font-size: 15px;
+    font-size: 14px;
     line-height: 26px;
 }
 
@@ -145,6 +145,7 @@ h3 {
     background-color: #FFFFFF;
     border: 2px solid #FFA900;
     border-radius: 5px;
+    color: #D54600;
     cursor: pointer;
     float: left;
     font-size: 12px;
@@ -156,9 +157,11 @@ h3 {
     display: none;
 }
 
-#showmore {
-    text-decoration: underline;
+.showmore {
+    color: #D54600;
     cursor: pointer;
+    font-size: 14px;
+    text-decoration: underline;
 }
 
 .others {
