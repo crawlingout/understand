@@ -8,16 +8,13 @@
 	<meta name="author" content="crawlingout">
 
 	<link href="style.css" rel="stylesheet" type="text/css" />
+<link href="ie.css" rel="stylesheet" type="text/css" />
+	<!--[if lte IE 8]>
+	<link href="ie.css" rel="stylesheet" type="text/css" />
+	<![endif]-->
 
 	<title>I can understand: learn to understand foreign languages</title>
 	
-	<!--https://github.com/termi/ES5-DOM-SHIM-->
-	<!--[if lt IE 8]>
-	<script src="http://h123.ru/js/a.ielt8.js"></script>
-	<![endif]-->
-	<!--[if IE 8]>
-	<script src="http://h123.ru/js/a.ie8.js"></script>
-	<![endif]-->
 	<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 	<script type="text/javascript" src="jquery.knob.js"></script>
 	<script type="text/javascript" src="app.js"></script>
@@ -246,6 +243,10 @@
 
 	<div class="debug" id="debug"></div>
 	<div class="debug" id="debug2"></div>
+</div>
+
+<div id="unsupported">
+	I am sorry, this app needs to use some functionality which is not supported by your browser. Please try Google Chrome.
 </div>
 
 <script type="text/javascript" src="http://www.crawlingout.eu/s/alerts.js"></script>
