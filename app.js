@@ -60,7 +60,7 @@ function callBing(from, to, text) {
 	$.ajax({
         type: 'POST',
         data: {"authtype": "js"},
-		//url: 'token/token.php', // local
+		//url: 'server/localtoken.php', // local
         url: 'http://www.simplyeasy.cz/services/token.php', // external
 		success: function(data) {
 
@@ -74,7 +74,7 @@ function callBing(from, to, text) {
 			document.body.appendChild(s);
 		},
 		error: function(xhr, type) {console.log('error');
-			$('#translatedword').text('=not translated=');
+			$('#translatedword').text('=untranslated=');
 		}
 	});
 
