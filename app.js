@@ -303,7 +303,7 @@ function loadDemo(demoid) {
     });
 
 	audiofile = 1;
-	loadAudioToPlayer('demo/'+demoid+'.mp3');
+	loadAudioToPlayer('http://www.simplyeasy.cz/files/'+demoid+'.mp3');
     localStorage.setItem('stored_audio_file_url', 'demo/'+demoid+'.mp3');
 }
 
