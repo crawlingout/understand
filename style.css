@@ -11,6 +11,11 @@ html, body {
     display: none;
 }
 
+a {
+    color: #24CC00;
+    text-decoration: none;
+}
+
 h1 {
     color: #FFA900;
     font-weight: normal;
@@ -152,6 +157,7 @@ h3 {
 
 #yourown {
     font-size: 12px;
+    font-weight: bold;
     padding: 0 30px 15px;
 }
 
