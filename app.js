@@ -486,6 +486,9 @@ $(document).ready(function() {
 	$('.demo').click(function() {
 		$("#more").hide();
         loadDemo($(this).attr('id'));
+
+        // swicth to the language of the demo
+        $('#from').val($(this).parent().data('lang'));
 	});
 
     // show more demos
