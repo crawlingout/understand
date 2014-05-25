@@ -484,13 +484,21 @@ $(document).ready(function() {
 	// DEMO
 
 	$('.demo').click(function() {
-		loadDemo($(this).attr('id'));
+		$("#more").hide();
+        loadDemo($(this).attr('id'));
 	});
 
     // show more demos
-    $('#showmore').click(function() {
-        $(this).hide();
-        $('.more').show();
+    $('#tryitnow').click(function() {
+        $('#more').show();
+    });
+
+    // hide demos
+    $(".overlay").click(function(){
+        $("#more").hide();
+    });
+    $("#closedemos").click(function(){
+        $("#more").hide();
     });
 
 
