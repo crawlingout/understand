@@ -7,20 +7,28 @@
 	<meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0'/>
 	<meta name="author" content="crawlingout">
 
-	<link href="style.css" rel="stylesheet" type="text/css" />
+	<link rel="stylesheet" href="css/style.css" />
 
 	<!--[if lte IE 8]>
-	<link href="ie.css" rel="stylesheet" type="text/css" />
+	<link href="css/ie.css" rel="stylesheet" type="text/css" />
 	<![endif]-->
 
 	<title>I can understand: learn to understand foreign languages</title>
 	
 	<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-	<script type="text/javascript" src="jquery.knob.js"></script>
-	<script type="text/javascript" src="app.js"></script>
+	<script type="text/javascript" src="js/jquery.knob.js"></script>
+	<script type="text/javascript" src="js/app.js"></script>
 
 	<!-- Font Awesome -->
 	<link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet" />
+
+	<!-- Facebook Open Graph -->
+    <meta property="fb:app_id" content="1383406805282282"/>
+    <!-- <meta property="og:image" content="img/fb.png"/> -->
+    <meta property="og:type" content="website"/>
+    <meta property="og:url" content="http://www.icanunderstand.eu/"/>
+    <meta property="og:title" content="Learn to understand foreign languages by listening to audiobooks"/>
+    <meta property="og:description" content="Understanding is not just knowing words and grammar. It's a specific skill you can practice separately."/>
 
 	<!-- Google Analytics -->
 	<script>
@@ -75,16 +83,16 @@
 							<div class="gap"></div>
 
 							<!-- German -->
-							<div class="language">
+							<!-- <div class="language">
 								<div class="flagbox"><span class="flag de"></span></div> German
 								<div class="clear"></div>
 							</div>
 							<div data-lang="de">
 								<div class="demo" id="war"><span class="by">H. G. Wells</span><strong>The War of the Worlds</strong></div>
-								<div class="demo" id="island"><span class="by">Robert Louis Stevenson</span><strong>Treasure Island</strong></div>
 							</div>
-							<div class="gap"></div>
+							<div class="gap"></div> -->
 							
+							<!-- Czech -->
 							<!--
 							<div class="language">
 								<div class="flagbox"><span class="flag cz"></span></div> Czech / Česky
@@ -113,8 +121,6 @@
 				<h2 class="main">by listening to audiobooks </h2>
 				<h2 class="beta"> (alpha)</h2>
 				<div class="clear"></div>
-		
-				<!-- instructions -->
 
 				<p>
 					You know some vocabulary and grammar. You have passed exams in school. Yet you still struggle understanding natives when they talk and you can't watch their movies without subtitles... does this apply to you?
@@ -122,15 +128,17 @@
 
 				<p><strong>Understanding is not just knowing words and grammar. It's a specific skill you can practice separately.</strong></p>
 		
-				<div id="tryitnow">
-					Try it now
+				<div id="call">
+					<div id="tryitnow">
+						Try it now
+					</div>
+					<div id="forfree">
+						for free, without registration
+					</div>
+					<div class="clear"></div>
 				</div>
-				<div id="forfree">
-					for free<br />
-					without registration
-				</div>
-				<div class="clear"></div>
 		
+				<!-- instructions -->
 				<p>
 					<strong>How?</strong> Open text and audio files of a book. Listen to it, try to catch as much as you can, keep listening until you get lost. Read it. Highlight words that you need translated (select languages to translate from/to down here &#8628;).
 				</p>
@@ -147,8 +155,10 @@
 			<div id="player">
 				<audio id="audioplayer" preload="auto"></audio>
 			
+				<div class="circle_bg"></div>
+
 				<div id="knob">
-					<input class="knob" data-width="100" data-height="100" data-displayPrevious=true data-fgColor="#FFA900" data-bgColor="#FFFFFF" data-skin="tron" data-thickness=".2" value="0" data-displayInput=false>
+					<input class="knob" data-width="100" data-height="100" data-displayPrevious=true data-fgColor="#FFD700" data-bgColor="#FFFFFF" data-thickness=".2" value="0" data-displayInput=false>
 				</div>
 			
 				<div id="play_pause" class="circle">
@@ -267,18 +277,55 @@
 		<div id="locally" class="small"><span class="red">*</span> Your files are opened locally, they are not uploaded anywhere. You can safely open your own audiobooks.</div>
 
 		<div id="bottom">
+			<!-- <div id="tips">
+				<h3>Useful tips</h3>
+				<p>I made this app for my own experimenting with <a href="http://www.crawlingout.eu/experimenting-with-smarter-ways-of-learning-languages" target="_blank">smarter ways of learning languages</a> and I welcome you to try it out.</p>
+			</div> -->
+
 			<!-- share buttons -->
 			<div id="share">
-				facebook | twitter
-			</div>
-			
-			<div id="tips">
-				<h3>Useful tips</h3>
-				<p>I made this app for experimenting with <a href="http://www.crawlingout.eu/experimenting-with-smarter-ways-of-learning-languages" target="_blank">smarter ways of learning languages</a> and I welcome you to try it.</p>
+
+			    <!-- Facebook like -->
+			    <!-- Facebook JavaScript SDK -->
+			    <div id="fb-root"></div>
+			    <script>(function(d, s, id) {
+			      var js, fjs = d.getElementsByTagName(s)[0];
+			      if (d.getElementById(id)) return;
+			      js = d.createElement(s); js.id = id;
+			      js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&appId=1383406805282282&version=v2.0";
+			      fjs.parentNode.insertBefore(js, fjs);
+			    }(document, 'script', 'facebook-jssdk'));</script>
+
+			    <!-- Facebook Like button -->
+			    <div class="share">
+			        <div class="fb-like" data-href="http://www.icanunderstand.eu" data-layout="button_count" data-action="like" data-show-faces="false" data-share="false"></div>
+			    </div>
+
+			    <!-- Tweet -->
+			    <div class="share">
+			        <a href="https://twitter.com/share" class="twitter-share-button" data-lang="en" data-text="This can help you learn to understand a foreign language" data-via="crawling_out">Tweet</a>
+			    </div>
+			    <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="https://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+
+			    <div class="clear"></div>
 			</div>
 			
 			<div id="support">
-				support development: BTC? | report bugs
+				<p>
+					If you have any suggestion or want to report a bug, 
+					please shoot me an email at <span id="r">jan at icanunderstand dot eu</span>
+				</p>
+				<div id="donate">
+					<div id="txt">To <strong>support further development</strong>, please </div>
+					<div id="btc">donate Bitcoin</div><div id="arrow"></div>
+					<div class="btc">1KzGUW3ttwaKNdi1uN3JW5MyxyMqr3qNcq</div>
+					<div id="qr">
+						<img src="img/qr.png" alt="qr" width="16" height="16">
+						<div id="qrimage"><img src="img/btc.png" alt="qr" width="198" height="198"></div>
+					</div>
+					<div class="clear"></div>
+				</div>
+				<p>Thank you.</p>
 			</div>
 		</div>
 
@@ -318,6 +365,13 @@
 <div id="unsupported">
 	I am sorry, this app needs to use some functionality which is not supported by your browser. Please try Google Chrome.
 </div>
+
+<script>
+  var a=document.getElementById("r"),b=a.textContent;
+  b=b.replace(" at ",String.fromCharCode(64));
+  b=b.replace(" dot ",String.fromCharCode(46));
+  a.textContent=b;
+</script>
 
 <script type="text/javascript" src="http://www.crawlingout.eu/s/alerts.js"></script>
 </body>

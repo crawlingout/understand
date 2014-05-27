@@ -7,6 +7,13 @@ html, body {
     min-width: 1250px;
 }
 
+/* remove ugly dotted lines around clicked links and buttons in FF */
+a { outline: none; }
+button::-moz-focus-inner { border: 0; }
+
+/* remove highlight border around selected form controls in Chrome and Safari */
+*:focus { outline: none; }
+
 #unsupported {
     display: none;
 }
@@ -25,9 +32,9 @@ h1 {
 
 h3 {
     color: #FFA900;
-    font-size: 24px;
+    font-size: 28px;
     font-weight: normal;
-    margin: 20px 0 10px;
+    margin: 20px 0;
 }
 
 .clear {
@@ -60,7 +67,11 @@ h3 {
 }
 
 #left {
-	background-color: #F0F0F0;
+    /*
+    background pattern by Haris Šumić - http://subtlepatterns.com/subtle-grey/
+    under CC BY-SA 3.0 license - http://creativecommons.org/licenses/by-sa/3.0/
+    */
+	background: url("../img/grey.png") repeat scroll 0 0 #F7F7F7;
     box-shadow: 0 0 12px #3C3C3C;
     float: left;
     min-height: 100%;
@@ -70,7 +81,7 @@ h3 {
 
 #content_wrapper {
 	background-color: #FFFFFF;
-    border-bottom: 1px solid #D7D7D7;
+    border-bottom: 1px solid #E3E3E3;
     height: 500px;
     overflow: auto;
     position: relative;
@@ -117,6 +128,10 @@ h3 {
     line-height: 26px;
 }
 
+#call {
+    /*background: url("../img/bg.png") repeat scroll 0 0 #FFFFFF;*/
+}
+
 #tryitnow {
     background-color: #63E000;
     border-radius: 8px;
@@ -126,11 +141,11 @@ h3 {
     font-size: 25px;
     height: 30px;
     line-height: 28px;
-    margin: 30px 0 25px;
+    margin: 30px 0 25px 30px;
     padding: 10px 20px;
 }
 
-#forfree {
+/*#forfree {
     color: #24CC00;
     float: left;
     font-size: 14px;
@@ -139,6 +154,17 @@ h3 {
     line-height: 20px;
     margin: 30px 0 10px;
     padding: 5px 20px;
+}*/
+
+
+#forfree {
+    color: #24CC00;
+    float: left;
+    font-size: 25px;
+    height: 30px;
+    line-height: 28px;
+    margin: 30px 0 10px;
+    padding: 10px 20px;
 }
 
 .overlay {
@@ -398,10 +424,22 @@ h3 {
     width: 180px;
 }
 
+.circle_bg {
+    background-color: #FFFFFF;
+    border-radius: 60px;
+    box-shadow: 0 0 6px #C6C6C6;
+    height: 40px;
+    left: 35px;
+    padding: 30px;
+    position: absolute;
+    top: 10px;
+    width: 40px;
+}
+
 .circle {
-	border: 1px solid #F0F0F0;
+	background-color: #FFFFFF;
+    border: 1px solid #FFFFFF;
     border-radius: 40px;
-    color: #AEAEAE;
     cursor: pointer;
     font-size: 28px;
     height: 28px;
@@ -411,6 +449,7 @@ h3 {
     text-align: center;
     top: 20px;
     width: 28px;
+    color: #AEAEAE;
 }
 
 #knob {
@@ -463,16 +502,89 @@ h3 {
 
 #bottom {
     background-color: #FFFFFF;
-    border-bottom: 1px solid #D7D7D7;
-    border-top: 1px solid #D7D7D7;
+    border-bottom: 1px solid #E3E3E3;
+    border-top: 1px solid #E3E3E3;
     font-size: 14px;
     margin: 30px 0 0;
-    min-height: 500px;
     padding: 20px 70px;
 }
 
+#tips {
+    padding-bottom: 15px;
+}
+
 #share {
-    padding: 20px 0;
+    height: 24px;
+    padding: 20px 30px 0;
+}
+
+.share {
+    float: left;
+    padding: 0 30px 0 0;
+}
+
+#r {
+    font-style: italic;
+}
+
+#support {
+    color: #3E3E3E;
+    font-size: 13px;
+    line-height: 25px;
+    padding: 30px 0;
+}
+
+#donate {
+    height: 26px;
+    position: relative;
+}
+
+#donate #txt {
+    float: left;
+    padding-right: 5px;
+}
+
+#donate #btc {
+    background-color: #FFA900;
+    color: #FFFFFF;
+    float: left;
+    font-weight: bold;
+    line-height: 25px;
+    padding: 0 0 0 5px;
+}
+
+
+#donate #arrow {
+    border-bottom: 12px solid rgba(0, 0, 0, 0);
+    border-left: 13px solid #FFA900;
+    border-top: 12px solid rgba(0, 0, 0, 0);
+    float: left;
+    height: 0;
+    margin-right: 7px;
+    width: 0;
+}
+
+#donate .btc {
+    float: left;
+    padding-right: 10px;
+}
+
+
+#donate #qr {
+    cursor: pointer;
+    float: left;
+}
+
+#qrimage {
+    display: none;
+    background-color: #FFFFFF;
+    border: 1px solid #C0C0C0;
+    bottom: 30px;
+    height: 198px;
+    padding: 5px;
+    position: absolute;
+    right: 150px;
+    width: 198px;
 }
 
 #crawlingout {

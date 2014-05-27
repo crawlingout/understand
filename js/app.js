@@ -304,7 +304,7 @@ function loadDemo(demoid) {
 
 	audiofile = 1;
 	loadAudioToPlayer('http://www.simplyeasy.cz/files/'+demoid+'.mp3');
-    localStorage.setItem('stored_audio_file_url', 'demo/'+demoid+'.mp3');
+    localStorage.setItem('stored_audio_file_url', 'http://www.simplyeasy.cz/files/'+demoid+'.mp3');
 }
 
 
@@ -524,4 +524,12 @@ $(document).ready(function() {
 
 	showQuota(0);
     $('.quota').text(quota);
+
+    // show BTC donation qr code on hover
+    $('#qr').hover(function() {
+        $('#qrimage').show();
+    },
+    function() {
+        $('#qrimage').hide();
+    });
 });
