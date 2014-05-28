@@ -253,7 +253,7 @@ function loadText(text) {//console.log(JSON.stringify(text));
     // hideexplanation on how to use the site
 	$('#explanation').hide();
     $('#backhome').show();
-    $('.right').show();
+    $('#translated_words').show();
 
 	$('#content').show().html(content);
 

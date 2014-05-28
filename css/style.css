@@ -358,17 +358,34 @@ h3 {
 }
 
 
-
-
-.right {
+#right {
 	position: absolute;
     max-width: 500px;
     min-width: 235px;
     padding-left: 10px;
     left: 1000px;
     top: 0;
+}
+
+#translated_words {
     display: none;
 }
+
+#donate2 {
+    background-color: #F5F5F5;
+    border: 1px solid #E7E7E7;
+    border-radius: 6px;
+    margin: 30px 25px;
+    padding: 10px 10px 20px 20px;
+}
+
+#donate2 h4 {
+    color: #6A6A6A;
+    font-size: 12px;
+    margin: 0 0 15px;
+    padding: 0;
+}
+
 
 #middle {
     position: relative;
@@ -534,17 +551,17 @@ h3 {
     padding: 30px 0;
 }
 
-#donate {
+#donate1 {
     height: 26px;
     position: relative;
 }
 
-#donate #txt {
+#donate1 #txt {
     float: left;
     padding-right: 5px;
 }
 
-#donate #btc {
+#donate1 #btc {
     background-color: #FFA900;
     color: #FFFFFF;
     float: left;
@@ -554,7 +571,7 @@ h3 {
 }
 
 
-#donate #arrow {
+#donate1 #arrow {
     border-bottom: 12px solid rgba(0, 0, 0, 0);
     border-left: 13px solid #FFA900;
     border-top: 12px solid rgba(0, 0, 0, 0);
@@ -564,13 +581,13 @@ h3 {
     width: 0;
 }
 
-#donate .btc {
+#donate1 .btc {
     float: left;
     padding-right: 10px;
 }
 
 
-#donate #qr {
+#donate1 #qr {
     cursor: pointer;
     float: left;
 }

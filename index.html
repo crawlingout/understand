@@ -9,6 +9,12 @@
 
 	<link rel="stylesheet" href="css/style.css" />
 
+	<!-- coin widget -->
+	<link rel="stylesheet" href="css/coin.css" />
+
+	<!-- Font Awesome -->
+	<link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet" />
+
 	<!--[if lte IE 8]>
 	<link href="css/ie.css" rel="stylesheet" type="text/css" />
 	<![endif]-->
@@ -19,16 +25,13 @@
 	<script type="text/javascript" src="js/jquery.knob.js"></script>
 	<script type="text/javascript" src="js/app.js"></script>
 
-	<!-- Font Awesome -->
-	<link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet" />
-
 	<!-- Facebook Open Graph -->
     <meta property="fb:app_id" content="1383406805282282"/>
     <!-- <meta property="og:image" content="img/fb.png"/> -->
     <meta property="og:type" content="website"/>
     <meta property="og:url" content="http://www.icanunderstand.eu/"/>
-    <meta property="og:title" content="Learn to understand foreign languages by listening to audiobooks"/>
-    <meta property="og:description" content="Understanding is not just knowing words and grammar. It's a specific skill you can practice separately."/>
+    <meta property="og:title" content="Really understand foreign languages"/>
+    <meta property="og:description" content="Understanding is not just knowing vocabulary and grammar. It's a specific skill you can practice separately."/>
 
 	<!-- Google Analytics -->
 	<script>
@@ -126,7 +129,7 @@
 					You know some vocabulary and grammar. You have passed exams in school. Yet you still struggle understanding natives when they talk and you can't watch their movies without subtitles... does this apply to you?
 				</p>
 
-				<p><strong>Understanding is not just knowing words and grammar. It's a specific skill you can practice separately.</strong></p>
+				<p><strong>Understanding is not just knowing vocabulary and grammar. It's a specific skill you can practice separately.</strong></p>
 		
 				<div id="call">
 					<div id="tryitnow">
@@ -315,7 +318,7 @@
 					If you have any suggestion or want to report a bug, 
 					please shoot me an email at <span id="r">jan at icanunderstand dot eu</span>
 				</p>
-				<div id="donate">
+				<div id="donate1">
 					<div id="txt">To <strong>support further development</strong>, please </div>
 					<div id="btc">donate Bitcoin</div><div id="arrow"></div>
 					<div class="btc">1KzGUW3ttwaKNdi1uN3JW5MyxyMqr3qNcq</div>
@@ -338,23 +341,45 @@
 	
 </div>
 
-<div class="right">
-	<div id="quota_used_wrapper"><span id="quota_used"></span> of <span class="quota"></span> characters/month used</div>
+<div id="right">
 
 	<!-- translated words -->
-	<div id="translation_wrapper">
-		<div id="translations">
-			<div id="selection"></div>
-			<div id="selectedword"></div><div id="arrowright"></div>
-			<div id="translatedword">...</div>
-			<div class="clear"></div>
+	<div id="translated_words">
+		<div id="quota_used_wrapper"><span id="quota_used"></span> of <span class="quota"></span> characters/month used</div>
+
+		<div id="translation_wrapper">
+			<div id="translations">
+				<div id="selection"></div>
+				<div id="selectedword"></div><div id="arrowright"></div>
+				<div id="translatedword">...</div>
+				<div class="clear"></div>
+			</div>
+		</div>
+		
+		<!-- previously translated words -->
+		<div id="previous_translated_words_wrapper">
+			<div id="previous_translated_words"></div>
+			<div id="remove_words" title="remove all stored words"><i class="fa fa-trash-o"></i></div>
 		</div>
 	</div>
-
-	<!-- previously translated words -->
-	<div id="previous_translated_words_wrapper">
-		<div id="previous_translated_words"></div>
-		<div id="remove_words" title="remove all stored words"><i class="fa fa-trash-o"></i></div>
+	
+	<div id="donate2">
+		<h4>Support development</h4>
+		<script src="js/coin.js"></script>
+		<script>
+		CoinWidgetCom.go({
+			wallet_address: "1KzGUW3ttwaKNdi1uN3JW5MyxyMqr3qNcq"
+			, currency: "bitcoin"
+			, counter: "count"
+			, alignment: "bl"
+			, qrcode: true
+			, auto_show: false
+			, lbl_button: "Donate Bitcoin"
+			, lbl_address: "My Bitcoin Address:"
+			, lbl_count: "donations"
+			, lbl_amount: "BTC"
+		});
+		</script>
 	</div>
 
 	<div class="debug" id="debug"></div>
