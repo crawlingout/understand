@@ -527,8 +527,8 @@ h3 {
     border-top: 1px solid #E3E3E3;
     font-size: 14px;
     margin: 30px 0 0;
-    min-height: 400px;
-    padding: 20px 70px;
+    padding: 60px 70px 30px;
+    position: relative;
 }
 
 #tips {
@@ -537,15 +537,18 @@ h3 {
 
 #share {
     height: 24px;
-    padding: 20px 30px 0;
+    padding: 35px 0 0;
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 400px;
 }
 
 .share {
-    float: right;
+    float: left;
     height: 25px;
     padding: 0;
     width: 110px;
-    overflow: hidden;
 }
 
 .r {
