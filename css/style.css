@@ -34,7 +34,7 @@ h3 {
     color: #C1C1C1;
     font-size: 28px;
     font-weight: normal;
-    margin: 10px 0 18px;
+    margin: 10px 30px 18px;
 }
 
 .clear {
@@ -126,6 +126,10 @@ h3 {
 #explanation p {
     font-size: 14px;
     line-height: 26px;
+}
+
+#explanation p.smaller {
+    font-size: 12px;
 }
 
 #call {
