@@ -31,10 +31,10 @@ h1 {
 }
 
 h3 {
-    color: #FFA900;
+    color: #C1C1C1;
     font-size: 28px;
     font-weight: normal;
-    margin: 20px 0;
+    margin: 10px 0 18px;
 }
 
 .clear {
@@ -523,6 +523,7 @@ h3 {
     border-top: 1px solid #E3E3E3;
     font-size: 14px;
     margin: 30px 0 0;
+    min-height: 400px;
     padding: 20px 70px;
 }
 
@@ -536,11 +537,14 @@ h3 {
 }
 
 .share {
-    float: left;
-    padding: 0 30px 0 0;
+    float: right;
+    height: 25px;
+    padding: 0;
+    width: 110px;
+    overflow: hidden;
 }
 
-#r {
+.r {
     font-style: italic;
 }
 
@@ -548,17 +552,16 @@ h3 {
     color: #3E3E3E;
     font-size: 13px;
     line-height: 25px;
-    padding: 30px 0;
+    padding: 0 0 30px;
 }
 
 #donate1 {
-    height: 26px;
+    height: 54px;
     position: relative;
 }
 
 #donate1 #txt {
-    float: left;
-    padding-right: 5px;
+    padding: 0;
 }
 
 #donate1 #btc {
@@ -583,13 +586,15 @@ h3 {
 
 #donate1 .btc {
     float: left;
-    padding-right: 10px;
+    padding-right: 5px;
 }
 
 
 #donate1 #qr {
+    color: #FF6500;
     cursor: pointer;
     float: left;
+    padding-right: 5px;
 }
 
 #qrimage {

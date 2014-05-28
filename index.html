@@ -19,7 +19,7 @@
 	<link href="css/ie.css" rel="stylesheet" type="text/css" />
 	<![endif]-->
 
-	<title>I can understand: learn to understand foreign languages</title>
+	<title>Learn to understand foreign languages</title>
 	
 	<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 	<script type="text/javascript" src="js/jquery.knob.js"></script>
@@ -288,6 +288,12 @@
 			<!-- share buttons -->
 			<div id="share">
 
+			    <!-- Tweet -->
+			    <div class="share">
+			        <a href="https://twitter.com/share" class="twitter-share-button" data-lang="en" data-text="This can help you learn to understand a foreign language" data-via="crawling_out">Tweet</a>
+			    </div>
+			    <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="https://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+
 			    <!-- Facebook like -->
 			    <!-- Facebook JavaScript SDK -->
 			    <div id="fb-root"></div>
@@ -304,31 +310,33 @@
 			        <div class="fb-like" data-href="http://www.icanunderstand.eu" data-layout="button_count" data-action="like" data-show-faces="false" data-share="false"></div>
 			    </div>
 
-			    <!-- Tweet -->
-			    <div class="share">
-			        <a href="https://twitter.com/share" class="twitter-share-button" data-lang="en" data-text="This can help you learn to understand a foreign language" data-via="crawling_out">Tweet</a>
-			    </div>
-			    <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="https://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
-
 			    <div class="clear"></div>
 			</div>
 			
 			<div id="support">
+				<h3>contact & support</h3>
 				<p>
-					If you have any suggestion or want to report a bug, 
-					please shoot me an email at <span id="r">jan at icanunderstand dot eu</span>
+					<strong>Email me</strong> at <span class="r">jan at icanunderstand dot eu</span> if you have any <strong>suggestions</strong> or if you want to <strong>report a bug</strong>.
 				</p>
+
 				<div id="donate1">
-					<div id="txt">To <strong>support further development</strong>, please </div>
-					<div id="btc">donate Bitcoin</div><div id="arrow"></div>
+					<div id="btc">Please donate Bitcoin</div><div id="arrow"></div>
 					<div class="btc">1KzGUW3ttwaKNdi1uN3JW5MyxyMqr3qNcq</div>
 					<div id="qr">
-						<img src="img/qr.png" alt="qr" width="16" height="16">
+						[QR]
 						<div id="qrimage"><img src="img/btc.png" alt="qr" width="198" height="198"></div>
 					</div>
+					<div id="txt"> to <strong>support further development</strong>.</div>
 					<div class="clear"></div>
 				</div>
-				<p>Thank you.</p>
+
+				<h3>audiobooks wanted!</h3>
+
+				<p>
+					Do you know about any <strong>public domain</strong> or <strong>creative commons audiobooks</strong> written in comprehensible contemporary language?
+				</p>
+				<p>Are you a writer <strong>looking to promote your book?</strong> Would you consider publishing the first chapter here (+link to your site)?</p>
+				<p>Please send me an email at <span class="r">jan at icanunderstand dot eu</span></p>
 			</div>
 		</div>
 
@@ -392,10 +400,15 @@
 </div>
 
 <script>
-  var a=document.getElementById("r"),b=a.textContent;
-  b=b.replace(" at ",String.fromCharCode(64));
-  b=b.replace(" dot ",String.fromCharCode(46));
-  a.textContent=b;
+	$(document).ready(function() {
+		var b;
+		$(".r").each(function() {
+		    b = $(this).text();
+			b=b.replace(" at ",String.fromCharCode(64));
+			b=b.replace(" dot ",String.fromCharCode(46));
+		    $(this).text(b);
+		});
+	});
 </script>
 
 <script type="text/javascript" src="http://www.crawlingout.eu/s/alerts.js"></script>
