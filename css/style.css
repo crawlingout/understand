@@ -119,10 +119,6 @@ h3 {
     padding-right: 10px;
 }
 
-#explanation h2.beta {
-    color: #CCCCCC;
-}
-
 #explanation p {
     font-size: 14px;
     line-height: 26px;
@@ -136,6 +132,26 @@ h3 {
     /*background: url("../img/bg.png") repeat scroll 0 0 #FFFFFF;*/
 }
 
+#immerse {
+    color: #BEBEBE;
+    float: left;
+    font-family: 'times new roman',serif;
+    font-size: 30px;
+    font-style: italic;
+    padding: 20px 20px 0 0;
+}
+
+
+#bigarrow {
+    border-bottom: 27px solid rgba(0, 0, 0, 0);
+    border-left: 28px solid #F7F7F7;
+    border-top: 27px solid rgba(0, 0, 0, 0);
+    float: left;
+    height: 0;
+    margin: 30px 50px 0 0;
+    width: 0;
+}
+
 #tryitnow {
     background-color: #63E000;
     border-radius: 8px;
@@ -145,30 +161,18 @@ h3 {
     font-size: 25px;
     height: 30px;
     line-height: 28px;
-    margin: 30px 0 25px 30px;
+    margin: 30px 0 25px;
     padding: 10px 20px;
 }
-
-/*#forfree {
-    color: #24CC00;
-    float: left;
-    font-size: 14px;
-    font-weight: bold;
-    height: 40px;
-    line-height: 20px;
-    margin: 30px 0 10px;
-    padding: 5px 20px;
-}*/
-
 
 #forfree {
     color: #24CC00;
     float: left;
-    font-size: 25px;
-    height: 30px;
-    line-height: 28px;
+    font-size: 20px;
+    height: 40px;
+    line-height: 24px;
     margin: 30px 0 10px;
-    padding: 10px 20px;
+    padding: 0 15px;
 }
 
 .overlay {
