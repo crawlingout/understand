@@ -135,21 +135,10 @@ h3 {
 #immerse {
     color: #BEBEBE;
     float: left;
-    font-family: 'times new roman',serif;
+    font-family: "Times New Roman",Georgia,Serif;
     font-size: 30px;
     font-style: italic;
-    padding: 20px 20px 0 0;
-}
-
-
-#bigarrow {
-    border-bottom: 27px solid rgba(0, 0, 0, 0);
-    border-left: 28px solid #F7F7F7;
-    border-top: 27px solid rgba(0, 0, 0, 0);
-    float: left;
-    height: 0;
-    margin: 30px 50px 0 0;
-    width: 0;
+    padding: 20px 50px 0 0;
 }
 
 #tryitnow {
