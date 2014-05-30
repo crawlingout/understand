@@ -108,15 +108,18 @@ h3 {
 }
 
 #explanation h2 {
-    float: left;
     font-size: 24px;
     font-weight: normal;
-    margin: 0 0 20px;
+    margin: 0 0 35px;
 }
 
 #explanation h2.main {
     color: #696969;
     padding-right: 10px;
+}
+
+#explanation h2.main .beta {
+    color: #CCCCCC;
 }
 
 #explanation p {
@@ -126,10 +129,6 @@ h3 {
 
 #explanation p.smaller {
     font-size: 12px;
-}
-
-#call {
-    /*background: url("../img/bg.png") repeat scroll 0 0 #FFFFFF;*/
 }
 
 #immerse {
