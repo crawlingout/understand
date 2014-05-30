@@ -5,7 +5,7 @@ var max_translation_length = 40;
 var from = localStorage.getItem('stored_lang_from') || 'en';
 var to = localStorage.getItem('stored_lang_to') || 'es';
 var previous_translated_words = [];
-var quota = 3000; // config
+var quota = 4000; // config
 var quota_used = Number(localStorage.getItem('quota_used')) || 0;
 var quota_month = Number(localStorage.getItem('quota_month')) || 0;
 var scrollposition = Number(localStorage.getItem('lang_scrollposition')) || 0;
@@ -23,16 +23,19 @@ function errorHandler(e) {
 function showQuota(add) {
     var d = new Date();
     var m = d.getMonth();
+    var percent;
 
     // still the same month
     if (m === quota_month) {
     	quota_used = quota_used + add;
-    	$('#quota_used').text(quota_used);
+        percent = Math.round((quota_used/quota)*100);
+    	$('#quota_used').text(percent);
     	localStorage.setItem('quota_used', quota_used);
     }
     else {
         quota_used = 0 + add;
-        $('#quota_used').text(quota_used);
+        percent = Math.round((quota_used/quota)*100);
+        $('#quota_used').text(percent);
         localStorage.setItem('quota_used', quota_used);
 
         quota_month = m;
@@ -523,7 +526,6 @@ $(document).ready(function() {
 	});
 
 	showQuota(0);
-    $('.quota').text(quota);
 
     // show BTC donation qr code on hover
     $('#qr').hover(function() {

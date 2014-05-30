@@ -1,0 +1,139 @@
+<!doctype html>
+
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+    <link rel="shortcut icon" href="../favicon.ico" />
+    <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0'/>
+    <meta name="author" content="crawlingout">
+
+    <title>User info</title>
+    <meta name="description" content="User registration and info for registered users.">
+
+    <link rel="stylesheet" href="style.css">
+
+    <!-- CoinWidget -->
+    <link rel="stylesheet" href="../css/coin.css" />
+
+    <!-- Font Awesome -->
+    <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet" />
+
+    <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+
+    <!-- Facebook Open Graph -->
+    <meta property="fb:app_id" content="1383406805282282"/>
+    <meta property="og:image" content="http://www.icanunderstand.eu/img/motto.png"/>
+    <meta property="og:type" content="website"/>
+    <meta property="og:url" content="http://www.icanunderstand.eu/"/>
+    <meta property="og:title" content="Really understand foreign languages"/>
+    <meta property="og:description" content="Understanding is not just knowing vocabulary and grammar. It's a specific skill you can practice separately."/>
+
+    <!-- Google Analytics -->
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-50154508-3', 'icanunderstand.eu');
+      ga('send', 'pageview');
+
+    </script>
+
+</head>
+
+<body>
+    <a href="/" title="back to main page"><i class="fa fa-arrow-circle-left"></i></a>
+
+    <div id="content">
+
+        <h2>Quota for translations</h2>
+        <p>
+            This web application has to use a paid 3rd party service to translate words. That's why I had to set up some limits.<br />
+            Currently, the limit is 4000 characters per month.
+        </p>
+
+        <p>
+            To be honest, I have not yet figured out the best way to finance it. Ads? Paid premium accounts with statistics and exporting your vocabulary to flashcards?
+        </p>
+
+        <p>
+            Anyway, if you have run out of your quota for translations, please shoot me an email at <span class="r">jan at icanunderstand dot eu</span> and I will increase your quota. It's <strong>for free</strong>, at least while this app is still in beta.
+        </p>
+
+        <p>If you want to support this app, don't be afraid to share it with your friends.</p>
+
+        <!-- share buttons -->
+        <div id="share">
+
+            <!-- Facebook like -->
+            <!-- Facebook JavaScript SDK -->
+            <div id="fb-root"></div>
+            <script>(function(d, s, id) {
+              var js, fjs = d.getElementsByTagName(s)[0];
+              if (d.getElementById(id)) return;
+              js = d.createElement(s); js.id = id;
+              js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&appId=1383406805282282&version=v2.0";
+              fjs.parentNode.insertBefore(js, fjs);
+            }(document, 'script', 'facebook-jssdk'));</script>
+
+            <!-- Facebook Like button -->
+            <div class="share">
+                <div class="fb-like" data-href="http://www.icanunderstand.eu" data-layout="button_count" data-action="like" data-show-faces="false" data-share="false"></div>
+            </div>
+
+            <!-- Tweet -->
+            <div class="share">
+                <a href="https://twitter.com/share" class="twitter-share-button" data-lang="en" data-text="This can help you learn to understand a foreign language" data-via="crawling_out" data-url="http://www.icanunderstand.eu">Tweet</a>
+            </div>
+            <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="https://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+
+            <div class="share">
+                <a href="mailto:?subject=Learn%20to%20really%20understand%20foreign%20languages%20&amp;body=http%3A%2F%2Fwww.icanunderstand.eu">
+                        <span class="icon">@</span><span class="text">email</span>
+                    </a>
+            </div>
+
+            <div class="clear"></div>
+        </div>
+
+        <p>Please consider supporting this app with a donation. Thank you.</p>
+        <!-- donate -->
+        <div id="donate">
+            <script src="../js/coin.js"></script>
+            <script>
+            CoinWidgetCom.go({
+                wallet_address: "1KzGUW3ttwaKNdi1uN3JW5MyxyMqr3qNcq"
+                , currency: "bitcoin"
+                , counter: "count"
+                , alignment: "bl"
+                , qrcode: true
+                , auto_show: false
+                , lbl_button: "Donate Bitcoin"
+                , lbl_address: "My Bitcoin Address:"
+                , lbl_count: "donations"
+                , lbl_amount: "BTC"
+            });
+            </script>
+        </div>
+
+        <p class="gray">
+            ................................................................................................................ 
+        </p>
+
+        <a href="/"><i class="fa fa-arrow-circle-left"></i> &nbsp;back to main page</a>
+    </div>
+
+<script>
+    $(document).ready(function() {
+        var b;
+        $(".r").each(function() {
+            b = $(this).text();
+            b=b.replace(" at ",String.fromCharCode(64));
+            b=b.replace(" dot ",String.fromCharCode(46));
+            $(this).text(b);
+        });
+    });
+</script>
+</body>
+</html>

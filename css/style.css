@@ -345,7 +345,7 @@ h3 {
 
 #quota_used_wrapper {
 	color: #B5B5B5;
-    font-size: 12px;
+    font-size: 11px;
     padding: 10px 0 30px 20px;
 }
 
@@ -373,6 +373,7 @@ h3 {
     border-radius: 6px;
     margin: 30px 25px;
     padding: 10px 10px 20px 20px;
+    width: 155px;
 }
 
 #donate2 h4 {
