@@ -15,6 +15,9 @@ var player = 0;
 var stored_audio_time = Number(localStorage.getItem('stored_audio_time')) || 0;
 var interval = 0;
 
+// workaround to load duration in Chrome for Android at least for demos (stored in data attr)
+var loaded_duration = Number(localStorage.getItem('stored_loaded_duration')) || 0;
+
 function errorHandler(e) {
     console.log('error>', e.message);
 }
@@ -85,10 +88,10 @@ function callBing(from, to, text) {
 }
 
 function getTranslation(word) {
-    if (quota_used < quota) {console.log('quota OK');
+    if (quota_used < quota) {
     	callBing(from, to, word);
     }
-    else {console.log('over quota');
+    else {
         $('#quota_used_wrapper').html('<div class="failed">Over quota! Could not translate.</div>');
         $('#translatedword').text('=not translated=');
     }
@@ -156,8 +159,9 @@ function loadAudioToPlayer(file) {
 
 		// configure audio progress bar
 		$('.knob').trigger('configure', {
-	        "max": player.duration
+	        "max": player.duration || loaded_duration
 	    });
+        //$('#debug1').text('dur: '+player.duration);
 
         // get time for the player to jump to - get stored time if page just loaded or get current time if just paused ('canplay' event also called)
         var jumpto = player.currentTime || stored_audio_time;
@@ -184,6 +188,9 @@ function resetPlayer() {
     localStorage.setItem('stored_audio_time', stored_audio_time);
     audiofile = 0;
     localStorage.removeItem('stored_audio_file_url');
+
+    loaded_duration = 0;
+    localStorage.removeItem('stored_loaded_duration');
 
     // reset audio progress bar
     $('.knob').val(0).trigger('change');
@@ -489,6 +496,10 @@ $(document).ready(function() {
 	// DEMO
 
 	$('.demo').click(function() {
+        // get duration (workaround for Android)
+        loaded_duration = $(this).data('duration') || 0;
+        localStorage.setItem('stored_loaded_duration', loaded_duration);
+
 		$("#more").hide();
         loadDemo($(this).attr('id'));
 
@@ -510,7 +521,7 @@ $(document).ready(function() {
     });
 
     // show quota pop-up
-    $('#showquotapopup').click(function() {console.log('x');
+    $('#showquotapopup').click(function() {
         $('#quota').show();
     });
 

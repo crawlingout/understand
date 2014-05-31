@@ -247,7 +247,7 @@ h3 {
     cursor: pointer;
     font-size: 12px;
     margin: 0 4px 4px 0;
-    padding: 4px 10px;
+    padding: 10px;
 }
 
 .demo .by {
@@ -411,7 +411,7 @@ h3 {
     margin: 26px 0 4px;
     padding: 15px;
     text-align: center;
-    width: 75px;
+    width: 82px;
 }
 
 .filetypes {
@@ -442,7 +442,7 @@ h3 {
 }
 
 #player {
-	height: 140px;
+	height: 135px;
     margin: 25px 25px 5px;
     position: relative;
     width: 180px;
@@ -502,8 +502,8 @@ h3 {
 }
 
 #settings {
-    font-size: 14px;
-    padding: 25px 10px 20px;
+    font-size: 13px;
+    padding: 20px 10px;
 }
 
 #settings select {
