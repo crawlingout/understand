@@ -470,6 +470,8 @@ $(document).ready(function() {
 
 		resetPlayer();
 
+        resetText();
+
 		// show 'browser not fully supported' message 
 		$('#warning').show();
 
