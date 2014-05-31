@@ -597,7 +597,8 @@ h3 {
     position: relative;
 }
 
-#donate1 #txt {
+#donate1 .txt {
+    float: left;
     padding: 0;
 }
 
@@ -621,7 +622,7 @@ h3 {
     width: 0;
 }
 
-#donate1 .btc {
+#donate1 #btcaddr {
     float: left;
     padding-right: 5px;
 }
@@ -632,6 +633,7 @@ h3 {
     cursor: pointer;
     float: left;
     padding-right: 5px;
+    position: relative;
 }
 
 #qrimage {
@@ -642,7 +644,7 @@ h3 {
     height: 198px;
     padding: 5px;
     position: absolute;
-    right: 150px;
+    right: 0;
     width: 198px;
 }
 
