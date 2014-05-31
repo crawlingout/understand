@@ -23,6 +23,11 @@ a {
     text-decoration: none;
 }
 
+.pseudolink {
+    color: #24CC00;
+    cursor: pointer;
+}
+
 h1 {
     color: #FFA900;
     font-weight: normal;
@@ -34,7 +39,7 @@ h3 {
     color: #C1C1C1;
     font-size: 28px;
     font-weight: normal;
-    margin: 10px 30px 18px;
+    margin: 10px 0 18px;
 }
 
 .clear {
@@ -127,7 +132,7 @@ h3 {
     line-height: 26px;
 }
 
-#explanation p.smaller {
+.popup p.smaller {
     font-size: 12px;
 }
 
@@ -183,10 +188,12 @@ h3 {
     padding: 0 30px 15px;
 }
 
-#demos {
+.popup {
     background-color: #F4F4F4;
+    left: 70px;
     padding: 20px 0;
     position: fixed;
+    top: 40px;
     width: 860px;
     z-index: 999;
 }
@@ -195,7 +202,11 @@ h3 {
     display: none;
 }
 
-#closedemos {
+#quota {
+    display: none;
+}
+
+.closepopup {
     color: #C0C0C0;
     cursor: pointer;
     font-size: 22px;
@@ -352,7 +363,6 @@ h3 {
 #quota_used {
     color: gray;
 }
-
 
 #right {
 	position: absolute;

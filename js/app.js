@@ -494,17 +494,22 @@ $(document).ready(function() {
         $('#from').val($(this).parent().data('lang'));
 	});
 
-    // show more demos
+    // show demos pop-up
     $('#tryitnow').click(function() {
         $('#more').show();
     });
 
-    // hide demos
+    // hide demos pop-up
     $(".overlay").click(function(){
-        $("#more").hide();
+        $(".hidepopup").hide();
     });
-    $("#closedemos").click(function(){
-        $("#more").hide();
+    $(".closepopup").click(function(){
+        $(".hidepopup").hide();
+    });
+
+    // show quota pop-up
+    $('#showquotapopup').click(function() {console.log('x');
+        $('#quota').show();
     });
 
 

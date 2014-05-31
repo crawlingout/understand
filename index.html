@@ -56,79 +56,88 @@
 	
 	<div id="top">
 		<div id="content_wrapper">
-			<div id="explanation">
+			<!-- hidden quota info -->
+			<div id="quota" class="hidepopup">
+				<div class="overlay"></div>
+				<div class="popup">
+					<div class="closepopup">&times;</div>
+					<iframe src="./user" frameborder="0" width="860" height="330"></iframe>
+				</div>
+			</div>
 
-				<!-- hidden demos -->
-				<div id="more">
-					<div class="overlay"></div>
-					<div id="demos">
-						<div id="closedemos">&times;</div>
+			<!-- hidden demos -->
+			<div id="more" class="hidepopup">
+				<div class="overlay"></div>
+				<div class="popup">
+					<div class="closepopup">&times;</div>
 
-						<div id="yourown">
-							 Select one of these free books and short stories.
+					<div id="yourown">
+						 Select one of these free books and short stories.
+					</div>
+
+					<div class="scrollable">
+						<!-- English -->
+						<div class="language">
+							<div class="flagbox"><span class="flag gb"></span></div> English
+							<div class="clear"></div>
 						</div>
-
-						<div class="scrollable">
-							<!-- English -->
-							<div class="language">
-								<div class="flagbox"><span class="flag gb"></span></div> English
-								<div class="clear"></div>
-							</div>
-							<div data-lang="en">
-								<div class="demo" id="war"><span class="by">H. G. Wells</span><strong>The War of the Worlds</strong></div>
-								<div class="demo" id="island"><span class="by">Robert Louis Stevenson</span><strong>Treasure Island</strong></div>
-								<div class="demo" id="whiteship"><span class="by">H. P. Lovecraft</span><strong>The White Ship</strong> (short story)</div>
-								<div class="demo" id="oz"><span class="by">L. Frank Baum</span><strong>The Wonderful Wizard of Oz</strong></div>
-								<div class="demo" id="tom"><span class="by">Mark Twain</span><strong>The Adventures of Tom Sawyer</strong></div>
-								<div class="demo" id="peterpan"><span class="by">J. M. Barrie</span><strong>Peter Pan</strong></div>
-								<div class="demo" id="alice"><span class="by">Lewis Carroll</span><strong>Alice's Adventures in Wonderland</strong></div>
-							</div>
-							<div class="gap"></div>
-
-							<!-- German -->
-							<!-- <div class="language">
-								<div class="flagbox"><span class="flag de"></span></div> German
-								<div class="clear"></div>
-							</div>
-							<div data-lang="de">
-								<div class="demo" id="war"><span class="by">H. G. Wells</span><strong>The War of the Worlds</strong></div>
-							</div>
-							<div class="gap"></div> -->
-							
-							<!-- Czech -->
-							<!--
-							<div class="language">
-								<div class="flagbox"><span class="flag cz"></span></div> Czech / Česky
-								<div class="clear"></div>
-							</div>
-							<div data-lang="cs">
-								<div class="demo" id="capek-valkasmloky"><span class="by">Karel Čapek</span><strong>Válka s mloky</strong></div>
-								<div class="demo" id="capek-tajemstvipisma"><span class="by">Karel Čapek</span><strong>Tajemství písma</strong> (povídka)</div>
-								<div class="demo" id="capek-telegram"><span class="by">Karel Čapek</span><strong>Telegram</strong> (povídka)</div>
-								<div class="demo" id="capek-vrazednyutok"><span class="by">Karel Čapek</span><strong>Vražedný útok</strong> (povídka)</div>
-							</div>
-							 -->
-
-							<h3>Audiobooks WANTED!</h3>
-
-							<p class="smaller">
-								Do you know about <strong>public domain</strong> or <strong>creative commons audiobooks</strong> written in comprehensible contemporary language?
-							</p>
-
-							<p class="smaller">Are you a writer <strong>looking to promote your book?</strong> Would you consider publishing the first chapter here (+link to your site)?</p>
-
-							<p class="smaller">Please send me an email at <span class="r">jan at icanunderstand dot eu</span></p>
-
-							<div class="gap"></div>
-							<div class="gap"></div>
-							<div class="gap"></div>
+						<div data-lang="en">
+							<div class="demo" id="war"><span class="by">H. G. Wells</span><strong>The War of the Worlds</strong></div>
+							<div class="demo" id="island"><span class="by">Robert Louis Stevenson</span><strong>Treasure Island</strong></div>
+							<div class="demo" id="whiteship"><span class="by">H. P. Lovecraft</span><strong>The White Ship</strong> (short story)</div>
+							<div class="demo" id="oz"><span class="by">L. Frank Baum</span><strong>The Wonderful Wizard of Oz</strong></div>
+							<div class="demo" id="tom"><span class="by">Mark Twain</span><strong>The Adventures of Tom Sawyer</strong></div>
+							<div class="demo" id="peterpan"><span class="by">J. M. Barrie</span><strong>Peter Pan</strong></div>
+							<div class="demo" id="alice"><span class="by">Lewis Carroll</span><strong>Alice's Adventures in Wonderland</strong></div>
 						</div>
+						<div class="gap"></div>
 
-						<div class="others">
-						You can find many more free books at <a href="http://www.booksshouldbefree.com" target="_blank">booksshouldbefree.com</a>. You can also open your own audio/text files.
+						<!-- German -->
+						<!-- <div class="language">
+							<div class="flagbox"><span class="flag de"></span></div> German
+							<div class="clear"></div>
 						</div>
+						<div data-lang="de">
+							<div class="demo" id="war"><span class="by">H. G. Wells</span><strong>The War of the Worlds</strong></div>
+						</div>
+						<div class="gap"></div> -->
+						
+						<!-- Czech -->
+						<!--
+						<div class="language">
+							<div class="flagbox"><span class="flag cz"></span></div> Czech / Česky
+							<div class="clear"></div>
+						</div>
+						<div data-lang="cs">
+							<div class="demo" id="capek-valkasmloky"><span class="by">Karel Čapek</span><strong>Válka s mloky</strong></div>
+							<div class="demo" id="capek-tajemstvipisma"><span class="by">Karel Čapek</span><strong>Tajemství písma</strong> (povídka)</div>
+							<div class="demo" id="capek-telegram"><span class="by">Karel Čapek</span><strong>Telegram</strong> (povídka)</div>
+							<div class="demo" id="capek-vrazednyutok"><span class="by">Karel Čapek</span><strong>Vražedný útok</strong> (povídka)</div>
+						</div>
+						 -->
+
+						<h3>Audiobooks WANTED!</h3>
+
+						<p class="smaller">
+							Do you know about <strong>public domain</strong> or <strong>creative commons audiobooks</strong> written in comprehensible contemporary language?
+						</p>
+
+						<p class="smaller">Are you a writer <strong>looking to promote your book?</strong> Would you consider publishing the first chapter here (+link to your site)?</p>
+
+						<p class="smaller">Please send me an email at <span class="r">jan at icanunderstand dot eu</span></p>
+
+						<div class="gap"></div>
+						<div class="gap"></div>
+						<div class="gap"></div>
+					</div>
+
+					<div class="others">
+					You can find many more free books at <a href="http://www.booksshouldbefree.com" target="_blank">booksshouldbefree.com</a>. You can also open your own audio/text files.
 					</div>
 				</div>
+			</div>
+
+			<div id="explanation">
 
 				<!-- header -->
 				<h1 class="main">Learn to understand foreign languages</h1>
@@ -374,7 +383,7 @@
 
 	<!-- translated words -->
 	<div id="translated_words">
-		<div id="quota_used_wrapper">used <span id="quota_used"></span>% of your quota for translations | <a href="./user">&nbsp;?&nbsp;</a></div>
+		<div id="quota_used_wrapper">used <span id="quota_used"></span>% of your quota for translations | <span id="showquotapopup" class="pseudolink">&nbsp;?&nbsp;</span></div>
 
 		<div id="translation_wrapper">
 			<div id="translations">
