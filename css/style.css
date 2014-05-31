@@ -192,8 +192,8 @@ h3 {
     background-color: #F4F4F4;
     left: 70px;
     padding: 20px 0;
-    position: fixed;
-    top: 40px;
+    position: absolute;
+    top: 50px;
     width: 860px;
     z-index: 999;
 }
