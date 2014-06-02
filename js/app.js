@@ -359,7 +359,7 @@ $(document).ready(function() {
 
 
 	// PLAYER
-
+    
 	$(".knob").knob({
         'change': function(e){
             player.currentTime = e;

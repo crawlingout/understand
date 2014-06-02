@@ -61,6 +61,7 @@ h3 {
 #warning {
     color: #F80000;
     font-size: 14px;
+    height: 18px;
     padding: 5px 0 7px 70px;
     display: none;
 }
@@ -101,6 +102,7 @@ h3 {
     cursor: pointer;
     left: 0;
     top: 0;
+    display: none;
 }
 
 #explanation {
@@ -481,6 +483,10 @@ h3 {
     left: 35px;
     position: absolute;
     top: 10px;
+}
+
+#knob input {
+    display: none;
 }
 
 .jumpback {
