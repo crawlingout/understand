@@ -5,7 +5,7 @@ var max_translation_length = 40;
 var from = localStorage.getItem('stored_lang_from') || 'en';
 var to = localStorage.getItem('stored_lang_to') || 'es';
 var previous_translated_words = [];
-var quota = 4000; // config
+var quota = 5000; // config
 var quota_used = Number(localStorage.getItem('quota_used')) || 0;
 var quota_month = Number(localStorage.getItem('quota_month')) || 0;
 var scrollposition = Number(localStorage.getItem('lang_scrollposition')) || 0;
@@ -17,6 +17,10 @@ var interval = 0;
 
 // workaround to load duration in Chrome for Android at least for demos (stored in data attr)
 var loaded_duration = Number(localStorage.getItem('stored_loaded_duration')) || 0;
+
+var warning = '<i class="fa fa-exclamation-triangle"></i> \
+                <span>&nbsp;This is an experimental app. Some functionality may be fully supported only in Google Chrome.</span>';
+
 
 function errorHandler(e) {
     console.log('error>', e.message);
@@ -299,15 +303,15 @@ function handleTextFileSelect(evt) {
 		reader.readAsText(evt.target.files[0]);
 	}
 	else {console.log('File reader not supported.');
-
 		// show 'browser not fully supported' message 
-		$('#warning').show();
+		$('#warning').html(warning);
+        $('#warning').show();
 	}
 }
 
 function loadDemo(demoid) {
 
-    $.get( 'demo/'+demoid+'.txt', function(data) {
+    $.get('demo/'+demoid+'.txt', function(data) {
         loadText(data);
         localStorage.setItem('stored_text_file_content', data);
     });
@@ -476,11 +480,11 @@ $(document).ready(function() {
 	else {console.log('The FileSystem API not fully supported in this browser.');
 
 		resetPlayer();
-
         resetText();
 
 		// show 'browser not fully supported' message 
-		$('#warning').show();
+		$('#warning').html(warning);
+        $('#warning').show();
 
 	}
 
