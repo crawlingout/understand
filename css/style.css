@@ -540,45 +540,18 @@ h3 {
 
 #share {
     height: 24px;
-    padding: 35px 0 0;
+    padding: 35px 150px 0 0;
     position: absolute;
     right: 0;
     top: 0;
-    width: 400px;
+    width: 350px;
 }
 
 .share {
-    float: left;
+    float: right;
     height: 25px;
     padding: 0;
-    width: 110px;
-}
-
-.share .icon {
-    background-color: #FFA900;
-    border: 1px solid #FFA900;
-    color: #FFFFFF;
-    display: block;
-    float: left;
-    font-size: 14px;
-    font-weight: bold;
-    height: 17px;
-    line-height: 16px;
-    padding: 1px;
-    text-align: center;
-    width: 17px;
-}
-
-.share .text {
-    border: 1px solid #FFA900;
-    color: #FFA900;
-    display: block;
-    float: left;
-    font-size: 11px;
-    font-weight: bold;
-    height: 14px;
-    line-height: 18px;
-    padding: 0 6px 5px 4px;
+    width: 125px;
 }
 
 .r {
