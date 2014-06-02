@@ -36,13 +36,13 @@ function showQuota(add) {
     if (m === quota_month) {
     	quota_used = quota_used + add;
         percent = Math.round((quota_used/quota)*100);
-    	$('#quota_used').text(percent);
+    	$('.quota_used').text(percent);
     	localStorage.setItem('quota_used', quota_used);
     }
     else {
         quota_used = 0 + add;
         percent = Math.round((quota_used/quota)*100);
-        $('#quota_used').text(percent);
+        $('.quota_used').text(percent);
         localStorage.setItem('quota_used', quota_used);
 
         quota_month = m;
@@ -92,13 +92,13 @@ function callBing(from, to, text) {
 }
 
 function getTranslation(word) {
-    if (quota_used < quota) {
+    // if (quota_used < quota) {
     	callBing(from, to, word);
-    }
-    else {
-        $('#quota_used_wrapper').html('<div class="failed">Over quota! Could not translate.</div>');
-        $('#translatedword').text('=not translated=');
-    }
+    // }
+    // else {
+    //     $('#quota_used_wrapper').html('<div class="failed">Over quota! Could not translate.</div>');
+    //     $('#translatedword').text('=untranslated=');
+    // }
 }
 
 function getSelectedText() {

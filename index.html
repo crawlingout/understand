@@ -138,7 +138,7 @@
 		<!-- language selectors -->
 		<div class="column">
 			<div id="settings">
-				<p>Translate highlighted words</p>
+				<p>Translate <span class="highlighed">highlighted</span> words</p>
 				<span class="spacer">from</span>
 				<select id="from" class="select_lang">
 					<option value="ar">Arabic</option>
@@ -226,10 +226,10 @@
 		<div id="locally" class="small"><span class="red">*</span> Your files are opened locally, they are not uploaded anywhere. You can safely open your own audiobooks.</div>
 
 		<div id="bottom">
-			<!-- <div id="tips">
+			<div id="tips">
 				<h3 style="margin-top:0;">useful tips</h3>
 				<p>I made this app for my own experimenting with <a href="http://www.crawlingout.eu/experimenting-with-smarter-ways-of-learning-languages" target="_blank">smarter ways of learning languages</a> and I welcome you to try it out.</p>
-			</div> -->
+			</div>
 			
 			<div id="support">
 				<h3>contact & support</h3>
@@ -239,7 +239,7 @@
 
 				<div id="donate1">
 					<div id="btc">Support further development</div><div id="arrow"></div>
-					<div class="txt"> Please consider donating Bitcoin: &nbsp;</div>
+					<div class="txt"> Please donate Bitcoin: &nbsp;</div>
 					<div id="btcaddr">1KzGUW3ttwaKNdi1uN3JW5MyxyMqr3qNcq</div>
 					<div id="qr">
 						[QR]
@@ -299,7 +299,11 @@
 
 	<!-- translated words -->
 	<div id="translated_words">
-		<div id="quota_used_wrapper">used <span id="quota_used"></span>% of your quota for translations | <span id="showquotapopup" class="pseudolink">&nbsp;?&nbsp;</span></div>
+		
+		<!-- quota -->
+		<div id="quota_used_wrapper">
+			<!-- translating by highlighting: <span class="quota_used"></span>% | <span id="showquotapopup" class="pseudolink">&nbsp;?&nbsp;</span> -->
+		</div>
 
 		<div id="translation_wrapper">
 			<div id="translations">
@@ -415,28 +419,32 @@
 	</div>
 </div>
 
+
 <!-- hidden quota info -->
-<div id="quota" class="hidepopup">
+<!-- <div id="quota" class="hidepopup">
     <div class="overlay"></div>
     <div class="popup">
         <div class="closepopup">&times;</div>
         <div class="quotaexplanation">
 
-            <h2>Why the quota for translations?</h2>
+            <h2>You can translate words by highlighting them</h2>
+            <h5>but the number of words you can translate each month is limited</h5>
+
             <p>
-                This language learning tool needs to use a paid 3rd party service to translate words. I had to set up some limits for now. Currently, the quota is 5000 characters per month for each user.
+                This language learning tool is using a paid 3rd party service to translate words. You can use it for if you do not use it excessively. Currently, the quota is 5000 characters per month for each user.
             </p>
 
             <p>
-                I need to figure out some way to finance translations. Ads? Paid premium accounts with some fancy stuff like statistics of your most troublesome words and exporting your vocabulary to flashcards?
+            	You have used <span class="quota_used"></span>% of your monthly quota for translating by highlighting.
             </p>
 
             <p>
-                Anyway, if you have run out of your quota for translations, please email me at <span class="r">jan at icanunderstand dot eu</span> and I will increase your quota. It's <strong>for free</strong>, at least while this app is still in beta.
+                If you happen to run out of your quota for translations, please email me at <span class="r">jan at icanunderstand dot eu</span>. I will increase your quota <strong>for free</strong> (at least while this app is still in beta).
             </p>
         </div>
     </div>
-</div>
+</div> -->
+
 
 <!-- message for unsupported browsers, currently IE8- -->
 <div id="unsupported">

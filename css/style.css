@@ -205,7 +205,7 @@ h3 {
 }
 
 #quota {
-    display: none;
+    /*display: none;*/
 }
 
 .closepopup {
@@ -362,8 +362,8 @@ h3 {
     padding: 10px 0 30px 20px;
 }
 
-#quota_used {
-    color: gray;
+.quota_used {
+    color: black;
 }
 
 #right {
@@ -518,6 +518,11 @@ h3 {
     width: 160px;
 }
 
+#settings .highlighed {
+    background-color: #EAEAEA;
+    padding: 0 2px;
+}
+
 .spacer {
     display: block;
     float: left;
@@ -647,14 +652,24 @@ h3 {
 
 .quotaexplanation h2 {
     color: #FFA900;
+    font-size: 26px;
     font-weight: normal;
-    margin: 0;
+    margin: 0 0 10px;
+}
+
+.quotaexplanation h5 {
+    color: #4F4F4F;
+    font-size: 18px;
+    font-weight: normal;
+    margin: 0 0 30px;
 }
 
 .quotaexplanation p {
-    line-height: 25px;
+    color: #545454;
     font-size: 13px;
+    line-height: 25px;
 }
+
 
 /* flags */
 
