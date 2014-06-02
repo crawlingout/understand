@@ -30,9 +30,13 @@ a {
 
 h1 {
     color: #FFA900;
+    font-size: 28px;
     font-weight: normal;
-    margin: 5px 0;
-    font-size: 35px;
+    margin: 10px 0;
+}
+
+h1 span {
+    color: #63E000;
 }
 
 h3 {
@@ -121,12 +125,12 @@ h3 {
 }
 
 #explanation h2.main {
-    color: #696969;
+    color: #8C8C8C;
     padding-right: 10px;
 }
 
 #explanation h2.main .beta {
-    color: #CCCCCC;
+    color: #D7D7D7;
 }
 
 #explanation p {
@@ -144,7 +148,7 @@ h3 {
     font-family: "Times New Roman",Georgia,Serif;
     font-size: 30px;
     font-style: italic;
-    padding: 20px 50px 0 0;
+    padding: 20px 70px 0 0;
 }
 
 #tryitnow {
@@ -626,10 +630,11 @@ h3 {
     border: 1px solid #C0C0C0;
     bottom: 30px;
     height: 198px;
-    padding: 5px;
+    padding: 10px;
     position: absolute;
-    right: 0;
+    right: -26px;
     width: 198px;
+    z-index: 999;
 }
 
 #crawlingout {

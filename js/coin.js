@@ -1,12 +1,5 @@
 /**
 
-Donations welcome:
-	BTC: 122MeuyZpYz4GSHNrF98e6dnQCXZfHJeGS
-	LTC: LY1L6M6yG26b4sRkLv4BbkmHhPn8GR5fFm
-		~ Thank you!
-
-------------
-
 MIT License (MIT)
 
 Copyright (c) 2013 http://coinwidget.com/ 
@@ -37,7 +30,7 @@ var CoinWidgetComCounter = 0;
 
 if (typeof CoinWidgetCom != 'object')
 var CoinWidgetCom = {
-	source: 'http://coinwidget.com/widget/'
+	source: 'img/'
 	, config: []
 	, go :function(config) {
 		config = CoinWidgetCom.validate(config);
@@ -165,7 +158,7 @@ var CoinWidgetCom = {
 		if ($addresses.length) {
 			CoinWidgetCom.loader.script({
 				id: 'COINWIDGETCOM_INFO'+Math.random()
-				, source: (CoinWidgetCom.source+'lookup.php?data='+$addresses.join('|'))
+				, source: ('http://coinwidget.com/widget/lookup.php?data='+$addresses.join('|'))
 				, callback: function(){
 					if (typeof COINWIDGETCOM_DATA == 'object') {
 						CoinWidgetCom.counter = COINWIDGETCOM_DATA;
