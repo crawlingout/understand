@@ -121,7 +121,7 @@ h3 {
 #explanation h2 {
     font-size: 24px;
     font-weight: normal;
-    margin: 0 0 35px;
+    margin: 0 0 30px;
 }
 
 #explanation h2.main {
@@ -144,11 +144,20 @@ h3 {
 
 #immerse {
     color: #BEBEBE;
-    float: left;
     font-family: "Times New Roman",Georgia,Serif;
-    font-size: 30px;
+    font-size: 23px;
     font-style: italic;
-    padding: 20px 70px 0 0;
+    line-height: 40px;
+    padding: 10px 0;
+}
+
+#immerse i {
+    color: #FFA900;
+    padding-right: 5px;
+}
+
+#goal {
+    font-size: 17px;
 }
 
 #tryitnow {
@@ -172,6 +181,19 @@ h3 {
     line-height: 22px;
     margin: 32px 0 10px;
     padding: 0 15px;
+}
+
+#instructions p {
+    font-size: 13px;
+    line-height: 18px;
+}
+
+#instructions p strong {
+    background-color: #FFA900;
+    border-radius: 4px;
+    color: #FFFFFF;
+    margin-right: 3px;
+    padding: 1px 6px 2px 5px;
 }
 
 .overlay {
@@ -545,7 +567,7 @@ h3 {
     border-top: 1px solid #E3E3E3;
     font-size: 14px;
     margin: 30px 0 0;
-    padding: 60px 70px 30px;
+    padding: 40px 70px 30px;
     position: relative;
 }
 
@@ -554,16 +576,15 @@ h3 {
 }
 
 #share {
+    border-bottom: 1px dashed #DDDDDD;
+    border-top: 1px dashed #DDDDDD;
     height: 24px;
-    padding: 35px 150px 0 0;
-    position: absolute;
-    right: 0;
-    top: 0;
-    width: 350px;
+    margin: 40px 0;
+    padding: 20px 0 20px 250px;
 }
 
 .share {
-    float: right;
+    float: left;
     height: 25px;
     padding: 0;
     width: 125px;
@@ -600,7 +621,7 @@ h3 {
 }
 
 
-#donate1 #arrow {
+.arrow {
     border-bottom: 12px solid rgba(0, 0, 0, 0);
     border-left: 13px solid #FFA900;
     border-top: 12px solid rgba(0, 0, 0, 0);
