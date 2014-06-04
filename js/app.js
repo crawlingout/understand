@@ -514,6 +514,9 @@ $(document).ready(function() {
     // show demos pop-up
     $('#tryitnow').click(function() {
         $('#more').show();
+
+        // scroll to the top of the page
+        $('html, body').animate({ scrollTop: 0 }, 'slow');
     });
 
     // hide demos pop-up
