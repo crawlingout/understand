@@ -88,7 +88,7 @@ function callBing(from, to, text) {
 		}
 	});
 
-	showQuota(text.length);
+	//showQuota(text.length);
 }
 
 function getTranslation(word) {
@@ -158,6 +158,12 @@ function loadAudioToPlayer(file) {
 	// set color of play/pause icon to golden
 	$('.circle').css('color', '#FFD700');
 
+    // un-green the 'load audio' button
+    $('#audioFileSelect').css({
+        "background-color": "#FFFFFF",
+        "color": "#565656"
+    });
+
 	// when the player is ready
 	player.addEventListener("canplay", function() {
 
@@ -201,6 +207,12 @@ function resetPlayer() {
 
     // reset color of play icon
     $('.circle').css('color', '#AEAEAE');
+
+    // green the 'load audio' button
+    $('#audioFileSelect').css({
+        "background-color": "#63E000",
+        "color": "#FFFFFF"
+    });
 }
 
 function resetText() {
@@ -211,6 +223,12 @@ function resetText() {
     scrollposition = 0;
     localStorage.setItem('lang_scrollposition', scrollposition);
     localStorage.removeItem('stored_text_file_content');
+
+    // green the 'load text' button
+    $('#textFileSelect').css({
+        "background-color": "#63E000",
+        "color": "#FFFFFF"
+    });
 }
 
 function handleAudioFileSelect(evt) {
@@ -247,7 +265,13 @@ function handleAudioFileSelect(evt) {
     }
 }
 
-function loadText(text) {//console.log(JSON.stringify(text));
+function loadText(text) {
+
+    // un-green the 'load text' button
+    $('#textFileSelect').css({
+        "background-color": "#FFFFFF",
+        "color": "#565656"
+    });
 	
 	// split paragraphs by empty lines
 	var paragraphs = text.split("\n");
@@ -527,11 +551,6 @@ $(document).ready(function() {
         $(".hidepopup").hide();
     });
 
-    // show quota pop-up
-    $('#showquotapopup').click(function() {
-        $('#quota').show();
-    });
-
 
 	// load previously translated words
 	var i;
@@ -550,7 +569,7 @@ $(document).ready(function() {
 		localStorage.setItem('previous_translated_words', '[]');
 	});
 
-	showQuota(0);
+	//showQuota(0);
 
     // show BTC donation qr code on hover
     $('#qr').hover(function() {

@@ -3,7 +3,7 @@ html, body {
     margin: 0;
     padding: 0;
     background-color: #F9F9F9;
-    font-family: Verdana, Arial, sans-serif;
+    font-family: Arial, sans-serif;
     min-width: 1250px;
 }
 
@@ -30,28 +30,22 @@ a {
 
 h1 {
     color: #FFA900;
-    font-size: 28px;
+    font-family: Times,serif;
+    font-size: 35px;
+    font-style: italic;
     font-weight: normal;
-    margin: 10px 0;
-}
-
-h1 span {
-    color: #63E000;
+    margin: 20px 0 50px;
 }
 
 h3 {
     color: #C1C1C1;
     font-size: 28px;
     font-weight: normal;
-    margin: 10px 0 18px;
+    margin: 10px 0;
 }
 
 .clear {
 	clear: both;
-}
-
-.red {
-    color: #F80000;
 }
 
 .small {
@@ -109,86 +103,167 @@ h3 {
     display: none;
 }
 
-#explanation {
-    color: #4B4B4B;
-    padding: 40px 70px 0;
-}
-
-#explanation a {
-    color: #D54600;
-}
-
-#explanation h2 {
-    font-size: 24px;
-    font-weight: normal;
-    margin: 0 0 30px;
-}
-
-#explanation h2.main {
-    color: #BEBEBE;
-    padding-right: 10px;
-}
-
-#explanation h2.main .beta {
-    color: #E8E8E8;
-}
-
 #explanation p {
-    font-size: 14px;
-    line-height: 26px;
+    font-size: 18px;
+    line-height: 35px;
 }
 
-.popup p.smaller {
-    font-size: 12px;
+#explanation p strong {
+    color: #6F6F6F;
+    font-weight: normal;
 }
 
-#immerse {
-    color: #BEBEBE;
-    font-family: "Times New Roman",Georgia,Serif;
-    font-size: 23px;
+#letter {
+    background-color: #FFFFFF;
+    color: #B7B7B7;
+    height: 300px;
+    padding: 40px 70px 45px;
+}
+
+#purpose {
+    color: #B7B7B7;
+    font-family: Times,serif;
+    font-size: 34px;
     font-style: italic;
-    line-height: 40px;
-    padding: 10px 0;
+    line-height: 36px;
+    padding: 10px 0 0;
 }
 
-#immerse i {
+#purpose span {
     color: #FFA900;
-    padding-right: 5px;
 }
 
-#goal {
-    font-size: 17px;
+#getstarted {
+    /*
+    background pattern by Atle Mo - http://subtlepatterns.com/carbon-fibre-2/
+    under CC BY-SA 3.0 license - http://creativecommons.org/licenses/by-sa/3.0/
+    */
+    background: url("../img/cf.png") repeat scroll 0 0 #404040;
+    height: 115px;
+}
+
+#getstarted_title {
+    border-right: 1px solid #777777;
+    color: #71FF00;
+    float: left;
+    font-size: 28px;
+    height: 69px;
+    line-height: 36px;
+    padding: 18px 40px 28px 50px;
+    text-align: right;
+    width: 185px;
+}
+
+#getstarted_content {
+    color: #FFFFFF;
+    float: left;
+    padding: 4px 0 0 40px;
+}
+
+#getstarted_content p {
+    font-size: 15px;
+    line-height: 28px;
+}
+
+#getstarted_content em {
+    border-bottom: 2px solid #71FF00;
+    font-style: normal;
+    font-weight: bold;
+    padding: 2px 0;
+    position: relative;;
+}
+
+#getstarted_content p strong {
+    color: white;
+}
+
+#arr1 {
+    border-left: 2px solid #71FF00;
+    bottom: -43px;
+    height: 41px;
+    left: 20px;
+    position: absolute;
+    width: 2px;
+}
+
+#arr2 {
+     border-bottom: 2px solid #71FF00;
+    border-left: 2px solid #71FF00;
+    bottom: -22px;
+    height: 18px;
+    left: 13px;
+    position: absolute;
+    width: 95px;
+}
+
+#arr3 {
+    border-left: 2px solid #71FF00;
+    bottom: -43px;
+    height: 21px;
+    left: 108px;
+    position: absolute;
+    width: 2px;
 }
 
 #tryitnow {
-    background-color: #FFA900;
-    border-radius: 8px;
+    background-color: #63E000;
+    border-radius: 4px;
     color: #FFFFFF;
     cursor: pointer;
-    float: left;
-    font-size: 25px;
-    height: 30px;
-    line-height: 30px;
-    margin: 30px 0 25px;
-    padding: 10px 20px;
+    font-weight: bold;
+    margin: 0 2px;
+    padding: 2px 6px;
 }
 
-#forfree {
-    color: #63E000;
-    float: left;
-    font-size: 17px;
-    height: 45px;
-    line-height: 22px;
-    margin: 32px 0 10px;
-    padding: 0 15px;
+.instruction  {
+    display: none;
+    background-color: #FFFFFF;
+    border: 2px solid #FFA900;
+    left: 70px;
+    padding: 30px 40px;
+    position: absolute;
+    top: 350px;
+    width: 760px;
 }
 
-#instructions p {
+.progress {
+    color: #C0C0C0;
     font-size: 13px;
-    line-height: 18px;
+    padding-bottom: 15px;
+    text-align: center;
 }
 
-#instructions p strong {
+.progress span {
+    color: gray;
+}
+
+.progress strong {
+    color: #FFA900;
+    font-weight: normal;
+}
+
+.gotit {
+    background-color: #FFA900;
+    border-radius: 5px;
+    color: #FFFFFF;
+    cursor: pointer;
+    float: right;
+    font-weight: bold;
+    margin: 30px 30px 0 0;
+    padding: 10px 20px;
+    text-align: center;
+    width: 50px;
+}
+
+#i1 {
+    /*display: block;*/
+}
+
+.instruction p {
+    font-size: 14px;
+}
+
+.instruction p span {
     background-color: #FFA900;
     border-radius: 4px;
     color: #FFFFFF;
@@ -223,6 +298,10 @@ h3 {
     top: 50px;
     width: 860px;
     z-index: 999;
+}
+
+.popup p.smaller {
+    font-size: 12px;
 }
 
 #more {
@@ -299,7 +378,7 @@ h3 {
 
 #content {
 	background-color: #FFFFFF;
-    font-family: Times,serif;
+    font-family: Times, serif;
     font-size: 22px;
     line-height: 32px;
     padding: 30px 70px;
@@ -404,22 +483,6 @@ h3 {
     display: none;
 }
 
-#donate2 {
-    background-color: #F5F5F5;
-    border: 1px solid #E7E7E7;
-    border-radius: 6px;
-    margin: 30px 25px;
-    padding: 10px 10px 20px 20px;
-    width: 155px;
-}
-
-#donate2 h4 {
-    color: #6A6A6A;
-    font-size: 12px;
-    margin: 0 0 15px;
-    padding: 0;
-}
-
 
 #middle {
     position: relative;
@@ -427,16 +490,16 @@ h3 {
 }
 
 .open_file {
-    background-color: #FFFFFF;
+    background-color: #63E000;
     border: 1px solid #DEDEDE;
     border-radius: 8px;
     box-shadow: 0 0 6px #DEDEDE;
-    color: #565656;
+    color: #FFFFFF;
     cursor: pointer;
     font-size: 13px;
-    line-height: 16px;
+    line-height: 20px;
     margin: 26px 0 4px;
-    padding: 15px;
+    padding: 10px 15px;
     text-align: center;
     width: 82px;
 }
@@ -570,23 +633,13 @@ h3 {
     position: relative;
 }
 
-#tips {
+#truth {
     padding-bottom: 15px;
 }
 
-#share {
-    border-bottom: 1px dashed #DDDDDD;
-    border-top: 1px dashed #DDDDDD;
-    height: 24px;
-    margin: 40px 0;
-    padding: 20px 0 20px 250px;
-}
-
-.share {
-    float: left;
-    height: 25px;
-    padding: 0;
-    width: 125px;
+#truth p {
+    font-size: 15px;
+    line-height: 25px;
 }
 
 .r {
@@ -659,40 +712,14 @@ h3 {
 
 #crawlingout {
     color: #9C9C9C;
-    font-size: 12px;
-    padding: 30px 70px;
+    font-size: 11px;
+    padding: 30px 80px;
     text-align: right;
 }
 
 #crawlingout a {
     color: #696969;
     text-decoration: none;
-}
-
-.quotaexplanation {
-    background-color: #FFFFFF;
-    padding: 30px;
-    width: 800px;
-}
-
-.quotaexplanation h2 {
-    color: #FFA900;
-    font-size: 26px;
-    font-weight: normal;
-    margin: 0 0 10px;
-}
-
-.quotaexplanation h5 {
-    color: #4F4F4F;
-    font-size: 18px;
-    font-weight: normal;
-    margin: 0 0 30px;
-}
-
-.quotaexplanation p {
-    color: #545454;
-    font-size: 13px;
-    line-height: 25px;
 }
 
 

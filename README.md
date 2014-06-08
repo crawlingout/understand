@@ -1,1 +1,1 @@
-This is the app for my language learning experiments at [www.icanunderstand.eu](http://www.icanunderstand.eu).
+This is the app for my language learning experiments at [icanunderstand.eu](http://icanunderstand.eu).
