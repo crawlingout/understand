@@ -211,7 +211,7 @@ function resetPlayer() {
     // green the 'load audio' button
     $('#audioFileSelect').css({
         "background-color": "#63E000",
-        "color": "#FFFFFF"
+        "color": "#000000"
     });
 }
 
@@ -227,7 +227,7 @@ function resetText() {
     // green the 'load text' button
     $('#textFileSelect').css({
         "background-color": "#63E000",
-        "color": "#FFFFFF"
+        "color": "#000000"
     });
 }
 
