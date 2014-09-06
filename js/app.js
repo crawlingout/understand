@@ -345,6 +345,53 @@ function loadDemo(demoid) {
     localStorage.setItem('stored_audio_file_url', 'http://www.simplyeasy.cz/files/'+demoid+'.mp3');
 }
 
+function jumpBack() {
+    // get current time
+    current_time = player.currentTime;
+
+    // get how much seconds to jump
+    var jumpstep = $(this).data('jump');
+
+    if (current_time > jumpstep) {
+        player.currentTime = current_time - jumpstep;
+    }
+    else {
+        player.currentTime = 0;
+    }
+}
+
+function playPause() {
+    // if not playing
+    if (player.paused || player.ended) {
+        // play
+        player.play();
+
+        // set icon to pause
+        $('#play_btn').hide();
+        $('#pause_btn').show();
+
+        // regularly update progress bar
+        interval = window.setInterval(function(){
+            $('.knob').val(player.currentTime).trigger('change');
+        }, 1000);
+    }
+    // if playing
+    else {
+        // pause
+        player.pause();
+
+        // set icon to play
+        $('#pause_btn').hide();
+        $('#play_btn').show();
+
+        // pause interval updating progress bar
+        window.clearInterval(interval);
+
+        // store time
+        localStorage.setItem('stored_audio_time', player.currentTime);
+    }
+}
+
 
 $(document).ready(function() {
 
@@ -412,52 +459,13 @@ $(document).ready(function() {
 				just_reloaded = 0;
 			}
 
-			// if not playing
-			if (player.paused || player.ended) {
-				// play
-				player.play();
-
-				// set icon to pause
-				$('#play_btn').hide();
-				$('#pause_btn').show();
-
-				// regularly update progress bar
-				interval = window.setInterval(function(){
-					$('.knob').val(player.currentTime).trigger('change');
-				}, 1000);
-			}
-			else {
-				// pause
-				player.pause();
-
-				// set icon to play
-				$('#pause_btn').hide();
-				$('#play_btn').show();
-
-				// pause interval updating progress bar
-				window.clearInterval(interval);
-
-				// store time
-				localStorage.setItem('stored_audio_time', player.currentTime);
-			}
+			playPause();
 		}
 	});
 
 	// jump 15 seconds back
 	$(".jumpback").click(function() {
-
-		// get current time
-		current_time = player.currentTime;
-
-		// get how much seconds to jump
-		var jumpstep = $(this).data('jump');
-
-		if (current_time > jumpstep) {
-			player.currentTime = current_time - jumpstep;
-		}
-		else {
-			player.currentTime = 0;
-		}
+		jumpBack();
 	});
 
 	// handle file selects
@@ -568,6 +576,21 @@ $(document).ready(function() {
 		previous_translated_words = [];
 		localStorage.setItem('previous_translated_words', '[]');
 	});
+
+
+    // keyboar shortcuts
+    window.onkeyup = function(e) {
+       var key = e.keyCode ? e.keyCode : e.which;
+
+       if (key == 37) { // left arrow
+           // jump back
+           jumpBack();
+       }
+       else if (key == 39) { // right arrow
+           // play/pause
+           playPause()
+       }
+    }
 
 	//showQuota(0);
 

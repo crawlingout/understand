@@ -115,22 +115,19 @@ h3 {
     padding: 40px 70px 45px;
 }
 
+
 #letter p strong {
-    color: #6F6F6F;
+    color: #6f6f6f;
     font-weight: normal;
 }
 
 #purpose {
-    color: #B7B7B7;
+    color: #FFA900;
     font-family: Times,serif;
     font-size: 34px;
     font-style: italic;
     line-height: 42px;
-    padding: 10px 0 0;
-}
-
-#purpose span {
-    color: #FFA900;
+    padding: 15px 0 0;
 }
 
 #getstarted {
@@ -348,7 +345,7 @@ h3 {
     border-bottom: 1px solid #F2F2F2;
     color: #D54600;
     cursor: pointer;
-    font-size: 12px;
+    font-size: 14px;
     margin: 0 4px 4px 0;
     padding: 10px;
 }
@@ -359,7 +356,7 @@ h3 {
     font-style: italic;
     padding-right: 20px;
     text-align: right;
-    width: 160px;
+    width: 180px;
 }
 .smallgap {
     height: 5px;
@@ -496,7 +493,7 @@ h3 {
     border: 1px solid #DEDEDE;
     border-radius: 8px;
     box-shadow: 0 0 6px #DEDEDE;
-    color: #FFFFFF;
+    color: #000000;
     cursor: pointer;
     font-size: 13px;
     line-height: 20px;
