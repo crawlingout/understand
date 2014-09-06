@@ -350,7 +350,7 @@ function jumpBack() {
     current_time = player.currentTime;
 
     // get how much seconds to jump
-    var jumpstep = $(this).data('jump');
+    var jumpstep = $(".jumpback").data('jump');
 
     if (current_time > jumpstep) {
         player.currentTime = current_time - jumpstep;
