@@ -112,7 +112,7 @@ h3 {
     background-color: #FFFFFF;
     color: #B7B7B7;
     height: 300px;
-    padding: 40px 70px 45px;
+    padding: 40px 70px 25px;
 }
 
 
@@ -131,47 +131,29 @@ h3 {
 }
 
 #getstarted {
-    /*
-    background pattern by Atle Mo - http://subtlepatterns.com/carbon-fibre-2/
-    under CC BY-SA 3.0 license - http://creativecommons.org/licenses/by-sa/3.0/
-    */
-    background: url("../img/cf.png") repeat scroll 0 0 #404040;
-    height: 115px;
-}
-
-#getstarted_title {
-    border-right: 1px solid #777777;
-    color: #FFFFFF;
+    background: url("../img/qma.png") no-repeat scroll 68px 20px #ffffff;
+    color: #4f4f4f;
     float: left;
-    font-size: 28px;
-    height: 69px;
-    line-height: 36px;
-    padding: 18px 40px 28px 50px;
-    text-align: right;
-    width: 185px;
+    height: 135px;
+    padding: 0 0 0 230px;
 }
 
-#getstarted_content {
-    color: #FFFFFF;
-    float: left;
-    padding: 5px 0 0 40px;
+#arrows {
+    background: url("../img/2a.png") no-repeat scroll 65px 60px #ffffff;
+    height: 120px;
 }
 
-#getstarted_content p {
+#getstarted p {
     font-size: 15px;
-    line-height: 29px;
+    line-height: 32px;
+    margin-top: 10px;
 }
 
-#getstarted_content em {
-    border-bottom: 2px solid #ffa900;
+#getstarted em {
     font-style: normal;
     font-weight: bold;
     padding: 0;
     position: relative;;
-}
-
-#getstarted_content p strong {
-    color: white;
 }
 
 #arr1 {
@@ -179,25 +161,6 @@ h3 {
     bottom: -43px;
     height: 41px;
     left: 20px;
-    position: absolute;
-    width: 2px;
-}
-
-#arr2 {
-     border-bottom: 2px solid #ffa900;
-    border-left: 2px solid #ffa900;
-    bottom: -22px;
-    height: 18px;
-    left: 13px;
-    position: absolute;
-    width: 95px;
-}
-
-#arr3 {
-    border-left: 2px solid #ffa900;
-    bottom: -43px;
-    height: 21px;
-    left: 108px;
     position: absolute;
     width: 2px;
 }
@@ -593,7 +556,7 @@ h3 {
     border-radius: 4px;
     color: #FFFFFF;
     margin-right: 3px;
-    padding: 1px 6px 2px 5px;
+    padding: 1px 7px;
 }
 
 .r {
