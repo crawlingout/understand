@@ -30,7 +30,7 @@ a {
 
 h1 {
     color: #FFA900;
-    font-family: Times,serif;
+    font-family: 'Times New Roman', serif;
     font-size: 35px;
     font-style: italic;
     font-weight: normal;
@@ -123,8 +123,8 @@ h3 {
 
 #purpose {
     color: #FFA900;
-    font-family: Times,serif;
-    font-size: 34px;
+    font-family: 'Times New Roman', serif;
+    font-size: 32px;
     font-style: italic;
     line-height: 42px;
     padding: 15px 0 0;
