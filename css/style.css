@@ -628,15 +628,15 @@ h3 {
     z-index: 999;
 }
 
-#crawlingout {
+#links {
     color: #9C9C9C;
-    font-size: 11px;
+    font-size: 13px;
     padding: 30px 80px;
-    text-align: right;
+    text-align: center;
 }
 
-#crawlingout a {
-    color: #696969;
+#links a {
+    color: #ff9800;
     text-decoration: none;
 }
 
