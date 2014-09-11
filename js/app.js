@@ -463,7 +463,7 @@ $(document).ready(function() {
 		}
 	});
 
-	// jump 15 seconds back
+	// jump N (defined in data attribute) seconds back
 	$(".jumpback").click(function() {
 		jumpBack();
 	});
