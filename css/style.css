@@ -44,6 +44,14 @@ h3 {
     margin: 10px 0;
 }
 
+ul {
+    padding: 10px;
+}
+
+li {
+    list-style-type: square;
+}
+
 .clear {
 	clear: both;
 }
@@ -165,7 +173,7 @@ h3 {
     width: 2px;
 }
 
-#tryitnow {
+#tryitnow, #learnmore {
     background-color: #ffa900;
     border-radius: 4px;
     color: #000000;
@@ -581,7 +589,7 @@ h3 {
     padding: 0;
 }
 
-#donate1 #btc {
+.inarrow {
     background-color: #FFA900;
     color: #FFFFFF;
     float: left;
