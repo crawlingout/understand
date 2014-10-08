@@ -29,12 +29,11 @@ a {
 }
 
 h1 {
-    color: #FFA900;
-    font-family: 'Times New Roman', serif;
-    font-size: 35px;
-    font-style: italic;
-    font-weight: normal;
-    margin: 20px 0 40px;
+    color: #ffa900;
+    font-family: "Roboto",arial,sans-serif;
+    font-size: 38px;
+    font-weight: 300;
+    margin: 10px 0 40px;
 }
 
 h3 {
@@ -131,11 +130,11 @@ li {
 
 #purpose {
     color: #FFA900;
-    font-family: 'Times New Roman', serif;
+    font-family: "Roboto",arial,sans-serif;
     font-size: 32px;
-    font-style: italic;
     line-height: 42px;
     padding: 15px 0 0;
+    font-weight: 300;
 }
 
 #getstarted {
@@ -155,13 +154,6 @@ li {
     font-size: 15px;
     line-height: 32px;
     margin-top: 10px;
-}
-
-#getstarted em {
-    font-style: normal;
-    font-weight: bold;
-    padding: 0;
-    position: relative;;
 }
 
 #arr1 {
