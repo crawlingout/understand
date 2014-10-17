@@ -434,14 +434,14 @@ $(document).ready(function() {
     // support for touch devices
     var watching_selected_text_on_tablet;
     document.getElementById('content').addEventListener('touchmove', function() {
-        watching_selected_text = setInterval(function(){
+        watching_selected_text_on_table = setInterval(function(){
             if (getTextSelection().length > max_translation_length) {
                 $("#content").addClass("forbidden");
             }
             else {
                 $("#content").removeClass("forbidden");
             }
-        }, 5); // TODO find better wa
+        }, 5); // TODO find better way
     }, false);
 
 	document.getElementById('content').addEventListener('touchend', function() {
