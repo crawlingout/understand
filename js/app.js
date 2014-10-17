@@ -26,7 +26,7 @@ function errorHandler(e) {
     console.log('error>', e.message);
 }
 
-// text content and translated words
+// handle monthly quota
 function showQuota(add) {
     var d = new Date();
     var m = d.getMonth();
@@ -84,7 +84,7 @@ function callBing(from, to, text) {
 			document.body.appendChild(s);
 		},
 		error: function(xhr, type) {console.log('error');
-			$('#translatedword').text('=untranslated=');
+			$('#translatedword').text('UNTRANSLATED');
 		}
 	});
 
@@ -93,40 +93,41 @@ function callBing(from, to, text) {
 
 function getTranslation(word) {
     // if (quota_used < quota) {
+
+        // call Bing API
     	callBing(from, to, word);
     // }
     // else {
     //     $('#quota_used_wrapper').html('<div class="failed">Over quota! Could not translate.</div>');
-    //     $('#translatedword').text('=untranslated=');
+    //     $('#translatedword').text('UNTRANSLATED');
     // }
 }
 
-function getSelectedText() {
-    var txt = '', text = '', previous_word = {};
-    
+function getTextSelection() {
     if (window.getSelection) {
-        txt = window.getSelection();
+        return window.getSelection().toString();
     }
     else if (document.getSelection) {
-        txt = document.getSelection();
+        return document.getSelection().toString();
     }
     else if (document.selection) {
-        txt = document.selection.createRange().text;
+        return document.selection.createRange().text;
     }
     else {
-        return;
+        return '';
     }
+}
 
-    document.getElementById('selection').innerHTML = txt;
+function handleSelectedText() {
+    var text = getTextSelection(), previous_word = {};
 
-    // get text string from the object returned by browser
-    text = $('#selection').text();
+    // TODO strip spaces before/after words and commas, semilocons and dots after words
 
     // get previously selected word
 	previous_word[from] = $('#selectedword').html();
 
     // if not empty or too long string
-    if (text !== '' && text !== '.' && text !== previous_word[from] && text.length < max_translation_length) {
+    if (text !== '' && text !== ' ' && text !== '.' && text !== previous_word[from] && text.length < max_translation_length) {
     	// get previously translated word
 		previous_word[to] = $('#translatedword').html();
 
@@ -408,9 +409,14 @@ $(document).ready(function() {
 
 	// TRANSLATOR
 
-	document.getElementById('content').onmouseup = getSelectedText;
+    $("#content").mouseup(function() {
+        handleSelectedText();
+    });
 
-	document.getElementById('content').addEventListener('touchend', getSelectedText, false); // support for touch devices
+	// support for touch devices
+    document.getElementById('content').addEventListener('touchend', function() {
+        handleSelectedText();
+    }, false);
 
 	// preload selected from/to languages
 	$('#from').val(from);
@@ -588,9 +594,9 @@ $(document).ready(function() {
        }
        else if (key == 39) { // right arrow
            // play/pause
-           playPause()
+           playPause();
        }
-    }
+    };
 
 	//showQuota(0);
 
