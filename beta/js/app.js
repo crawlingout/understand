@@ -411,7 +411,7 @@ $(document).ready(function() {
 
     // set selection color depending on whether the length of selected text is in limit or not
     var watching_selected_text;
-    $("#content").mousedown(function() {
+    $("#content").mousemove(function() {
         watching_selected_text = setInterval(function(){
             if (getTextSelection().length > max_translation_length) {
                 $("#content").addClass("forbidden");
@@ -422,7 +422,8 @@ $(document).ready(function() {
         }, 5); // TODO find better way
     });
 
-	$("#content").mouseup(function() {
+	// when mouse button released, get and handle selected text
+    $("#content").mouseup(function() {
         handleSelectedText();
 
         // cancel measuring length of selected text
@@ -430,10 +431,27 @@ $(document).ready(function() {
         $("#content").removeClass("forbidden");
     });
 
-	// support for touch devices
-    document.getElementById('content').addEventListener('touchend', function() {
-        handleSelectedText();
+    // support for touch devices
+    var watching_selected_text_on_tablet;
+    document.getElementById('content').addEventListener('touchmove', function() {
+        watching_selected_text = setInterval(function(){
+            if (getTextSelection().length > max_translation_length) {
+                $("#content").addClass("forbidden");
+            }
+            else {
+                $("#content").removeClass("forbidden");
+            }
+        }, 5); // TODO find better wa
     }, false);
+
+	document.getElementById('content').addEventListener('touchend', function() {
+        handleSelectedText();
+
+        // cancel measuring length of selected text
+        clearInterval(watching_selected_text_on_tablet);
+        $("#content").removeClass("forbidden");
+    }, false);
+
 
 	// preload selected from/to languages
 	$('#from').val(from);
