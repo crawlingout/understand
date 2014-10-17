@@ -1,0 +1,11 @@
+#unsupported {
+    display: block;
+    float: left;
+    min-height: 100%;
+    width: 1000px;
+    padding: 30px;
+}
+
+#left {
+    display: none;
+}
