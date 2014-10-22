@@ -168,7 +168,7 @@ li {
 #tryitnow, #learnmore {
     background-color: #ffa900;
     border-radius: 4px;
-    color: #000000;
+    color: #ffffff;
     cursor: pointer;
     font-weight: bold;
     margin: 0 2px;
@@ -420,7 +420,7 @@ li {
     border: 1px solid #DEDEDE;
     border-radius: 8px;
     box-shadow: 0 0 6px #DEDEDE;
-    color: #000000;
+    color: #ffffff;
     cursor: pointer;
     font-size: 13px;
     line-height: 20px;
@@ -569,9 +569,9 @@ li {
 }
 
 #instructions p span {
-    background-color: #FFA900;
+    background-color: #f4f4f4;
     border-radius: 4px;
-    color: #FFFFFF;
+    color: #848484;
     margin-right: 3px;
     padding: 1px 7px;
 }

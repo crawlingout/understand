@@ -126,6 +126,8 @@ function handleSelectedText() {
     // get previously selected word
 	previous_word[from] = $('#selectedword').html();
 
+    // TODO - measure translation lenght in words, not characters, and inform users about it, offer translation via Google translate link
+
     // if not empty or too long string
     if (text !== '' && text !== ' ' && text !== '.' && text !== previous_word[from] && text.length < max_translation_length) {
     	// get previously translated word
@@ -212,7 +214,7 @@ function resetPlayer() {
     // green the 'load audio' button
     $('#audioFileSelect').css({
         "background-color": "#ffa900",
-        "color": "#000000"
+        "color": "#ffffff"
     });
 }
 
@@ -228,7 +230,7 @@ function resetText() {
     // green the 'load text' button
     $('#textFileSelect').css({
         "background-color": "#ffa900",
-        "color": "#000000"
+        "color": "#ffffff"
     });
 }
 
@@ -409,47 +411,15 @@ $(document).ready(function() {
 
 	// TRANSLATOR
 
-    // set selection color depending on whether the length of selected text is in limit or not
-    var watching_selected_text;
-    $("#content").mousemove(function() {
-        watching_selected_text = setInterval(function(){
-            if (getTextSelection().length > max_translation_length) {
-                $("#content").addClass("forbidden");
-            }
-            else {
-                $("#content").removeClass("forbidden");
-            }
-        }, 5); // TODO find better way
-    });
-
-	// when mouse button released, get and handle selected text
+    // when mouse button released, get and handle selected text
     $("#content").mouseup(function() {
         handleSelectedText();
-
-        // cancel measuring length of selected text
-        clearInterval(watching_selected_text);
         $("#content").removeClass("forbidden");
     });
 
     // support for touch devices
-    var watching_selected_text_on_tablet;
-    document.getElementById('content').addEventListener('touchmove', function() {
-        watching_selected_text_on_table = setInterval(function(){
-            if (getTextSelection().length > max_translation_length) {
-                $("#content").addClass("forbidden");
-            }
-            else {
-                $("#content").removeClass("forbidden");
-            }
-        }, 5); // TODO find better way
-    }, false);
-
 	document.getElementById('content').addEventListener('touchend', function() {
         handleSelectedText();
-
-        // cancel measuring length of selected text
-        clearInterval(watching_selected_text_on_tablet);
-        $("#content").removeClass("forbidden");
     }, false);
 
 
