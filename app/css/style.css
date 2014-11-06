@@ -1,10 +1,11 @@
 html, body {
-	height: 100%;
+	background-color: #f9f9f9;
+    font-family: Arial,sans-serif;
+    height: 100%;
     margin: 0;
-    padding: 0;
-    background-color: #F9F9F9;
-    font-family: Arial, sans-serif;
+    min-height: 500px;
     min-width: 1250px;
+    padding: 0;
 }
 
 /* remove ugly dotted lines around clicked links and buttons in FF */
@@ -19,7 +20,7 @@ button::-moz-focus-inner { border: 0; }
 }
 
 a {
-    color: #24CC00;
+    color: #ffa900;
     text-decoration: none;
 }
 
@@ -110,69 +111,52 @@ li {
     display: none;
 }
 
-#explanation p {
-    font-size: 18px;
-    line-height: 35px;
-}
-
 #letter {
-    background-color: #FFFFFF;
-    color: #B7B7B7;
-    height: 300px;
-    padding: 40px 70px 25px;
+    color: #8b8b8b;
+    height: 400px;
+    left: 50%;
+    margin-left: -450px;
+    margin-top: -300px;
+    padding: 80px 50px;
+    position: relative;
+    top: 50%;
+    width: 900px;
 }
 
-
-#letter p strong {
-    color: #6f6f6f;
-    font-weight: normal;
+#letter p {
+    font-size: 19px;
+    line-height: 35px;
 }
 
 #purpose {
     color: #FFA900;
     font-family: "Roboto",arial,sans-serif;
-    font-size: 32px;
+    font-size: 34px;
     line-height: 42px;
     padding: 15px 0 0;
     font-weight: 300;
 }
 
 #getstarted {
-    background: url("../img/how.png") no-repeat scroll 70px 20px #ffffff;
-    color: #4f4f4f;
-    float: left;
-    height: 135px;
-    padding: 0 0 0 230px;
+    height: 80px;
+    margin: 60px 0 60px 460px;
 }
 
-#arrows {
-    background: url("../img/2a.png") no-repeat scroll 65px 60px #ffffff;
-    height: 120px;
-}
-
-#getstarted p {
-    font-size: 15px;
-    line-height: 32px;
-    margin-top: 10px;
-}
-
-#arr1 {
-    border-left: 2px solid #ffa900;
-    bottom: -43px;
-    height: 41px;
-    left: 20px;
-    position: absolute;
-    width: 2px;
-}
-
-#tryitnow, #learnmore {
+#getstarted a {
     background-color: #ffa900;
-    border-radius: 4px;
-    color: #ffffff;
-    cursor: pointer;
-    font-weight: bold;
-    margin: 0 2px;
-    padding: 3px 8px;
+    border-radius: 8px;
+    color: white;
+    display: block;
+    font-size: 28px;
+    padding: 10px 0;
+    text-align: center;
+    width: 200px;
+}
+
+#norisk {
+    padding: 10px 0;
+    width: 200px;
+    text-align: center;
 }
 
 .overlay {
@@ -543,15 +527,15 @@ li {
 }
 
 #instructions {
-    padding-bottom: 30px;
+    padding: 55px 70px 20px;
 }
 
 #instructions p {
     font-size: 15px;
-    line-height: 25px;
+    line-height: 28px;
 }
 
-#instructions p span {
+.no {
     background-color: #f4f4f4;
     border-radius: 4px;
     color: #848484;
@@ -559,16 +543,25 @@ li {
     padding: 1px 7px;
 }
 
+#tryitnow {
+    background-color: #ffa900;
+    border-radius: 4px;
+    color: #ffffff;
+    cursor: pointer;
+    font-weight: bold;
+    margin: 0 2px;
+    padding: 3px 8px;
+}
+
 .r {
     font-style: italic;
 }
 
-#support {
-    border-top: 1px solid #d9d9d9;
+#support, #planned {
     color: #3e3e3e;
     font-size: 13px;
     line-height: 25px;
-    padding: 30px 0;
+    padding: 0 0 30px;
 }
 
 #donate1 {

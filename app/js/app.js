@@ -194,6 +194,12 @@ function loadAudioToPlayer(file) {
 
 function resetPlayer() {
 
+    // if playing
+    if (!(player.paused || player.ended)) {
+        // pause
+        playPause();
+    }
+
     // reset stored time and url
     stored_audio_time = 0;
     localStorage.setItem('stored_audio_time', stored_audio_time);
@@ -209,7 +215,7 @@ function resetPlayer() {
     // reset color of play icon
     $('.circle').css('color', '#AEAEAE');
 
-    // green the 'load audio' button
+    // grey out the 'load audio' button
     $('#audioFileSelect').css({
         "background-color": "#ffa900",
         "color": "#ffffff"
@@ -219,13 +225,13 @@ function resetPlayer() {
 function resetText() {
     $('#backhome').hide();
     $('#content').hide().html('');
-    $('#explanation').show();
+    $('#instructions').show();
 
     scrollposition = 0;
     localStorage.setItem('lang_scrollposition', scrollposition);
     localStorage.removeItem('stored_text_file_content');
 
-    // green the 'load text' button
+    // grey out the 'load text' button
     $('#textFileSelect').css({
         "background-color": "#ffa900",
         "color": "#ffffff"
@@ -289,8 +295,8 @@ function loadText(text) {
     }
     content = content + '</p>';
 
-    // hideexplanation on how to use the site
-	$('#explanation').hide();
+    // hideinstructions on how to use the site
+	$('#instructions').hide();
     $('#backhome').show();
     $('#translated_words').show();
 
@@ -400,8 +406,8 @@ $(document).ready(function() {
 		loadText(textfile);
 	}
 	else {
-		// show explanation on how to use the site
-		$('#explanation').show();
+		// show instructions on how to use the site
+		$('#instructions').show();
         $('#backhome').hide();
 	}
 
@@ -409,11 +415,12 @@ $(document).ready(function() {
 
 	// TRANSLATOR
 
+    // when mouse button released, get and handle selected text
     $("#content").mouseup(function() {
         handleSelectedText();
     });
 
-	// support for touch devices
+    // support for touch devices
     document.getElementById('content').addEventListener('touchend', function() {
         handleSelectedText();
     }, false);

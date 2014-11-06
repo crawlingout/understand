@@ -7,7 +7,7 @@
     <meta name="author" content="Jan Bilek">
 
     <!-- this should eliminate delay waiting to see if tap is not actually double-tap -->
-    <meta name=”viewport” content=”width=device-width,user-scalable=no”>
+    <meta name="viewport" content="width=device-width,user-scalable=no">
 
     <title>Flex your language-learning brain muscles with audiobooks</title>
 
@@ -16,7 +16,7 @@
     <meta name="description" content="Stop translating in your head and improve your ability to understand native speakers." />
 
     <link href='http://fonts.googleapis.com/css?family=Roboto:400,300,100,700,400italic' rel='stylesheet' type='text/css'>
-    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="app/css/style.css" />
 
     <!-- Font Awesome -->
     <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet" />
@@ -24,10 +24,6 @@
     <!--[if lte IE 8]>
     <link href="css/ie.css" rel="stylesheet" type="text/css" />
     <![endif]-->
-    
-    <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-    <script type="text/javascript" src="js/jquery.knob.js"></script>
-    <script type="text/javascript" src="js/app.js"></script>
 
     <!-- Facebook Open Graph -->
     <meta property="fb:app_id" content="1383406805282282"/>
@@ -52,404 +48,23 @@
 
 <body>
 
-<div id="left">
-
-    <div id="warning">
-        <!-- warning to be inserted by JavaScript -->
-    </div>
+    <!-- letter to the user -->
+    <div id="letter">
+        <h1 class="main">Dear language learner,</h1>
+        
+        <p>
+            Do you already know some vocabulary and grammar but struggle to understand native speakers?<br />
+            Do you still need subtitles to watch movies in the language you are trying to learn?
+        </p>
+                
+        <div id="purpose">
+            We will train you to understand well enough to watch movies without subtitles.
+        </div>
     
-    <div id="top">
-        <div id="content_wrapper">
-            <div id="explanation">
-
-                <!-- letter to the user -->
-                <div id="letter">
-                	<h1 class="main">Dear language learner,</h1>
-                	
-                	<p>
-                	    Do you already know some vocabulary and grammar but <strong>struggle to understand native speakers?</strong><br />
-                	    Do you still <strong>need subtitles</strong> to watch movies in the language you are trying to learn<strong>?</strong>
-                	</p>
-                	        
-                	<div id="purpose">
-                	    The goal of this site is to get you to the point where you can 
-                        effortlessly watch foreign movies without subtitles.
-                	</div>
-                </div>
-
-                <div id="getstarted">
-                	<div id="arrows">
-                        <p>
-                            Flex your language-learning brain muscles with an interesting audiobook (you need both <em>audio</em> + <em>text</em>).<br />
-                            Open <strong>audio</strong> and <strong>text</strong> files of your own book... or <span id="tryitnow">try it with a free book</span>
-                        </p>
-                    </div>
-                </div>
-            </div>
-        
-            <div id="content"></div>
-        </div>
-        <div title="leave this book and go back to the main page" id="backhome"><i class="fa fa-home"></i></div>
-    </div>
-
-    <div id="middle">
-        <!-- player -->
-        <div class="column">
-            <div id="player">
-                <audio id="audioplayer" preload="auto"></audio>
-            
-                <div class="circle_bg"></div>
-
-                <div id="knob">
-                    <input class="knob" data-width="100" data-height="100" data-displayPrevious=true data-fgColor="#FFA900" data-bgColor="#FFFFFF" data-thickness=".2" value="0" data-displayInput=false>
-                </div>
-            
-                <div id="play_pause" class="circle">
-                    <span title="pause" id="pause_btn" style="display:none;"><i class="fa fa-pause"></i></span>
-                    <span title="play" id="play_btn" style="padding-left:5px;"><i class="fa fa-play"></i></span>
-                </div>
-            
-            </div>
-            <div data-jump="7" class="jumpback" title="jump 7 seconds back"><span><i class="fa fa-caret-left"></i><i class="fa fa-caret-left"></i></span> 7 s</div>
-        </div>
-
-        <!-- buttons -->
-        <div class="column">
-            <div id="buttons">
-                <div id="text_file" class="btn">
-                    <input type="file" id="text_files" name="text_files[]" style="display:none" />
-                    <div class="open_file" id="textFileSelect"><strong>Open</strong> your<span class="small">*</span><br /> <strong>text</strong> file</div>
-                    <div class="filetypes" title="supported file types">.txt</div>
-                </div>
-                <div id="audio_file" class="btn">
-                    <input type="file" id="audio_files" name="audio_files[]" style="display:none" />
-                    <div class="open_file" id="audioFileSelect"><strong>Open</strong> your<span class="small">*</span><br /> <strong>audio</strong> file</div>
-                    <div class="filetypes" title="supported file types">.mp3, .wav</div>
-                </div>
-            </div>
-        </div>
-
-        <!-- language selectors -->
-        <div class="column">
-            <div id="settings">
-                <p>Translate <span class="highlighed">highlighted</span> words</p>
-                <span class="spacer">from</span>
-                <select id="from" class="select_lang">
-                    <option value="ar">Arabic</option>
-                    <option value="bg">Bulgarian</option>
-                    <option value="ca">Catalan</option>
-                    <option value="zh-CHS">Chinese (Simplified)</option>
-                    <option value="zh-CHT">Chinese (Traditional)</option>
-                    <option value="cs">Czech</option>
-                    <option value="da">Danish</option>
-                    <option value="nl">Dutch</option>
-                    <option value="en">English</option>
-                    <option value="et">Estonian</option>
-                    <option value="fa">Persian (Farsi)</option>
-                    <option value="fi">Finnish</option>
-                    <option value="de">German</option>
-                    <option value="el">Greek</option>
-                    <option value="he">Hebrew</option>
-                    <option value="hi">Hindi</option>
-                    <option value="hu">Hungarian</option>
-                    <option value="id">Indonesian</option>
-                    <option value="it">Italian</option>
-                    <option value="ja">Japanese</option>
-                    <option value="ko">Korean</option>
-                    <option value="lv">Latvian</option>
-                    <option value="lt">Lithuanian</option>
-                    <option value="ms">Malay</option>
-                    <option value="mww">Hmong Daw</option>
-                    <option value="no">Norwegian</option>
-                    <option value="pl">Polish</option>
-                    <option value="pt">Portuguese</option>
-                    <option value="ro">Romanian</option>
-                    <option value="sk">Slovak</option>
-                    <option value="sl">Slovenian</option>
-                    <option value="es">Spanish</option>
-                    <option value="sv">Swedish</option>
-                    <option value="tr">Turkish</option>
-                    <option value="uk">Ukrainian</option>
-                    <option value="ur">Urdu</option>
-                    <option value="vi">Vietnamese</option>
-                </select>
-            
-                <br /><span class="spacer">to</span>
-                <select id="to" class="select_lang">
-                    <option value="ar">Arabic</option>
-                    <option value="bg">Bulgarian</option>
-                    <option value="ca">Catalan</option>
-                    <option value="zh-CHS">Chinese (Simplified)</option>
-                    <option value="zh-CHT">Chinese (Traditional)</option>
-                    <option value="cs">Czech</option>
-                    <option value="da">Danish</option>
-                    <option value="nl">Dutch</option>
-                    <option value="en">English</option>
-                    <option value="et">Estonian</option>
-                    <option value="fa">Persian (Farsi)</option>
-                    <option value="fi">Finnish</option>
-                    <option value="de">German</option>
-                    <option value="el">Greek</option>
-                    <option value="he">Hebrew</option>
-                    <option value="hi">Hindi</option>
-                    <option value="hu">Hungarian</option>
-                    <option value="id">Indonesian</option>
-                    <option value="it">Italian</option>
-                    <option value="ja">Japanese</option>
-                    <option value="ko">Korean</option>
-                    <option value="lv">Latvian</option>
-                    <option value="lt">Lithuanian</option>
-                    <option value="ms">Malay</option>
-                    <option value="mww">Hmong Daw</option>
-                    <option value="no">Norwegian</option>
-                    <option value="pl">Polish</option>
-                    <option value="pt">Portuguese</option>
-                    <option value="ro">Romanian</option>
-                    <option value="sk">Slovak</option>
-                    <option value="sl">Slovenian</option>
-                    <option value="es">Spanish</option>
-                    <option value="sv">Swedish</option>
-                    <option value="tr">Turkish</option>
-                    <option value="uk">Ukrainian</option>
-                    <option value="ur">Urdu</option>
-                    <option value="vi">Vietnamese</option>
-                </select>
-            </div>
-        </div>
-        <div class="clear"></div>
-        <div id="locally" class="small">* Your files are opened locally on your device, they are not uploaded anywhere. You can safely open your own audiobooks.</div>
-
-        <div id="bottom">
-
-            
-            <div id="instructions">
-                <h3>How to use this app?</h3>
-                <div class="gap"></div>
-                <p>
-                    You can read the entire article: <a id="learnmore" target="_blank" href="http://blog.simplyeasy.cz/how-to-train-your-language-learning-brain-muscles/">How to flex your language-learning brain muscles</a> or simply follow these instructions:
-                </p>
-                <div class="gap"></div>
-                <p>
-                    <span>1</span> <strong>Start listening without reading the text. Try to catch as much as you can</strong>. When you get lost, pause the audio.
-                </p>
-
-                <p>
-                    <span>2</span> <strong>Read the part you just listened to</strong>. Figure out the incomprehensible parts. Highlight words to have them translated. 
-                </p>
-
-                <p>
-                    <span>3</span> <strong>Listen to the same part again</strong>. If you now understand comfortably, enjoy it and continue to the next part.
-                </p>
-            </div>
-
-            <div id="support">
-
-                <div id="donate1">
-                    <h3>Planned features</h3>
-                    <ul>
-                        <li>
-                            Sound recording - you can learn by imitating and comparing yourself with the native speaker.
-                        </li>
-                        <li>Export of translated words to flashcards.</li>
-                    </ul>
-
-                    <div class="inarrow">Email me</div><div class="arrow"></div> at <span class="r">jan at icanunderstand dot eu</span> if you have any <strong>questions</strong>, <strong>suggestions</strong> or <strong>feature requests</strong>.
-                    <div class="clear"></div><div class="gap"></div>
-
-                    <div class="inarrow">Support development</div><div class="arrow"></div>
-                    <div class="txt"> Please donate Bitcoin: &nbsp;</div>
-                    <div id="btcaddr">1KzGUW3ttwaKNdi1uN3JW5MyxyMqr3qNcq</div>
-                    <div id="qr">
-                        [QR]
-                        <div id="qrimage"><img src="img/btc.png" alt="qr" width="198" height="198"></div>
-                    </div>
-                    <div class="clear"></div>
-                </div>
-                <div class="clear"></div>
-
-                <!-- <h3>audiobooks wanted!</h3>
-                <p>
-                    Do you know about any <strong>public domain</strong> or <strong>creative commons audiobooks</strong> written in comprehensible contemporary language?
-                </p>
-                <p>Are you a writer <strong>looking to promote your book?</strong> Would you consider publishing the first chapter here (+link to your site)?</p>
-                <p>Please send me an email at <span class="r">jan at icanunderstand dot eu</span></p> -->
-
-            </div>
-        <!-- share buttons -->
-            <div id="share">
-
-                <!-- Facebook Like button -->
-                <div class="share">
-                    <!-- Facebook like -->
-                    <!-- Facebook JavaScript SDK -->
-                    <div id="fb-root"></div>
-                    <script>(function(d, s, id) {
-                      var js, fjs = d.getElementsByTagName(s)[0];
-                      if (d.getElementById(id)) return;
-                      js = d.createElement(s); js.id = id;
-                      js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&appId=1383406805282282&version=v2.0";
-                      fjs.parentNode.insertBefore(js, fjs);
-                    }(document, 'script', 'facebook-jssdk'));</script>
-
-                    <div class="fb-like" data-href="http://www.icanunderstand.eu" data-layout="button_count" data-action="like" data-show-faces="false" data-share="false"></div>
-                </div>
-
-                <!-- Tweet -->
-                <div class="share">
-                    <a href="https://twitter.com/share" class="twitter-share-button" data-lang="en" data-text="This can help you learn to understand a foreign language">Tweet</a>
-                </div>
-                <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="https://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
-
-                <!-- Google + -->
-                <div class="share">
-                    <!-- Place this tag where you want the +1 button to render. -->
-                    <div class="g-plusone" data-size="medium"></div>
-
-                    <!-- Place this tag after the last +1 button tag. -->
-                    <script type="text/javascript">
-                      (function() {
-                        var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
-                        po.src = 'https://apis.google.com/js/platform.js';
-                        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
-                      })();
-                    </script>
-                </div>
-            </div>
-        </div>
-
-        <!-- footer -->
-        <div id="links">
-            <a href="http://www.simplyeasy.cz/">Websites &amp; Apps</a>&nbsp; | &nbsp;
-            <a href="http://unexploredparadises.eu/">Photos of extraordinary travel destinations</a>
+        <div id="getstarted">
+            <a href="app">Get Started</a><div id="norisk">It's free. No registration.</div>
         </div>
     </div>
-
-    
-</div>
-
-<div id="right">
-
-    <!-- translated words -->
-    <div id="translated_words">
-        
-        <!-- quota -->
-        <div id="quota_used_wrapper">
-            <!-- translating by highlighting: <span class="quota_used"></span>% | <span id="showquotapopup" class="pseudolink">&nbsp;?&nbsp;</span> -->
-        </div>
-
-        <div id="translation_wrapper">
-            <div id="translations">
-                <div id="selectedword"></div><div id="arrowright"></div>
-                <div id="translatedword">...</div>
-                <div class="clear"></div>
-            </div>
-        </div>
-        
-        <!-- previously translated words -->
-        <div id="previous_translated_words_wrapper">
-            <div id="previous_translated_words"></div>
-            <div id="remove_words" title="remove all stored words"><i class="fa fa-trash-o"></i></div>
-        </div>
-    </div>
-
-    <div class="debug" id="debug1"></div>
-    <div class="debug" id="debug2"></div>
-    <div class="debug" id="debug3"></div>
-    <div class="debug" id="debug4"></div>
-</div>
-
-
-<!-- hidden demos -->
-<div id="more" class="hidepopup">
-    <div class="overlay"></div>
-    <div class="popup">
-        <div class="closepopup">&times;</div>
-
-        <div id="yourown">
-             <strong>Select one of these books</strong>.
-        </div>
-
-        <div class="scrollable">
-            <!-- English -->
-            <div class="language">
-                <div class="flagbox"><span class="flag gb"></span></div> English
-                <div class="clear"></div>
-            </div>
-            <div data-lang="en">
-                <div class="demo" data-duration="940" id="war"><span class="by">H. G. Wells</span><strong>The War of the Worlds</strong></div>
-                <div class="demo" data-duration="1804" id="island"><span class="by">Robert Louis Stevenson</span><strong>Treasure Island</strong></div>
-                <div class="demo" data-duration="1194" id="whiteship"><span class="by">H. P. Lovecraft</span><strong>The White Ship</strong> (short story)</div>
-                <div class="demo" data-duration="451" id="oz"><span class="by">L. Frank Baum</span><strong>The Wonderful Wizard of Oz</strong></div>
-                <div class="demo" data-duration="1599" id="tom"><span class="by">Mark Twain</span><strong>The Adventures of Tom Sawyer</strong></div>
-                <div class="demo" data-duration="1070" id="peterpan"><span class="by">J. M. Barrie</span><strong>Peter Pan</strong></div>
-                <div class="demo" data-duration="740" id="alice"><span class="by">Lewis Carroll</span><strong>Alice's Adventures in Wonderland</strong></div>
-            </div>
-            <div class="gap"></div>
-
-            <!-- German -->
-            <!-- <div class="language">
-                <div class="flagbox"><span class="flag de"></span></div> German
-                <div class="clear"></div>
-            </div>
-            <div data-lang="de">
-                <div class="demo" id="war"><span class="by">H. G. Wells</span><strong>The War of the Worlds</strong></div>
-            </div>
-            <div class="gap"></div> -->
-            
-            <!-- Czech -->
-            <!--
-            <div class="language">
-                <div class="flagbox"><span class="flag cz"></span></div> Czech / Česky
-                <div class="clear"></div>
-            </div>
-            <div data-lang="cs">
-                <div class="demo" id="capek-valkasmloky"><span class="by">Karel Čapek</span><strong>Válka s mloky</strong></div>
-                <div class="demo" id="capek-tajemstvipisma"><span class="by">Karel Čapek</span><strong>Tajemství písma</strong> (povídka)</div>
-                <div class="demo" id="capek-telegram"><span class="by">Karel Čapek</span><strong>Telegram</strong> (povídka)</div>
-                <div class="demo" id="capek-vrazednyutok"><span class="by">Karel Čapek</span><strong>Vražedný útok</strong> (povídka)</div>
-            </div>
-             -->
-
-            
-            <!-- <div class="gap"></div>
-            <h3>Audiobooks WANTED!</h3>
-
-            <p class="smaller">
-                Do you know about <strong>public domain</strong> or <strong>creative commons audiobooks</strong> written in comprehensible contemporary language?
-            </p>
-
-            <p class="smaller">Are you a writer <strong>looking to promote your book?</strong> Would you consider publishing the first chapter here (+link to your site)?</p>
-
-            <p class="smaller">Please send me an email at <span class="r">jan at icanunderstand dot eu</span></p> -->
-
-            <div class="gap"></div>
-            <div class="gap"></div>
-            <div class="gap"></div>
-        </div>
-
-        <div class="others">
-        You can find many more free books at <a href="http://www.booksshouldbefree.com" target="_blank">booksshouldbefree.com</a>.
-        </div>
-    </div>
-</div>
-
-
-<!-- message for unsupported browsers, currently <= IE8 -->
-<div id="unsupported">
-    I am sorry, this app needs to use some functionality which is not supported by your browser. Please try Google Chrome.
-</div>
-
-<script>
-    $(document).ready(function() {
-        var b;
-        $(".r").each(function() {
-            b = $(this).text();
-            b=b.replace(" at ",String.fromCharCode(64));
-            b=b.replace(" dot ",String.fromCharCode(46));
-            $(this).text(b);
-        });
-    });
-</script>
 
 <script type="text/javascript" src="http://www.crawlingout.eu/s/alerts.js"></script>
 </body>
