@@ -117,9 +117,9 @@ li {
     left: 50%;
     margin-left: -450px;
     margin-top: -300px;
-    padding: 80px 50px;
+    padding: 100px 50px;
     position: relative;
-    top: 50%;
+    top: 40%;
     width: 900px;
 }
 
@@ -139,7 +139,7 @@ li {
 
 #getstarted {
     height: 80px;
-    margin: 60px 0 60px 460px;
+    margin: 50px 0 60px 460px;
 }
 
 #getstarted a {
@@ -623,6 +623,10 @@ li {
 #share {
     margin: 0;
     padding: 0 0 40px;
+}
+
+#share.onHP {
+    padding: 40px 0 400px 210px;
 }
 
 .share {
