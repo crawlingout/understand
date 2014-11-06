@@ -27,7 +27,7 @@
 
     <!-- Facebook Open Graph -->
     <meta property="fb:app_id" content="1383406805282282"/>
-    <meta property="og:image" content="http://www.icanunderstand.eu/img/man-listening.jpg"/>
+    <meta property="og:image" content="http://www.icanunderstand.eu/app/img/man-listening.jpg"/>
     <meta property="og:type" content="website"/>
     <meta property="og:url" content="http://icanunderstand.eu/"/>
     <meta property="og:title" content="Flex your language-learning brain muscles with audiobooks"/>
@@ -63,6 +63,47 @@
     
         <div id="getstarted">
             <a href="app">Get Started</a><div id="norisk">It's free. No registration.</div>
+        </div>
+
+        <!-- share buttons -->
+        <div id="share">
+
+            <!-- Facebook Like button -->
+            <div class="share">
+                <!-- Facebook like -->
+                <!-- Facebook JavaScript SDK -->
+                <div id="fb-root"></div>
+                <script>(function(d, s, id) {
+                  var js, fjs = d.getElementsByTagName(s)[0];
+                  if (d.getElementById(id)) return;
+                  js = d.createElement(s); js.id = id;
+                  js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&appId=1383406805282282&version=v2.0";
+                  fjs.parentNode.insertBefore(js, fjs);
+                }(document, 'script', 'facebook-jssdk'));</script>
+
+                <div class="fb-like" data-href="http://www.icanunderstand.eu" data-layout="button_count" data-action="like" data-show-faces="false" data-share="false"></div>
+            </div>
+
+            <!-- Tweet -->
+            <div class="share">
+                <a href="https://twitter.com/share" class="twitter-share-button" data-lang="en" data-text="This can help you learn to understand a foreign language">Tweet</a>
+            </div>
+            <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="https://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+
+            <!-- Google + -->
+            <div class="share">
+                <!-- Place this tag where you want the +1 button to render. -->
+                <div class="g-plusone" data-size="medium"></div>
+
+                <!-- Place this tag after the last +1 button tag. -->
+                <script type="text/javascript">
+                  (function() {
+                    var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+                    po.src = 'https://apis.google.com/js/platform.js';
+                    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+                  })();
+                </script>
+            </div>
         </div>
     </div>
 
