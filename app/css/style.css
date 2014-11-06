@@ -113,7 +113,7 @@ li {
 
 #letter {
     color: #8b8b8b;
-    height: 400px;
+    height: 600px;
     left: 50%;
     margin-left: -450px;
     margin-top: -300px;
@@ -626,7 +626,9 @@ li {
 }
 
 #share.onHP {
-    padding: 40px 0 400px 210px;
+    bottom: 300px;
+    padding: 0;
+    position: absolute;
 }
 
 .share {
