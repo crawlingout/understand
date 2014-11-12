@@ -631,6 +631,14 @@ li {
     position: absolute;
 }
 
+#article {
+    border-top: 1px dotted silver;
+    font-size: 16px;
+    line-height: 30px;
+    padding-top: 30px;
+    width: 800px
+}
+
 .share {
     float: left;
     height: 25px;
