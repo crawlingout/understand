@@ -686,10 +686,9 @@ li {
 #beta {
     color: #d9d9d9;
     font-size: 22px;
-    padding: 30px 70px 0 0;
     position: absolute;
-    right: 0;
-    top: 0;
+    right: 70px;
+    top: 30px;
 }
 
 #betatext {
