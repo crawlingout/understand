@@ -688,7 +688,7 @@ li {
     font-size: 22px;
     position: absolute;
     right: 70px;
-    top: 30px;
+    top: 25px;
 }
 
 #betatext {
@@ -700,7 +700,7 @@ li {
     position: absolute;
     right: 20px;
     text-align: center;
-    top: 60px;
+    top: 50px;
     width: 350px;
     display: none;
 }
