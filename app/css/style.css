@@ -674,6 +674,11 @@ li {
     text-decoration: none;
 }
 
+.my_disqus {
+    background-color: white;
+    padding: 0 70px;
+}
+
 
 /* flags */
 
