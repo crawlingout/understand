@@ -544,7 +544,7 @@ li {
     border-top: 1px solid #E3E3E3;
     font-size: 14px;
     margin: 30px 0 0;
-    padding: 40px 70px 30px;
+    padding: 40px 70px 0;
     position: relative;
 }
 
@@ -665,7 +665,7 @@ li {
 #links {
     color: #9C9C9C;
     font-size: 13px;
-    padding: 30px 80px;
+    padding: 40px 80px;
     text-align: center;
 }
 
@@ -676,7 +676,8 @@ li {
 
 .my_disqus {
     background-color: white;
-    padding: 0 70px;
+    border-bottom: 1px solid #e4e3e3;
+    padding: 0 70px 15px;
 }
 
 
