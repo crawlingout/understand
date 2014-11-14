@@ -1,5 +1,5 @@
 html, body {
-	background-color: #f9f9f9;
+    background-color: #f9f9f9;
     font-family: Arial,sans-serif;
     height: 100%;
     margin: 0;
@@ -53,7 +53,7 @@ li {
 }
 
 .clear {
-	clear: both;
+    clear: both;
 }
 
 .small {
@@ -83,7 +83,7 @@ li {
     background pattern by Haris Šumić - http://subtlepatterns.com/subtle-grey/
     under CC BY-SA 3.0 license - http://creativecommons.org/licenses/by-sa/3.0/
     */
-	background: url("../img/grey.png") repeat scroll 0 0 #F7F7F7;
+    background: url("../img/grey.png") repeat scroll 0 0 #F7F7F7;
     box-shadow: 0 0 12px #3C3C3C;
     float: left;
     min-height: 100%;
@@ -92,7 +92,7 @@ li {
 }
 
 #content_wrapper {
-	background-color: #FFFFFF;
+    background-color: #FFFFFF;
     border-bottom: 1px solid #E3E3E3;
     height: 500px;
     overflow: auto;
@@ -292,7 +292,7 @@ li {
 }
 
 #content {
-	background-color: #FFFFFF;
+    background-color: #FFFFFF;
     font-family: Times, serif;
     font-size: 22px;
     line-height: 32px;
@@ -302,20 +302,24 @@ li {
 }
 
 #translation_wrapper {
-	min-height: 60px;
+    min-height: 60px;
 }
 
 #translations {
-	padding: 0 20px;
+    padding: 0 20px;
     display: none;
 }
 
-#selection {
-	display: none;
+#whentoolong {
+    display: none;
+    height: 20px;
+    padding: 5px 20px;
+    line-height: 20px;
+    font-size: 13px;
 }
 
 #selectedword {
-	background-color: #029100;
+    background-color: #029100;
     color: #FFFFFF;
     float: left;
     height: 20px;
@@ -323,7 +327,7 @@ li {
 }
 
 #arrowright {
-	border-bottom: 15px solid rgba(0, 0, 0, 0);
+    border-bottom: 15px solid rgba(0, 0, 0, 0);
     border-left: 15px solid #029100;
     border-top: 15px solid rgba(0, 0, 0, 0);
     float: left;
@@ -333,7 +337,7 @@ li {
 }
 
 #translatedword {
-	background-color: #FF4C00;
+    background-color: #FF4C00;
     color: #FFFFFF;
     float: left;
     height: 20px;
@@ -341,12 +345,12 @@ li {
 }
 
 .failed {
-	color: red;
+    color: red;
     font-weight: bold;
 }
 
 #previous_translated_words_wrapper {
-    padding: 0 22px;
+    padding: 5px 22px;
     position: relative;
     font-size: 13px;
     color: #FF4C00;
@@ -358,11 +362,11 @@ li {
 }
 
 #previous_translated_words span {
-	color: green;
+    color: green;
 }
 
 #remove_words {
-	color: #CCCCCC;
+    color: #CCCCCC;
     cursor: pointer;
     font-size: 28px;
     margin-top: 15px;
@@ -376,7 +380,7 @@ li {
 }
 
 #quota_used_wrapper {
-	color: #B5B5B5;
+    color: #B5B5B5;
     font-size: 11px;
     padding: 10px 0 30px 20px;
 }
@@ -386,7 +390,7 @@ li {
 }
 
 #right {
-	position: absolute;
+    position: absolute;
     max-width: 500px;
     min-width: 235px;
     padding-left: 10px;
@@ -447,7 +451,7 @@ li {
 }
 
 #player {
-	height: 135px;
+    height: 135px;
     margin: 25px 25px 5px;
     position: relative;
     width: 180px;
@@ -466,7 +470,7 @@ li {
 }
 
 .circle {
-	background-color: #FFFFFF;
+    background-color: #FFFFFF;
     border: 1px solid #FFFFFF;
     border-radius: 40px;
     cursor: pointer;
@@ -482,7 +486,7 @@ li {
 }
 
 #knob {
-	height: 130px;
+    height: 130px;
     left: 35px;
     position: absolute;
     top: 10px;
@@ -493,7 +497,7 @@ li {
 }
 
 .jumpback {
-	background-color: #FFFFFF;
+    background-color: #FFFFFF;
     border: 1px solid #DEDEDE;
     border-radius: 60px;
     box-shadow: 0 0 6px #DEDEDE;
@@ -711,10 +715,10 @@ li {
 
 
 /*#jumpback span {
-	font-size: 18px;
+    font-size: 18px;
 }*/
 
 .debug {
-	padding: 15px 15px 15px 20px;
-	color: gray;
+    padding: 15px 15px 15px 20px;
+    color: gray;
 }
