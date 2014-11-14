@@ -1,7 +1,7 @@
 window.requestFileSystem = window.requestFileSystem || window.webkitRequestFileSystem;
 var fs = null;
 
-var max_translation_length = 30;
+var max_translation_length = 5; // number of words allowed to be translated - if changed, change also note in #whentoolong
 var from = localStorage.getItem('stored_lang_from') || 'en';
 var to = localStorage.getItem('stored_lang_to') || 'es';
 var previous_translated_words = [];
@@ -70,8 +70,8 @@ function callBing(from, to, text) {
 	$.ajax({
         type: 'POST',
         data: {"authtype": "js"},
-		//url: 'server/localtoken.php', // local
-        url: 'http://www.simplyeasy.cz/services/token.php', // external
+		url: '../../server/localtoken.php', // local
+        //url: 'http://www.simplyeasy.cz/services/token.php', // external
 		success: function(data) {
 
 			var s = document.createElement("script");
@@ -121,36 +121,50 @@ function getTextSelection() {
 function handleSelectedText() {
     var text = getTextSelection(), previous_word = {};
 
-    // TODO strip spaces before/after words and commas, semilocons and dots after words
-
     // get previously selected word
 	previous_word[from] = $('#selectedword').html();
 
+    // get previously translated word
+    previous_word[to] = $('#translatedword').html();
+
     // TODO - measure translation lenght in words, not characters, and inform users about it, offer translation via Google translate link
 
-    // if not empty or too long string
-    if (text !== '' && text !== ' ' && text !== '.' && text !== previous_word[from] && text.length < max_translation_length) {
-    	// get previously translated word
-		previous_word[to] = $('#translatedword').html();
+    // if not empty or the same word again
+    if (text !== '' && text !== ' ' && text !== '.' && text !== previous_word[from]) {
+        // clear previous result
+        $('#translatedword').html('...');
 
-    	// insert into visible element
-    	$('#selectedword').text(text);
+        // strip spaces before/after words
+        text = text.trim();
 
-    	// clear previous result
-    	$('#translatedword').html('...');
+        // too long string
+        if (text.split(' ').length <= max_translation_length) {
+            // hide warning text shown when text is too long
+            $('#whentoolong').hide();
 
-        // try to translate
-        getTranslation(text);
+        	// insert word to be translated into visible element
+        	$('#selectedword').text(text);
 
-    	// unhide pair word_to_translate: translated_word
-    	$('#translations').show();
+            // try to translate
+            getTranslation(text);
 
-    	// if previous word not empty
-    	if (previous_word[from] !== '' || previous_word[to] !== '...') {
+        	// unhide pair word_to_translate: translated_word
+        	$('#translations').show();
+        }
+        else {
+            // create URL to google translate
+            $('#googletranslate').attr('href','https://translate.google.com/#'+from+'/'+to+'/'+encodeURIComponent(text));
 
-			// show previously translated word
-			prependPrevWord(previous_word);
-		}
+            $('#whentoolong').show();
+            $('#translations').hide();
+        }
+
+        // if previous word not empty
+        if (previous_word[from] !== '' && previous_word[to] !== '...') {
+
+            // prepend previously translated word into the list
+            prependPrevWord(previous_word);
+        }
     }
 }
 

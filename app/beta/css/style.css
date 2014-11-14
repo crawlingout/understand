@@ -1,10 +1,11 @@
 html, body {
-	height: 100%;
+	background-color: #f9f9f9;
+    font-family: Arial,sans-serif;
+    height: 100%;
     margin: 0;
-    padding: 0;
-    background-color: #F9F9F9;
-    font-family: Arial, sans-serif;
+    min-height: 500px;
     min-width: 1250px;
+    padding: 0;
 }
 
 /* remove ugly dotted lines around clicked links and buttons in FF */
@@ -19,7 +20,7 @@ button::-moz-focus-inner { border: 0; }
 }
 
 a {
-    color: #24CC00;
+    color: #ffa900;
     text-decoration: none;
 }
 
@@ -110,69 +111,74 @@ li {
     display: none;
 }
 
-#explanation p {
-    font-size: 18px;
-    line-height: 35px;
+#other_languages {
+    border-right: 1px dotted silver;
+    height: 25px;
+    left: -100px;
+    line-height: 25px;
+    margin: 0;
+    padding: 5px 30px 5px 0;
+    position: absolute;
+    text-align: right;
+    top: 120px;
+    width: 80px;
+}
+
+.other_lang {
+    color: #a4a4a4;
+    font-size: 15px;
+    text-transform: uppercase;
+}
+.other_lang:hover {
+    color: #ffa900;
 }
 
 #letter {
-    background-color: #FFFFFF;
-    color: #B7B7B7;
-    height: 300px;
-    padding: 40px 70px 25px;
+    color: #8b8b8b;
+    height: 600px;
+    left: 50%;
+    margin-left: -450px;
+    margin-top: -300px;
+    padding: 100px 50px;
+    position: relative;
+    top: 40%;
+    width: 900px;
 }
 
-
-#letter p strong {
-    color: #6f6f6f;
-    font-weight: normal;
+#letter p {
+    font-size: 19px;
+    line-height: 35px;
 }
 
 #purpose {
     color: #FFA900;
     font-family: "Roboto",arial,sans-serif;
-    font-size: 32px;
+    font-size: 34px;
     line-height: 42px;
     padding: 15px 0 0;
     font-weight: 300;
 }
 
 #getstarted {
-    background: url("../img/how.png") no-repeat scroll 70px 20px #ffffff;
-    color: #4f4f4f;
-    float: left;
-    height: 135px;
-    padding: 0 0 0 230px;
+    height: 80px;
+    margin: 60px 0;
 }
 
-#arrows {
-    background: url("../img/2a.png") no-repeat scroll 65px 60px #ffffff;
-    height: 120px;
-}
-
-#getstarted p {
-    font-size: 15px;
-    line-height: 32px;
-    margin-top: 10px;
-}
-
-#arr1 {
-    border-left: 2px solid #ffa900;
-    bottom: -43px;
-    height: 41px;
-    left: 20px;
-    position: absolute;
-    width: 2px;
-}
-
-#tryitnow, #learnmore {
+#getstarted a {
     background-color: #ffa900;
-    border-radius: 4px;
-    color: #ffffff;
-    cursor: pointer;
-    font-weight: bold;
-    margin: 0 2px;
-    padding: 3px 8px;
+    border-radius: 8px;
+    color: white;
+    display: block;
+    font-size: 28px;
+    padding: 10px 0;
+    text-align: center;
+    width: 200px;
+}
+
+#norisk {
+    padding: 10px 0;
+    width: 200px;
+    text-align: center;
 }
 
 .overlay {
@@ -295,23 +301,6 @@ li {
     display: none;
 }
 
-#content p::selection { /* Chrome */
-    color: white;
-    background-color: #029100;
-}
-#content p::-moz-selection { /* Firefox */
-    color: white;
-    background-color: #029100;
-}
-#content.forbidden p::selection { /* Chrome */
-    color: white;
-    background-color: red;
-}
-#content.forbidden p::-moz-selection { /* Firefox */
-    color: white;
-    background-color: red;
-}
-
 #translation_wrapper {
 	min-height: 60px;
 }
@@ -321,8 +310,12 @@ li {
     display: none;
 }
 
-#selection {
+#whentoolong {
 	display: none;
+    height: 20px;
+    padding: 5px 20px;
+    line-height: 20px;
+    font-size: 13px;
 }
 
 #selectedword {
@@ -357,7 +350,7 @@ li {
 }
 
 #previous_translated_words_wrapper {
-    padding: 0 22px;
+    padding: 5px 22px;
     position: relative;
     font-size: 13px;
     color: #FF4C00;
@@ -551,24 +544,23 @@ li {
 
 #bottom {
     background-color: #FFFFFF;
-    border-bottom: 1px solid #E3E3E3;
     border-top: 1px solid #E3E3E3;
     font-size: 14px;
     margin: 30px 0 0;
-    padding: 40px 70px 30px;
+    padding: 40px 70px 0;
     position: relative;
 }
 
 #instructions {
-    padding-bottom: 30px;
+    padding: 50px 70px 20px;
 }
 
 #instructions p {
     font-size: 15px;
-    line-height: 25px;
+    line-height: 28px;
 }
 
-#instructions p span {
+.no {
     background-color: #f4f4f4;
     border-radius: 4px;
     color: #848484;
@@ -576,16 +568,25 @@ li {
     padding: 1px 7px;
 }
 
+#tryitnow {
+    background-color: #ffa900;
+    border-radius: 4px;
+    color: #ffffff;
+    cursor: pointer;
+    font-weight: bold;
+    margin: 0 2px;
+    padding: 3px 8px;
+}
+
 .r {
     font-style: italic;
 }
 
 #support {
-    border-top: 1px solid #d9d9d9;
     color: #3e3e3e;
     font-size: 13px;
     line-height: 25px;
-    padding: 30px 0;
+    padding: 0 0 10px;
 }
 
 #donate1 {
@@ -646,7 +647,15 @@ li {
 
 #share {
     margin: 0;
-    padding: 0 0 40px;
+    padding: 40px 0 70px;
+}
+
+#article {
+    border-top: 1px dotted silver;
+    font-size: 15px;
+    line-height: 30px;
+    padding: 30px 0 10px;
+    width: 800px
 }
 
 .share {
@@ -659,13 +668,19 @@ li {
 #links {
     color: #9C9C9C;
     font-size: 13px;
-    padding: 30px 80px;
+    padding: 40px 80px;
     text-align: center;
 }
 
 #links a {
     color: #ff9800;
     text-decoration: none;
+}
+
+.my_disqus {
+    background-color: white;
+    border-bottom: 1px solid #e4e3e3;
+    padding: 0 70px 15px;
 }
 
 

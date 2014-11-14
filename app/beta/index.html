@@ -7,7 +7,7 @@
     <meta name="author" content="Jan Bilek">
 
     <!-- this should eliminate delay waiting to see if tap is not actually double-tap -->
-    <meta name=”viewport” content=”width=device-width,user-scalable=no”>
+    <meta name="viewport" content="width=device-width,user-scalable=no">
 
     <title>Flex your language-learning brain muscles with audiobooks</title>
 
@@ -31,7 +31,7 @@
 
     <!-- Facebook Open Graph -->
     <meta property="fb:app_id" content="1383406805282282"/>
-    <meta property="og:image" content="http://www.icanunderstand.eu/img/man-listening.jpg"/>
+    <meta property="og:image" content="http://www.icanunderstand.eu/app/img/man-listening.jpg"/>
     <meta property="og:type" content="website"/>
     <meta property="og:url" content="http://icanunderstand.eu/"/>
     <meta property="og:title" content="Flex your language-learning brain muscles with audiobooks"/>
@@ -66,8 +66,7 @@
                 <div class="gap"></div>
                 <div id="arrows">
                     <p>
-                        You will be flexing your language-learning brain muscles with an interesting audiobook (you need both <em>audio</em> + <em>text</em>).<br />
-                        Open <strong>audio</strong> and <strong>text</strong> files of your own book... or <span id="tryitnow">try it with one of our demo books</span>
+                        You will be flexing your language-learning brain muscles with an interesting audiobook (you need both <em>audio</em> + <em>text</em>).
                     </p>
                 </div>
                 <div class="gap"></div>
@@ -85,6 +84,9 @@
                 <div class="gap"></div>
                 <p>
                     For more details, read the article: <a target="_blank" href="http://www.simplyeasy.cz/blog/how-to-train-your-language-learning-brain-muscles/">How to flex your language-learning brain muscles</a>.
+                </p>
+                <p>
+                    To start, open <strong>audio</strong> and <strong>text</strong> files of your own book or <span id="tryitnow">try it with one of our demo books</span>
                 </p>
             </div>
 
@@ -251,59 +253,11 @@
             </div>
 
             <!-- share buttons -->
-            <div id="share">
-
-                <!-- Facebook Like button -->
-                <div class="share">
-                    <!-- Facebook like -->
-                    <!-- Facebook JavaScript SDK -->
-                    <div id="fb-root"></div>
-                    <script>(function(d, s, id) {
-                      var js, fjs = d.getElementsByTagName(s)[0];
-                      if (d.getElementById(id)) return;
-                      js = d.createElement(s); js.id = id;
-                      js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&appId=1383406805282282&version=v2.0";
-                      fjs.parentNode.insertBefore(js, fjs);
-                    }(document, 'script', 'facebook-jssdk'));</script>
-
-                    <div class="fb-like" data-href="http://www.icanunderstand.eu" data-layout="button_count" data-action="like" data-show-faces="false" data-share="false"></div>
-                </div>
-
-                <!-- Tweet -->
-                <div class="share">
-                    <a href="https://twitter.com/share" class="twitter-share-button" data-lang="en" data-text="This can help you learn to understand a foreign language">Tweet</a>
-                </div>
-                <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="https://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
-
-                <!-- Google + -->
-                <div class="share">
-                    <!-- Place this tag where you want the +1 button to render. -->
-                    <div class="g-plusone" data-size="medium"></div>
-
-                    <!-- Place this tag after the last +1 button tag. -->
-                    <script type="text/javascript">
-                      (function() {
-                        var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
-                        po.src = 'https://apis.google.com/js/platform.js';
-                        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
-                      })();
-                    </script>
-                </div>
-            </div>
-
-            <div class="gap"></div><div class="gap"></div>
-            <div id="planned">
-                <h3>Planned features</h3>
-                <ul>
-                    <li>
-                        Sound recording - you can learn by imitating and comparing yourself with the native speaker.
-                    </li>
-                    <li>Export of translated words to flashcards.</li>
-                </ul>
-            </div>
-
-
+            <!-- in beta removed -->
         </div>
+
+        <!-- Disqus -->
+        <!-- in beta removed -->
 
         <!-- footer -->
         <div id="links">
@@ -326,6 +280,7 @@
         </div>
 
         <div id="translation_wrapper">
+            <div id="whentoolong">Too long (> 5 words). <a id="googletranslate" target="_blank" href="">Google Translate</a>?</div>
             <div id="translations">
                 <div id="selectedword"></div><div id="arrowright"></div>
                 <div id="translatedword">...</div>
