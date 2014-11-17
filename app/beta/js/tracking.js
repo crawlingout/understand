@@ -1,9 +1,12 @@
 var tracking = 0; // state of tracking
 var tracking_session_time = 0; // in seconds
 var tracking_audio_time = 0; // in seconds
+var session_audio_time;
+
+// take into account stored time -> player does not start at zero
+var tracking_audio_time_absolute = Number(localStorage.getItem('stored_audio_time')) || 0;
 
 var timer;
-
 
 function convertSeconds(seconds) { // this function only gets seconds after whole minutes
     var hours_minutes = '0:00', hours, minutes;
@@ -17,14 +20,14 @@ function convertSeconds(seconds) { // this function only gets seconds after whol
             minutes = '0'+minutes;
         }
 
-        hours_minutes = hours+':'+minutes;console.log('hm', hours_minutes);
+        hours_minutes = hours+':'+minutes;
     }
 
     return hours_minutes;
 }
 
-function appTimer() {
-    tracking_session_time++;console.log(tracking_session_time);
+function trackProgress() {
+    tracking_session_time++;
 
     // if the whole minute
     if (!(tracking_session_time % 60)) {
@@ -34,18 +37,11 @@ function appTimer() {
     }
 }
 
-$(document).ready(function() {
-    $('#start_tracking').on('click', function() {
-        var tracking = 1;
-        $('.tracking_off').hide();
-        $('.tracking_on').show();
+function showAudioTime(audiotime) {
+    session_audio_time = audiotime - tracking_audio_time_absolute;
+    document.getElementById("audio_time").innerHTML = convertSeconds(session_audio_time);
+}
 
-        timer = setInterval(function() {appTimer();}, 1000);
-    });
-
-    $('#stop_tracking').on('click', function() {
-        var tracking = 0;
-        $('.tracking_on').hide();
-        $('.tracking_off').show();
-    });
-});
+function showRatio() {
+    document.getElementById("session_audio_ratio").innerHTML = Math.floor((session_audio_time/tracking_session_time)*100);
+}

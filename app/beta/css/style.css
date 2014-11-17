@@ -724,7 +724,8 @@ li {
     border: 1px solid #6a6a6a;
     cursor: pointer;
     margin-right: 5px;
-    padding: 0 5px;
+    text-align: center;
+    width: 52px;
 }
 
 .tracking_on {

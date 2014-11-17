@@ -72,8 +72,8 @@ function callBing(from, to, text) {
 	$.ajax({
         type: 'POST',
         data: {"authtype": "js"},
-		url: '../../server/localtoken.php', // local
-        //url: 'http://www.simplyeasy.cz/services/token.php', // external
+		//url: '../../server/localtoken.php', // local
+        url: 'http://www.simplyeasy.cz/services/token.php', // external
 		success: function(data) {
 
 			var s = document.createElement("script");
@@ -391,7 +391,7 @@ function playPause() {
         player.currentTime = stored_audio_time;
         just_reloaded = 0;
     }
-            
+
     // if not playing
     if (player.paused || player.ended) {
         // play
@@ -404,6 +404,12 @@ function playPause() {
         // regularly update progress bar
         interval = window.setInterval(function(){
             $('.knob').val(player.currentTime).trigger('change');
+
+            // track audio time
+            if (tracking) {
+                showAudioTime(player.currentTime);
+                showRatio();
+            }
         }, 1000);
     }
     // if playing
@@ -602,9 +608,11 @@ $(document).ready(function() {
 
 	// remove previously translated words
 	$('#remove_words').click(function() {
-		$('#previous_translated_words').empty();
-		previous_translated_words = [];
-		localStorage.setItem('previous_translated_words', '[]');
+        if (confirm('Are you sure?')) {
+    		$('#previous_translated_words').empty();
+    		previous_translated_words = [];
+    		localStorage.setItem('previous_translated_words', '[]');
+        }
 	});
 
 
@@ -621,6 +629,28 @@ $(document).ready(function() {
            playPause();
        }
     };
+
+
+    // TRACKING
+    $('#start_tracking').on('click', function() {
+        tracking = 1;
+
+        $('#start_tracking').hide();
+        $('#track_session').hide();
+
+        $('#stop_tracking').show();
+        $('#tracking_info').show();
+
+        timer = setInterval(function() {trackProgress();}, 1000);
+    });
+
+    $('#stop_tracking').on('click', function() {
+        tracking = 0;
+        $('#stop_tracking').hide();
+        $('#start_tracking').show();
+
+        clearInterval(timer);
+    });
 
 
 	//showQuota(0);
