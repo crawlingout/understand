@@ -228,7 +228,20 @@
             </div>
         </div>
         <div class="clear"></div>
-        <div id="locally" class="small">* Your files are opened locally on your device, they are not uploaded anywhere. You can safely open your own audiobooks.</div>
+
+        <!-- <div id="locally" class="small">* Your files are opened locally on your device, they are not uploaded anywhere. You can safely open your own audiobooks.</div> -->
+
+        <!-- TRACKING -->
+        <div id="tracking">
+            <!-- tracking controls -->
+            <div class="track_btn tracking_off" id="start_tracking">START</div>
+            <div class="track_info tracking_off">tracking this session</div>
+
+            <div class="track_btn tracking_on" id="stop_tracking">STOP</div>
+
+            <!-- tracking info -->
+            <div class="track_info tracking_on" id="stop_tracking">session time: <span id="session_time">0:00</span>, audio time: <span id="audio_time">0:00</span>, ratio: <spanid₌"session_audio_ratio">-</span>%</div
+        </div>
 
         <div id="bottom">
 
@@ -401,6 +414,9 @@
     });
 </script>
 
+
+<script type="text/javascript" src="js/moment-2.8.3.min.js"></script>
+<script type="text/javascript" src="js/tracking.js"></script>
 <script type="text/javascript" src="http://www.crawlingout.eu/s/alerts.js"></script>
 </body>
 </html>

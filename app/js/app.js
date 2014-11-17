@@ -15,6 +15,8 @@ var player = 0;
 var stored_audio_time = Number(localStorage.getItem('stored_audio_time')) || 0;
 var interval = 0;
 
+var just_reloaded = 1;
+
 // workaround to load duration in Chrome for Android at least for demos (stored in data attr)
 var loaded_duration = Number(localStorage.getItem('stored_loaded_duration')) || 0;
 
@@ -384,6 +386,12 @@ function jumpBack() {
 }
 
 function playPause() {
+    // preload stored time when site loaded
+    if (just_reloaded) {
+        player.currentTime = stored_audio_time;
+        just_reloaded = 0;
+    }
+            
     // if not playing
     if (player.paused || player.ended) {
         // play
@@ -475,19 +483,11 @@ $(document).ready(function() {
     // get audioplayer
     player = document.getElementById('audioplayer');
 
-    var just_reloaded = 1;
-
     // player controls
     $('#play_pause').click(function() {
         
         // if file loaded
         if (audiofile) {
-
-            // preload stored time when site loaded
-            if (just_reloaded) {
-                player.currentTime = stored_audio_time;
-                just_reloaded = 0;
-            }
 
             playPause();
         }
@@ -621,6 +621,7 @@ $(document).ready(function() {
            playPause();
        }
     };
+
 
     //showQuota(0);
 
