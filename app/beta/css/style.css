@@ -391,7 +391,6 @@ li {
 
 #right {
 	position: absolute;
-    max-width: 500px;
     min-width: 235px;
     padding-left: 10px;
     left: 1000px;
