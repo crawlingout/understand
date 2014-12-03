@@ -388,7 +388,8 @@ function jumpBack() {
 function playPause() {
     // preload stored time when site loaded
     if (just_reloaded) {
-        player.currentTime = stored_audio_time;
+        player.currentTime = stored_audio_time;console.log('bbb');$('#debug2').text(stored_audio_time);
+
         just_reloaded = 0;
     }
 
