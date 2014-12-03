@@ -393,7 +393,7 @@ function playPause() {
             player.currentTime = stored_audio_time;
             $('.knob').val(stored_audio_time).trigger('change');
         
-            $('#debug2').text('deb2: '+player.currentTime+'='+stored_audio_time+' / '+player.duration);
+            $('#debug2').text('deb2: '+player.duration+' / '+player.currentTime+'='+stored_audio_time);
 
             just_reloaded = 0;
         }, 100);
@@ -676,4 +676,9 @@ $(document).ready(function() {
     function() {
         $('#betatext').hide();
     });
+
+
+    setTimeout(function() {
+        $('#debug3').text('deb3: '+player.duration+' / '+player.currentTime+'='+stored_audio_time);
+    }, 100);
 });
