@@ -396,9 +396,7 @@ function playPause() {
         if (true) {player.pause();
             player.currentTime = 20.0;player.play();
             
-            setTimeout(function() {
-                $('#debug2').text('deb2: '+player.currentTime+'='+stored_audio_time+' / '+player.duration);
-            }, 800);
+            $('#debug2').text('deb2: '+player.currentTime+'='+stored_audio_time+' / '+player.duration);
 
             just_reloaded = 0;
         }
@@ -408,15 +406,15 @@ function playPause() {
         $('#pause_btn').show();
 
         // regularly update progress bar
-        // interval = window.setInterval(function(){
-        //     $('.knob').val(player.currentTime).trigger('change');
+        interval = window.setInterval(function(){
+            $('.knob').val(player.currentTime).trigger('change');
 
-        //     // track audio time
-        //     if (tracking) {
-        //         showAudioTime(player.currentTime);
-        //         showRatio();
-        //     }
-        // }, 1000);
+            // track audio time
+            if (tracking) {
+                showAudioTime(player.currentTime);
+                showRatio();
+            }
+        }, 1000);
     }
     // if playing
     else {
