@@ -372,7 +372,7 @@ function loadDemo(demoid) {
 
 function jumpBack() {
     // get current time
-    current_time = player.currentTime;
+    current_time = player.currentTime;$('#debug3').text('deb3: '+player.currentTime);
 
     // get how much seconds to jump
     var jumpstep = $(".jumpback").data('jump');
@@ -395,7 +395,7 @@ function playPause() {
         // preload stored time when site loaded
         if (just_reloaded) {
             player.currentTime = stored_audio_time;
-            setTimeout(function() {$('#debug2').text('deb2: '+player.currentTime+'='+stored_audio_time);}, 100);
+            setTimeout(function() {$('#debug2').text('deb2: '+player.currentTime+'='+stored_audio_time);}, 800);
 
             just_reloaded = 0;
         }
