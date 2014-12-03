@@ -184,7 +184,7 @@ function loadAudioToPlayer(file) {
     });
 
 	// when the player is ready
-	player.addEventListener("canplay", function() {
+	player.addEventListener("canplay", function() {console.log('canplay event');
 
 		// configure audio progress bar
 		$('.knob').trigger('configure', {
@@ -388,7 +388,7 @@ function jumpBack() {
 function playPause() {
     // preload stored time when site loaded
     if (just_reloaded) {
-        player.currentTime = stored_audio_time;$('#debug2').text(player.currentTime+'='+stored_audio_time);
+        player.currentTime = 100;$('#debug2').text(player.currentTime+'='+stored_audio_time);
 
         just_reloaded = 0;
     }
