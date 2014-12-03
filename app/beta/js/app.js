@@ -395,7 +395,7 @@ function playPause() {
             $('#debug2').text('deb2: '+player.currentTime+'='+stored_audio_time+' / '+player.duration);
 
             just_reloaded = 0;
-        }, 2000);
+        }, 200);
     }
 
     // if not playing
