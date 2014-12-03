@@ -426,16 +426,16 @@ function playPause() {
     }
 
     // preload stored time when site loaded
-    if (just_reloaded) {console.log('x');
-        setTimeout(function() {console.log('y');
-            player.currentTime = 20.0;
+    if (just_reloaded) {
+        player.currentTime = 20.0;
+        setTimeout(function() {
         
             $('#debug2').text('deb2: '+player.currentTime+'='+stored_audio_time+' / '+player.duration);
 
             just_reloaded = 0;
 
             goOn();
-        }, 10000);
+        }, 2000);
     }
     else {
         goOn();
