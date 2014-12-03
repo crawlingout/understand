@@ -372,7 +372,7 @@ function loadDemo(demoid) {
 
 function jumpBack() {
     // get current time
-    current_time = player.currentTime;$('#debug3').text('deb3: '+player.currentTime);
+    current_time = player.currentTime;
 
     // get how much seconds to jump
     var jumpstep = $(".jumpback").data('jump');
@@ -388,15 +388,16 @@ function jumpBack() {
 function playPause() {
 
     // preload stored time when site loaded
-    if (just_reloaded) {console.log('x');
-        setTimeout(function() {console.log('y');
-            player.currentTime = 20.0;
+    // if (just_reloaded) {
+    //     setTimeout(function() {
+    //         player.currentTime = stored_audio_time;
+    //         $('.knob').val(stored_audio_time).trigger('change');
         
-            $('#debug2').text('deb2: '+player.currentTime+'='+stored_audio_time+' / '+player.duration);
+    //         $('#debug2').text('deb2: '+player.currentTime+'='+stored_audio_time+' / '+player.duration);
 
-            just_reloaded = 0;
-        }, 200);
-    }
+    //         just_reloaded = 0;
+    //     }, 100);
+    // }
 
     // if not playing
     if (player.paused || player.ended) {
@@ -446,6 +447,15 @@ $(document).ready(function() {
 		$('#instructions').show();
         $('#backhome').hide();
 	}
+
+    setTimeout(function() {
+        player.currentTime = stored_audio_time;
+        $('.knob').val(stored_audio_time).trigger('change');
+    
+        $('#debug2').text('deb2: '+player.currentTime+'='+stored_audio_time+' / '+player.duration);
+
+        just_reloaded = 0;
+    }, 500);
 
 
 
