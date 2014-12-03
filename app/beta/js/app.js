@@ -680,5 +680,5 @@ $(document).ready(function() {
 
     setTimeout(function() {
         $('#debug3').text('deb3: '+player.duration+' / '+player.currentTime+'='+stored_audio_time);
-    }, 100);
+    }, 3000);
 });
