@@ -199,7 +199,7 @@ function loadAudioToPlayer(file) {
 		if (player.duration) {
             // configure audio progress bar
             setKnob(player.duration, player.currentTime);
-            $('#debug1').text('deb1: '+player.duration+' / '+player.currentTime+'='+stored_audio_time);
+            //$('#debug1').text('deb1: '+player.duration+' / '+player.currentTime+'='+stored_audio_time);
         }
 	});
 
@@ -401,9 +401,7 @@ function playPause() {
             }
 
             just_reloaded = 0;
-        
-            $('#debug2').text('deb2: '+player.duration+' / '+player.currentTime+'='+stored_audio_time);
-            $('#debug3').text('deb3: '+$('.knob').attr('max'));
+            //$('#debug2').text('deb2: '+player.duration+' / '+player.currentTime+'='+stored_audio_time);
         }, 100);
     }
 
