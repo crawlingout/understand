@@ -190,7 +190,7 @@ function loadAudioToPlayer(file) {
 		$('.knob').trigger('configure', {
 	        "max": player.duration || loaded_duration
 	    });
-        //$('#debug1').text('dur: '+player.duration);
+        $('#debug1').text('dur: '+player.duration);
 
         // get time for the player to jump to - get stored time if page just loaded or get current time if just paused ('canplay' event also called)
         var jumpto = player.currentTime || stored_audio_time;
@@ -301,7 +301,7 @@ function loadText(text) {
 	// split paragraphs by empty lines
 	var paragraphs = text.split("\n");
 
-    var content = '<p>';//console.log(paragraphs);
+    var content = '<p>';
 
     for (var i=0, l=paragraphs.length; i<l; i++) {
     	if (paragraphs[i] !== '\r' && paragraphs[i] !== '') {
