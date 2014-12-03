@@ -170,6 +170,16 @@ function handleSelectedText() {
     }
 }
 
+function setKnob(dur, cur) {
+    // get time for the player to jump to
+    var jumpto = cur || stored_audio_time;
+
+    $('.knob').trigger('configure', {
+        max: dur
+    });
+    $('.knob').val(jumpto).trigger('change');
+}
+
 function loadAudioToPlayer(file) {
 	// load audio file
 	player.src = file;
@@ -186,17 +196,11 @@ function loadAudioToPlayer(file) {
 	// when the player is ready
 	player.addEventListener("canplay", function() {
 
-		// configure audio progress bar
-		$('.knob').trigger('configure', {
-	        "max": player.duration || loaded_duration
-	    });
-        $('#debug1').text('deb1: '+player.duration+' / '+player.currentTime+'='+stored_audio_time);
-
-        // get time for the player to jump to - get stored time if page just loaded or get current time if just paused ('canplay' event also called)
-        var jumpto = player.currentTime || stored_audio_time;
-		
-		// set stored time
-		$('.knob').val(jumpto).trigger('change');
+		if (player.duration) {
+            // configure audio progress bar
+            setKnob(player.duration, player.currentTime);
+            $('#debug1').text('deb1: '+player.duration+' / '+player.currentTime+'='+stored_audio_time);
+        }
 	});
 
 	// listener for finished audio
@@ -391,11 +395,15 @@ function playPause() {
     if (just_reloaded) {
         setTimeout(function() {
             player.currentTime = stored_audio_time;
-            $('.knob').val(stored_audio_time).trigger('change');
-        
-            $('#debug2').text('deb2: '+player.duration+' / '+player.currentTime+'='+stored_audio_time);
+
+            if (player.duration) {
+                setKnob(player.duration, player.currentTime);
+            }
 
             just_reloaded = 0;
+        
+            $('#debug2').text('deb2: '+player.duration+' / '+player.currentTime+'='+stored_audio_time);
+            $('#debug3').text('deb3: '+$('.knob').attr('max'));
         }, 100);
     }
 
@@ -676,9 +684,4 @@ $(document).ready(function() {
     function() {
         $('#betatext').hide();
     });
-
-
-    setTimeout(function() {
-        $('#debug3').text('deb3: '+player.duration+' / '+player.currentTime+'='+stored_audio_time);
-    }, 3000);
 });
