@@ -387,49 +387,58 @@ function jumpBack() {
 
 function playPause() {
 
-    // if not playing
-    if (player.paused || player.ended) {
-        // play
-        player.play();
+    var goOn = function() {
+        // if not playing
+        if (player.paused || player.ended) {
+            // play
+            player.play();
 
-        // preload stored time when site loaded
-        if (true) {player.pause();
-            player.currentTime = 20.0;player.play();
-            
+            // set icon to pause
+            $('#play_btn').hide();
+            $('#pause_btn').show();
+
+            // regularly update progress bar
+            interval = window.setInterval(function(){
+                $('.knob').val(player.currentTime).trigger('change');
+
+                // track audio time
+                if (tracking) {
+                    showAudioTime(player.currentTime);
+                    showRatio();
+                }
+            }, 1000);
+        }
+        // if playing
+        else {
+            // pause
+            player.pause();
+
+            // set icon to play
+            $('#pause_btn').hide();
+            $('#play_btn').show();
+
+            // pause interval updating progress bar
+            window.clearInterval(interval);
+
+            // store time
+            localStorage.setItem('stored_audio_time', player.currentTime);
+        }
+    }
+
+    // preload stored time when site loaded
+    if (just_reloaded) {console.log('x');
+        setTimeout(function() {console.log('y');
+            player.currentTime = 20.0;
+        
             $('#debug2').text('deb2: '+player.currentTime+'='+stored_audio_time+' / '+player.duration);
 
             just_reloaded = 0;
-        }
 
-        // set icon to pause
-        $('#play_btn').hide();
-        $('#pause_btn').show();
-
-        // regularly update progress bar
-        interval = window.setInterval(function(){
-            $('.knob').val(player.currentTime).trigger('change');
-
-            // track audio time
-            if (tracking) {
-                showAudioTime(player.currentTime);
-                showRatio();
-            }
-        }, 1000);
+            goOn();
+        }, 10000);
     }
-    // if playing
     else {
-        // pause
-        player.pause();
-
-        // set icon to play
-        $('#pause_btn').hide();
-        $('#play_btn').show();
-
-        // pause interval updating progress bar
-        window.clearInterval(interval);
-
-        // store time
-        localStorage.setItem('stored_audio_time', player.currentTime);
+        goOn();
     }
 }
 
