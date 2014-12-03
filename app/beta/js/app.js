@@ -391,7 +391,7 @@ function playPause() {
     if (just_reloaded) {
         setTimeout(function() {
             player.currentTime = stored_audio_time;
-            $('.knob').val(jumpto).trigger('change');
+            $('.knob').val(stored_audio_time).trigger('change');
         
             $('#debug2').text('deb2: '+player.currentTime+'='+stored_audio_time+' / '+player.duration);
 
