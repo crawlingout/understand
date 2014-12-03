@@ -372,7 +372,7 @@ function loadDemo(demoid) {
 
 function jumpBack() {
     // get current time
-    current_time = player.currentTime;
+    current_time = player.currentTime;$('#debug3').text(player.currentTime);
 
     // get how much seconds to jump
     var jumpstep = $(".jumpback").data('jump');
