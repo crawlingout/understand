@@ -184,13 +184,13 @@ function loadAudioToPlayer(file) {
     });
 
 	// when the player is ready
-	player.addEventListener("canplay", function() {console.log('canplay event');
+	player.addEventListener("canplay", function() {
 
 		// configure audio progress bar
 		$('.knob').trigger('configure', {
 	        "max": player.duration || loaded_duration
 	    });
-        $('#debug1').text('dur: '+player.duration+' / '+stored_audio_time+' / '+player.currentTime);
+        $('#debug1').text('deb1: '+player.duration+' / '+stored_audio_time+'='+player.currentTime);
 
         // get time for the player to jump to - get stored time if page just loaded or get current time if just paused ('canplay' event also called)
         var jumpto = player.currentTime || stored_audio_time;
@@ -372,7 +372,7 @@ function loadDemo(demoid) {
 
 function jumpBack() {
     // get current time
-    current_time = player.currentTime;$('#debug3').text(player.currentTime);
+    current_time = player.currentTime;
 
     // get how much seconds to jump
     var jumpstep = $(".jumpback").data('jump');
@@ -386,12 +386,6 @@ function jumpBack() {
 }
 
 function playPause() {
-    // preload stored time when site loaded
-    if (just_reloaded) {
-        player.currentTime = 100;$('#debug2').text(player.currentTime+'='+stored_audio_time);
-
-        just_reloaded = 0;
-    }
 
     // if not playing
     if (player.paused || player.ended) {
@@ -427,6 +421,13 @@ function playPause() {
 
         // store time
         localStorage.setItem('stored_audio_time', player.currentTime);
+    }
+    
+    // preload stored time when site loaded
+    if (just_reloaded) {
+        player.currentTime = stored_audio_time;$('#debug2').text('deb2: '+player.currentTime+'='+stored_audio_time);
+
+        just_reloaded = 0;
     }
 }
 
@@ -477,7 +478,7 @@ $(document).ready(function() {
 	// PLAYER
     
 	$(".knob").knob({
-        'change': function(e){$('#debug4').text('shit');
+        'change': function(e){
             player.currentTime = e;
             $('.knob').val(player.currentTime).trigger('change');
         }
