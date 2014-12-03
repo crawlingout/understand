@@ -184,20 +184,20 @@ function loadAudioToPlayer(file) {
     });
 
 	// when the player is ready
-	// player.addEventListener("canplay", function() {
+	player.addEventListener("canplay", function() {
 
-	// 	// configure audio progress bar
-	// 	$('.knob').trigger('configure', {
-	//         "max": player.duration || loaded_duration
-	//     });
- //        $('#debug1').text('deb1: '+player.duration+' / '+player.currentTime+'='+stored_audio_time);
+		// configure audio progress bar
+		$('.knob').trigger('configure', {
+	        "max": player.duration || loaded_duration
+	    });
+        $('#debug1').text('deb1: '+player.duration+' / '+player.currentTime+'='+stored_audio_time);
 
- //        // get time for the player to jump to - get stored time if page just loaded or get current time if just paused ('canplay' event also called)
- //        var jumpto = player.currentTime || stored_audio_time;
+        // get time for the player to jump to - get stored time if page just loaded or get current time if just paused ('canplay' event also called)
+        var jumpto = player.currentTime || stored_audio_time;
 		
-	// 	// set stored time
-	// 	$('.knob').val(jumpto).trigger('change');
-	// });
+		// set stored time
+		$('.knob').val(jumpto).trigger('change');
+	});
 
 	// listener for finished audio
 	player.addEventListener("ended", function() {
@@ -386,18 +386,19 @@ function jumpBack() {
 }
 
 function playPause() {
-    // preload stored time when site loaded
+
+    // if not playing
+    if (player.paused || player.ended) {
+        // play
+        player.play();
+
+        // preload stored time when site loaded
     if (just_reloaded) {
         player.currentTime = stored_audio_time;
         $('#debug2').text('deb2: '+player.currentTime+'='+stored_audio_time);
 
         just_reloaded = 0;
     }
-
-    // if not playing
-    if (player.paused || player.ended) {
-        // play
-        player.play();
 
         // set icon to pause
         $('#play_btn').hide();
