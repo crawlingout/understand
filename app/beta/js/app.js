@@ -455,7 +455,7 @@ $(document).ready(function() {
         $('#debug2').text('deb2: '+player.currentTime+'='+stored_audio_time+' / '+player.duration);
 
         just_reloaded = 0;
-    }, 500);
+    }, 1500);
 
 
 
