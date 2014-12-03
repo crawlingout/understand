@@ -560,7 +560,6 @@ $(document).ready(function() {
     // CLEAR EVERYTHING AND GO BACK TO THE MAIN PAGE
     $('#backhome').click(function() {
         resetPlayer();
-
         resetText();
     });
 
