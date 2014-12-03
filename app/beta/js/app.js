@@ -477,7 +477,7 @@ $(document).ready(function() {
 	// PLAYER
     
 	$(".knob").knob({
-        'change': function(e){
+        'change': function(e){$('#debug4').text('shit');
             player.currentTime = e;
             $('.knob').val(player.currentTime).trigger('change');
         }
