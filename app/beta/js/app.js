@@ -190,7 +190,7 @@ function loadAudioToPlayer(file) {
 		$('.knob').trigger('configure', {
 	        "max": player.duration || loaded_duration
 	    });
-        $('#debug1').text('dur: '+player.duration+' / '+stored_audio_time);
+        $('#debug1').text('dur: '+player.duration+' / '+stored_audio_time+' / '+player.currentTime);
 
         // get time for the player to jump to - get stored time if page just loaded or get current time if just paused ('canplay' event also called)
         var jumpto = player.currentTime || stored_audio_time;
