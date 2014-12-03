@@ -393,8 +393,8 @@ function playPause() {
         player.play();
 
         // preload stored time when site loaded
-        if (true) {
-            player.currentTime = 100.0;
+        if (just_reloaded) {player.pause();
+            player.currentTime = 20.0;player.play();
             
             setTimeout(function() {
                 $('#debug2').text('deb2: '+player.currentTime+'='+stored_audio_time+player.duration);
