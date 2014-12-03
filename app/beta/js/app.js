@@ -394,8 +394,11 @@ function playPause() {
 
         // preload stored time when site loaded
         if (just_reloaded) {
-            player.currentTime = stored_audio_time;
-            setTimeout(function() {$('#debug2').text('deb2: '+player.currentTime+'='+stored_audio_time);}, 800);
+            
+            setTimeout(function() {
+                player.currentTime = stored_audio_time;
+                $('#debug2').text('deb2: '+player.currentTime+'='+stored_audio_time);
+            }, 800);
 
             just_reloaded = 0;
         }
