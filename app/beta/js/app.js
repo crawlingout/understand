@@ -393,7 +393,7 @@ function playPause() {
         player.play();
 
         // preload stored time when site loaded
-        if (just_reloaded) {player.pause();
+        if (true) {player.pause();
             player.currentTime = 20.0;player.play();
             
             setTimeout(function() {
