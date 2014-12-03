@@ -397,7 +397,7 @@ function playPause() {
             player.currentTime = 20.0;player.play();
             
             setTimeout(function() {
-                $('#debug2').text('deb2: '+player.currentTime+'='+stored_audio_time+player.duration);
+                $('#debug2').text('deb2: '+player.currentTime+'='+stored_audio_time+' / '+player.duration);
             }, 800);
 
             just_reloaded = 0;
