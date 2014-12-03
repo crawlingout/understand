@@ -184,20 +184,20 @@ function loadAudioToPlayer(file) {
     });
 
 	// when the player is ready
-	player.addEventListener("canplay", function() {
+	// player.addEventListener("canplay", function() {
 
-		// configure audio progress bar
-		$('.knob').trigger('configure', {
-	        "max": player.duration || loaded_duration
-	    });
-        $('#debug1').text('deb1: '+player.duration+' / '+player.currentTime+'='+stored_audio_time);
+	// 	// configure audio progress bar
+	// 	$('.knob').trigger('configure', {
+	//         "max": player.duration || loaded_duration
+	//     });
+ //        $('#debug1').text('deb1: '+player.duration+' / '+player.currentTime+'='+stored_audio_time);
 
-        // get time for the player to jump to - get stored time if page just loaded or get current time if just paused ('canplay' event also called)
-        var jumpto = player.currentTime || stored_audio_time;
+ //        // get time for the player to jump to - get stored time if page just loaded or get current time if just paused ('canplay' event also called)
+ //        var jumpto = player.currentTime || stored_audio_time;
 		
-		// set stored time
-		$('.knob').val(jumpto).trigger('change');
-	});
+	// 	// set stored time
+	// 	$('.knob').val(jumpto).trigger('change');
+	// });
 
 	// listener for finished audio
 	player.addEventListener("ended", function() {
