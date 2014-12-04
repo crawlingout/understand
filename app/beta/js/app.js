@@ -201,12 +201,15 @@ function loadAudioToPlayer(file) {
 	player.addEventListener("canplay", function() {console.log('canplay');
 
 		if (player.duration) {
-            // configure audio progress bar
+            // set knob
             setKnob(player.duration, player.currentTime);
             //$('#debug1').text('deb1: '+player.duration+' / '+player.currentTime+'='+stored_audio_time);
         }
         else {
-            setKnob(stored_duration, stored_audio_time);
+            // if at least stored duration available (after reload), use it to set knob
+            if (stored_duration) {
+                setKnob(stored_duration, stored_audio_time);
+            }
         }
 	});
 
@@ -401,8 +404,8 @@ function jumpBack() {
 
 function playPause() {
 
-    // if duration still not loaded and therefore knob not yet loaded
-    if (!player.duration) {
+    // if not even stored_duration still not loaded and therefore knob not yet loaded
+    if (!player.duration && !stored_duration) {
         // wait
         setTimeout(function() {
             if (just_reloaded) {
@@ -415,6 +418,7 @@ function playPause() {
             if (player.duration) {
                 // stored duration so it could be used to set knob after reload
                 localStorage.setItem('stored_duration', player.duration);
+                setKnob(player.duration, player.currentTime);
             }
             $('#debug3').text('deb3: '+player.duration+' / '+player.currentTime+'='+stored_audio_time);
         }, 200);
