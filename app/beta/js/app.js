@@ -13,9 +13,13 @@ var textfile = localStorage.getItem('stored_text_file_content') || 0;
 var audiofile = localStorage.getItem('stored_audio_file_url') || 0;
 var player = 0;
 var stored_audio_time = Number(localStorage.getItem('stored_audio_time')) || 0;
+
 var interval = 0;
 
 var just_reloaded = 1;
+
+// workaround: some browsers do not load duration immediately - stored duration is used to set knob
+var stored_duration = Number(localStorage.getItem('stored_duration')) || 0;
 
 // workaround to load duration in Chrome for Android at least for demos (stored in data attr)
 var loaded_duration = Number(localStorage.getItem('stored_loaded_duration')) || 0;
@@ -194,12 +198,20 @@ function loadAudioToPlayer(file) {
     });
 
 	// when the player is ready
-	player.addEventListener("canplay", function() {
+	player.addEventListener("canplay", function() {console.log('canplay');
 
 		if (player.duration) {
             // configure audio progress bar
             setKnob(player.duration, player.currentTime);
             //$('#debug1').text('deb1: '+player.duration+' / '+player.currentTime+'='+stored_audio_time);
+        }
+        else {
+            setKnob(stored_duration, stored_audio_time);
+            $('#debug1').text('deb1: workaround used');
+
+            setTimeout(function() {
+                $('#debug3').text('deb3: '+player.duration+' / '+player.currentTime+'='+stored_audio_time);
+            }, 500);
         }
 	});
 
@@ -230,6 +242,9 @@ function resetPlayer() {
 
     loaded_duration = 0;
     localStorage.removeItem('stored_loaded_duration');
+
+    stored_duration = 0;
+    localStorage.removeItem('stored_duration');
 
     // reset audio progress bar
     $('.knob').val(0).trigger('change');
@@ -391,18 +406,27 @@ function jumpBack() {
 
 function playPause() {
 
-    // preload stored time when site loaded
     if (just_reloaded) {
-        setTimeout(function() {
+        if (player.duration) {
+            // jump to stored time
             player.currentTime = stored_audio_time;
+        }
+        // in some browser, duration and also currentTime are not available immediately
+        else {
+            // wait
+            setTimeout(function() {
+                // jump to stored time
+                player.currentTime = stored_audio_time;
 
-            if (player.duration) {
-                setKnob(player.duration, player.currentTime);
-            }
+                if (player.duration) {
+                    // stored duration so it could be used to set knob after reload
+                    localStorage.setItem('stored_duration', player.duration);
+                }
+                $('#debug2').text('deb2: '+player.duration+' / '+player.currentTime+'='+stored_audio_time);
+            }, 200);
 
-            just_reloaded = 0;
-            //$('#debug2').text('deb2: '+player.duration+' / '+player.currentTime+'='+stored_audio_time);
-        }, 100);
+        }
+        just_reloaded = 0;
     }
 
     // if not playing
