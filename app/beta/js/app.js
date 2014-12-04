@@ -205,8 +205,9 @@ function loadAudioToPlayer(file) {
             setKnob(player.duration, player.currentTime);
             //$('#debug1').text('deb1: '+player.duration+' / '+player.currentTime+'='+stored_audio_time);
         }
-        else {
+        else {console.log('duration not available at canplay event');
             // if at least stored duration available (after reload), use it to set knob
+            // workaround for browsers that load duration later
             if (stored_duration) {
                 setKnob(stored_duration, stored_audio_time);
             }
@@ -404,8 +405,9 @@ function jumpBack() {
 
 function playPause() {
 
-    // if not even stored_duration still not loaded and therefore knob not yet loaded
-    if (!player.duration && !stored_duration) {
+    // if even stored_duration still not loaded and therefore knob not yet loaded
+    // this situation appears after new audio file is opened (stored_duration reseted) in browser which loads duration late (no player.duration)
+    if (!player.duration && !stored_duration) {console.log('not even stored_duration not available when user pushing play button');
         // wait
         setTimeout(function() {
             if (just_reloaded) {
@@ -420,7 +422,7 @@ function playPause() {
                 localStorage.setItem('stored_duration', player.duration);
                 setKnob(player.duration, player.currentTime);
             }
-            $('#debug3').text('deb3: '+player.duration+' / '+player.currentTime+'='+stored_audio_time);
+            //$('#debug3').text('deb3: '+player.duration+' / '+player.currentTime+'='+stored_audio_time);
         }, 200);
     }
     else {
@@ -431,7 +433,7 @@ function playPause() {
             just_reloaded = 0;
         }
     }
-$('#debug4').text('deb4: '+player.duration+' / '+player.currentTime+'='+stored_audio_time);
+
     // if not playing
     if (player.paused || player.ended) {
         // play
