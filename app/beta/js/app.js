@@ -401,36 +401,35 @@ function jumpBack() {
 
 function playPause() {
 
-    // if not playing
-    if (player.paused || player.ended) {
-
-        // if knob not yet loaded because of duration still not loaded
-        if (!player.duration) {
-            // wait
-            setTimeout(function() {
-                if (just_reloaded) {
-                    // jump to stored time
-                    player.currentTime = stored_audio_time;
-                    
-                    just_reloaded = 0;
-                }
-
-                if (player.duration) {
-                    // stored duration so it could be used to set knob after reload
-                    localStorage.setItem('stored_duration', player.duration);
-                }
-                $('#debug3').text('deb3: '+player.duration+' / '+player.currentTime+'='+stored_audio_time);
-            }, 200);
-        }
-        else {
+    // if duration still not loaded and therefore knob not yet loaded
+    if (!player.duration) {
+        // wait
+        setTimeout(function() {
             if (just_reloaded) {
                 // jump to stored time
                 player.currentTime = stored_audio_time;
-
+                
                 just_reloaded = 0;
             }
+
+            if (player.duration) {
+                // stored duration so it could be used to set knob after reload
+                localStorage.setItem('stored_duration', player.duration);
+            }
+            $('#debug3').text('deb3: '+player.duration+' / '+player.currentTime+'='+stored_audio_time);
+        }, 200);
+    }
+    else {
+        if (just_reloaded) {
+            // jump to stored time
+            player.currentTime = stored_audio_time;
+
+            just_reloaded = 0;
         }
-    
+    }
+
+    // if not playing
+    if (player.paused || player.ended) {
         // play
         player.play();
 
