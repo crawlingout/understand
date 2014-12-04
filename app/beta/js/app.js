@@ -427,7 +427,7 @@ function playPause() {
             just_reloaded = 0;
         }
     }
-
+$('#debug4').text('deb4: '+player.duration+' / '+player.currentTime+'='+stored_audio_time);
     // if not playing
     if (player.paused || player.ended) {
         // play
