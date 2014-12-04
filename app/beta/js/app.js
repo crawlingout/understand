@@ -207,11 +207,6 @@ function loadAudioToPlayer(file) {
         }
         else {
             setKnob(stored_duration, stored_audio_time);
-            $('#debug1').text('deb1: workaround used');
-
-            setTimeout(function() {
-                $('#debug3').text('deb3: '+player.duration+' / '+player.currentTime+'='+stored_audio_time);
-            }, 500);
         }
 	});
 
@@ -406,27 +401,31 @@ function jumpBack() {
 
 function playPause() {
 
-    if (just_reloaded) {
-        if (player.duration) {
-            // jump to stored time
-            player.currentTime = stored_audio_time;
-        }
-        // in some browser, duration and also currentTime are not available immediately
-        else {
-            // wait
-            setTimeout(function() {
+    // if knob not yet loaded because of duration still not loaded
+    if (!player.duration) {
+        // wait
+        setTimeout(function() {
+            if (just_reloaded) {
                 // jump to stored time
                 player.currentTime = stored_audio_time;
+                
+                just_reloaded = 0;
+            }
 
-                if (player.duration) {
-                    // stored duration so it could be used to set knob after reload
-                    localStorage.setItem('stored_duration', player.duration);
-                }
-                $('#debug2').text('deb2: '+player.duration+' / '+player.currentTime+'='+stored_audio_time);
-            }, 200);
+            if (player.duration) {
+                // stored duration so it could be used to set knob after reload
+                localStorage.setItem('stored_duration', player.duration);
+            }
+            $('#debug3').text('deb3: '+player.duration+' / '+player.currentTime+'='+stored_audio_time);
+        }, 200);
+    }
+    else {
+        if (just_reloaded) {
+            // jump to stored time
+            player.currentTime = stored_audio_time;
 
+            just_reloaded = 0;
         }
-        just_reloaded = 0;
     }
 
     // if not playing
