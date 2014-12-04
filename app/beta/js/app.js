@@ -21,9 +21,6 @@ var just_reloaded = 1;
 // workaround: some browsers do not load duration immediately - stored duration is used to set knob
 var stored_duration = Number(localStorage.getItem('stored_duration')) || 0;
 
-// workaround to load duration in Chrome for Android at least for demos (stored in data attr)
-var loaded_duration = Number(localStorage.getItem('stored_loaded_duration')) || 0;
-
 var warning = '<i class="fa fa-exclamation-triangle"></i> \
                 <span>&nbsp;This is an experimental app. Some functionality is supported only in Google Chrome.</span>';
 
@@ -238,9 +235,6 @@ function resetPlayer() {
     localStorage.setItem('stored_audio_time', stored_audio_time);
     audiofile = 0;
     localStorage.removeItem('stored_audio_file_url');
-
-    loaded_duration = 0;
-    localStorage.removeItem('stored_loaded_duration');
 
     stored_duration = 0;
     localStorage.removeItem('stored_duration');
@@ -609,9 +603,6 @@ $(document).ready(function() {
 	// DEMO
 
 	$('.demo').click(function() {
-        // get duration (workaround for Android)
-        loaded_duration = $(this).data('duration') || 0;
-        localStorage.setItem('stored_loaded_duration', loaded_duration);
 
 		$("#more").hide();
         loadDemo($(this).attr('id'));
