@@ -13,12 +13,13 @@ var textfile = localStorage.getItem('stored_text_file_content') || 0;
 var audiofile = localStorage.getItem('stored_audio_file_url') || 0;
 var player = 0;
 var stored_audio_time = Number(localStorage.getItem('stored_audio_time')) || 0;
+
 var interval = 0;
 
 var just_reloaded = 1;
 
-// workaround to load duration in Chrome for Android at least for demos (stored in data attr)
-var loaded_duration = Number(localStorage.getItem('stored_loaded_duration')) || 0;
+// workaround: some browsers do not load duration immediately - stored duration is used to set knob
+var stored_duration = Number(localStorage.getItem('stored_duration')) || 0;
 
 var warning = '<i class="fa fa-exclamation-triangle"></i> \
                 <span>&nbsp;This is an experimental app. Some functionality is supported only in Google Chrome.</span>';
@@ -170,6 +171,16 @@ function handleSelectedText() {
     }
 }
 
+function setKnob(dur, cur) {
+    // get time for the player to jump to
+    var jumpto = cur || stored_audio_time;
+
+    $('.knob').trigger('configure', {
+        max: dur
+    });
+    $('.knob').val(jumpto).trigger('change');
+}
+
 function loadAudioToPlayer(file) {
     // load audio file
     player.src = file;
@@ -184,19 +195,20 @@ function loadAudioToPlayer(file) {
     });
 
     // when the player is ready
-    player.addEventListener("canplay", function() {
+    player.addEventListener("canplay", function() {console.log('canplay');
 
-        // configure audio progress bar
-        $('.knob').trigger('configure', {
-            "max": player.duration || loaded_duration
-        });
-        //$('#debug1').text('dur: '+player.duration);
-
-        // get time for the player to jump to - get stored time if page just loaded or get current time if just paused ('canplay' event also called)
-        var jumpto = player.currentTime || stored_audio_time;
-        
-        // set stored time
-        $('.knob').val(jumpto).trigger('change');
+        if (player.duration) {
+            // set knob
+            setKnob(player.duration, player.currentTime);
+            //$('#debug1').text('deb1: '+player.duration+' / '+player.currentTime+'='+stored_audio_time);
+        }
+        else {console.log('duration not available at canplay event');
+            // if at least stored duration available (after reload), use it to set knob
+            // workaround for browsers that load duration later
+            if (stored_duration) {
+                setKnob(stored_duration, stored_audio_time);
+            }
+        }
     });
 
     // listener for finished audio
@@ -223,9 +235,6 @@ function resetPlayer() {
     localStorage.setItem('stored_audio_time', stored_audio_time);
     audiofile = 0;
     localStorage.removeItem('stored_audio_file_url');
-
-    loaded_duration = 0;
-    localStorage.removeItem('stored_loaded_duration');
 
     // reset audio progress bar
     $('.knob').val(0).trigger('change');
@@ -386,10 +395,34 @@ function jumpBack() {
 }
 
 function playPause() {
-    // preload stored time when site loaded
-    if (just_reloaded) {
-        player.currentTime = stored_audio_time;
-        just_reloaded = 0;
+
+    // if even stored_duration still not loaded and therefore knob not yet loaded
+    // this situation appears after new audio file is opened (stored_duration reseted) in browser which loads duration late (no player.duration)
+    if (!player.duration && !stored_duration) {console.log('not even stored_duration not available when user pushing play button');
+        // wait
+        setTimeout(function() {
+            if (just_reloaded) {
+                // jump to stored time
+                player.currentTime = stored_audio_time;
+                
+                just_reloaded = 0;
+            }
+
+            if (player.duration) {
+                // stored duration so it could be used to set knob after reload
+                localStorage.setItem('stored_duration', player.duration);
+                setKnob(player.duration, player.currentTime);
+            }
+            //$('#debug3').text('deb3: '+player.duration+' / '+player.currentTime+'='+stored_audio_time);
+        }, 200);
+    }
+    else {
+        if (just_reloaded) {
+            // jump to stored time
+            player.currentTime = stored_audio_time;
+
+            just_reloaded = 0;
+        }
     }
             
     // if not playing
@@ -561,9 +594,6 @@ $(document).ready(function() {
     // DEMO
 
     $('.demo').click(function() {
-        // get duration (workaround for Android)
-        loaded_duration = $(this).data('duration') || 0;
-        localStorage.setItem('stored_loaded_duration', loaded_duration);
 
         $("#more").hide();
         loadDemo($(this).attr('id'));
