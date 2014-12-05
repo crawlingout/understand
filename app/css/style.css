@@ -218,10 +218,6 @@ li {
     display: none;
 }
 
-#quota {
-    /*display: none;*/
-}
-
 .closepopup {
     color: #C0C0C0;
     cursor: pointer;
@@ -377,16 +373,6 @@ li {
 
 #remove_words span {
     font-size: 24px;
-}
-
-#quota_used_wrapper {
-    color: #B5B5B5;
-    font-size: 11px;
-    padding: 10px 0 30px 20px;
-}
-
-.quota_used {
-    color: black;
 }
 
 #right {

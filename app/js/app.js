@@ -5,9 +5,6 @@ var max_translation_length = 5; // number of words allowed to be translated - if
 var from = localStorage.getItem('stored_lang_from') || 'en';
 var to = localStorage.getItem('stored_lang_to') || 'es';
 var previous_translated_words = [];
-var quota = 5000; // config
-var quota_used = Number(localStorage.getItem('quota_used')) || 0;
-var quota_month = Number(localStorage.getItem('quota_month')) || 0;
 var scrollposition = Number(localStorage.getItem('lang_scrollposition')) || 0;
 var textfile = localStorage.getItem('stored_text_file_content') || 0;
 var audiofile = localStorage.getItem('stored_audio_file_url') || 0;
@@ -27,30 +24,6 @@ var warning = '<i class="fa fa-exclamation-triangle"></i> \
 
 function errorHandler(e) {
     console.log('error>', e.message);
-}
-
-// handle monthly quota
-function showQuota(add) {
-    var d = new Date();
-    var m = d.getMonth();
-    var percent;
-
-    // still the same month
-    if (m === quota_month) {
-        quota_used = quota_used + add;
-        percent = Math.round((quota_used/quota)*100);
-        $('.quota_used').text(percent);
-        localStorage.setItem('quota_used', quota_used);
-    }
-    else {
-        quota_used = 0 + add;
-        percent = Math.round((quota_used/quota)*100);
-        $('.quota_used').text(percent);
-        localStorage.setItem('quota_used', quota_used);
-
-        quota_month = m;
-        localStorage.setItem('quota_month', quota_month);
-    }
 }
 
 function prependPrevWord(word) {
@@ -95,15 +68,7 @@ function callBing(from, to, text) {
 }
 
 function getTranslation(word) {
-    // if (quota_used < quota) {
-
-        // call Bing API
-        callBing(from, to, word);
-    // }
-    // else {
-    //     $('#quota_used_wrapper').html('<div class="failed">Over quota! Could not translate.</div>');
-    //     $('#translatedword').text('UNTRANSLATED');
-    // }
+    callBing(from, to, word);
 }
 
 function getTextSelection() {
