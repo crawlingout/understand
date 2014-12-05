@@ -431,7 +431,7 @@ function playPause() {
                 setKnob(player.duration, player.currentTime);
             }
             //$('#debug3').text('deb3: '+player.duration+' / '+player.currentTime+'='+stored_audio_time);
-        }, 100);
+        }, 200);
     }
     else {
         if (just_reloaded) {
