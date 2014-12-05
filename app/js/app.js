@@ -225,16 +225,24 @@ function loadAudioToPlayer(file) {
 function resetPlayer() {
 
     // if playing
-    if (!(player.paused || player.ended)) {
-        // pause
-        playPause();
+    if (!player.paused && !player.ended) {
+        player.pause();
     }
 
-    // reset stored time and url
+    // reset stored time, url and duration
     stored_audio_time = 0;
     localStorage.setItem('stored_audio_time', stored_audio_time);
     audiofile = 0;
     localStorage.removeItem('stored_audio_file_url');
+    stored_duration = 0;
+    localStorage.removeItem('stored_duration');
+
+    // clear interval updating progress bar
+    window.clearInterval(interval);
+
+    // set icon to play
+    $('#pause_btn').hide();
+    $('#play_btn').show();
 
     // reset audio progress bar
     $('.knob').val(0).trigger('change');
@@ -424,7 +432,7 @@ function playPause() {
             just_reloaded = 0;
         }
     }
-            
+
     // if not playing
     if (player.paused || player.ended) {
         // play

@@ -37,10 +37,10 @@ function showQuota(add) {
 
     // still the same month
     if (m === quota_month) {
-    	quota_used = quota_used + add;
+        quota_used = quota_used + add;
         percent = Math.round((quota_used/quota)*100);
-    	$('.quota_used').text(percent);
-    	localStorage.setItem('quota_used', quota_used);
+        $('.quota_used').text(percent);
+        localStorage.setItem('quota_used', quota_used);
     }
     else {
         quota_used = 0 + add;
@@ -54,51 +54,51 @@ function showQuota(add) {
 }
 
 function prependPrevWord(word) {
-	$('#previous_translated_words').prepend('<p><span>'+word[from]+'</span>&nbsp;&nbsp;'+word[to]+'</p>');
+    $('#previous_translated_words').prepend('<p><span>'+word[from]+'</span>&nbsp;&nbsp;'+word[to]+'</p>');
 }
 
 function mycallback(response) {
-	$('#translatedword').html(response);
+    $('#translatedword').html(response);
 
-	var new_word = {};
-	new_word[from] = $('#selectedword').text();
-	new_word[to] = response;
+    var new_word = {};
+    new_word[from] = $('#selectedword').text();
+    new_word[to] = response;
 
-	previous_translated_words.push(new_word);
+    previous_translated_words.push(new_word);
 
-	localStorage.setItem('previous_translated_words', JSON.stringify(previous_translated_words));
+    localStorage.setItem('previous_translated_words', JSON.stringify(previous_translated_words));
 }
 
 function callBing(from, to, text) {
-	$.ajax({
+    $.ajax({
         type: 'POST',
         data: {"authtype": "js"},
-		//url: '../../server/localtoken.php', // local
+        //url: '../../server/localtoken.php', // local
         url: 'http://www.simplyeasy.cz/services/token.php', // external
-		success: function(data) {
+        success: function(data) {
 
-			var s = document.createElement("script");
-			s.src = "http://api.microsofttranslator.com/V2/Ajax.svc/Translate" +
-				"?appId=Bearer " + encodeURIComponent(data) +
-				"&from=" + encodeURIComponent(from) +
-				"&to=" + encodeURIComponent(to) +
-				"&text=" + encodeURIComponent(text) +
-				"&oncomplete=mycallback";
-			document.body.appendChild(s);
-		},
-		error: function(xhr, type) {console.log('error');
-			$('#translatedword').text('UNTRANSLATED');
-		}
-	});
+            var s = document.createElement("script");
+            s.src = "http://api.microsofttranslator.com/V2/Ajax.svc/Translate" +
+                "?appId=Bearer " + encodeURIComponent(data) +
+                "&from=" + encodeURIComponent(from) +
+                "&to=" + encodeURIComponent(to) +
+                "&text=" + encodeURIComponent(text) +
+                "&oncomplete=mycallback";
+            document.body.appendChild(s);
+        },
+        error: function(xhr, type) {console.log('error');
+            $('#translatedword').text('UNTRANSLATED');
+        }
+    });
 
-	//showQuota(text.length);
+    //showQuota(text.length);
 }
 
 function getTranslation(word) {
     // if (quota_used < quota) {
 
         // call Bing API
-    	callBing(from, to, word);
+        callBing(from, to, word);
     // }
     // else {
     //     $('#quota_used_wrapper').html('<div class="failed">Over quota! Could not translate.</div>');
@@ -125,7 +125,7 @@ function handleSelectedText() {
     var text = getTextSelection(), previous_word = {};
 
     // get previously selected word
-	previous_word[from] = $('#selectedword').html();
+    previous_word[from] = $('#selectedword').html();
 
     // get previously translated word
     previous_word[to] = $('#translatedword').html();
@@ -145,14 +145,14 @@ function handleSelectedText() {
             // hide warning text shown when text is too long
             $('#whentoolong').hide();
 
-        	// insert word to be translated into visible element
-        	$('#selectedword').text(text);
+            // insert word to be translated into visible element
+            $('#selectedword').text(text);
 
             // try to translate
             getTranslation(text);
 
-        	// unhide pair word_to_translate: translated_word
-        	$('#translations').show();
+            // unhide pair word_to_translate: translated_word
+            $('#translations').show();
         }
         else {
             // create URL to google translate
@@ -182,11 +182,11 @@ function setKnob(dur, cur) {
 }
 
 function loadAudioToPlayer(file) {
-	// load audio file
-	player.src = file;
+    // load audio file
+    player.src = file;
 
-	// set color of play/pause icon to golden
-	$('.circle').css('color', '#FFD700');
+    // set color of play/pause icon to golden
+    $('.circle').css('color', '#FFD700');
 
     // un-green the 'load audio' button
     $('#audioFileSelect').css({
@@ -194,10 +194,10 @@ function loadAudioToPlayer(file) {
         "color": "#565656"
     });
 
-	// when the player is ready
-	player.addEventListener("canplay", function() {console.log('canplay');
+    // when the player is ready
+    player.addEventListener("canplay", function() {console.log('canplay');
 
-		if (player.duration) {
+        if (player.duration) {
             // set knob
             setKnob(player.duration, player.currentTime);
             //$('#debug1').text('deb1: '+player.duration+' / '+player.currentTime+'='+stored_audio_time);
@@ -209,35 +209,40 @@ function loadAudioToPlayer(file) {
                 setKnob(stored_duration, stored_audio_time);
             }
         }
-	});
+    });
 
-	// listener for finished audio
-	player.addEventListener("ended", function() {
-		// set icon to play
-		$('#pause_btn').hide();
-		$('#play_btn').show();
+    // listener for finished audio
+    player.addEventListener("ended", function() {
+        // set icon to play
+        $('#pause_btn').hide();
+        $('#play_btn').show();
 
-		// reset stored time
-		localStorage.setItem('stored_audio_time', '0');
-	});
+        // reset stored time
+        localStorage.setItem('stored_audio_time', '0');
+    });
 }
 
 function resetPlayer() {
 
     // if playing
-    if (!(player.paused || player.ended)) {
-        // pause
-        playPause();
+    if (!player.paused && !player.ended) {
+        player.pause();
     }
 
-    // reset stored time and url
+    // reset stored time, url and duration
     stored_audio_time = 0;
     localStorage.setItem('stored_audio_time', stored_audio_time);
     audiofile = 0;
     localStorage.removeItem('stored_audio_file_url');
-
     stored_duration = 0;
     localStorage.removeItem('stored_duration');
+
+    // clear interval updating progress bar
+    window.clearInterval(interval);
+
+    // set icon to play
+    $('#pause_btn').hide();
+    $('#play_btn').show();
 
     // reset audio progress bar
     $('.knob').val(0).trigger('change');
@@ -275,30 +280,30 @@ function handleAudioFileSelect(evt) {
 
     // store file via FileSystem API
     var storeFile = function() {
-    	fs.root.getFile(audiofile.name, {create: true, exclusive: true}, function(fileEntry) {
-    		// store file's local URL in local storage
-    		localStorage.setItem('stored_audio_file_url', fileEntry.toURL());
+        fs.root.getFile(audiofile.name, {create: true, exclusive: true}, function(fileEntry) {
+            // store file's local URL in local storage
+            localStorage.setItem('stored_audio_file_url', fileEntry.toURL());
 
-	        fileEntry.createWriter(function(fileWriter) {
-	            fileWriter.write(audiofile);
-	        }, errorHandler);
-	    }, errorHandler);
+            fileEntry.createWriter(function(fileWriter) {
+                fileWriter.write(audiofile);
+            }, errorHandler);
+        }, errorHandler);
     };
 
     // if FileSystem API supported
     if (fs) {
-    	// remove file previously stored via FileSystem API
-	    var dirReader = fs.root.createReader();
-	    dirReader.readEntries(function(entries) {
-			for (var i = 0; i < entries.length; ++i) {
-				entries[i].remove(function() { // store after removing previously stored file
-					storeFile();
-				}, errorHandler);
-			}
-			if (entries.length === 0) { // store even if no file previously stored
-				storeFile();
-			}
-	    }, errorHandler);
+        // remove file previously stored via FileSystem API
+        var dirReader = fs.root.createReader();
+        dirReader.readEntries(function(entries) {
+            for (var i = 0; i < entries.length; ++i) {
+                entries[i].remove(function() { // store after removing previously stored file
+                    storeFile();
+                }, errorHandler);
+            }
+            if (entries.length === 0) { // store even if no file previously stored
+                storeFile();
+            }
+        }, errorHandler);
     }
 }
 
@@ -309,65 +314,65 @@ function loadText(text) {
         "background-color": "#FFFFFF",
         "color": "#565656"
     });
-	
-	// split paragraphs by empty lines
-	var paragraphs = text.split("\n");
+    
+    // split paragraphs by empty lines
+    var paragraphs = text.split("\n");
 
     var content = '<p>';
 
     for (var i=0, l=paragraphs.length; i<l; i++) {
-    	if (paragraphs[i] !== '\r' && paragraphs[i] !== '') {
-    		content = content + paragraphs[i]+' ';
-    	}
-    	else {
-    		content = content + '</p><p>';
-    	}
+        if (paragraphs[i] !== '\r' && paragraphs[i] !== '') {
+            content = content + paragraphs[i]+' ';
+        }
+        else {
+            content = content + '</p><p>';
+        }
     }
     content = content + '</p>';
 
     // hideinstructions on how to use the site
-	$('#instructions').hide();
+    $('#instructions').hide();
     $('#backhome').show();
     $('#translated_words').show();
 
-	$('#content').show().html(content);
+    $('#content').show().html(content);
 
     // jump to stored scroll position
     $('#content_wrapper').scrollTop(scrollposition);
 
     // store scroll position
     $('#content_wrapper').scroll(function() {
-		localStorage.setItem('lang_scrollposition', this.scrollTop);
-	});
+        localStorage.setItem('lang_scrollposition', this.scrollTop);
+    });
 }
 
 function handleTextFileSelect(evt) {
 
-	// reset stored scroll position
-	scrollposition = 0;
-	localStorage.setItem('lang_scrollposition', scrollposition);
+    // reset stored scroll position
+    scrollposition = 0;
+    localStorage.setItem('lang_scrollposition', scrollposition);
  
-	// file reader supported
-	if (window.FileReader) {
+    // file reader supported
+    if (window.FileReader) {
 
-		var reader = new FileReader();
+        var reader = new FileReader();
 
-		// closure to capture the file information.
-		reader.onload = function(e) {
-			loadText(e.target.result);
+        // closure to capture the file information.
+        reader.onload = function(e) {
+            loadText(e.target.result);
 
-			// store text
-			localStorage.setItem('stored_text_file_content', e.target.result);
-		};
+            // store text
+            localStorage.setItem('stored_text_file_content', e.target.result);
+        };
 
-		// read in the file
-		reader.readAsText(evt.target.files[0]);
-	}
-	else {console.log('File reader not supported.');
-		// show 'browser not fully supported' message 
-		$('#warning').html(warning);
+        // read in the file
+        reader.readAsText(evt.target.files[0]);
+    }
+    else {console.log('File reader not supported.');
+        // show 'browser not fully supported' message 
+        $('#warning').html(warning);
         $('#warning').show();
-	}
+    }
 }
 
 function loadDemo(demoid) {
@@ -378,8 +383,8 @@ function loadDemo(demoid) {
         localStorage.setItem('stored_text_file_content', data);
     });
 
-	audiofile = 1;
-	loadAudioToPlayer('http://www.simplyeasy.cz/files/'+demoid+'.mp3');
+    audiofile = 1;
+    loadAudioToPlayer('http://www.simplyeasy.cz/files/'+demoid+'.mp3');
     localStorage.setItem('stored_audio_file_url', 'http://www.simplyeasy.cz/files/'+demoid+'.mp3');
 }
 
@@ -392,9 +397,17 @@ function jumpBack() {
 
     if (current_time > jumpstep) {
         player.currentTime = current_time - jumpstep;
+
+        // TRACKING
+        audioTime(-jumpstep);
+
     }
     else {
         player.currentTime = 0;
+
+        // TRACKING
+        audioTime(-current_time);
+
     }
 }
 
@@ -402,7 +415,7 @@ function playPause() {
 
     // if even stored_duration still not loaded and therefore knob not yet loaded
     // this situation appears after new audio file is opened (stored_duration reseted) in browser which loads duration late (no player.duration)
-    if (!player.duration && !stored_duration) {console.log('not even stored_duration not available when user pushing play button');
+    if (!player.duration && !stored_duration) {console.log('even stored_duration not available when user pushing play button');
         // wait
         setTimeout(function() {
             if (just_reloaded) {
@@ -418,7 +431,7 @@ function playPause() {
                 setKnob(player.duration, player.currentTime);
             }
             //$('#debug3').text('deb3: '+player.duration+' / '+player.currentTime+'='+stored_audio_time);
-        }, 200);
+        }, 100);
     }
     else {
         if (just_reloaded) {
@@ -442,11 +455,11 @@ function playPause() {
         interval = window.setInterval(function(){
             $('.knob').val(player.currentTime).trigger('change');
 
+            // TRACKING
             // track audio time
-            if (tracking) {
-                showAudioTime(player.currentTime);
-                showRatio();
-            }
+            audioTime(1);
+            showRatio();
+
         }, 1000);
     }
     // if playing
@@ -469,18 +482,18 @@ function playPause() {
 
 $(document).ready(function() {
 
-	if (textfile) {
-		loadText(textfile);
-	}
-	else {
-		// show instructions on how to use the site
-		$('#instructions').show();
+    if (textfile) {
+        loadText(textfile);
+    }
+    else {
+        // show instructions on how to use the site
+        $('#instructions').show();
         $('#backhome').hide();
-	}
+    }
 
 
 
-	// TRANSLATOR
+    // TRANSLATOR
 
     // when mouse button released, get and handle selected text
     $("#content").mouseup(function() {
@@ -493,26 +506,26 @@ $(document).ready(function() {
     }, false);
 
 
-	// preload selected from/to languages
-	$('#from').val(from);
-	$('#to').val(to);
+    // preload selected from/to languages
+    $('#from').val(from);
+    $('#to').val(to);
 
-	// change selected from/to languages
-	$('.select_lang').change(function() {
-		if ($(this).attr('id') === 'from') {
-			from = $(this).val();
-		}
-		if ($(this).attr('id') === 'to') {
-			to = $(this).val();
-		}
-		localStorage.setItem('stored_lang_'+$(this).attr('id'), $(this).val());
-	});
+    // change selected from/to languages
+    $('.select_lang').change(function() {
+        if ($(this).attr('id') === 'from') {
+            from = $(this).val();
+        }
+        if ($(this).attr('id') === 'to') {
+            to = $(this).val();
+        }
+        localStorage.setItem('stored_lang_'+$(this).attr('id'), $(this).val());
+    });
 
 
 
-	// PLAYER
+    // PLAYER
     
-	$(".knob").knob({
+    $(".knob").knob({
         'change': function(e){
             player.currentTime = e;
             $('.knob').val(player.currentTime).trigger('change');
@@ -520,78 +533,78 @@ $(document).ready(function() {
     });
 
     $("#audioFileSelect").click(function() {
-    	resetPlayer();
+        resetPlayer();
     });
 
     // get audioplayer
-	player = document.getElementById('audioplayer');
+    player = document.getElementById('audioplayer');
 
-	// player controls
-	$('#play_pause').click(function() {
-		
-		// if file loaded
-		if (audiofile) {
+    // player controls
+    $('#play_pause').click(function() {
+        
+        // if file loaded
+        if (audiofile) {
 
-			playPause();
-		}
-	});
+            playPause();
+        }
+    });
 
-	// jump N (defined in data attribute) seconds back
-	$(".jumpback").click(function() {
-		jumpBack();
-	});
+    // jump N (defined in data attribute) seconds back
+    $(".jumpback").click(function() {
+        jumpBack();
+    });
 
-	// handle file selects
-	var audio_file_select = document.getElementById('audio_files');
-	audio_file_select.addEventListener('change', handleAudioFileSelect, false);
+    // handle file selects
+    var audio_file_select = document.getElementById('audio_files');
+    audio_file_select.addEventListener('change', handleAudioFileSelect, false);
 
-	// fake file select so the native one can be hidden
-	var audioFileSelect = document.getElementById("audioFileSelect");
-	audioFileSelect.addEventListener("click", function (e) {
-		if (audio_file_select) {
-	  		audio_file_select.click();
-		}
-		e.preventDefault();
-	}, false);
+    // fake file select so the native one can be hidden
+    var audioFileSelect = document.getElementById("audioFileSelect");
+    audioFileSelect.addEventListener("click", function (e) {
+        if (audio_file_select) {
+            audio_file_select.click();
+        }
+        e.preventDefault();
+    }, false);
 
-	var text_file_select = document.getElementById('text_files');
-	text_file_select.addEventListener('change', handleTextFileSelect, false);
+    var text_file_select = document.getElementById('text_files');
+    text_file_select.addEventListener('change', handleTextFileSelect, false);
 
-	// fake file select so the native one can be hidden
-	var textFileSelect = document.getElementById("textFileSelect");
-	textFileSelect.addEventListener("click", function (e) {
-		if (text_file_select) {
-	  		text_file_select.click();
-		}
-		e.preventDefault();
-	}, false);
+    // fake file select so the native one can be hidden
+    var textFileSelect = document.getElementById("textFileSelect");
+    textFileSelect.addEventListener("click", function (e) {
+        if (text_file_select) {
+            text_file_select.click();
+        }
+        e.preventDefault();
+    }, false);
 
 
-	// check for FileSystem API support
-	if (window.requestFileSystem) {
-		// all the APIs are supported
+    // check for FileSystem API support
+    if (window.requestFileSystem) {
+        // all the APIs are supported
 
-		// initialise file system
-		window.requestFileSystem(window.TEMPORARY, 50*1024*1024, function(filesystem) {
-	        fs = filesystem;
+        // initialise file system
+        window.requestFileSystem(window.TEMPORARY, 50*1024*1024, function(filesystem) {
+            fs = filesystem;
 
-			// try to preload previously selected file
-			if (audiofile) {
-				loadAudioToPlayer(audiofile);
-			}
+            // try to preload previously selected file
+            if (audiofile) {
+                loadAudioToPlayer(audiofile);
+            }
 
-	    }, errorHandler);
-	}
-	else {console.log('The FileSystem API not fully supported in this browser.');
+        }, errorHandler);
+    }
+    else {console.log('The FileSystem API not fully supported in this browser.');
 
-		resetPlayer();
+        resetPlayer();
         resetText();
 
-		// show 'browser not fully supported' message 
-		$('#warning').html(warning);
+        // show 'browser not fully supported' message 
+        $('#warning').html(warning);
         $('#warning').show();
 
-	}
+    }
 
 
     // CLEAR EVERYTHING AND GO BACK TO THE MAIN PAGE
@@ -601,16 +614,16 @@ $(document).ready(function() {
     });
 
 
-	// DEMO
+    // DEMO
 
-	$('.demo').click(function() {
+    $('.demo').click(function() {
 
-		$("#more").hide();
+        $("#more").hide();
         loadDemo($(this).attr('id'));
 
         // swicth to the language of the demo
         $('#from').val($(this).parent().data('lang'));
-	});
+    });
 
     // show demos pop-up
     $('#tryitnow').click(function() {
@@ -629,24 +642,24 @@ $(document).ready(function() {
     });
 
 
-	// load previously translated words
-	var i;
-	previous_translated_words = JSON.parse(localStorage.getItem('previous_translated_words')) || [];
+    // load previously translated words
+    var i;
+    previous_translated_words = JSON.parse(localStorage.getItem('previous_translated_words')) || [];
 
-	for (i in previous_translated_words) {
-		if (previous_translated_words[i][from] && previous_translated_words[i][to]) {
-			prependPrevWord(previous_translated_words[i]);
-		}
-	}
-
-	// remove previously translated words
-	$('#remove_words').click(function() {
-        if (confirm('Are you sure?')) {
-    		$('#previous_translated_words').empty();
-    		previous_translated_words = [];
-    		localStorage.setItem('previous_translated_words', '[]');
+    for (i in previous_translated_words) {
+        if (previous_translated_words[i][from] && previous_translated_words[i][to]) {
+            prependPrevWord(previous_translated_words[i]);
         }
-	});
+    }
+
+    // remove previously translated words
+    $('#remove_words').click(function() {
+        if (confirm('Are you sure?')) {
+            $('#previous_translated_words').empty();
+            previous_translated_words = [];
+            localStorage.setItem('previous_translated_words', '[]');
+        }
+    });
 
 
     // keyboar shortcuts
@@ -665,6 +678,7 @@ $(document).ready(function() {
 
 
     // TRACKING
+    // tracking controls
     $('#start_tracking').on('click', function() {
         tracking = 1;
 
@@ -674,7 +688,7 @@ $(document).ready(function() {
         $('#stop_tracking').show();
         $('#tracking_info').show();
 
-        timer = setInterval(function() {trackProgress();}, 1000);
+        timer = setInterval(function() {sessionTime();}, 1000);
     });
 
     $('#stop_tracking').on('click', function() {
@@ -686,7 +700,7 @@ $(document).ready(function() {
     });
 
 
-	//showQuota(0);
+    //showQuota(0);
 
     // show BTC donation qr code on hover
     $('#qr').hover(function() {
