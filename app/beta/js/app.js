@@ -429,8 +429,8 @@ function playPause() {
                 
                 just_reloaded = 0;
             }
-            //$('#debug3').text('deb3: '+player.duration+' / '+player.currentTime+'='+stored_audio_time);
-        }, 200);
+            $('#debug3').text('deb3: '+player.duration+' / '+player.currentTime+'='+stored_audio_time);
+        }, 500);
     }
     else {
         if (just_reloaded) {
