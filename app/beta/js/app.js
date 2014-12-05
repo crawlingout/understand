@@ -418,17 +418,16 @@ function playPause() {
     if (!player.duration && !stored_duration) {console.log('even stored_duration not available when user pushing play button');
         // wait
         setTimeout(function() {
+            if (player.duration) {
+                // stored duration so it could be used to set knob after reload
+                localStorage.setItem('stored_duration', player.duration);
+                setKnob(player.duration, player.currentTime);
+            }
             if (just_reloaded) {
                 // jump to stored time
                 player.currentTime = stored_audio_time;
                 
                 just_reloaded = 0;
-            }
-
-            if (player.duration) {
-                // stored duration so it could be used to set knob after reload
-                localStorage.setItem('stored_duration', player.duration);
-                setKnob(player.duration, player.currentTime);
             }
             //$('#debug3').text('deb3: '+player.duration+' / '+player.currentTime+'='+stored_audio_time);
         }, 200);
