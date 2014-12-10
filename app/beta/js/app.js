@@ -400,7 +400,7 @@ function playPause() {
                 }
             }
             $('#debug3').text('deb3: '+player.duration+' / '+player.currentTime+'='+stored_audio_time);
-        }, 100); // TODO - could shorter time be used?
+        }, 10); // TODO - could shorter time be used?
     }
     else {
         if (just_reloaded) {
