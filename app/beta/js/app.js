@@ -165,14 +165,19 @@ function loadAudioToPlayer(file) {
         if (player.duration) {
             // set knob
             setKnob(player.duration, player.currentTime);
-            //$('#debug1').text('deb1: '+player.duration+' / '+player.currentTime+'='+stored_audio_time);
+            $('#debug1').text('deb1: '+player.duration+' / '+player.currentTime+'='+stored_audio_time);
         }
         else {console.log('duration not available at canplay event');
             // if at least stored duration available (after reload), use it to set knob
             // workaround for browsers that load duration later
             if (stored_duration) {
                 setKnob(stored_duration, stored_audio_time);
+                $('#debug2').text('deb2: '+player.duration+' / '+player.currentTime+'='+stored_audio_time);
             }
+            else {
+                $('#debug2').text('deb2-B: '+player.duration+' / '+player.currentTime+'='+stored_audio_time);
+            }
+            // else attempt to handle it after play button is pushed
         }
     });
 
@@ -379,7 +384,8 @@ function jumpBack() {
 function playPause() {
 
     // if even stored_duration still not loaded and therefore knob not yet loaded
-    // this situation appears after new audio file is opened (stored_duration reseted) in browser which loads duration late (no player.duration)
+    // this situation appears after new audio file is opened (stored_duration reseted)
+    // in browser which loads duration late (no player.duration when canplay event called)
     if (!player.duration && !stored_duration) {console.log('even stored_duration not available when user pushing play button');
         // wait
         setTimeout(function() {
@@ -395,8 +401,8 @@ function playPause() {
                 localStorage.setItem('stored_duration', player.duration);
                 setKnob(player.duration, player.currentTime);
             }
-            //$('#debug3').text('deb3: '+player.duration+' / '+player.currentTime+'='+stored_audio_time);
-        }, 200);
+            $('#debug3').text('deb3: '+player.duration+' / '+player.currentTime+'='+stored_audio_time);
+        }, 200); // TODO - could shorter time be used?
     }
     else {
         if (just_reloaded) {
@@ -404,6 +410,7 @@ function playPause() {
             player.currentTime = stored_audio_time;
 
             just_reloaded = 0;
+            $('#debug4').text('deb4: '+player.duration+' / '+player.currentTime+'='+stored_audio_time);
         }
     }
 
