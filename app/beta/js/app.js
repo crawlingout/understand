@@ -162,20 +162,16 @@ function loadAudioToPlayer(file) {
     // when the player is ready
     player.addEventListener("canplay", function() {console.log('canplay');
 
+        // detect if player loaded propperly
         if (player.duration) {
             // set knob
             setKnob(player.duration, player.currentTime);
-            $('#debug1').text('deb1: '+player.duration+' / '+player.currentTime+'='+stored_audio_time);
         }
-        else {console.log('duration not available at canplay event');
+        else {
             // if at least stored duration available (after reload), use it to set knob
-            // workaround for browsers that load duration later
+            // workaround for browsers that load player later
             if (stored_duration) {
                 setKnob(stored_duration, stored_audio_time);
-                $('#debug2').text('deb2: '+player.duration+' / '+player.currentTime+'='+stored_audio_time);
-            }
-            else {
-                $('#debug2').text('deb2-B: '+player.duration+' / '+player.currentTime+'='+stored_audio_time);
             }
             // else attempt to handle it after play button is pushed
         }
@@ -383,23 +379,25 @@ function jumpBack() {
 
 function playPause() {
 
-    // if even stored_duration still not loaded and therefore knob not yet loaded
-    // this situation appears after new audio file is opened (stored_duration reseted)
-    // in browser which loads duration late (no player.duration when canplay event called)
-    if (!player.duration && !stored_duration) {console.log('even stored_duration not available when user pushing play button');
+    // in browser which loads player late (no player.duration when canplay event called)
+    if (!player.duration) {
         // wait
         setTimeout(function() {
-            if (just_reloaded) {
-                // jump to stored time
-                player.currentTime = stored_audio_time;
-                
-                just_reloaded = 0;
-            }
 
+            // check if player already loaded
             if (player.duration) {
-                // stored duration so it could be used to set knob after reload
+                // store duration so it could be used to set knob after reload
                 localStorage.setItem('stored_duration', player.duration);
+
+                // set knob
                 setKnob(player.duration, player.currentTime);
+
+                if (just_reloaded) {
+                    // jump to stored time
+                    player.currentTime = stored_audio_time;
+                    
+                    just_reloaded = 0;
+                }
             }
             $('#debug3').text('deb3: '+player.duration+' / '+player.currentTime+'='+stored_audio_time);
         }, 200); // TODO - could shorter time be used?
