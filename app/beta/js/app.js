@@ -392,14 +392,14 @@ function playPause() {
                 // set knob
                 setKnob(player.duration, player.currentTime);
 
-                if (just_reloaded) {$('#debug1').text('deb1: just_reloaded = 0');
+                if (just_reloaded) {
                     // jump to stored time
                     player.currentTime = stored_audio_time;
                     
                     just_reloaded = 0;
                 }
             }
-            $('#debug3').text('deb3: '+player.duration+' / '+player.currentTime+'='+stored_audio_time);
+            //$('#debug1').text('deb1: '+player.duration+' / '+player.currentTime+'='+stored_audio_time);
         }, 200); // TODO - could shorter time be used?
     }
     else {
@@ -408,7 +408,7 @@ function playPause() {
             player.currentTime = stored_audio_time;
 
             just_reloaded = 0;
-            $('#debug4').text('deb4: '+player.duration+' / '+player.currentTime+'='+stored_audio_time);
+            //$('#debug2').text('deb2: '+player.duration+' / '+player.currentTime+'='+stored_audio_time);
         }
     }
 
