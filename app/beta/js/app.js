@@ -392,7 +392,7 @@ function playPause() {
                 // set knob
                 setKnob(player.duration, player.currentTime);
 
-                if (just_reloaded) {
+                if (just_reloaded) {$('#debug1').text('deb1: just_reloaded = 0');
                     // jump to stored time
                     player.currentTime = stored_audio_time;
                     
@@ -400,7 +400,7 @@ function playPause() {
                 }
             }
             $('#debug3').text('deb3: '+player.duration+' / '+player.currentTime+'='+stored_audio_time);
-        }, 10); // TODO - could shorter time be used?
+        }, 200); // TODO - could shorter time be used?
     }
     else {
         if (just_reloaded) {
