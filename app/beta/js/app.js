@@ -124,7 +124,7 @@ function handleSelectedText() {
 
             // ONLY FOR BETA - Seznam Slovník
             if (translation_length < 2) {
-                $('#seznam').attr('href','http://slovnik.seznam.cz/'+from+'-cz/word/?q='+text)
+                $('#seznam').attr('href','http://slovnik.seznam.cz/'+from+'-cz/word/?q='+text);
             }
             // =============
         }
