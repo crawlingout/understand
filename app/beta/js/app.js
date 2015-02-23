@@ -122,9 +122,9 @@ function handleSelectedText() {
             // unhide pair word_to_translate: translated_word
             $('#translations').show();
 
-            // ONLY FOR BETA
+            // ONLY FOR BETA - Seznam Slovník
             if (translation_length < 2) {
-                $('#seznam').attr('href','http://slovnik.seznam.cz/#'+from+'-'+to+'/word/?q='+encodeURIComponent(text))
+                $('#seznam').attr('href','http://slovnik.seznam.cz/'+from+'-cs/word/?q='+text)
             }
             // =============
         }
