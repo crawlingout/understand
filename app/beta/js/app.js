@@ -27,7 +27,10 @@ function errorHandler(e) {
 }
 
 function prependPrevWord(word) {
-    $('#previous_translated_words').prepend('<p><span>'+word[from]+'</span>&nbsp;&nbsp;'+word[to]+'</p>');
+    //$('#previous_translated_words').prepend('<p><span>'+word[from]+'</span>&nbsp;&nbsp;'+word[to]+'</p>');
+
+    // ONLY FOR BETA - link to Seznam Slovník
+    $('#previous_translated_words').prepend('<p><a target="_blank" href="http://slovnik.seznam.cz/'+from+'-cz/word/?q='+word[from]+'+"><span>'+word[from]+'</span>&nbsp;&nbsp;'+word[to]+'</a></p>');
 }
 
 function mycallback(response) {
@@ -122,7 +125,7 @@ function handleSelectedText() {
             // unhide pair word_to_translate: translated_word
             $('#translations').show();
 
-            // ONLY FOR BETA - Seznam Slovník
+            // ONLY FOR BETA - link to Seznam Slovník
             if (translation_length < 2) {
                 $('#seznam').attr('href','http://slovnik.seznam.cz/'+from+'-cz/word/?q='+text);
             }
