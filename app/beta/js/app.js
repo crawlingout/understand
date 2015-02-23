@@ -105,8 +105,11 @@ function handleSelectedText() {
         // strip spaces before/after words
         text = text.trim();
 
+        // get length of transtlated string
+        var translation_length = text.split(' ').length;
+
         // too long string
-        if (text.split(' ').length <= max_translation_length) {
+        if (translation_length <= max_translation_length) {
             // hide warning text shown when text is too long
             $('#whentoolong').hide();
 
@@ -118,6 +121,12 @@ function handleSelectedText() {
 
             // unhide pair word_to_translate: translated_word
             $('#translations').show();
+
+            // ONLY FOR BETA
+            if (translation_length < 2) {
+                $('#seznam').attr('href','http://slovnik.seznam.cz/#'+from+'-'+to+'/word/?q='+encodeURIComponent(text))
+            }
+            // =============
         }
         else {
             // create URL to google translate
@@ -160,7 +169,7 @@ function loadAudioToPlayer(file) {
     });
 
     // when the player is ready
-    player.addEventListener("canplay", function() {console.log('canplay');
+    player.addEventListener("canplay", function() {//console.log(player.duration, player.currentTime);
 
         // detect if player loaded propperly
         if (player.duration) {
@@ -178,7 +187,7 @@ function loadAudioToPlayer(file) {
     });
 
     // listener for finished audio
-    player.addEventListener("ended", function() {
+    player.addEventListener("ended", function() {console.log('ended');
         // set icon to play
         $('#pause_btn').hide();
         $('#play_btn').show();

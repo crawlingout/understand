@@ -387,6 +387,13 @@ li {
     display: none;
 }
 
+/* ONLY FOR BETA */
+#seznam_dict a {
+    padding: 5px 22px;
+    color: red;
+    font-size: 13px;
+}
+/* ============= */
 
 #middle {
     position: relative;
