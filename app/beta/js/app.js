@@ -126,8 +126,8 @@ function handleSelectedText() {
             $('#translations').show();
 
             // ONLY FOR BETA - link to Seznam Slovník
-            if (translation_length < 2) {
-                $('#seznam').attr('href','http://slovnik.seznam.cz/'+from+'-cz/word/?q='+text);
+            if (translation_length <= 5) {
+                $('#seznam').attr('href','https://translate.google.com/#'+from+'/'+to+'/'+encodeURIComponent(text));
             }
             // =============
         }
