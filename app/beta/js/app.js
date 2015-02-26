@@ -30,7 +30,7 @@ function prependPrevWord(word) {
     //$('#previous_translated_words').prepend('<p><span>'+word[from]+'</span>&nbsp;&nbsp;'+word[to]+'</p>');
 
     // ONLY FOR BETA - link to Seznam Slovník
-    $('#previous_translated_words').prepend('<p><a target="_blank" href="https://translate.google.com/#'+from+'/'+to+'/'+encodeURIComponent(text)+'"><span>'+word[from]+'</span>&nbsp;&nbsp;'+word[to]+'</a></p>');
+    $('#previous_translated_words').prepend('<p><a target="_blank" href="https://translate.google.com/#'+from+'/'+to+'/'+encodeURIComponent(word[from])+'"><span>'+word[from]+'</span>&nbsp;&nbsp;'+word[to]+'</a></p>');
 }
 
 function mycallback(response) {
