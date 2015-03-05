@@ -48,7 +48,7 @@ function audioTime(difference) {
 
 // ratio between session time and audio time
 function showRatio() {
-    if (tracking) {console.log(session_audio_time+'/'+session_time);
+    if (tracking) {
         document.getElementById("session_audio_ratio").innerHTML = Math.floor((session_audio_time/session_time)*100);
     }
 }
