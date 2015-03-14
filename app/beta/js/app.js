@@ -29,8 +29,9 @@ function errorHandler(e) {
 function prependPrevWord(word) {
     //$('#previous_translated_words').prepend('<p><span>'+word[from]+'</span>&nbsp;&nbsp;'+word[to]+'</p>');
 
-    // ONLY FOR BETA - link to Seznam Slovník
-    $('#previous_translated_words').prepend('<p><a target="_blank" href="https://translate.google.com/#'+from+'/'+to+'/'+encodeURIComponent(word[from])+'"><span>'+word[from]+'</span>&nbsp;&nbsp;'+word[to]+'</a></p>');
+    // ONLY FOR BETA
+    var goog_tran = 'https://translate.google.com/#'+from+'/'+to+'/'+encodeURIComponent(word[from]);
+    $('#previous_translated_words').prepend('<p><a target="_blank" href="'+goog_tran+'"><span>'+word[from]+'</span>&nbsp;&nbsp;'+word[to]+'</a></p>');
 }
 
 function mycallback(response) {
@@ -125,7 +126,7 @@ function handleSelectedText() {
             // unhide pair word_to_translate: translated_word
             $('#translations').show();
 
-            // ONLY FOR BETA - link to Seznam Slovník
+            // ONLY FOR BETA
             if (translation_length <= 5) {
                 $('#seznam').attr('href','https://translate.google.com/#'+from+'/'+to+'/'+encodeURIComponent(text));
             }
@@ -657,6 +658,27 @@ $(document).ready(function() {
            playPause();
        }
     };
+
+
+    // RECORDING
+    $('#recording').on('click', function() {console.log('recording');
+
+        //
+        $.voice.record($("#live").is(":checked"), function(){
+            //
+            console.log('recorded');
+        });
+    });
+    $('#playback').on('click', function() {
+        console.log('playback');
+
+        //
+        $.voice.stop();
+        $.voice.export(function(url){
+            $("#audio").attr("src", url);
+            $("#audio")[0].play();
+        }, "URL");
+    });
 
 
     // TRACKING

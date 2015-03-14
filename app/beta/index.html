@@ -15,7 +15,7 @@
     <meta name="keywords" content="language, foreign language, learning, understanding" />
     <meta name="description" content="Stop translating in your head and improve your ability to understand native speakers." />
 
-    <link href='http://fonts.googleapis.com/css?family=Roboto:400,300,100,700,400italic' rel='stylesheet' type='text/css'>
+    <link href='//fonts.googleapis.com/css?family=Roboto:400,300,100,700,400italic' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="css/style.css" />
 
     <!-- Font Awesome -->
@@ -27,6 +27,10 @@
     
     <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
     <script type="text/javascript" src="js/jquery.knob.js"></script>
+
+    <!-- sound recording -->
+    <script type="text/javascript" src="js/recorder.js"></script>
+    <script type="text/javascript" src="js/jquery.voice.js"></script>
 
     <!-- tracking -->
     <script type="text/javascript" src="js/moment-2.8.3.min.js"></script>
@@ -126,7 +130,7 @@
                 </div>
             
             </div>
-            <div data-jump="7" class="jumpback" title="jump 7 seconds back"><span><i class="fa fa-caret-left"></i><i class="fa fa-caret-left"></i></span> 7 s</div>
+            <div data-jump="5" class="jumpback" title="jump 5 seconds back"><span><i class="fa fa-caret-left"></i><i class="fa fa-caret-left"></i></span> 5 s</div>
         </div>
 
         <!-- buttons -->
@@ -234,6 +238,16 @@
         </div>
         <div class="clear"></div>
 
+        <!-- recording -->
+        <div id="recorder">
+            <div id="recording" title="record your own voice">
+                record
+                <audio src="" id="audio" title="play your recording"></audio>
+            </div>
+            <div id="playback">replay</div>
+            <div class="clear"></div>
+        </div>
+
         <!-- <div id="locally" class="small">* Your files are opened locally on your device, they are not uploaded anywhere. You can safely open your own audiobooks.</div> -->
 
         <!-- TRACKING -->
@@ -300,10 +314,10 @@
     <div id="translated_words">
 
         <div id="translation_wrapper">
-            <div id="whentoolong">Too long (> 5 words). <a id="googletranslate" target="_blank" href="https://translate.google.cz/">Google Translate</a>?</div>
+            <div id="whentoolong">Too long (> 5 words). <a id="googletranslate" target="_blank" href="https://translate.google.com/">Google Translate</a>?</div>
             <div id="translations">
-                <!-- ONLY FOR BETA - link to Seznam Slovník -->
-                <a id="seznam" target="_blank" href="http://slovnik.seznam.cz/">
+                <!-- ONLY FOR BETA -->
+                <a id="seznam" target="_blank" href="https://translate.google.com/">
                     <div id="selectedword"></div><div id="arrowright"></div>
                     <div id="translatedword">...</div>
                 </a>
@@ -418,6 +432,5 @@
     });
 </script>
 
-<script type="text/javascript" src="http://www.simplyeasy.cz/services/alerts.js"></script>
 </body>
 </html>
