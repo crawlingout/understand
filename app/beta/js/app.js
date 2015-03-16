@@ -191,7 +191,7 @@ function loadAudioToPlayer(file) {
     });
 
     // listener for finished audio
-    player.addEventListener("ended", function() {console.log('ended');
+    player.addEventListener("ended", function() {//console.log('ended');
         // set icon to play
         $('#pause_btn').hide();
         $('#play_btn').show();
@@ -367,12 +367,9 @@ function loadDemo(demoid) {
     localStorage.setItem('stored_audio_file_url', 'http://www.simplyeasy.cz/files/'+demoid+'.mp3');
 }
 
-function jumpBack() {
+function jumpBack(jumpstep) {
     // get current time
     current_time = player.currentTime;
-
-    // get how much seconds to jump
-    var jumpstep = $(".jumpback").data('jump');
 
     if (current_time > jumpstep) {
         player.currentTime = current_time - jumpstep;
@@ -463,7 +460,27 @@ function playPause() {
 }
 
 
+// if just recorded my own voice -> replay
+// if not, record
+var already_replayed = 1; // this determines whether recorded audio has been replayed already
+function recordReplay() {
+    // if not played yet
+    if (already_replayed === 0) {
+
+        // play
+        $('#playback').click();
+    }
+    else {
+        // record
+        $('#recording').click();
+    }
+}
+
+
 $(document).ready(function() {
+
+    // get how much seconds to jump back
+    var jumpback = $(".jumpback").data('jump');
 
     if (textfile) {
         loadText(textfile);
@@ -534,7 +551,7 @@ $(document).ready(function() {
 
     // jump N (defined in data attribute) seconds back
     $(".jumpback").click(function() {
-        jumpBack();
+        jumpBack(jumpback);
     });
 
     // handle file selects
@@ -645,39 +662,92 @@ $(document).ready(function() {
     });
 
 
-    // keyboar shortcuts
+    // keyboard shortcuts
     window.onkeyup = function(e) {
        var key = e.keyCode ? e.keyCode : e.which;
 
        if (key == 37) { // left arrow
            // jump back
-           jumpBack();
+           jumpBack(jumpback);
        }
        else if (key == 39) { // right arrow
            // play/pause
            playPause();
        }
+       else if (key == 16) { // shift
+           // record/replay
+           recordReplay();
+       }
     };
 
 
     // RECORDING
-    $('#recording').on('click', function() {console.log('recording');
+    var recording_now = 0;
+    var ended;
+    $('#recording').on('click', function() {
 
-        //
-        $.voice.record($("#live").is(":checked"), function(){
-            //
-            console.log('recorded');
-        });
+        // if audio book playing
+        if (!(player.paused || player.ended)) {
+            // pause audio book
+            playPause();
+        }
+
+        // mark as not replayed yet
+        already_replayed = 0;
+
+        if (recording_now === 0) {
+            // record my own voice
+            $.voice.record(function() {//console.log('recorded');
+                recording_now = 1;
+                $('#playback').removeClass('active');
+                $('#recording').addClass('active');
+            });
+        }
+        // click on mic while already recording stops recording
+        else {
+            // stop recording
+            $.voice.stop();
+            recording_now = 0;
+            $('#recording').removeClass('active');
+        }
     });
     $('#playback').on('click', function() {
-        console.log('playback');
 
-        //
+        // stop recording
         $.voice.stop();
-        $.voice.export(function(url){
-            $("#audio").attr("src", url);
-            $("#audio")[0].play();
+        recording_now = 0;
+
+        // mark as played
+        already_replayed = 1;
+
+        // play recording
+        $.voice.replay(function(url){//console.log('played');
+            $("#myvoice").attr("src", url);
+            $("#myvoice")[0].play();
+
+            $('#recording').removeClass('active');
+            $('#playback').addClass('active');
         }, "URL");
+
+        // detect the end of recorded audio
+        // this could not be done via event listener - event 'ended' does not fire reliably in chrome
+        ended = setInterval(function(){
+            if (myvoice.ended) {
+                clearInterval(ended);
+                // done playing
+                $('#playback').removeClass('active');
+
+                // jump audio book back the same amount of seconds
+                if (myvoice.duration) {
+                    jumpBack(myvoice.duration);
+                }
+                // if audio book not playing
+                if (player.paused || player.ended) {
+                    // play audio book
+                    playPause();
+                }
+            }
+        }, 200);
     });
 
 

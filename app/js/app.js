@@ -613,7 +613,7 @@ $(document).ready(function() {
     });
 
 
-    // keyboar shortcuts
+    // keyboard shortcuts
     window.onkeyup = function(e) {
        var key = e.keyCode ? e.keyCode : e.which;
 

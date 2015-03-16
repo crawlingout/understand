@@ -17,7 +17,7 @@
                     console.log('Web Audio API is not supported in this browser');
                 }
             },
-            record: function(output, callback) {
+            record: function(callback) {
                 if ($.voice.initCalled === false) {
                     this.init();
                     $.voice.initCalled = true;
@@ -26,9 +26,6 @@
                     audio: true
                 }, function(stream) {
                     var input = $.voice.context.createMediaStreamSource(stream);
-                    if (output === true) {
-                        input.connect($.voice.context.destination);
-                    }
                     $.voice.recorder = new Recorder(input, {
                         workerPath: $.voice.workerPath
                     });
@@ -41,15 +38,14 @@
             },
             stop: function() {
                 $.voice.recorder.stop();
-                //$.voice.recorder.clear();
                 $.voice.stream.stop();
                 return $.voice;
             },
-            export: function(callback, type) {
+            replay: function(callback, type) {
                 $.voice.recorder.exportWAV(function(blob) {
-                    if (type == "" || type == "blob") {
+                    if (type === "" || type === "blob") {
                         callback(blob);
-                    } else if (type == "URL") {
+                    } else if (type === "URL") {
                         var url = URL.createObjectURL(blob);
                         callback(url);
                     }

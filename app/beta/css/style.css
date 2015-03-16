@@ -430,8 +430,10 @@ li {
     float: left;
 }
 
+
 #recorder {
     margin: 0 0 25px 65px;
+    color: #898989;
 }
 
 #recording {
@@ -439,6 +441,7 @@ li {
     border: 1px solid #dadada;
     border-right: none;
     border-radius: 10px 0 0 10px;
+    cursor: pointer;
     float: left;
     padding: 5px 30px;
 }
@@ -447,9 +450,15 @@ li {
     background-color: white;
     border: 1px solid #dadada;
     border-radius: 0 10px 10px 0;
+    cursor: pointer;
     float: left;
     padding: 5px 30px;
 }
+
+.active i {
+    color: #ff6500;
+}
+
 
 #text_file {
     float: right;
@@ -506,7 +515,7 @@ li {
     border: 1px solid #DEDEDE;
     border-radius: 60px;
     box-shadow: 0 0 6px #DEDEDE;
-    color: #565656;
+    color: #898989;
     cursor: pointer;
     font-size: 14px;
     height: 60px;
