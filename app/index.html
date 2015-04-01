@@ -62,38 +62,34 @@
         <div id="content_wrapper">
             <!-- BETA -->
             <div id="beta">
-                EXPERIMENTAL
+                EXPERIMENT
             </div>
             <div id="betatext" style="width: 370px;">
-                This app is in EXPERIMENTAL state. Something not working right? Please feel free to send us your feedback. Thanks!
+                This app is in EXPERIMENTAL state. Something not working right? Please feel free to send me your feedback. Thanks!
             </div>
             
             <div id="instructions">
-                <h3>How to use this app?</h3>
                 <div class="gap"></div>
-                <div id="arrows">
-                    <p>
-                        You will be flexing your language-learning brain muscles with an interesting audiobook (you need both <em>audio</em> + <em>text</em>).
-                    </p>
-                </div>
                 <div class="gap"></div>
+                <div class="gap"></div>
+                <div class="gap"></div>
+                <h3>How to practice listening skills with audiobooks?</h3>
+                <div class="gap"></div>
+                <div class="gap"></div>
+
                 <p>
-                    <span class="no">1</span> <strong>Start listening without reading the text. Try to catch as much as you can</strong>. When you get lost, pause the audio.
+                    Open both <strong>audio</strong> and <strong>text</strong> files of your own book (or try it with one of <span class="pseudolink" id="tryitnow">our demo books</span>).
                 </p>
-            
+
                 <p>
-                    <span class="no">2</span> <strong>Read the part you just listened to</strong>. Figure out the incomprehensible parts. Highlight words to have them translated. 
-                </p>
-            
-                <p>
-                    <span class="no">3</span> <strong>Listen to the same part again</strong>. If you now understand comfortably, enjoy it and continue to the next part.
+                    Listen without reading first. If you don't understand, read. If you don't know a word, highlight it to see translation.
                 </p>
                 <div class="gap"></div>
+
+                <p>Need more help?</p>
+
                 <p>
-                    For more details, read the article: <a target="_blank" href="http://blog.simplyeasy.cz/how-i-rewired-my-brain-to-really-understand-a-foreign-language/">How I Rewired My Brain to Really Understand a Foreign Language</a>.
-                </p>
-                <p>
-                    To start, open <strong>audio</strong> and <strong>text</strong> files of your own book or <span id="tryitnow">try it with one of our demo books</span>
+                    Read the <a target="_blank" href="http://blog.simplyeasy.cz/how-i-rewired-my-brain-to-really-understand-a-foreign-language/">article</a> or watch the <span class="pseudolink" id="video">video</span>.
                 </p>
             </div>
 
@@ -112,7 +108,7 @@
                 <div class="circle_bg"></div>
 
                 <div id="knob">
-                    <input class="knob" data-width="100" data-height="100" data-displayPrevious=true data-fgColor="#FFA900" data-bgColor="#FFFFFF" data-thickness=".2" value="0" data-displayInput=false>
+                    <input class="knob" data-width="100" data-height="100" data-displayPrevious=true data-fgColor="#4ba3d9" data-bgColor="#FFFFFF" data-thickness=".2" value="0" data-displayInput=false>
                 </div>
             
                 <div id="play_pause" class="circle">
@@ -121,7 +117,7 @@
                 </div>
             
             </div>
-            <div data-jump="7" class="jumpback" title="jump 7 seconds back"><span><i class="fa fa-caret-left"></i><i class="fa fa-caret-left"></i></span> 7 s</div>
+            <div data-jump="6" class="jumpback" title="jump 6 seconds back"><span><i class="fa fa-caret-left"></i><i class="fa fa-caret-left"></i></span> 6 s</div>
         </div>
 
         <!-- buttons -->
@@ -137,11 +133,14 @@
                     <div class="open_file" id="audioFileSelect"><strong>Open</strong> your<span class="small">*</span><br /> <strong>audio</strong> file</div>
                     <div class="filetypes" title="supported file types">.mp3, .wav</div>
                 </div>
+
+                <div class="clear"></div>
+                <div id="locally" class="small"><span>*</span>&nbsp; Your files are opened locally on your device, not uploaded.</div>
             </div>
         </div>
 
         <!-- language selectors -->
-        <div class="column">
+        <div class="column" style="width:28%;">
             <div id="settings">
                 <p>Translate <span class="highlighed">highlighted</span> words</p>
                 <span class="spacer">from</span>
@@ -228,7 +227,6 @@
             </div>
         </div>
         <div class="clear"></div>
-        <div id="locally" class="small">* Your files are opened locally on your device, they are not uploaded anywhere. You can safely open your own audiobooks.</div>
 
         <div id="bottom">
 
@@ -236,11 +234,11 @@
 
                 <div id="donate1">
 
-                    <div class="inarrow">Email me</div><div class="arrow"></div> at <span class="r">jan at icanunderstand dot eu</span> if you have any <strong>questions</strong>, <strong>suggestions</strong> or <strong>feature requests</strong>.
+                    <div class="inarrow">Email me</div><div class="arrow"></div> if you have any <strong>questions</strong>, <strong>suggestions</strong> or <strong>feature requests</strong> - <span class="r">jan at icanunderstand dot eu</span>
                     <div class="clear"></div><div class="gap"></div>
 
                     <div class="inarrow">Support development</div><div class="arrow"></div>
-                    <div class="txt"> Please donate Bitcoin: &nbsp;</div>
+                    <div class="txt"> Bitcoin donations appreciated: &nbsp;</div>
                     <div id="btcaddr">1KzGUW3ttwaKNdi1uN3JW5MyxyMqr3qNcq</div>
                     <div id="qr">
                         [QR]
@@ -283,21 +281,6 @@
                     <a href="https://twitter.com/share" class="twitter-share-button" data-lang="en" data-text="This can help you learn to understand a foreign language" data-url="http://icanunderstand.eu" data-counturl="http://icanunderstand.eu">Tweet</a>
                 </div>
                 <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="https://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
-
-                <!-- Google + -->
-                <div class="share">
-                    <!-- Place this tag where you want the +1 button to render. -->
-                    <div class="g-plusone" data-size="medium"></div>
-
-                    <!-- Place this tag after the last +1 button tag. -->
-                    <script type="text/javascript">
-                      (function() {
-                        var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
-                        po.src = 'https://apis.google.com/js/platform.js';
-                        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
-                      })();
-                    </script>
-                </div>
             </div>
         </div>
 
@@ -321,7 +304,7 @@
 
         <!-- footer -->
         <div id="links">
-            <a href="http://www.simplyeasy.cz/">Websites &amp; Apps</a>&nbsp; | &nbsp;
+            <a href="http://www.simplyeasy.cz/">Jan Bilek</a>&nbsp; | &nbsp;
             <a href="http://unexploredparadises.eu/">Photos of extraordinary travel destinations</a>
         </div>
     </div>
@@ -349,11 +332,6 @@
             <div id="remove_words" title="remove all stored words"><i class="fa fa-trash-o"></i></div>
         </div>
     </div>
-
-    <div class="debug" id="debug1"></div>
-    <div class="debug" id="debug2"></div>
-    <div class="debug" id="debug3"></div>
-    <div class="debug" id="debug4"></div>
 </div>
 
 
@@ -369,10 +347,7 @@
 
         <div class="scrollable">
             <!-- English -->
-            <div class="language">
-                <div class="flagbox"><span class="flag gb"></span></div> English
-                <div class="clear"></div>
-            </div>
+            <h3>English</h3>
             <div data-lang="en">
                 <div class="demo" id="war"><span class="by">H. G. Wells</span><strong>The War of the Worlds</strong></div>
                 <div class="demo" id="island"><span class="by">Robert Louis Stevenson</span><strong>Treasure Island</strong></div>
@@ -385,10 +360,7 @@
             <div class="gap"></div>
 
             <!-- German -->
-            <!-- <div class="language">
-                <div class="flagbox"><span class="flag de"></span></div> German
-                <div class="clear"></div>
-            </div>
+            <!-- <h3>German / Deutsch</h3>
             <div data-lang="de">
                 <div class="demo" id="war"><span class="by">H. G. Wells</span><strong>The War of the Worlds</strong></div>
             </div>
@@ -396,10 +368,7 @@
             
             <!-- Czech -->
             <!--
-            <div class="language">
-                <div class="flagbox"><span class="flag cz"></span></div> Czech / Česky
-                <div class="clear"></div>
-            </div>
+            <h3>Czech / Česky</h3>
             <div data-lang="cs">
                 <div class="demo" id="capek-valkasmloky"><span class="by">Karel Čapek</span><strong>Válka s mloky</strong></div>
                 <div class="demo" id="capek-tajemstvipisma"><span class="by">Karel Čapek</span><strong>Tajemství písma</strong> (povídka)</div>

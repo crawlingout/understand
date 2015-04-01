@@ -150,8 +150,8 @@ function loadAudioToPlayer(file) {
     // load audio file
     player.src = file;
 
-    // set color of play/pause icon to golden
-    $('.circle').css('color', '#FFD700');
+    // set color of play/pause icon
+    $('.circle').css('color', '#4ba3d9');
 
     // un-green the 'load audio' button
     $('#audioFileSelect').css({
@@ -218,7 +218,7 @@ function resetPlayer() {
 
     // grey out the 'load audio' button
     $('#audioFileSelect').css({
-        "background-color": "#ffa900",
+        "background-color": "#4ba3d9",
         "color": "#ffffff"
     });
 }
@@ -234,7 +234,7 @@ function resetText() {
 
     // grey out the 'load text' button
     $('#textFileSelect').css({
-        "background-color": "#ffa900",
+        "background-color": "#4ba3d9",
         "color": "#ffffff"
     });
 }

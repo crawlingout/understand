@@ -20,17 +20,17 @@ button::-moz-focus-inner { border: 0; }
 }
 
 a {
-    color: #ffa900;
+    color: #4ba3d9;
     text-decoration: none;
 }
 
 .pseudolink {
-    color: #24CC00;
+    color: #4ba3d9;
     cursor: pointer;
 }
 
 h1 {
-    color: #ffa900;
+    color: #4ba3d9;
     font-family: "Roboto",arial,sans-serif;
     font-size: 38px;
     font-weight: 300;
@@ -83,11 +83,6 @@ li {
 }
 
 #left {
-    /*
-    background pattern by Haris Šumić - http://subtlepatterns.com/subtle-grey/
-    under CC BY-SA 3.0 license - http://creativecommons.org/licenses/by-sa/3.0/
-    */
-	background: url("../img/grey.png") repeat scroll 0 0 #F7F7F7;
     box-shadow: 0 0 12px #3C3C3C;
     float: left;
     min-height: 100%;
@@ -134,7 +129,7 @@ li {
     text-transform: uppercase;
 }
 .other_lang:hover {
-    color: #ffa900;
+    color: #4ba3d9;
 }
 
 #letter {
@@ -155,7 +150,7 @@ li {
 }
 
 #purpose {
-    color: #FFA900;
+    color: #4ba3d9;
     font-family: "Roboto",arial,sans-serif;
     font-size: 34px;
     line-height: 42px;
@@ -169,7 +164,7 @@ li {
 }
 
 #getstarted a {
-    background-color: #ffa900;
+    background-color: #4ba3d9;
     border-radius: 8px;
     color: white;
     display: block;
@@ -397,7 +392,7 @@ li {
 }
 
 .open_file {
-    background-color: #ffa900;
+    background-color: #4ba3d9;
     border: 1px solid #DEDEDE;
     border-radius: 8px;
     box-shadow: 0 0 6px #DEDEDE;
@@ -419,11 +414,11 @@ li {
 .column {
     min-width: 200px;
     float: left;
-    width: 33%;
+    width: 35%;
 }
 
 #buttons {
-    padding: 15px 20px 20px 0;
+    padding: 5px 20px 20px 0;
 }
 
 .btn {
@@ -436,27 +431,27 @@ li {
 
 
 #recorder {
-    margin: 0 0 25px 65px;
     color: #898989;
+    left: 178px;
+    position: absolute;
+    top: 102px;
+}
+
+.rec {
+    background-color: white;
+    border: 1px solid #dadada;
+    cursor: pointer;
+    float: left;
+    padding: 10px 21px;
 }
 
 #recording {
-    background-color: white;
-    border: 1px solid #dadada;
+    border-radius: 20px 0 0 20px;
     border-right: none;
-    border-radius: 10px 0 0 10px;
-    cursor: pointer;
-    float: left;
-    padding: 5px 30px;
 }
 
 #playback {
-    background-color: white;
-    border: 1px solid #dadada;
-    border-radius: 0 10px 10px 0;
-    cursor: pointer;
-    float: left;
-    padding: 5px 30px;
+    border-radius: 0 20px 20px 0;
 }
 
 .active i {
@@ -469,7 +464,7 @@ li {
 }
 
 #player {
-	height: 135px;
+	height: 140px;
     margin: 25px 25px 5px;
     position: relative;
     width: 180px;
@@ -515,20 +510,19 @@ li {
 }
 
 .jumpback {
-	background-color: #FFFFFF;
-    border: 1px solid #DEDEDE;
+	background-color: #ffffff;
+    border: 1px solid #dedede;
     border-radius: 60px;
-    box-shadow: 0 0 6px #DEDEDE;
     color: #898989;
     cursor: pointer;
     font-size: 14px;
-    height: 60px;
+    height: 18px;
     left: 185px;
-    line-height: 60px;
+    line-height: 18px;
     padding: 15px;
     position: absolute;
     text-align: center;
-    top: 40px;
+    top: 25px;
     width: 60px;
 }
 
@@ -540,7 +534,7 @@ li {
 #settings select {
     margin-bottom: 10px;
     padding: 2px;
-    width: 160px;
+    width: 150px;
 }
 
 #settings .highlighed {
@@ -556,16 +550,21 @@ li {
 }
 
 #locally {
-    padding: 0 60px 0 0;
-    text-align: center;
+    color: #4f4f4f;
+    font-size: 11px;
+    padding: 18px 0 0;
+}
+
+#locally span {
+    font-size: 12px;
 }
 
 #bottom {
-    background-color: #FFFFFF;
-    border-top: 1px solid #E3E3E3;
+    background-color: #ffffff;
+    border-top: 1px solid #e3e3e3;
     font-size: 14px;
-    margin: 30px 0 0;
-    padding: 40px 70px 0;
+    margin: 0;
+    padding: 40px 70px;
     position: relative;
 }
 
@@ -574,7 +573,7 @@ li {
 }
 
 #instructions p {
-    font-size: 15px;
+    font-size: 17px;
     line-height: 28px;
 }
 
@@ -584,16 +583,6 @@ li {
     color: #848484;
     margin-right: 3px;
     padding: 1px 7px;
-}
-
-#tryitnow {
-    background-color: #ffa900;
-    border-radius: 4px;
-    color: #ffffff;
-    cursor: pointer;
-    font-weight: bold;
-    margin: 0 2px;
-    padding: 3px 8px;
 }
 
 .r {
@@ -618,17 +607,17 @@ li {
 }
 
 .inarrow {
-    background-color: #FFA900;
-    color: #FFFFFF;
+    background-color: #c4c4c4;
+    color: #ffffff;
     float: left;
     font-weight: bold;
     line-height: 25px;
-    padding: 0 0 0 5px;
+    padding: 0 8px;
 }
 
 .arrow {
     border-bottom: 12px solid rgba(0, 0, 0, 0);
-    border-left: 13px solid #FFA900;
+    border-left: 13px solid #c4c4c4;
     border-top: 12px solid rgba(0, 0, 0, 0);
     float: left;
     height: 0;
@@ -641,9 +630,8 @@ li {
     padding-right: 5px;
 }
 
-
 #donate1 #qr {
-    color: #FF6500;
+    color: #4ba3d9;
     cursor: pointer;
     float: left;
     padding-right: 5px;
@@ -687,18 +675,11 @@ li {
     color: #9C9C9C;
     font-size: 13px;
     padding: 40px 80px;
-    text-align: center;
 }
 
 #links a {
-    color: #ff9800;
+    color: #4ba3d9;
     text-decoration: none;
-}
-
-.my_disqus {
-    background-color: white;
-    border-bottom: 1px solid #e4e3e3;
-    padding: 0 70px 15px;
 }
 
 #beta {
@@ -725,12 +706,13 @@ li {
 
 /* tracking */
 #tracking {
-    border-top: 1px solid #e3e3e3;
+    border-bottom: 1px dotted silver;
     color: #6a6a6a;
     font-size: 13px;
     height: 18px;
     line-height: 18px;
-    padding: 25px 70px 0;
+    margin-bottom: 40px;
+    padding: 5px 0 40px;
 }
 
 .track_btn, .track_info {
@@ -738,7 +720,9 @@ li {
 }
 
 .track_btn {
-    border: 1px solid #6a6a6a;
+    background-color: #4ba3d9;
+    border-radius: 2px;
+    color: white;
     cursor: pointer;
     margin-right: 5px;
     text-align: center;
@@ -747,36 +731,6 @@ li {
 
 .tracking_on {
     display: none;
-}
-
-
-
-/* flags */
-
-.flag {
-    display: block;
-}
-
-/* united_kingdom */
-.gb {
- background: url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB2aWV3Qm94PSIwIDAgNjAgMzAiIGhlaWdodD0iNjAwIj4NCjxkZWZzPg0KPGNsaXBQYXRoIGlkPSJ0Ij4NCjxwYXRoIGQ9Im0zMCwxNWgzMHYxNXp2MTVoLTMwemgtMzB2LTE1enYtMTVoMzB6Ii8+DQo8L2NsaXBQYXRoPg0KPC9kZWZzPg0KPHBhdGggZmlsbD0iIzAwMjQ3ZCIgZD0ibTAsMHYzMGg2MHYtMzB6Ii8+DQo8cGF0aCBzdHJva2U9IiNmZmYiIHN0cm9rZS13aWR0aD0iNiIgZD0ibTAsMGw2MCwzMG0wLTMwbC02MCwzMCIvPg0KPHBhdGggc3Ryb2tlPSIjY2YxNDJiIiBzdHJva2Utd2lkdGg9IjQiIGQ9Im0wLDBsNjAsMzBtMC0zMGwtNjAsMzAiIGNsaXAtcGF0aD0idXJsKCN0KSIvPg0KPHBhdGggc3Ryb2tlPSIjZmZmIiBzdHJva2Utd2lkdGg9IjEwIiBkPSJtMzAsMHYzMG0tMzAtMTVoNjAiLz4NCjxwYXRoIHN0cm9rZT0iI2NmMTQyYiIgc3Ryb2tlLXdpZHRoPSI2IiBkPSJtMzAsMHYzMG0tMzAtMTVoNjAiLz4NCjwvc3ZnPg0K');
- width: 150%;
- height: 100%;
- background-size: 100% 100%;
-}
-/* czech_republic */
-.cz {
- background: url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iOTAwIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIGhlaWdodD0iNjAwIiB2aWV3Qm94PSIwIDAgNiA0Ij4NCjxwYXRoIGZpbGw9IiNkNzE0MWEiIGQ9Im0wLDBoNnY0aC02eiIvPg0KPHBhdGggZmlsbD0iI2ZmZiIgZD0ibTAsMGg2djJoLTZ6Ii8+DQo8cGF0aCBmaWxsPSIjMTE0NTdlIiBkPSJtMywybC0zLTJ2NHoiLz4NCjwvc3ZnPg0K');
- width: 150%;
- height: 100%;
- background-size: 100% 100%;
-}
-/* germany */
-.de {
- background: url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiBoZWlnaHQ9IjYwMCIgdmlld0JveD0iMCAwIDUgMyI+DQo8cGF0aCBkPSJtMCwwaDV2M2gtNXoiLz4NCjxwYXRoIGZpbGw9IiNkMDAiIGQ9Im0wLDFoNXYyaC01eiIvPg0KPHBhdGggZmlsbD0iI2ZmY2UwMCIgZD0ibTAsMmg1djFoLTV6Ii8+DQo8L3N2Zz4NCg==');
- width: 166.66666666667%;
- height: 100%;
- background-size: 100% 100%;
 }
 
 

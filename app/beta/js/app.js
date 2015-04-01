@@ -231,7 +231,7 @@ function resetPlayer() {
 
     // grey out the 'load audio' button
     $('#audioFileSelect').css({
-        "background-color": "#ffa900",
+        "background-color": "#4ba3d9",
         "color": "#ffffff"
     });
 }
@@ -247,7 +247,7 @@ function resetText() {
 
     // grey out the 'load text' button
     $('#textFileSelect').css({
-        "background-color": "#ffa900",
+        "background-color": "#4ba3d9",
         "color": "#ffffff"
     });
 }

@@ -62,39 +62,34 @@
         <div id="content_wrapper">
             <!-- BETA -->
             <div id="beta">
-                EXPERIMENTAL
+                EXPERIMENT
             </div>
             <div id="betatext" style="width: 370px;">
-                This app is in EXPERIMENTAL state. Something not working right? Please feel free to send us your feedback. Thanks!
+                Tohle je experimentální aplikace. Něco nefunguje správně? Prosím napište na <span class="r">jan at icanunderstand dot eu</span> - díky moc!
             </div>
             
             <div id="instructions">
-                <h3>Jak používat tuto aplikaci?</h3>
                 <div class="gap"></div>
-                <div id="arrows" style="margin-bottom: 35px;">
-                    <p>
-                        Budete trénovat své "jazykové mozkové buňky" se zajímavou audioknihou (budete používat nejen <em>audio</em> ale i <em>text</em> knihy).
-                    </p>
-                </div>
-                
+                <div class="gap"></div>
+                <div class="gap"></div>
+                <div class="gap"></div>
+                <h3>Jak procvičovat cizí jazyk s audioknihou?</h3>
+                <div class="gap"></div>
+                <div class="gap"></div>
+
                 <p>
-                    <span class="no">1</span> <strong>Začněte poslouchat bez dívání se na text. Zkuste pochytit co nejvíc</strong>. Když se přestanete chytat, pauzněte audio.
+                    Otevřete <strong>audio</strong> a <strong>text</strong> některé z vašich vlastních knih (nebo to můžete <span class="pseudolink" id="tryitnow">zkusit s některou z našich knih na ukázku</span>).
                 </p>
-            
+
                 <p>
-                    <span class="no">2</span> <strong>Přečtěte si text úseku, co jste si právě poslechli</strong>. Použijte text jako pomůcku k rozpoznání nesrozumitelných slov.<br />
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Pokud potřebujete některá slova přeložit, zvýrazněte je myší. 
+                    Poslouchejte bez dívání se na text. Teprve pokud nerozumíte, čtěte text. Neznáte-li slovo, zvýrazněte je myší pro překlad.
                 </p>
-            
+                <div class="gap"></div>
+
+                <p>Něco není jasné?</p>
+
                 <p>
-                    <span class="no">3</span> <strong>Poslechněte si stejnou část znovu</strong>. Pokud nyní pohodlně rozumíte, pokračujte posloucháním dalšího kousku příběhu.
-                </p>
-                
-                <p style="margin-top: 30px;">
-                    Pokud se chcete dozvědět více, přečtěte si článek: <a target="_blank" href="http://magazin.simplyeasy.cz/jak-jsem-se-naucil-opravdu-rozumet-cizimu-jazyku/">Jak jsem se naučil opravdu rozumět cizímu jazyku</a>.
-                </p>
-                <p>
-                    Otevřete <strong>audio</strong> a <strong>text</strong> některé z vašich vlastních knih nebo to můžete <span id="tryitnow">zkusit s některou z našich knih na ukázku</span>
+                    Přečtěte si <a target="_blank" href="http://magazin.simplyeasy.cz/jak-jsem-se-naucil-opravdu-rozumet-cizimu-jazyku/">článek</a> nebo se podívejte na <span class="pseudolink" id="video">video</span>.
                 </p>
             </div>
 
@@ -113,7 +108,7 @@
                 <div class="circle_bg"></div>
 
                 <div id="knob">
-                    <input class="knob" data-width="100" data-height="100" data-displayPrevious=true data-fgColor="#FFA900" data-bgColor="#FFFFFF" data-thickness=".2" value="0" data-displayInput=false>
+                    <input class="knob" data-width="100" data-height="100" data-displayPrevious=true data-fgColor="#4ba3d9" data-bgColor="#FFFFFF" data-thickness=".2" value="0" data-displayInput=false>
                 </div>
             
                 <div id="play_pause" class="circle">
@@ -122,7 +117,7 @@
                 </div>
             
             </div>
-            <div data-jump="7" class="jumpback" title="jump 7 seconds back"><span><i class="fa fa-caret-left"></i><i class="fa fa-caret-left"></i></span> 7 s</div>
+            <div data-jump="6" class="jumpback" title="jump 6 seconds back"><span><i class="fa fa-caret-left"></i><i class="fa fa-caret-left"></i></span> 6 s</div>
         </div>
 
         <!-- buttons -->
@@ -138,13 +133,16 @@
                     <div class="open_file" id="audioFileSelect"><strong>Otevřít</strong><br /> <strong>audio</strong></div>
                     <div class="filetypes" title="supported file types">.mp3, .wav</div>
                 </div>
+
+                <div class="clear"></div>
+                <div id="locally" class="small"><span>*</span>&nbsp; Vaše soubory se otevírají lokálně, nikam se neuploadují.</div>
             </div>
         </div>
 
         <!-- language selectors -->
-        <div class="column">
+        <div class="column" style="width:28%;">
             <div id="settings">
-                <p>Překládat <span class="highlighed">vybraná</span> slova</p>
+                <p>Překládat <span class="highlighed">zvýrazněná</span> slova</p>
                 <span class="spacer">z</span>
                 <select id="from" class="select_lang">
                     <option value="ar">arabštiny</option>
@@ -229,7 +227,6 @@
             </div>
         </div>
         <div class="clear"></div>
-        <div id="locally" class="small">Vaše soubory se otevírají lokálně, nikam se neuploadují. Můžete bezpečně otevřít vaše vlastní audioknihy.</div>
 
         <div id="bottom">
 
@@ -237,11 +234,11 @@
 
                 <div id="donate1">
 
-                    <div class="inarrow">Napište mi</div><div class="arrow"></div> Máte-li nějaké <strong>otázky</strong> nebo <strong>návrhy</strong>, pište na <span class="r">jan at icanunderstand dot eu</span>.
+                    <div class="inarrow">Napište mi</div><div class="arrow"></div> máte-li nějaké <strong>otázky</strong> nebo <strong>návrhy</strong> - <span class="r">jan at icanunderstand dot eu</span>
                     <div class="clear"></div><div class="gap"></div>
 
                     <div class="inarrow">Podpořte vývoj</div><div class="arrow"></div>
-                    <div class="txt"> Prosím darujte Bitcoin: </div>
+                    <div class="txt"> Bitcoinové příspěvky jsou přijímány s vděčností: &nbsp;</div>
                     <div id="btcaddr">1KzGUW3ttwaKNdi1uN3JW5MyxyMqr3qNcq</div>
                     <div id="qr">
                         [QR]
@@ -284,21 +281,6 @@
                     <a href="https://twitter.com/share" class="twitter-share-button" data-lang="en" data-text="This can help you learn to understand a foreign language" data-url="http://icanunderstand.eu" data-counturl="http://icanunderstand.eu">Tweet</a>
                 </div>
                 <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="https://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
-
-                <!-- Google + -->
-                <div class="share">
-                    <!-- Place this tag where you want the +1 button to render. -->
-                    <div class="g-plusone" data-size="medium"></div>
-
-                    <!-- Place this tag after the last +1 button tag. -->
-                    <script type="text/javascript">
-                      (function() {
-                        var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
-                        po.src = 'https://apis.google.com/js/platform.js';
-                        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
-                      })();
-                    </script>
-                </div>
             </div>
         </div>
 
@@ -322,7 +304,7 @@
 
         <!-- footer -->
         <div id="links">
-            <a href="http://www.simplyeasy.cz/">Websites &amp; Apps</a>&nbsp; | &nbsp;
+            <a href="http://www.simplyeasy.cz/">Jan Bílek</a>&nbsp; | &nbsp;
             <a href="http://unexploredparadises.eu/">Photos of extraordinary travel destinations</a>
         </div>
     </div>
@@ -350,11 +332,6 @@
             <div id="remove_words" title="remove all stored words"><i class="fa fa-trash-o"></i></div>
         </div>
     </div>
-
-    <div class="debug" id="debug1"></div>
-    <div class="debug" id="debug2"></div>
-    <div class="debug" id="debug3"></div>
-    <div class="debug" id="debug4"></div>
 </div>
 
 
@@ -370,10 +347,7 @@
 
         <div class="scrollable">
             <!-- English -->
-            <div class="language">
-                <div class="flagbox"><span class="flag gb"></span></div> Anglicky
-                <div class="clear"></div>
-            </div>
+            <h3>English / anglicky</h3>
             <div data-lang="en">
                 <div class="demo" id="war"><span class="by">H. G. Wells</span><strong>The War of the Worlds</strong></div>
                 <div class="demo" id="island"><span class="by">Robert Louis Stevenson</span><strong>Treasure Island</strong></div>
@@ -386,10 +360,7 @@
             <div class="gap"></div>
 
             <!-- German -->
-            <!-- <div class="language">
-                <div class="flagbox"><span class="flag de"></span></div> German
-                <div class="clear"></div>
-            </div>
+            <!-- <h3>Deutsch / německy</h3>
             <div data-lang="de">
                 <div class="demo" id="war"><span class="by">H. G. Wells</span><strong>The War of the Worlds</strong></div>
             </div>
@@ -397,10 +368,7 @@
             
             <!-- Czech -->
             <!--
-            <div class="language">
-                <div class="flagbox"><span class="flag cz"></span></div> Czech / Česky
-                <div class="clear"></div>
-            </div>
+            <h3>Czech / Česky</h3>
             <div data-lang="cs">
                 <div class="demo" id="capek-valkasmloky"><span class="by">Karel Čapek</span><strong>Válka s mloky</strong></div>
                 <div class="demo" id="capek-tajemstvipisma"><span class="by">Karel Čapek</span><strong>Tajemství písma</strong> (povídka)</div>
@@ -427,7 +395,7 @@
         </div>
 
         <div class="others">
-            Další knihy můžete najít na <a href="http://www.booksshouldbefree.com" target="_blank">booksshouldbefree.com</a>.
+            Další knihy můžete najít na např. <a href="http://www.booksshouldbefree.com" target="_blank">booksshouldbefree.com</a>.
         </div>
     </div>
 </div>
