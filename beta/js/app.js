@@ -360,7 +360,7 @@ function handleTextFileSelect(evt) {
 
 function loadDemo(demoid) {
 
-    $.get('../demo/'+demoid+'.txt', function(data) { // URL specific for Beta!
+    $.get('../app/demo/'+demoid+'.txt', function(data) { // URL specific for Beta!
     //$.get('demo/'+demoid+'.txt', function(data) { 
         loadText(data);
         localStorage.setItem('stored_text_file_content', data);
@@ -615,6 +615,9 @@ $(document).ready(function() {
     $('#backhome').click(function() {
         resetPlayer();
         resetText();
+
+        // TRACKING
+        resetTracking();
     });
 
 

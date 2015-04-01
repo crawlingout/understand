@@ -74,12 +74,10 @@ function showHowManyTranslated() {
 
 // when RESET button clicked
 function resetTracking() {
-    if (confirm('Are you sure?')) {
-        session_time = 1; storeData('session_time', 1);$("#session_time").text('0:00');
-        session_audio_time = 0; storeData('session_audio_time', 0); $("#audio_time").text('0:00');
-        previously_translated = 0; storeData('previously_translated', 0); $("#track_translated_words").text('0');
-        $("#session_audio_ratio").text('-');
-    }
+    session_time = 1; storeData('session_time', 1);$("#session_time").text('0:00');
+    session_audio_time = 0; storeData('session_audio_time', 0); $("#audio_time").text('0:00');
+    previously_translated = 0; storeData('previously_translated', 0); $("#track_translated_words").text('0');
+    $("#session_audio_ratio").text('-');
 }
 
 
@@ -100,6 +98,8 @@ $(document).ready(function() {
 
     // RESET button clicked
     $("#reset_tracking").click(function() {
-        resetTracking();
+        if (confirm('Are you sure?')) {
+            resetTracking();
+        }
     });
 });
