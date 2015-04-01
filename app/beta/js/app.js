@@ -50,20 +50,24 @@ function callBing(from, to, text) {
     $.ajax({
         type: 'POST',
         data: {"authtype": "js"},
-        //url: '../../server/localtoken.php', // local
-        url: 'http://www.simplyeasy.cz/services/token.php', // external
+        url: '../../server/localtoken.php', // local
+        //url: 'http://www.simplyeasy.cz/services/token.php', // external
         success: function(data) {
 
             var s = document.createElement("script");
-            s.src = "http://api.microsofttranslator.com/V2/Ajax.svc/Translate" +
+            s.src = "https://api.microsofttranslator.com/V2/Ajax.svc/Translate" +
                 "?appId=Bearer " + encodeURIComponent(data) +
                 "&from=" + encodeURIComponent(from) +
                 "&to=" + encodeURIComponent(to) +
                 "&text=" + encodeURIComponent(text) +
                 "&oncomplete=mycallback";
             document.body.appendChild(s);
+
+            // TRACKING
+            // track and display number of translated words
+            showHowManyTranslated();
         },
-        error: function(xhr, type) {console.log('error');
+        error: function(xhr, type) {console.log('bing translator error');
             $('#translatedword').text('UNTRANSLATED');
         }
     });
@@ -163,8 +167,8 @@ function loadAudioToPlayer(file) {
     // load audio file
     player.src = file;
 
-    // set color of play/pause icon to golden
-    $('.circle').css('color', '#FFD700');
+    // set color of play/pause icon
+    $('.circle').css('color', '#4ba3d9');
 
     // un-green the 'load audio' button
     $('#audioFileSelect').css({
@@ -438,8 +442,8 @@ function playPause() {
             // TRACKING
             // track audio time
             audioTime(1);
+            // display ratio between session time and audio time
             showRatio();
-
         }, 1000);
     }
     // if playing
@@ -762,7 +766,10 @@ $(document).ready(function() {
         $('#stop_tracking').show();
         $('#tracking_info').show();
 
-        timer = setInterval(function() {sessionTime();}, 1000);
+        timer = setInterval(function() {
+            // track and display session time
+            sessionTime();
+        }, 1000);
     });
 
     $('#stop_tracking').on('click', function() {

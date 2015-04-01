@@ -3,7 +3,7 @@
 
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <link rel="shortcut icon" href="favicon.ico" />
+    <link rel="shortcut icon" href="../favicon.ico" />
     <meta name="author" content="Jan Bilek">
 
     <!-- this should eliminate delay waiting to see if tap is not actually double-tap -->
@@ -254,13 +254,18 @@
             <!-- TRACKING -->
             <div id="tracking">
                 <!-- tracking controls -->
-                <div class="track_btn tracking_off" id="start_tracking">START</div>
-                <div class="track_info tracking_off" id="track_session">tracking this session</div>
+                <div class="track_btn" id="start_tracking">START</div>
+                <div class="track_info" id="track_session">tracking this session</div>
 
-                <div class="track_btn tracking_on" id="stop_tracking">STOP</div>
+                <div class="track_btn" id="stop_tracking">STOP</div>
 
                 <!-- tracking info -->
-                <div class="track_info tracking_on" id="tracking_info">session time: <span id="session_time">0:00</span>, audio time: <span id="audio_time">0:00</span>, ratio: <span id="session_audio_ratio">-</span>%</div>
+                <div class="track_info" id="tracking_info">
+                    <!-- reset button -->
+                    <div class="track_btn" id="reset_tracking" style="background-color: red;">RESET</div>
+
+                    session time: <span id="session_time">0:00</span>, audio time: <span id="audio_time">0:00</span>, ratio: <span id="session_audio_ratio">-</span>%, translated words: <span id="track_translated_words">0</span>
+                </div>
                 <div class="clear"></div>
             </div>
 
@@ -268,11 +273,11 @@
 
                 <div id="donate1">
 
-                    <div class="inarrow">Email me</div><div class="arrow"></div> at <span class="r">jan at icanunderstand dot eu</span> if you have any <strong>questions</strong>, <strong>suggestions</strong> or <strong>feature requests</strong>.
+                    <div class="inarrow">Email me</div><div class="arrow"></div> if you have any <strong>questions</strong>, <strong>suggestions</strong> or <strong>feature requests</strong> - <span class="r">jan at icanunderstand dot eu</span>
                     <div class="clear"></div><div class="gap"></div>
 
                     <div class="inarrow">Support development</div><div class="arrow"></div>
-                    <div class="txt"> Please donate Bitcoin: &nbsp;</div>
+                    <div class="txt"> Bitcoin donations appreciated: &nbsp;</div>
                     <div id="btcaddr">1KzGUW3ttwaKNdi1uN3JW5MyxyMqr3qNcq</div>
                     <div id="qr">
                         [QR]
@@ -352,10 +357,7 @@
 
         <div class="scrollable">
             <!-- English -->
-            <div class="language">
-                <div class="flagbox"><span class="flag gb"></span></div> English
-                <div class="clear"></div>
-            </div>
+            <h3>English</h3>
             <div data-lang="en">
                 <div class="demo" id="war"><span class="by">H. G. Wells</span><strong>The War of the Worlds</strong></div>
                 <div class="demo" id="island"><span class="by">Robert Louis Stevenson</span><strong>Treasure Island</strong></div>
@@ -368,10 +370,7 @@
             <div class="gap"></div>
 
             <!-- German -->
-            <!-- <div class="language">
-                <div class="flagbox"><span class="flag de"></span></div> German
-                <div class="clear"></div>
-            </div>
+            <!-- <h3>German / Deutsch</h3>
             <div data-lang="de">
                 <div class="demo" id="war"><span class="by">H. G. Wells</span><strong>The War of the Worlds</strong></div>
             </div>
@@ -379,10 +378,7 @@
             
             <!-- Czech -->
             <!--
-            <div class="language">
-                <div class="flagbox"><span class="flag cz"></span></div> Czech / Česky
-                <div class="clear"></div>
-            </div>
+            <h3>Czech / Česky</h3>
             <div data-lang="cs">
                 <div class="demo" id="capek-valkasmloky"><span class="by">Karel Čapek</span><strong>Válka s mloky</strong></div>
                 <div class="demo" id="capek-tajemstvipisma"><span class="by">Karel Čapek</span><strong>Tajemství písma</strong> (povídka)</div>

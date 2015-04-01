@@ -238,23 +238,9 @@ li {
     padding: 20px 30px;
 }
 
-.language {
-    color: #C0C0C0;
-    font-size: 25px;
-    line-height: 24px;
-    padding: 15px 10px;
-}
-
-.flagbox {
-    float: left;
-    height: 24px;
-    margin-right: 30px;
-    width: 24px;
-}
-
 .demo {
     border-bottom: 1px solid #F2F2F2;
-    color: #D54600;
+    color: #4ba3d9;
     cursor: pointer;
     font-size: 14px;
     margin: 0 4px 4px 0;
@@ -724,12 +710,12 @@ li {
     border-radius: 2px;
     color: white;
     cursor: pointer;
-    margin-right: 5px;
+    margin-right: 10px;
     text-align: center;
     width: 52px;
 }
 
-.tracking_on {
+#stop_tracking, #tracking_info {
     display: none;
 }
 
