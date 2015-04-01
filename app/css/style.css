@@ -60,6 +60,10 @@ li {
     font-size: 13px;
 }
 
+.georgia {
+    font-family: georgia,arial,sans-serif;
+}
+
 #top {
     position: relative;
 }
