@@ -47,11 +47,11 @@ function callBing(from, to, text) {
         type: 'POST',
         data: {"authtype": "js"},
         //url: '../../server/localtoken.php', // local
-        url: 'http://www.simplyeasy.cz/services/token.php', // external
+        url: 'https://www.simplyeasy.cz/services/token.php', // external
         success: function(data) {
 
             var s = document.createElement("script");
-            s.src = "http://api.microsofttranslator.com/V2/Ajax.svc/Translate" +
+            s.src = "https://api.microsofttranslator.com/V2/Ajax.svc/Translate" +
                 "?appId=Bearer " + encodeURIComponent(data) +
                 "&from=" + encodeURIComponent(from) +
                 "&to=" + encodeURIComponent(to) +
@@ -349,8 +349,8 @@ function loadDemo(demoid) {
     });
 
     audiofile = 1;
-    loadAudioToPlayer('http://www.simplyeasy.cz/files/'+demoid+'.mp3');
-    localStorage.setItem('stored_audio_file_url', 'http://www.simplyeasy.cz/files/'+demoid+'.mp3');
+    loadAudioToPlayer('https://www.simplyeasy.cz/files/'+demoid+'.mp3');
+    localStorage.setItem('stored_audio_file_url', 'https://www.simplyeasy.cz/files/'+demoid+'.mp3');
 }
 
 function jumpBack() {
