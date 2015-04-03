@@ -547,14 +547,10 @@ li {
     font-size: 13px;
     line-height: 25px;
     padding: 0 0 10px;
-}
-
-#donate1 {
-    height: 40px;
     position: relative;
 }
 
-#donate1 .txt {
+#support .txt {
     float: left;
     padding: 0;
 }
@@ -578,12 +574,12 @@ li {
     width: 0;
 }
 
-#donate1 #btcaddr {
+#btcaddr {
     float: left;
     padding-right: 5px;
 }
 
-#donate1 #qr {
+#qr {
     color: #4ba3d9;
     cursor: pointer;
     float: left;
@@ -627,7 +623,7 @@ li {
 #links {
     color: #9C9C9C;
     font-size: 13px;
-    padding: 40px 80px;
+    padding: 40px 70px;
 }
 
 #links a {
@@ -638,7 +634,7 @@ li {
 .my_disqus {
     background-color: white;
     border-bottom: 1px solid #e4e3e3;
-    padding: 0 70px 15px;
+    padding: 0 70px 70px;
 }
 
 #beta {
