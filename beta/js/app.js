@@ -50,7 +50,7 @@ function callBing(from, to, text) {
     $.ajax({
         type: 'POST',
         data: {"authtype": "js"},
-        //url: '../../server/localtoken.php', // local
+        //url: '../server/localtoken.php', // local
         url: 'https://www.simplyeasy.cz/services/token.php', // external
         success: function(data) {
 

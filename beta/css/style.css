@@ -318,7 +318,7 @@ li {
 }
 
 #translatedword {
-	background-color: #FF4C00;
+	background-color: #4ba3d9;
     color: #FFFFFF;
     float: left;
     height: 20px;
@@ -334,7 +334,7 @@ li {
     padding: 5px 22px;
     position: relative;
     font-size: 13px;
-    color: #FF4C00;
+    color: #4ba3d9;
 }
 
 #previous_translated_words_wrapper p {
