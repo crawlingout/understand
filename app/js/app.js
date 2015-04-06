@@ -19,7 +19,7 @@ var just_reloaded = 1;
 var stored_duration = Number(localStorage.getItem('stored_duration')) || 0;
 
 var warning = '<i class="fa fa-exclamation-triangle"></i> \
-                <span>&nbsp;This is an experimental app. Some functionality is supported only in Google Chrome.</span>';
+                <span>&nbsp;This app is in BETA state. Some features are supported only in Google Chrome.</span>';
 
 
 function errorHandler(e) {
