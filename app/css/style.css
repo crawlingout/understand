@@ -112,14 +112,14 @@ li {
 
 #other_languages {
     border-right: 1px dotted silver;
-    height: 25px;
+    height: 105px;
     left: -100px;
     line-height: 25px;
     margin: 0;
     padding: 5px 30px 5px 0;
     position: absolute;
     text-align: right;
-    top: 120px;
+    top: 115px;
     width: 80px;
 }
 
