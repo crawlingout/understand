@@ -122,8 +122,8 @@ li {
 #content {
     background-color: #FFFFFF;
     font-family: Times, serif;
-    font-size: 22px;
-    line-height: 32px;
+    font-size: 24px;
+    line-height: 36px;
     padding: 30px 70px;
     text-align: justify;
     display: none;
@@ -259,13 +259,13 @@ li {
 
 #settings {
     font-size: 13px;
-    padding: 20px 10px;
+    padding: 20px 10px 0 20px;
 }
 
 #settings select {
     margin-bottom: 10px;
     padding: 2px;
-    width: 150px;
+    width: 140px;
 }
 
 #settings .highlighed {

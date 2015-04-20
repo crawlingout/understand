@@ -71,23 +71,8 @@ function getTranslation(word) {
     callBing(from, to, word);
 }
 
-function getTextSelection() {
-    if (window.getSelection) {
-        return window.getSelection().toString();
-    }
-    else if (document.getSelection) {
-        return document.getSelection().toString();
-    }
-    else if (document.selection) {
-        return document.selection.createRange().text;
-    }
-    else {
-        return '';
-    }
-}
-
-function handleSelectedText() {
-    var text = getTextSelection(), previous_word = {};
+function handleSelectedText(text) {
+    var previous_word = {};
 
     // get previously selected word
     previous_word[from] = $('#selectedword').html();
@@ -163,14 +148,14 @@ function loadText(text) {
     // split paragraphs by empty lines
     var paragraphs = text.split("\n");
 
-    var content = '<p>';
+    var content = '<p> ';
 
     for (var i=0, l=paragraphs.length; i<l; i++) {
         if (paragraphs[i] !== '\r' && paragraphs[i] !== '') {
             content = content + paragraphs[i]+' ';
         }
         else {
-            content = content + '</p><p>';
+            content = content + '</p><p> ';
         }
     }
     content = content + '</p>';
@@ -235,16 +220,28 @@ $(document).ready(function() {
 
 
     // TRANSLATOR
+    
+    // detect clicked word
+    // based on http://stackoverflow.com/a/9304990/716001 - space at the beginning of each paragraph needed!
+    $('p').click(function(e) {
+        s = window.getSelection();
+        var range = s.getRangeAt(0);
+        var node = s.anchorNode;
 
-    // when mouse button released, get and handle selected text
-    $("#content").mouseup(function() {
-        handleSelectedText();
+        while (range.toString().indexOf(' ') !== 0) {
+            range.setStart(node, (range.startOffset - 1));
+        }
+
+        range.setStart(node, range.startOffset + 1);
+
+        do {
+            range.setEnd(node, range.endOffset + 1);
+
+        } while (range.toString().indexOf(' ') == -1 && range.toString().trim() != '' && range.endOffset < node.length);
+
+        var str = range.toString().trim();
+        handleSelectedText(str);
     });
-
-    // support for touch devices
-    document.getElementById('content').addEventListener('touchend', function() {
-        handleSelectedText();
-    }, false);
 
 
     // preload selected from/to languages
