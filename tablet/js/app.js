@@ -673,11 +673,9 @@ $(document).ready(function() {
 
     // remove previously translated words
     $('#remove_words').click(function() {
-        if (confirm('Are you sure?')) {
-            $('#previous_translated_words').empty();
-            previous_translated_words = [];
-            localStorage.setItem('previous_translated_words', '[]');
-        }
+        $('#previous_translated_words').empty();
+        previous_translated_words = [];
+        localStorage.setItem('previous_translated_words', '[]');
     });
 
 
