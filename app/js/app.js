@@ -105,7 +105,7 @@ function handleSelectedText() {
         // strip spaces before/after words
         text = text.trim();
 
-        // too long string
+        // string NOT too long
         if (text.split(' ').length <= max_translation_length) {
             // hide warning text shown when text is too long
             $('#whentoolong').hide();

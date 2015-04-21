@@ -1,7 +1,7 @@
 window.requestFileSystem = window.requestFileSystem || window.webkitRequestFileSystem;
 var fs = null;
 
-var max_translation_length = 5; // number of words allowed to be translated - if changed, change also note in #whentoolong
+var max_translation_length = 1; // number of words allowed to be translated - if changed, change also note in #whentoolong
 var from = localStorage.getItem('stored_lang_from') || 'en';
 var to = localStorage.getItem('stored_lang_to') || 'es';
 var previous_translated_words = [];
@@ -30,8 +30,8 @@ function prependPrevWord(word) {
     //$('#previous_translated_words').prepend('<p><span>'+word[from]+'</span>&nbsp;&nbsp;'+word[to]+'</p>');
 
     // ONLY FOR BETA
-    var goog_tran = 'https://translate.google.com/#'+from+'/'+to+'/'+encodeURIComponent(word[from]);
-    $('#previous_translated_words').prepend('<p><a target="_blank" href="'+goog_tran+'"><span>'+word[from]+'</span>&nbsp;&nbsp;'+word[to]+'</a></p>');
+    var seznam_tran = 'http://slovnik.seznam.cz/'+from+'-cz/word/?q='+encodeURIComponent(word[from]);
+    $('#previous_translated_words').prepend('<p><a target="_blank" href="'+seznam_tran+'"><span>'+word[from]+'</span>&nbsp;&nbsp;'+word[to]+'</a></p>');
 }
 
 function mycallback(response) {
@@ -94,8 +94,8 @@ function getTextSelection() {
     }
 }
 
-function handleSelectedText() {
-    var text = getTextSelection(), previous_word = {};
+function handleSelectedText(text) {
+    var previous_word = {};
 
     // get previously selected word
     previous_word[from] = $('#selectedword').html();
@@ -113,11 +113,13 @@ function handleSelectedText() {
         // strip spaces before/after words
         text = text.trim();
 
-        // get length of transtlated string
-        var translation_length = text.split(' ').length;
+        // trim trailing dot or comma
+        if (text[text.length-1] === "." || text[text.length-1] === ",") {
+            text = text.slice(0,-1);
+        }
 
         // string NOT too long
-        if (translation_length <= max_translation_length) {
+        if (text.split(' ').length <= max_translation_length) {
             // hide warning text shown when text is too long
             $('#whentoolong').hide();
 
@@ -131,9 +133,7 @@ function handleSelectedText() {
             $('#translations').show();
 
             // ONLY FOR BETA
-            if (translation_length <= 5) {
-                $('#seznam').attr('href','https://translate.google.com/#'+from+'/'+to+'/'+encodeURIComponent(text));
-            }
+            $('#seznam').attr('href','http://slovnik.seznam.cz/'+from+'-cz/word/?q='+encodeURIComponent(text));
             // =============
         }
         else {
@@ -301,14 +301,14 @@ function loadText(text) {
     // split paragraphs by empty lines
     var paragraphs = text.split("\n");
 
-    var content = '<p>';
+    var content = '<p class="mycontent"> ';
 
     for (var i=0, l=paragraphs.length; i<l; i++) {
         if (paragraphs[i] !== '\r' && paragraphs[i] !== '') {
             content = content + paragraphs[i]+' ';
         }
         else {
-            content = content + '</p><p>';
+            content = content + '</p><p class="mycontent"> ';
         }
     }
     content = content + '</p>';
@@ -499,15 +499,27 @@ $(document).ready(function() {
 
     // TRANSLATOR
 
-    // when mouse button released, get and handle selected text
-    $("#content").mouseup(function() {
-        handleSelectedText();
-    });
+    // detect clicked word
+    // based on http://stackoverflow.com/a/9304990/716001 - space at the beginning of each paragraph needed!
+    $('#content').on('click', 'p.mycontent', function(e) {
+        s = window.getSelection();
+        var range = s.getRangeAt(0);
+        var node = s.anchorNode;
 
-    // support for touch devices
-    document.getElementById('content').addEventListener('touchend', function() {
-        handleSelectedText();
-    }, false);
+        while (range.toString().indexOf(' ') !== 0) {
+            range.setStart(node, (range.startOffset - 1));
+        }
+
+        range.setStart(node, range.startOffset + 1);
+
+        do {
+            range.setEnd(node, range.endOffset + 1);
+
+        } while (range.toString().indexOf(' ') === -1 && range.toString().trim() !== '' && range.endOffset < node.length);
+
+        var str = range.toString().trim();
+        handleSelectedText(str);
+    });
 
 
     // preload selected from/to languages

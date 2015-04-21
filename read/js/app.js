@@ -1,7 +1,7 @@
 window.requestFileSystem = window.requestFileSystem || window.webkitRequestFileSystem;
 var fs = null;
 
-var max_translation_length = 5; // number of words allowed to be translated - if changed, change also note in #whentoolong
+var max_translation_length = 1; // number of words allowed to be translated - if changed, change also note in #whentoolong
 var from = localStorage.getItem('stored_lang_from') || 'en';
 var to = localStorage.getItem('stored_lang_to') || 'es';
 var previous_translated_words = [];
@@ -27,7 +27,11 @@ function errorHandler(e) {
 }
 
 function prependPrevWord(word) {
-    $('#previous_translated_words').prepend('<p><span>'+word[from]+'</span>&nbsp;&nbsp;'+word[to]+'</p>');
+    //$('#previous_translated_words').prepend('<p><span>'+word[from]+'</span>&nbsp;&nbsp;'+word[to]+'</p>');
+
+    // ONLY FOR BETA
+    var seznam_tran = 'http://slovnik.seznam.cz/'+from+'-cz/word/?q='+encodeURIComponent(word[from]);
+    $('#previous_translated_words').prepend('<p><a target="_blank" href="'+seznam_tran+'"><span>'+word[from]+'</span>&nbsp;&nbsp;'+word[to]+'</a></p>');
 }
 
 function mycallback(response) {
@@ -90,7 +94,12 @@ function handleSelectedText(text) {
         // strip spaces before/after words
         text = text.trim();
 
-        // too long string
+        // trim trailing dot or comma
+        if (text[text.length-1] === "." || text[text.length-1] === ",") {
+            text = text.slice(0,-1);
+        }
+
+        // string NOT too long
         if (text.split(' ').length <= max_translation_length) {
             // hide warning text shown when text is too long
             $('#whentoolong').hide();
@@ -103,6 +112,9 @@ function handleSelectedText(text) {
 
             // unhide pair word_to_translate: translated_word
             $('#translations').show();
+
+            // ONLY FOR BETA
+            $('#seznam').attr('href','http://slovnik.seznam.cz/'+from+'-cz/word/?q='+encodeURIComponent(text));
         }
         else {
             // create URL to google translate
@@ -148,14 +160,14 @@ function loadText(text) {
     // split paragraphs by empty lines
     var paragraphs = text.split("\n");
 
-    var content = '<p> ';
+    var content = '<p class="mycontent"> ';
 
     for (var i=0, l=paragraphs.length; i<l; i++) {
         if (paragraphs[i] !== '\r' && paragraphs[i] !== '') {
             content = content + paragraphs[i]+' ';
         }
         else {
-            content = content + '</p><p> ';
+            content = content + '</p><p class="mycontent"> ';
         }
     }
     content = content + '</p>';
@@ -223,7 +235,7 @@ $(document).ready(function() {
     
     // detect clicked word
     // based on http://stackoverflow.com/a/9304990/716001 - space at the beginning of each paragraph needed!
-    $('p').click(function(e) {
+    $('#content').on('click', 'p.mycontent', function(e) {
         s = window.getSelection();
         var range = s.getRangeAt(0);
         var node = s.anchorNode;
@@ -237,7 +249,7 @@ $(document).ready(function() {
         do {
             range.setEnd(node, range.endOffset + 1);
 
-        } while (range.toString().indexOf(' ') == -1 && range.toString().trim() != '' && range.endOffset < node.length);
+        } while (range.toString().indexOf(' ') === -1 && range.toString().trim() !== '' && range.endOffset < node.length);
 
         var str = range.toString().trim();
         handleSelectedText(str);
