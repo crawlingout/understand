@@ -103,8 +103,6 @@ function handleSelectedText(text) {
     // get previously translated word
     previous_word[to] = $('#translatedword').html();
 
-    // TODO - measure translation lenght in words, not characters, and inform users about it, offer translation via Google translate link
-
     // if not empty or the same word again
     if (text !== '' && text !== ' ' && text !== '.' && text !== previous_word[from]) {
         // clear previous result
@@ -498,7 +496,7 @@ $(document).ready(function() {
 
 
     // TRANSLATOR
-
+    
     // detect clicked word
     // based on http://stackoverflow.com/a/9304990/716001 - space at the beginning of each paragraph needed!
     $('#content').on('click', 'p.mycontent', function(e) {
@@ -511,15 +509,19 @@ $(document).ready(function() {
         }
 
         range.setStart(node, range.startOffset + 1);
+        if (range.endOffset < node.length) {
+            do {
+                range.setEnd(node, range.endOffset + 1);
 
-        do {
-            range.setEnd(node, range.endOffset + 1);
-
-        } while (range.toString().indexOf(' ') === -1 && range.toString().trim() !== '' && range.endOffset < node.length);
+            } while (range.toString().indexOf(' ') === -1 && range.toString().trim() !== '');
+        }
 
         var str = range.toString().trim();
         handleSelectedText(str);
     });
+
+    // when longer text coppied to clipboard
+    document.getElementById('content').addEventListener("copy", onCopyEvent);
 
 
     // preload selected from/to languages
@@ -677,25 +679,6 @@ $(document).ready(function() {
         previous_translated_words = [];
         localStorage.setItem('previous_translated_words', '[]');
     });
-
-
-    // keyboard shortcuts
-    window.onkeyup = function(e) {
-       var key = e.keyCode ? e.keyCode : e.which;
-
-       if (key == 37) { // left arrow
-           // jump back
-           jumpBack(jumpback);
-       }
-       else if (key == 39) { // right arrow
-           // play/pause
-           playPause();
-       }
-       else if (key == 16) { // shift
-           // record/replay
-           recordReplay();
-       }
-    };
 
 
     // RECORDING

@@ -84,8 +84,6 @@ function handleSelectedText(text) {
     // get previously translated word
     previous_word[to] = $('#translatedword').html();
 
-    // TODO - measure translation lenght in words, not characters, and inform users about it, offer translation via Google translate link
-
     // if not empty or the same word again
     if (text !== '' && text !== ' ' && text !== '.' && text !== previous_word[from]) {
         // clear previous result
@@ -217,6 +215,25 @@ function handleTextFileSelect(evt) {
     }
 }
 
+function getTextSelection() {
+    if (window.getSelection) {
+        return window.getSelection().toString();
+    }
+    else if (document.getSelection) {
+        return document.getSelection().toString();
+    }
+    else if (document.selection) {
+        return document.selection.createRange().text;
+    }
+    else {
+        return '';
+    }
+}
+
+function onCopyEvent() {
+    handleSelectedText(getTextSelection());
+}
+
 
 $(document).ready(function() {
 
@@ -245,15 +262,19 @@ $(document).ready(function() {
         }
 
         range.setStart(node, range.startOffset + 1);
+        if (range.endOffset < node.length) {
+            do {
+                range.setEnd(node, range.endOffset + 1);
 
-        do {
-            range.setEnd(node, range.endOffset + 1);
-
-        } while (range.toString().indexOf(' ') === -1 && range.toString().trim() !== '' && range.endOffset < node.length);
+            } while (range.toString().indexOf(' ') === -1 && range.toString().trim() !== '');
+        }
 
         var str = range.toString().trim();
         handleSelectedText(str);
     });
+
+    // when longer text coppied to clipboard
+    document.getElementById('content').addEventListener("copy", onCopyEvent);
 
 
     // preload selected from/to languages

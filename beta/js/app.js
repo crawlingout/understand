@@ -103,8 +103,6 @@ function handleSelectedText() {
     // get previously translated word
     previous_word[to] = $('#translatedword').html();
 
-    // TODO - measure translation lenght in words, not characters, and inform users about it, offer translation via Google translate link
-
     // if not empty or the same word again
     if (text !== '' && text !== ' ' && text !== '.' && text !== previous_word[from]) {
         // clear previous result
