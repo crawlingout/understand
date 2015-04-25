@@ -332,6 +332,11 @@ li {
     color: #21b51f;
 }
 
+#previous_translated_words em {
+    color: #bbbbbb;
+}
+
+
 #remove_words {
     color: #CCCCCC;
     cursor: pointer;

@@ -37,7 +37,7 @@ function linkToDict(text) {
 
 function prependPrevWord(word) {
     $('#previous_translated_words').
-        prepend('<p><a target="_blank" href="'+linkToDict(word[from])+'"><span>'+word[from]+'</span>&nbsp;&nbsp;'+word[to]+'</a></p>');
+        prepend('<p><a target="_blank" href="'+linkToDict(word[from])+'"><span>'+word[from]+'</span>&nbsp;&nbsp;'+word[to]+' <em>></em></a></p>');
 }
 
 function mycallback(response) {
