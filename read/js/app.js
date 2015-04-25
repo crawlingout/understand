@@ -26,12 +26,18 @@ function errorHandler(e) {
     console.log('error>', e.message);
 }
 
-function prependPrevWord(word) {
-    //$('#previous_translated_words').prepend('<p><span>'+word[from]+'</span>&nbsp;&nbsp;'+word[to]+'</p>');
+function linkToDict(text) {
+    if (to==='cs' && (from==='en' || from==='es' || from==='de' || from==='fr' || from==='it' || from==='ru')) {
+        return 'http://slovnik.seznam.cz/'+from+'-cz/word/?q='+encodeURIComponent(text);
+    }
+    else {
+        return 'https://translate.google.com/#'+from+'/'+to+'/'+encodeURIComponent(text);
+    }
+}
 
-    // ONLY FOR BETA
-    var seznam_tran = 'http://slovnik.seznam.cz/'+from+'-cz/word/?q='+encodeURIComponent(word[from]);
-    $('#previous_translated_words').prepend('<p><a target="_blank" href="'+seznam_tran+'"><span>'+word[from]+'</span>&nbsp;&nbsp;'+word[to]+'</a></p>');
+function prependPrevWord(word) {
+    $('#previous_translated_words').
+        prepend('<p><a target="_blank" href="'+linkToDict(word[from])+'"><span>'+word[from]+'</span>&nbsp;&nbsp;'+word[to]+'</a></p>');
 }
 
 function mycallback(response) {
@@ -112,7 +118,7 @@ function handleSelectedText(text) {
             $('#translations').show();
 
             // ONLY FOR BETA
-            $('#seznam').attr('href','http://slovnik.seznam.cz/'+from+'-cz/word/?q='+encodeURIComponent(text));
+            $('#linktodict').attr('href','http://slovnik.seznam.cz/'+from+'-cz/word/?q='+encodeURIComponent(text));
         }
         else {
             // create URL to google translate
