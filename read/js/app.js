@@ -2,8 +2,8 @@ window.requestFileSystem = window.requestFileSystem || window.webkitRequestFileS
 var fs = null;
 
 var max_translation_length = 1; // number of words allowed to be translated - if changed, change also note in #whentoolong
-var from = localStorage.getItem('read_stored_lang_from') || 'en';
-var to = localStorage.getItem('read_stored_lang_to') || 'es';
+var from = localStorage.getItem('read_stored_lang_from') || 'es';
+var to = localStorage.getItem('read_stored_lang_to') || 'en';
 var previous_translated_words = [];
 var scrollposition = Number(localStorage.getItem('read_lang_scrollposition')) || 0;
 var textfile = localStorage.getItem('read_stored_text_file_content') || 0;
@@ -81,6 +81,25 @@ function getTranslation(word) {
     callBing(from, to, word);
 }
 
+function getTextSelection() {
+    if (window.getSelection) {
+        return window.getSelection().toString();
+    }
+    else if (document.getSelection) {
+        return document.getSelection().toString();
+    }
+    else if (document.selection) {
+        return document.selection.createRange().text;
+    }
+    else {
+        return '';
+    }
+}
+
+function onCopyEvent() {
+    handleSelectedText(getTextSelection());
+}
+
 function handleSelectedText(text) {
     var previous_word = {};
 
@@ -107,6 +126,13 @@ function handleSelectedText(text) {
         if (text.split(' ').length <= max_translation_length) {
             // hide warning text shown when text is too long
             $('#whentoolong').hide();
+
+            // remove trailing characters
+            var len = text.length;
+            var lastchar = text.substr(len-1,1);
+            if (lastchar === "," || lastchar === "." || lastchar === '"' || lastchar === ")" || lastchar === ":") {;
+                text = text.substring(0,len-1);
+            }
 
             // insert word to be translated into visible element
             $('#selectedword').text(text);
@@ -221,25 +247,6 @@ function handleTextFileSelect(evt) {
     }
 }
 
-function getTextSelection() {
-    if (window.getSelection) {
-        return window.getSelection().toString();
-    }
-    else if (document.getSelection) {
-        return document.getSelection().toString();
-    }
-    else if (document.selection) {
-        return document.selection.createRange().text;
-    }
-    else {
-        return '';
-    }
-}
-
-function onCopyEvent() {
-    handleSelectedText(getTextSelection());
-}
-
 
 $(document).ready(function() {
 
@@ -281,6 +288,21 @@ $(document).ready(function() {
 
     // when longer text coppied to clipboard
     document.getElementById('content').addEventListener("copy", onCopyEvent);
+
+
+    // if no 'to' language stored, select the language of originating site version (czech version / czech 'to' language)
+    if (!localStorage.getItem('stored_lang_to')) {
+        // set 'to' language
+        to = $("#content_wrapper").data('language');
+        // swicth 'to' selector to the language of the site
+        $('#to').val(to);
+
+        // if 'from' language is not previously stored and 'to' language is not english, switch 'from' language to english
+        if (!localStorage.getItem('stored_lang_from') && to !== 'en') {
+            from = 'en';
+            $('#from').val('en');
+        }
+    }
 
 
     // preload selected from/to languages

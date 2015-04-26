@@ -2,8 +2,8 @@ window.requestFileSystem = window.requestFileSystem || window.webkitRequestFileS
 var fs = null;
 
 var max_translation_length = 1; // number of words allowed to be translated - if changed, change also note in #whentoolong
-var from = localStorage.getItem('stored_lang_from') || 'en';
-var to = localStorage.getItem('stored_lang_to') || 'es';
+var from = localStorage.getItem('stored_lang_from') || 'es';
+var to = localStorage.getItem('stored_lang_to') || 'en';
 var previous_translated_words = [];
 var scrollposition = Number(localStorage.getItem('lang_scrollposition')) || 0;
 var textfile = localStorage.getItem('stored_text_file_content') || 0;
@@ -96,8 +96,12 @@ function getTextSelection() {
     }
 }
 
-function handleSelectedText() {
-    var text = getTextSelection(), previous_word = {};
+function onCopyEvent() {
+    handleSelectedText(getTextSelection());
+}
+
+function handleSelectedText(text) {
+    var previous_word = {};
 
     // get previously selected word
     previous_word[from] = $('#selectedword').html();
@@ -117,6 +121,13 @@ function handleSelectedText() {
         if (text.split(' ').length <= max_translation_length) {
             // hide warning text shown when text is too long
             $('#whentoolong').hide();
+
+            // remove trailing characters
+            var len = text.length;
+            var lastchar = text.substr(len-1,1);
+            if (lastchar === "," || lastchar === "." || lastchar === '"' || lastchar === ")" || lastchar === ":") {;
+                text = text.substring(0,len-1);
+            }
 
             // insert word to be translated into visible element
             $('#selectedword').text(text);
@@ -295,14 +306,14 @@ function loadText(text) {
     // split paragraphs by empty lines
     var paragraphs = text.split("\n");
 
-    var content = '<p>';
+    var content = '<p class="mycontent"> ';
 
     for (var i=0, l=paragraphs.length; i<l; i++) {
         if (paragraphs[i] !== '\r' && paragraphs[i] !== '') {
             content = content + paragraphs[i]+' ';
         }
         else {
-            content = content + '</p><p>';
+            content = content + '</p><p class="mycontent"> ';
         }
     }
     content = content + '</p>';
@@ -446,6 +457,7 @@ function playPause() {
 
 $(document).ready(function() {
 
+    // load text if previously stored
     if (textfile) {
         loadText(textfile);
     }
@@ -459,16 +471,46 @@ $(document).ready(function() {
 
     // TRANSLATOR
 
-    // when mouse button released, get and handle selected text
-    $("#content").mouseup(function() {
-        handleSelectedText();
+    // detect clicked word
+    // based on http://stackoverflow.com/a/9304990/716001 - space at the beginning of each paragraph needed!
+    $('#content').on('click', 'p.mycontent', function(e) {
+        s = window.getSelection();
+        var range = s.getRangeAt(0);
+        var node = s.anchorNode;
+
+        while (range.toString().indexOf(' ') !== 0) {
+            range.setStart(node, (range.startOffset - 1));
+        }
+
+        range.setStart(node, range.startOffset + 1);
+        if (range.endOffset < node.length) {
+            do {
+                range.setEnd(node, range.endOffset + 1);
+
+            } while (range.toString().indexOf(' ') === -1 && range.toString().trim() !== '');
+        }
+
+        var str = range.toString().trim();
+        handleSelectedText(str);
     });
 
-    // support for touch devices
-    document.getElementById('content').addEventListener('touchend', function() {
-        handleSelectedText();
-    }, false);
+    // when longer text coppied to clipboard
+    document.getElementById('content').addEventListener("copy", onCopyEvent);
 
+
+    // if no 'to' language stored, select the language of originating site version (czech version / czech 'to' language)
+    if (!localStorage.getItem('stored_lang_to')) {
+        // set 'to' language
+        to = $("#content_wrapper").data('language');
+        // swicth 'to' selector to the language of the site
+        $('#to').val(to);
+
+        // if 'from' language is not previously stored and 'to' language is not english, switch 'from' language to english
+        if (!localStorage.getItem('stored_lang_from') && to !== 'en') {
+            from = 'en';
+            $('#from').val('en');
+        }
+    }
 
     // preload selected from/to languages
     $('#from').val(from);
