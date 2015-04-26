@@ -2,21 +2,21 @@ window.requestFileSystem = window.requestFileSystem || window.webkitRequestFileS
 var fs = null;
 
 var max_translation_length = 1; // number of words allowed to be translated - if changed, change also note in #whentoolong
-var from = localStorage.getItem('stored_lang_from') || 'en';
-var to = localStorage.getItem('stored_lang_to') || 'es';
+var from = localStorage.getItem('read_stored_lang_from') || 'en';
+var to = localStorage.getItem('read_stored_lang_to') || 'es';
 var previous_translated_words = [];
-var scrollposition = Number(localStorage.getItem('lang_scrollposition')) || 0;
-var textfile = localStorage.getItem('stored_text_file_content') || 0;
-var audiofile = localStorage.getItem('stored_audio_file_url') || 0;
+var scrollposition = Number(localStorage.getItem('read_lang_scrollposition')) || 0;
+var textfile = localStorage.getItem('read_stored_text_file_content') || 0;
+var audiofile = localStorage.getItem('read_stored_audio_file_url') || 0;
 var player = 0;
-var stored_audio_time = Number(localStorage.getItem('stored_audio_time')) || 0;
+var stored_audio_time = Number(localStorage.getItem('read_stored_audio_time')) || 0;
 
 var interval = 0;
 
 var just_reloaded = 1;
 
 // workaround: some browsers do not load duration immediately - stored duration is used to set knob
-var stored_duration = Number(localStorage.getItem('stored_duration')) || 0;
+var stored_duration = Number(localStorage.getItem('read_stored_duration')) || 0;
 
 var warning = '<i class="fa fa-exclamation-triangle"></i> \
                 <span>&nbsp;This app is in BETA state. Some features are supported only in Google Chrome.</span>';
@@ -49,7 +49,7 @@ function mycallback(response) {
 
     previous_translated_words.push(new_word);
 
-    localStorage.setItem('previous_translated_words', JSON.stringify(previous_translated_words));
+    localStorage.setItem('read_previous_translated_words', JSON.stringify(previous_translated_words));
 }
 
 function callBing(from, to, text) {
@@ -143,8 +143,8 @@ function resetText() {
     $('#instructions').show();
 
     scrollposition = 0;
-    localStorage.setItem('lang_scrollposition', scrollposition);
-    localStorage.removeItem('stored_text_file_content');
+    localStorage.setItem('read_lang_scrollposition', scrollposition);
+    localStorage.removeItem('read_stored_text_file_content');
 
     // grey out the 'load text' button
     $('#textFileSelect').css({
@@ -188,7 +188,7 @@ function loadText(text) {
 
     // store scroll position
     $('#content_wrapper').scroll(function() {
-        localStorage.setItem('lang_scrollposition', this.scrollTop);
+        localStorage.setItem('read_lang_scrollposition', this.scrollTop);
     });
 }
 
@@ -196,7 +196,7 @@ function handleTextFileSelect(evt) {
 
     // reset stored scroll position
     scrollposition = 0;
-    localStorage.setItem('lang_scrollposition', scrollposition);
+    localStorage.setItem('read_lang_scrollposition', scrollposition);
  
     // file reader supported
     if (window.FileReader) {
@@ -208,7 +208,7 @@ function handleTextFileSelect(evt) {
             loadText(e.target.result);
 
             // store text
-            localStorage.setItem('stored_text_file_content', e.target.result);
+            localStorage.setItem('read_stored_text_file_content', e.target.result);
         };
 
         // read in the file
@@ -295,7 +295,7 @@ $(document).ready(function() {
         if ($(this).attr('id') === 'to') {
             to = $(this).val();
         }
-        localStorage.setItem('stored_lang_'+$(this).attr('id'), $(this).val());
+        localStorage.setItem('read_stored_lang_'+$(this).attr('id'), $(this).val());
     });
 
 
@@ -322,7 +322,7 @@ $(document).ready(function() {
 
     // load previously translated words
     var i;
-    previous_translated_words = JSON.parse(localStorage.getItem('previous_translated_words')) || [];
+    previous_translated_words = JSON.parse(localStorage.getItem('read_previous_translated_words')) || [];
 
     for (i in previous_translated_words) {
         if (previous_translated_words[i][from] && previous_translated_words[i][to]) {
@@ -334,6 +334,6 @@ $(document).ready(function() {
     $('#remove_words').click(function() {
         $('#previous_translated_words').empty();
         previous_translated_words = [];
-        localStorage.setItem('previous_translated_words', '[]');
+        localStorage.setItem('read_previous_translated_words', '[]');
     });
 });
