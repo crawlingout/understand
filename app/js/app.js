@@ -1,7 +1,6 @@
 window.requestFileSystem = window.requestFileSystem || window.webkitRequestFileSystem;
 var fs = null;
 
-var max_translation_length = 1; // number of words allowed to be translated - if changed, change also note in #whentoolong
 var from = localStorage.getItem('stored_lang_from') || 'es';
 var to = localStorage.getItem('stored_lang_to') || 'en';
 var previous_translated_words = [];
@@ -57,7 +56,7 @@ function callBing(from, to, text) {
         type: 'POST',
         data: {"authtype": "js"},
         //url: '../../server/localtoken.php', // local
-        url: 'https://www.simplyeasy.cz/services/token.php', // external
+        url: 'https://www.simplyeasy.cz/understand-server/token.php', // external
         success: function(data) {
 
             var s = document.createElement("script");
@@ -69,7 +68,7 @@ function callBing(from, to, text) {
                 "&oncomplete=mycallback";
             document.body.appendChild(s);
         },
-        error: function(xhr, type) {console.log('error');
+        error: function(xhr, type) {console.log('bing translator error');
             $('#translatedword').text('UNTRANSLATED');
         }
     });
@@ -118,7 +117,7 @@ function handleSelectedText(text) {
         text = text.trim();
 
         // string NOT too long
-        if (text.split(' ').length <= max_translation_length) {
+        if (text.split(' ').length <= 1) {
             // hide warning text shown when text is too long
             $('#whentoolong').hide();
 
@@ -365,22 +364,19 @@ function handleTextFileSelect(evt) {
 
 function loadDemo(demoid) {
 
-    $.get('demo/'+demoid+'.txt', function(data) {
+    $.get('../demo/'+demoid+'.txt', function(data) {
         loadText(data);
         localStorage.setItem('stored_text_file_content', data);
     });
 
     audiofile = 1;
-    loadAudioToPlayer('https://www.simplyeasy.cz/files/'+demoid+'.mp3');
-    localStorage.setItem('stored_audio_file_url', 'https://www.simplyeasy.cz/files/'+demoid+'.mp3');
+    loadAudioToPlayer('https://www.simplyeasy.cz/understand-server/files/'+demoid+'.mp3');
+    localStorage.setItem('stored_audio_file_url', 'https://www.simplyeasy.cz/understand-server/files/'+demoid+'.mp3');
 }
 
-function jumpBack() {
+function jumpBack(jumpstep) {
     // get current time
     current_time = player.currentTime;
-
-    // get how much seconds to jump
-    var jumpstep = $(".jumpback").data('jump');
 
     if (current_time > jumpstep) {
         player.currentTime = current_time - jumpstep;
@@ -456,6 +452,9 @@ function playPause() {
 
 
 $(document).ready(function() {
+
+    // get how much seconds to jump back
+    var jumpback = $(".jumpback").data('jump');
 
     // load text if previously stored
     if (textfile) {
@@ -557,7 +556,7 @@ $(document).ready(function() {
 
     // jump N (defined in data attribute) seconds back
     $(".jumpback").click(function() {
-        jumpBack();
+        jumpBack(jumpback);
     });
 
     // handle file selects
@@ -673,7 +672,7 @@ $(document).ready(function() {
 
        if (key == 37) { // left arrow
            // jump back
-           jumpBack();
+           jumpBack(jumpback);
        }
        else if (key == 39) { // right arrow
            // play/pause

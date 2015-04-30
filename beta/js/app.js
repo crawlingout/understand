@@ -1,7 +1,6 @@
 window.requestFileSystem = window.requestFileSystem || window.webkitRequestFileSystem;
 var fs = null;
 
-var max_translation_length = 1; // number of words allowed to be translated - if changed, change also note in #whentoolong
 var from = localStorage.getItem('stored_lang_from') || 'es';
 var to = localStorage.getItem('stored_lang_to') || 'en';
 var previous_translated_words = [];
@@ -56,8 +55,8 @@ function callBing(from, to, text) {
     $.ajax({
         type: 'POST',
         data: {"authtype": "js"},
-        //url: '../server/localtoken.php', // local
-        url: 'https://www.simplyeasy.cz/services/token.php', // external
+        //url: '../server/local-token.php', // local
+        url: 'https://www.simplyeasy.cz/understand-server/token.php', // external
         success: function(data) {
 
             var s = document.createElement("script");
@@ -121,11 +120,8 @@ function handleSelectedText(text) {
         // strip spaces before/after words
         text = text.trim();
 
-        // get length of transtlated string
-        var translation_length = text.split(' ').length;
-
         // string NOT too long
-        if (translation_length <= max_translation_length) {
+        if (text.split(' ').length <= 1) {
             // hide warning text shown when text is too long
             $('#whentoolong').hide();
 
@@ -145,11 +141,7 @@ function handleSelectedText(text) {
             // unhide pair word_to_translate: translated_word
             $('#translations').show();
 
-            // ONLY FOR BETA
-            if (translation_length <= 5) {
-                $('#linktodict').attr('href', linkToDict(text));
-            }
-            // =============
+            $('#linktodict').attr('href', linkToDict(text));
         }
         else {
             // create URL to google translate
@@ -192,7 +184,7 @@ function loadAudioToPlayer(file) {
     });
 
     // when the player is ready
-    player.addEventListener("canplay", function() {//console.log(player.duration, player.currentTime);
+    player.addEventListener("canplay", function() {
 
         // detect if player loaded propperly
         if (player.duration) {
@@ -210,7 +202,7 @@ function loadAudioToPlayer(file) {
     });
 
     // listener for finished audio
-    player.addEventListener("ended", function() {//console.log('ended');
+    player.addEventListener("ended", function() {
         // set icon to play
         $('#pause_btn').hide();
         $('#play_btn').show();
@@ -275,6 +267,9 @@ function handleAudioFileSelect(evt) {
     audiofile = evt.target.files[0];
 
     loadAudioToPlayer(URL.createObjectURL(audiofile));
+
+    // upload file
+    localStorage.setItem('stored_audio_file_url', 'my_URL_at_simplyeasy');
 
     // store file via FileSystem API
     var storeFile = function() {
@@ -375,15 +370,14 @@ function handleTextFileSelect(evt) {
 
 function loadDemo(demoid) {
 
-    $.get('../app/demo/'+demoid+'.txt', function(data) { // URL specific for Beta!
-    //$.get('demo/'+demoid+'.txt', function(data) { 
+    $.get('../demo/'+demoid+'.txt', function(data) { 
         loadText(data);
         localStorage.setItem('stored_text_file_content', data);
     });
 
     audiofile = 1;
-    loadAudioToPlayer('https://www.simplyeasy.cz/files/'+demoid+'.mp3');
-    localStorage.setItem('stored_audio_file_url', 'https://www.simplyeasy.cz/files/'+demoid+'.mp3');
+    loadAudioToPlayer('https://www.simplyeasy.cz/understand-server/files/'+demoid+'.mp3');
+    localStorage.setItem('stored_audio_file_url', 'https://www.simplyeasy.cz/understand-server/files/'+demoid+'.mp3');
 }
 
 function jumpBack(jumpstep) {
@@ -428,7 +422,6 @@ function playPause() {
                     just_reloaded = 0;
                 }
             }
-            //$('#debug1').text('deb1: '+player.duration+' / '+player.currentTime+'='+stored_audio_time);
         }, 200); // TODO - could shorter time be used?
     }
     else {
@@ -437,7 +430,6 @@ function playPause() {
             player.currentTime = stored_audio_time;
 
             just_reloaded = 0;
-            //$('#debug2').text('deb2: '+player.duration+' / '+player.currentTime+'='+stored_audio_time);
         }
     }
 
@@ -708,11 +700,9 @@ $(document).ready(function() {
 
     // remove previously translated words
     $('#remove_words').click(function() {
-        if (confirm('Are you sure?')) {
-            $('#previous_translated_words').empty();
-            previous_translated_words = [];
-            localStorage.setItem('previous_translated_words', '[]');
-        }
+        $('#previous_translated_words').empty();
+        previous_translated_words = [];
+        localStorage.setItem('previous_translated_words', '[]');
     });
 
 
