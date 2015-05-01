@@ -15,7 +15,6 @@
     <meta name="keywords" content="language, foreign language, learning, understanding" />
     <meta name="description" content="Stop translating in your head and improve your ability to understand native speakers." />
 
-    <link href='//fonts.googleapis.com/css?family=Roboto:400,300,100,700,400italic' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="css/style.css" />
 
     <!-- Font Awesome -->
@@ -51,10 +50,6 @@
 
 <div id="left">
 
-    <div id="warning">
-        <!-- warning to be inserted by JavaScript -->
-    </div>
-    
     <div id="top">
         <div id="content_wrapper" data-language="en">
             <!-- BETA -->
@@ -121,7 +116,7 @@
             <div id="recorder">
                 <div id="recording" class="rec" title="record your own voice">
                     <i class="fa fa-microphone"></i>
-                    <audio src="" id="myvoice" title="play your recording"></audio>
+                    <audio id="myvoice" title="play your recording"></audio>
                 </div>
                 <div id="playback" class="rec" title="re-play your own voice"><i class="fa fa-volume-up"></i></div>
                 <div class="clear"></div>
@@ -137,13 +132,13 @@
                     <div class="filetypes" title="supported file types">.txt - convert <a href="https://cloudconvert.com/pdf-to-txt" target="_blank">.pdf</a>, <a href="https://cloudconvert.com/epub-to-txt" target="_blank">.epub</a> and <a href="https://cloudconvert.com/" target="_blank">other formats</a> to .txt</div>
                 </div>
                 <div id="audio_file" class="btn">
-                    <input type="file" id="audio_files" name="audio_files[]" style="display:none" />
+                <form enctype="multipart/form-data">
+                    <input type="file" id="audio_files" name="fileToUpload" style="display:none" /></form>
                     <div class="open_file" id="audioFileSelect"><strong>Open</strong> your<span class="small">*</span><br /> <strong>audio</strong> file</div>
-                    <div class="filetypes" title="supported file types">.mp3, .wav</div>
+                    <div class="filetypes" title="supported file types">.mp3</div>
                 </div>
 
                 <div class="clear"></div>
-                <div id="locally" class="small"><span>*</span>&nbsp; Your files are opened locally on your device, not uploaded.</div>
             </div>
         </div>
 

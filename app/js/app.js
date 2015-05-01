@@ -124,7 +124,7 @@ function handleSelectedText(text) {
             // remove trailing characters
             var len = text.length;
             var lastchar = text.substr(len-1,1);
-            if (lastchar === "," || lastchar === "." || lastchar === '"' || lastchar === ")" || lastchar === ":") {;
+            if (lastchar === "," || lastchar === "." || lastchar === '"' || lastchar === ")" || lastchar === ":") {
                 text = text.substring(0,len-1);
             }
 
@@ -237,7 +237,7 @@ function resetPlayer() {
     // reset color of play icon
     $('.circle').css('color', '#AEAEAE');
 
-    // grey out the 'load audio' button
+    // blue 'load audio' button
     $('#audioFileSelect').css({
         "background-color": "#4ba3d9",
         "color": "#ffffff"
@@ -253,7 +253,7 @@ function resetText() {
     localStorage.setItem('lang_scrollposition', scrollposition);
     localStorage.removeItem('stored_text_file_content');
 
-    // grey out the 'load text' button
+    // blue 'load text' button
     $('#textFileSelect').css({
         "background-color": "#4ba3d9",
         "color": "#ffffff"
@@ -381,7 +381,7 @@ function jumpBack(jumpstep) {
     if (current_time > jumpstep) {
         player.currentTime = current_time - jumpstep;
     }
-    else {
+    else if (player.currentTime) {
         player.currentTime = 0;
     }
 }
@@ -549,7 +549,6 @@ $(document).ready(function() {
         
         // if file loaded
         if (audiofile) {
-
             playPause();
         }
     });

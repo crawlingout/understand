@@ -1,4 +1,7 @@
-window.requestFileSystem = window.requestFileSystem || window.webkitRequestFileSystem;
+var server = 'https://www.simplyeasy.cz/understand-server/';
+//var server = '../understand-server/';
+
+var uploaded_file_url = localStorage.getItem('uploaded_file_url') || 0;
 var fs = null;
 
 var from = localStorage.getItem('stored_lang_from') || 'es';
@@ -16,9 +19,6 @@ var just_reloaded = 1;
 
 // workaround: some browsers do not load duration immediately - stored duration is used to set knob
 var stored_duration = Number(localStorage.getItem('stored_duration')) || 0;
-
-var warning = '<i class="fa fa-exclamation-triangle"></i> \
-                <span>&nbsp;This is an experimental app. Some functionality is supported only in Google Chrome.</span>';
 
 
 function errorHandler(e) {
@@ -55,8 +55,7 @@ function callBing(from, to, text) {
     $.ajax({
         type: 'POST',
         data: {"authtype": "js"},
-        //url: '../server/local-token.php', // local
-        url: 'https://www.simplyeasy.cz/understand-server/token.php', // external
+        url: server+'token.php',
         success: function(data) {
 
             var s = document.createElement("script");
@@ -128,7 +127,7 @@ function handleSelectedText(text) {
             // remove trailing characters
             var len = text.length;
             var lastchar = text.substr(len-1,1);
-            if (lastchar === "," || lastchar === "." || lastchar === '"' || lastchar === ")" || lastchar === ":") {;
+            if (lastchar === "," || lastchar === "." || lastchar === '"' || lastchar === ")" || lastchar === ":") {
                 text = text.substring(0,len-1);
             }
 
@@ -240,7 +239,7 @@ function resetPlayer() {
     // reset color of play icon
     $('.circle').css('color', '#AEAEAE');
 
-    // grey out the 'load audio' button
+    // blue 'load audio' button
     $('#audioFileSelect').css({
         "background-color": "#4ba3d9",
         "color": "#ffffff"
@@ -256,7 +255,7 @@ function resetText() {
     localStorage.setItem('lang_scrollposition', scrollposition);
     localStorage.removeItem('stored_text_file_content');
 
-    // grey out the 'load text' button
+    // blue 'load text' button
     $('#textFileSelect').css({
         "background-color": "#4ba3d9",
         "color": "#ffffff"
@@ -266,37 +265,38 @@ function resetText() {
 function handleAudioFileSelect(evt) {
     audiofile = evt.target.files[0];
 
+    // load audio to player
     loadAudioToPlayer(URL.createObjectURL(audiofile));
 
-    // upload file
-    localStorage.setItem('stored_audio_file_url', 'my_URL_at_simplyeasy');
+    // validate
+    if (audiofile.size < 10380843 && audiofile.type === 'audio/mpeg') {
+        // upload file
+        var formData = new FormData($('form')[0]);
 
-    // store file via FileSystem API
-    var storeFile = function() {
-        fs.root.getFile(audiofile.name, {create: true, exclusive: true}, function(fileEntry) {
-            // store file's local URL in local storage
-            localStorage.setItem('stored_audio_file_url', fileEntry.toURL());
+        // if previously uploaded file
+        if (uploaded_file_url) {
+            formData.append("previous", uploaded_file_url);
+        }
 
-            fileEntry.createWriter(function(fileWriter) {
-                fileWriter.write(audiofile);
-            }, errorHandler);
-        }, errorHandler);
-    };
-
-    // if FileSystem API supported
-    if (fs) {
-        // remove file previously stored via FileSystem API
-        var dirReader = fs.root.createReader();
-        dirReader.readEntries(function(entries) {
-            for (var i = 0; i < entries.length; ++i) {
-                entries[i].remove(function() { // store after removing previously stored file
-                    storeFile();
-                }, errorHandler);
-            }
-            if (entries.length === 0) { // store even if no file previously stored
-                storeFile();
-            }
-        }, errorHandler);
+        $.ajax({
+            url: server+'upload.php',
+            type: 'POST',
+            success: function(response) {
+                // if NOT error
+                if (response.substring(0,5) !== 'Sorry') {
+                    response = $.trim(response);
+                    localStorage.setItem('uploaded_file_url', response);
+                    localStorage.setItem('stored_audio_file_url', server+'uploads/'+response+'.mp3');
+                }
+            },
+            error: function(response) {
+                console.log('error: ', response);
+            },
+            data: formData,
+            cache: false,
+            contentType: false,
+            processData: false
+        });
     }
 }
 
@@ -361,23 +361,23 @@ function handleTextFileSelect(evt) {
         // read in the file
         reader.readAsText(evt.target.files[0]);
     }
-    else {console.log('File reader not supported.');
-        // show 'browser not fully supported' message 
-        $('#warning').html(warning);
-        $('#warning').show();
+    else {
+        console.log('File reader not supported.');
     }
 }
 
 function loadDemo(demoid) {
+    resetPlayer();
+    resetText();
 
     $.get('../demo/'+demoid+'.txt', function(data) { 
         loadText(data);
         localStorage.setItem('stored_text_file_content', data);
     });
 
-    audiofile = 1;
-    loadAudioToPlayer('https://www.simplyeasy.cz/understand-server/files/'+demoid+'.mp3');
-    localStorage.setItem('stored_audio_file_url', 'https://www.simplyeasy.cz/understand-server/files/'+demoid+'.mp3');
+    audiofile = 'https://www.simplyeasy.cz/understand-server/files/'+demoid+'.mp3';
+    loadAudioToPlayer(audiofile);
+    localStorage.setItem('stored_audio_file_url', audiofile);
 }
 
 function jumpBack(jumpstep) {
@@ -391,7 +391,7 @@ function jumpBack(jumpstep) {
         audioTime(-jumpstep);
 
     }
-    else {
+    else if (player.currentTime) {
         player.currentTime = 0;
 
         // TRACKING
@@ -493,6 +493,7 @@ $(document).ready(function() {
     // get how much seconds to jump back
     var jumpback = $(".jumpback").data('jump');
 
+    // previously opened text file
     if (textfile) {
         loadText(textfile);
     }
@@ -501,7 +502,6 @@ $(document).ready(function() {
         $('#instructions').show();
         $('#backhome').hide();
     }
-
 
 
     // TRANSLATOR
@@ -586,7 +586,6 @@ $(document).ready(function() {
         
         // if file loaded
         if (audiofile) {
-
             playPause();
         }
     });
@@ -621,31 +620,13 @@ $(document).ready(function() {
         e.preventDefault();
     }, false);
 
-
-    // check for FileSystem API support
-    if (window.requestFileSystem) {
-        // all the APIs are supported
-
-        // initialise file system
-        window.requestFileSystem(window.TEMPORARY, 50*1024*1024, function(filesystem) {
-            fs = filesystem;
-
-            // try to preload previously selected file
-            if (audiofile) {
-                loadAudioToPlayer(audiofile);
-            }
-
-        }, errorHandler);
+    // previously loaded audio file?
+    if (audiofile) {
+        // load the file
+        loadAudioToPlayer(audiofile);
     }
-    else {console.log('The FileSystem API not fully supported in this browser.');
-
+    else {
         resetPlayer();
-        resetText();
-
-        // show 'browser not fully supported' message 
-        $('#warning').html(warning);
-        $('#warning').show();
-
     }
 
 

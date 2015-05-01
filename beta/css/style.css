@@ -68,20 +68,6 @@ li {
     position: relative;
 }
 
-#warning {
-    color: #F80000;
-    font-size: 14px;
-    height: 18px;
-    padding: 5px 0 7px 70px;
-    display: none;
-}
-
-
-#warning span {
-    color: #000000;
-    font-size: 12px;
-}
-
 #left {
     box-shadow: 0 0 12px #3C3C3C;
     float: left;
@@ -147,15 +133,6 @@ li {
 #letter p {
     font-size: 19px;
     line-height: 35px;
-}
-
-#purpose {
-    color: #4ba3d9;
-    font-family: "Roboto",arial,sans-serif;
-    font-size: 34px;
-    line-height: 42px;
-    padding: 15px 0 0;
-    font-weight: 300;
 }
 
 #getstarted {
@@ -518,16 +495,6 @@ li {
     float: left;
     line-height: 30px;
     width: 40px;
-}
-
-#locally {
-    color: #4f4f4f;
-    font-size: 11px;
-    padding: 18px 0 0;
-}
-
-#locally span {
-    font-size: 12px;
 }
 
 #bottom {
