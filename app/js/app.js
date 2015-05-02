@@ -606,6 +606,7 @@ $(document).ready(function() {
         // swicth to the language of the demo
         $('#from').val($(this).parent().data('lang'));
         from = $(this).parent().data('lang');
+        localStorage.setItem('stored_lang_from', from);
     });
 
     // show demos pop-up
