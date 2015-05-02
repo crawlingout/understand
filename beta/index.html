@@ -54,12 +54,12 @@
         <div id="content_wrapper" data-language="en">
             <!-- BETA -->
             <div id="beta">
-                EXPERIMENT
+                BETA
             </div>
             <div id="betatext" style="width: 370px;">
-                This app is in EXPERIMENTAL state. Something not working right? Please feel free to send us your feedback. Thanks!
+                This app is in BETA state. Something is not working right? Please let me know about it - I will try to fix it. Thank you!
             </div>
-
+            
             <div id="instructions">
                 <div class="gap"></div>
                 <div class="gap"></div>
@@ -74,7 +74,7 @@
                 </p>
 
                 <p>
-                    Listen without reading first. If you don't understand, read. If you don't know a word, highlight it to see translation.
+                    Listen without reading. If you don't understand, read. If you don't know a word, click on it to see translation.
                 </p>
                 <div class="gap"></div>
 
@@ -85,12 +85,12 @@
         
             <div id="content"></div>
         </div>
-        <div title="close this book and go back to the main page" id="backhome"><i class="fa fa-times"></i></div>
+        <div title="close this book" id="backhome"><i class="fa fa-times"></i></div>
     </div>
 
     <div id="middle">
+        <!-- player -->
         <div class="column">
-            <!-- player -->
             <div id="player">
                 <audio id="audioplayer" preload="auto"></audio>
             
@@ -130,8 +130,9 @@
                     <div class="filetypes" title="supported file types">.txt - convert <a href="https://cloudconvert.com/pdf-to-txt" target="_blank">.pdf</a>, <a href="https://cloudconvert.com/epub-to-txt" target="_blank">.epub</a> and <a href="https://cloudconvert.com/" target="_blank">other formats</a> to .txt</div>
                 </div>
                 <div id="audio_file" class="btn">
-                <form enctype="multipart/form-data">
-                    <input type="file" id="audio_files" name="fileToUpload" style="display:none" /></form>
+                    <form enctype="multipart/form-data">
+                        <input type="file" id="audio_files" name="fileToUpload" style="display:none" />
+                    </form>
                     <div class="open_file" id="audioFileSelect"><strong>Open</strong> your<span class="small">*</span><br /> <strong>audio</strong> file</div>
                     <div class="filetypes" title="supported file types">.mp3</div>
                 </div>
@@ -143,7 +144,7 @@
         <!-- language selectors -->
         <div class="column" style="width: 28%;">
             <div id="settings">
-                <p>Translate <span class="highlighed">highlighted</span> words</p>
+                <p>Click on words to translate them</p>
                 <span class="spacer">from</span>
                 <select id="from" class="select_lang">
                     <option value="ar">Arabic</option>
@@ -255,19 +256,15 @@
 
             <div id="support">
 
-                <div id="donate1">
-
-                    <div class="inarrow">Email me</div><div class="arrow"></div> if you have any <strong>questions</strong>, <strong>suggestions</strong> or <strong>feature requests</strong> - <span class="r">jan at simplyeasy dot cz</span>
-                    <div class="clear"></div><div class="gap"></div>
-
-                    <div class="inarrow">Support development</div><div class="arrow"></div>
-                    <div class="txt"> Bitcoin donations appreciated: &nbsp;</div>
-                    <div id="btcaddr">1KzGUW3ttwaKNdi1uN3JW5MyxyMqr3qNcq</div>
-                    <div id="qr">
-                        [QR]
-                        <div id="qrimage"><img src="img/btc.png" alt="qr" width="198" height="198"></div>
-                    </div>
-                    <div class="clear"></div>
+                <div class="inarrow">Email me</div><div class="arrow"></div> if you have any <strong>questions</strong>, <strong>suggestions</strong> or <strong>feature requests</strong> - <span class="r">jan at simplyeasy dot cz</span>
+                <div class="clear"></div><div class="gap"></div>
+                
+                <div class="inarrow">Support development</div><div class="arrow"></div>
+                <div class="txt"> Bitcoin donations appreciated: &nbsp;</div>
+                <div id="btcaddr">1KzGUW3ttwaKNdi1uN3JW5MyxyMqr3qNcq</div>
+                <div id="qr">
+                    [QR]
+                    <div id="qrimage"><img src="img/btc.png" alt="qr" width="198" height="198"></div>
                 </div>
                 <div class="clear"></div>
 

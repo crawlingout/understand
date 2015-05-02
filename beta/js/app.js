@@ -1,5 +1,5 @@
-var server = 'https://www.simplyeasy.cz/understand-server/';
-//var server = '../understand-server/';
+//var server = 'https://www.simplyeasy.cz/understand-server/';
+var server = '../understand-server/';
 
 var from = localStorage.getItem('stored_lang_from') || 'es';
 var to = localStorage.getItem('stored_lang_to') || 'en';
@@ -135,6 +135,7 @@ function handleSelectedText(text) {
             // unhide pair word_to_translate: translated_word
             $('#translations').show();
 
+            // create link to external dictionary or translator
             $('#linktodict').attr('href', linkToDict(text));
         }
         else {
@@ -495,6 +496,7 @@ $(document).ready(function() {
     }
 
 
+
     // TRANSLATOR
 
     // detect clicked word
@@ -610,6 +612,7 @@ $(document).ready(function() {
         }
         e.preventDefault();
     }, false);
+
 
     // previously loaded audio file?
     if (audiofile) {

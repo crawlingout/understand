@@ -1,5 +1,5 @@
-window.requestFileSystem = window.requestFileSystem || window.webkitRequestFileSystem;
-var fs = null;
+var server = 'https://www.simplyeasy.cz/understand-server/';
+//var server = '../understand-server/';
 
 var from = localStorage.getItem('stored_lang_from') || 'es';
 var to = localStorage.getItem('stored_lang_to') || 'en';
@@ -9,17 +9,12 @@ var textfile = localStorage.getItem('stored_text_file_content') || 0;
 var audiofile = localStorage.getItem('stored_audio_file_url') || 0;
 var player = 0;
 var stored_audio_time = Number(localStorage.getItem('stored_audio_time')) || 0;
+var uploaded_file_url = localStorage.getItem('uploaded_file_url') || 0;
 
 var interval = 0;
 
-var just_reloaded = 1;
-
-// workaround: some browsers do not load duration immediately - stored duration is used to set knob
-var stored_duration = Number(localStorage.getItem('stored_duration')) || 0;
-
-var warning = '<i class="fa fa-exclamation-triangle"></i> \
-                <span>&nbsp;This app is in BETA state. Some features are supported only in Google Chrome.</span>';
-
+// workaround: some browsers do not load duration on canplay event; in that case this flag is raised so duration could be obtained later
+var correct_knob_duration = 0;
 
 function errorHandler(e) {
     console.log('error>', e.message);
@@ -55,8 +50,7 @@ function callBing(from, to, text) {
     $.ajax({
         type: 'POST',
         data: {"authtype": "js"},
-        //url: '../../server/localtoken.php', // local
-        url: 'https://www.simplyeasy.cz/understand-server/token.php', // external
+        url: server+'token.php',
         success: function(data) {
 
             var s = document.createElement("script");
@@ -171,9 +165,6 @@ function loadAudioToPlayer(file) {
     // load audio file
     player.src = file;
 
-    // set color of play/pause icon
-    $('.circle').css('color', '#4ba3d9');
-
     // un-green the 'load audio' button
     $('#audioFileSelect').css({
         "background-color": "#FFFFFF",
@@ -181,21 +172,26 @@ function loadAudioToPlayer(file) {
     });
 
     // when the player is ready
+    var canplay_fired = 0; // workaround to prevent loop - some browsers fire canplay event again on player.currentTime = stored_audio_time
     player.addEventListener("canplay", function() {
+        if (!canplay_fired) {
+            // set color of play/pause icon
+            $('.circle').css('color', '#4ba3d9');
 
-        // detect if player loaded propperly
-        if (player.duration) {
-            // set knob
-            setKnob(player.duration, player.currentTime);
-        }
-        else {
-            // if at least stored duration available (after reload), use it to set knob
-            // workaround for browsers that load player later
-            if (stored_duration) {
-                setKnob(stored_duration, stored_audio_time);
+            // if duration loaded propperly
+            if (player.duration) {
+                // set player to stored time
+                player.currentTime = stored_audio_time;
+
+                // set knob
+                setKnob(player.duration, stored_audio_time);
             }
-            // else attempt to handle it after play button is pushed
+            else {
+                // raise flag so duration can be obtained later
+                correct_knob_duration = 1;
+            }
         }
+        canplay_fired = 1;
     });
 
     // listener for finished audio
@@ -221,8 +217,6 @@ function resetPlayer() {
     localStorage.setItem('stored_audio_time', stored_audio_time);
     audiofile = 0;
     localStorage.removeItem('stored_audio_file_url');
-    stored_duration = 0;
-    localStorage.removeItem('stored_duration');
 
     // clear interval updating progress bar
     window.clearInterval(interval);
@@ -263,34 +257,48 @@ function resetText() {
 function handleAudioFileSelect(evt) {
     audiofile = evt.target.files[0];
 
+    // load audio to player
     loadAudioToPlayer(URL.createObjectURL(audiofile));
 
-    // store file via FileSystem API
-    var storeFile = function() {
-        fs.root.getFile(audiofile.name, {create: true, exclusive: true}, function(fileEntry) {
-            // store file's local URL in local storage
-            localStorage.setItem('stored_audio_file_url', fileEntry.toURL());
-
-            fileEntry.createWriter(function(fileWriter) {
-                fileWriter.write(audiofile);
-            }, errorHandler);
-        }, errorHandler);
+    // make sure it's mp3 file
+    var isMP3 = function(file) {
+        if (file.type.substring(0,5) === 'audio' && file.name.substr(file.name.length - 3) === 'mp3') {
+            return true;
+        }
+        else {
+            return false;
+        }
     };
 
-    // if FileSystem API supported
-    if (fs) {
-        // remove file previously stored via FileSystem API
-        var dirReader = fs.root.createReader();
-        dirReader.readEntries(function(entries) {
-            for (var i = 0; i < entries.length; ++i) {
-                entries[i].remove(function() { // store after removing previously stored file
-                    storeFile();
-                }, errorHandler);
-            }
-            if (entries.length === 0) { // store even if no file previously stored
-                storeFile();
-            }
-        }, errorHandler);
+    // validate - if smaller than 99MB and MP3
+    if (audiofile.size < 103809024 && isMP3(audiofile)) {
+        // upload file
+        var formData = new FormData($('form')[0]);
+
+        // if previously uploaded file
+        if (uploaded_file_url) {
+            formData.append("previous", uploaded_file_url);
+        }
+
+        $.ajax({
+            url: server+'upload.php',
+            type: 'POST',
+            success: function(response) {console.log('upload: ', response);
+                // if NOT error
+                if (response.substring(0,5) !== 'Sorry') {
+                    response = $.trim(response);
+                    localStorage.setItem('uploaded_file_url', response);
+                    localStorage.setItem('stored_audio_file_url', server+'uploads/'+response+'.mp3');
+                }
+            },
+            error: function(response) {
+                console.log('error: ', response);
+            },
+            data: formData,
+            cache: false,
+            contentType: false,
+            processData: false
+        });
     }
 }
 
@@ -334,44 +342,49 @@ function loadText(text) {
 }
 
 function handleTextFileSelect(evt) {
+    // validation
+    if (evt.target.files[0].name.substr(evt.target.files[0].name.length - 3) === 'txt' && evt.target.files[0].type.substring(0,4) === 'text') {
+        // reset stored scroll position
+        scrollposition = 0;
+        localStorage.setItem('lang_scrollposition', scrollposition);
+     
+        // file reader supported
+        if (window.FileReader) {
 
-    // reset stored scroll position
-    scrollposition = 0;
-    localStorage.setItem('lang_scrollposition', scrollposition);
- 
-    // file reader supported
-    if (window.FileReader) {
+            var reader = new FileReader();
 
-        var reader = new FileReader();
+            // closure to capture the file information.
+            reader.onload = function(e) {
+                loadText(e.target.result);
 
-        // closure to capture the file information.
-        reader.onload = function(e) {
-            loadText(e.target.result);
+                // store text
+                localStorage.setItem('stored_text_file_content', e.target.result);
+            };
 
-            // store text
-            localStorage.setItem('stored_text_file_content', e.target.result);
-        };
-
-        // read in the file
-        reader.readAsText(evt.target.files[0]);
+            // read in the file
+            reader.readAsText(evt.target.files[0]);
+        }
+        else {
+            console.log('File reader not supported.');
+        }
     }
-    else {console.log('File reader not supported.');
-        // show 'browser not fully supported' message 
-        $('#warning').html(warning);
-        $('#warning').show();
+    else {
+        console.log('This is not a text file!');
     }
 }
 
 function loadDemo(demoid) {
+    resetPlayer();
+    resetText();
 
-    $.get('../demo/'+demoid+'.txt', function(data) {
+    $.get('../demo/'+demoid+'.txt', function(data) { 
         loadText(data);
         localStorage.setItem('stored_text_file_content', data);
     });
 
-    audiofile = 1;
-    loadAudioToPlayer('https://www.simplyeasy.cz/understand-server/files/'+demoid+'.mp3');
-    localStorage.setItem('stored_audio_file_url', 'https://www.simplyeasy.cz/understand-server/files/'+demoid+'.mp3');
+    audiofile = 'https://www.simplyeasy.cz/understand-server/files/'+demoid+'.mp3';
+    loadAudioToPlayer(audiofile);
+    localStorage.setItem('stored_audio_file_url', audiofile);
 }
 
 function jumpBack(jumpstep) {
@@ -388,35 +401,16 @@ function jumpBack(jumpstep) {
 
 function playPause() {
 
-    // in browser which loads player late (no player.duration when canplay event called)
-    if (!player.duration) {
-        // wait
+    // if duration not detected on canplay event (some browsers show duration = 0 at that time)
+    if (correct_knob_duration) {
+        // get it now
         setTimeout(function() {
-
-            // check if player already loaded
             if (player.duration) {
-                // store duration so it could be used to set knob after reload
-                localStorage.setItem('stored_duration', player.duration);
-
-                // set knob
+                // and use it to set knob correctly
                 setKnob(player.duration, player.currentTime);
-
-                if (just_reloaded) {
-                    // jump to stored time
-                    player.currentTime = stored_audio_time;
-                    
-                    just_reloaded = 0;
-                }
+                correct_knob_duration = 0;
             }
-        }, 200); // TODO - could shorter time be used?
-    }
-    else {
-        if (just_reloaded) {
-            // jump to stored time
-            player.currentTime = stored_audio_time;
-
-            just_reloaded = 0;
-        }
+        }, 300);
     }
 
     // if not playing
@@ -456,7 +450,7 @@ $(document).ready(function() {
     // get how much seconds to jump back
     var jumpback = $(".jumpback").data('jump');
 
-    // load text if previously stored
+    // previously opened text file
     if (textfile) {
         loadText(textfile);
     }
@@ -510,6 +504,7 @@ $(document).ready(function() {
             $('#from').val('en');
         }
     }
+
 
     // preload selected from/to languages
     $('#from').val(from);
@@ -584,30 +579,13 @@ $(document).ready(function() {
     }, false);
 
 
-    // check for FileSystem API support
-    if (window.requestFileSystem) {
-        // all the APIs are supported
-
-        // initialise file system
-        window.requestFileSystem(window.TEMPORARY, 50*1024*1024, function(filesystem) {
-            fs = filesystem;
-
-            // try to preload previously selected file
-            if (audiofile) {
-                loadAudioToPlayer(audiofile);
-            }
-
-        }, errorHandler);
+    // previously loaded audio file?
+    if (audiofile) {
+        // load the file
+        loadAudioToPlayer(audiofile);
     }
-    else {console.log('The FileSystem API not fully supported in this browser.');
-
+    else {
         resetPlayer();
-        resetText();
-
-        // show 'browser not fully supported' message 
-        $('#warning').html(warning);
-        $('#warning').show();
-
     }
 
 

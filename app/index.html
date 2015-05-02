@@ -52,10 +52,6 @@
 <body>
 
 <div id="left">
-
-    <div id="warning">
-        <!-- warning to be inserted by JavaScript -->
-    </div>
     
     <div id="top">
         <div id="content_wrapper" data-language="en">
@@ -113,6 +109,8 @@
                 </div>
             
             </div>
+
+            <!-- jump N seconds back -->
             <div data-jump="6" class="jumpback" title=" jump 6 seconds back (keyboard shortcut: left arrow) "><span><i class="fa fa-caret-left"></i><i class="fa fa-caret-left"></i></span> 6 s</div>
         </div>
 
@@ -125,9 +123,11 @@
                     <div class="filetypes" title="supported file types">.txt - convert <a href="https://cloudconvert.com/pdf-to-txt" target="_blank">.pdf</a>, <a href="https://cloudconvert.com/epub-to-txt" target="_blank">.epub</a> and <a href="https://cloudconvert.com/" target="_blank">other formats</a> to .txt</div>
                 </div>
                 <div id="audio_file" class="btn">
-                    <input type="file" id="audio_files" name="audio_files[]" style="display:none" />
+                    <form enctype="multipart/form-data">
+                        <input type="file" id="audio_files" name="fileToUpload" style="display:none" />
+                    </form>
                     <div class="open_file" id="audioFileSelect"><strong>Open</strong> your<span class="small">*</span><br /> <strong>audio</strong> file</div>
-                    <div class="filetypes" title="supported file types">.mp3, .wav</div>
+                    <div class="filetypes" title="supported file types">.mp3</div>
                 </div>
 
                 <div class="clear"></div>

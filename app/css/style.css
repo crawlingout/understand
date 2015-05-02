@@ -64,20 +64,6 @@ li {
     position: relative;
 }
 
-#warning {
-    color: #F80000;
-    font-size: 14px;
-    height: 18px;
-    padding: 5px 0 7px 70px;
-    display: none;
-}
-
-
-#warning span {
-    color: #000000;
-    font-size: 12px;
-}
-
 #left {
     box-shadow: 0 0 12px #3C3C3C;
     float: left;

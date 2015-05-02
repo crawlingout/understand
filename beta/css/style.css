@@ -31,7 +31,7 @@ a {
 
 h1 {
     color: #4ba3d9;
-    font-family: "Roboto",arial,sans-serif;
+    font-family: arial,sans-serif;
     font-size: 38px;
     font-weight: 300;
     margin: 10px 0 40px;
@@ -58,10 +58,6 @@ li {
 
 .small {
     font-size: 13px;
-}
-
-.georgia {
-    font-family: georgia,arial,sans-serif;
 }
 
 #top {
@@ -98,24 +94,20 @@ li {
 
 #other_languages {
     border-right: 1px dotted silver;
-    height: 25px;
+    height: 105px;
     left: -100px;
     line-height: 25px;
     margin: 0;
     padding: 5px 30px 5px 0;
     position: absolute;
     text-align: right;
-    top: 120px;
+    top: 115px;
     width: 80px;
 }
 
 .other_lang {
-    color: #a4a4a4;
     font-size: 15px;
     text-transform: uppercase;
-}
-.other_lang:hover {
-    color: #4ba3d9;
 }
 
 #letter {
@@ -131,7 +123,7 @@ li {
 }
 
 #letter p {
-    font-size: 19px;
+    font-size: 18px;
     line-height: 35px;
 }
 
@@ -152,9 +144,10 @@ li {
 }
 
 #norisk {
-    padding: 10px 0;
-    width: 200px;
+    font-size: 14px;
+    padding: 12px 0;
     text-align: center;
+    width: 200px;
 }
 
 .overlay {
@@ -294,11 +287,15 @@ li {
 
 #previous_translated_words_wrapper p {
     line-height: 20px;
-    margin: 0 0 8px;
+    margin: 0 0 15px;
 }
 
 #previous_translated_words span {
-	color: #21b51f;
+    color: #21b51f;
+}
+
+#previous_translated_words em {
+    color: #bbbbbb;
 }
 
 #remove_words {
@@ -521,14 +518,10 @@ li {
     font-size: 13px;
     line-height: 25px;
     padding: 0 0 10px;
-}
-
-#donate1 {
-    height: 40px;
     position: relative;
 }
 
-#donate1 .txt {
+#support .txt {
     float: left;
     padding: 0;
 }
@@ -552,12 +545,12 @@ li {
     width: 0;
 }
 
-#donate1 #btcaddr {
+#btcaddr {
     float: left;
     padding-right: 5px;
 }
 
-#donate1 #qr {
+#qr {
     color: #4ba3d9;
     cursor: pointer;
     float: left;
