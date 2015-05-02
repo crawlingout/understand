@@ -38,10 +38,10 @@ h1 {
 }
 
 h3 {
-    color: #C1C1C1;
+    color: #c1c1c1;
     font-size: 28px;
     font-weight: normal;
-    margin: 10px 0;
+    margin: 25px 0;
 }
 
 ul {
@@ -171,11 +171,6 @@ li {
     z-index: 99;
 }
 
-#yourown {
-    font-size: 12px;
-    padding: 20px 30px 15px;
-}
-
 .popup {
     background-color: #F4F4F4;
     left: 70px;
@@ -241,12 +236,6 @@ li {
 .gap {
     height: 15px;
     width: 100%;
-}
-
-.others {
-    font-size: 13px;
-    margin: 0;
-    padding: 15px 30px;
 }
 
 #content {

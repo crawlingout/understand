@@ -1,9 +1,6 @@
 var server = 'https://www.simplyeasy.cz/understand-server/';
 //var server = '../understand-server/';
 
-var uploaded_file_url = localStorage.getItem('uploaded_file_url') || 0;
-var fs = null;
-
 var from = localStorage.getItem('stored_lang_from') || 'es';
 var to = localStorage.getItem('stored_lang_to') || 'en';
 var previous_translated_words = [];
@@ -12,14 +9,12 @@ var textfile = localStorage.getItem('stored_text_file_content') || 0;
 var audiofile = localStorage.getItem('stored_audio_file_url') || 0;
 var player = 0;
 var stored_audio_time = Number(localStorage.getItem('stored_audio_time')) || 0;
+var uploaded_file_url = localStorage.getItem('uploaded_file_url') || 0;
 
 var interval = 0;
 
-var just_reloaded = 1;
-
-// workaround: some browsers do not load duration immediately - stored duration is used to set knob
-var stored_duration = Number(localStorage.getItem('stored_duration')) || 0;
-
+// workaround: some browsers do not load duration on canplay event; in that case this flag is raised so duration could be obtained later
+var correct_knob_duration = 0;
 
 function errorHandler(e) {
     console.log('error>', e.message);
@@ -173,9 +168,6 @@ function loadAudioToPlayer(file) {
     // load audio file
     player.src = file;
 
-    // set color of play/pause icon
-    $('.circle').css('color', '#4ba3d9');
-
     // un-green the 'load audio' button
     $('#audioFileSelect').css({
         "background-color": "#FFFFFF",
@@ -183,21 +175,26 @@ function loadAudioToPlayer(file) {
     });
 
     // when the player is ready
+    var canplay_fired = 0; // workaround to prevent loop - some browsers fire canplay event again on player.currentTime = stored_audio_time
     player.addEventListener("canplay", function() {
+        if (!canplay_fired) {
+            // set color of play/pause icon
+            $('.circle').css('color', '#4ba3d9');
 
-        // detect if player loaded propperly
-        if (player.duration) {
-            // set knob
-            setKnob(player.duration, player.currentTime);
-        }
-        else {
-            // if at least stored duration available (after reload), use it to set knob
-            // workaround for browsers that load player later
-            if (stored_duration) {
-                setKnob(stored_duration, stored_audio_time);
+            // if duration loaded propperly
+            if (player.duration) {
+                // set player to stored time
+                player.currentTime = stored_audio_time;
+
+                // set knob
+                setKnob(player.duration, stored_audio_time);
             }
-            // else attempt to handle it after play button is pushed
+            else {
+                // raise flag so duration can be obtained later
+                correct_knob_duration = 1;
+            }
         }
+        canplay_fired = 1;
     });
 
     // listener for finished audio
@@ -223,8 +220,6 @@ function resetPlayer() {
     localStorage.setItem('stored_audio_time', stored_audio_time);
     audiofile = 0;
     localStorage.removeItem('stored_audio_file_url');
-    stored_duration = 0;
-    localStorage.removeItem('stored_duration');
 
     // clear interval updating progress bar
     window.clearInterval(interval);
@@ -268,8 +263,18 @@ function handleAudioFileSelect(evt) {
     // load audio to player
     loadAudioToPlayer(URL.createObjectURL(audiofile));
 
-    // validate
-    if (audiofile.size < 10380843 && audiofile.type === 'audio/mpeg') {
+    // make sure it's mp3 file
+    var isMP3 = function(file) {
+        if (file.type.substring(0,5) === 'audio' && file.name.substr(file.name.length - 3) === 'mp3') {
+            return true;
+        }
+        else {
+            return false;
+        }
+    };
+
+    // validate - if smaller than 99MB and MP3
+    if (audiofile.size < 103809024 && isMP3(audiofile)) {
         // upload file
         var formData = new FormData($('form')[0]);
 
@@ -281,7 +286,7 @@ function handleAudioFileSelect(evt) {
         $.ajax({
             url: server+'upload.php',
             type: 'POST',
-            success: function(response) {
+            success: function(response) {console.log('upload: ', response);
                 // if NOT error
                 if (response.substring(0,5) !== 'Sorry') {
                     response = $.trim(response);
@@ -340,29 +345,34 @@ function loadText(text) {
 }
 
 function handleTextFileSelect(evt) {
+    // validation
+    if (evt.target.files[0].name.substr(evt.target.files[0].name.length - 3) === 'txt' && evt.target.files[0].type.substring(0,4) === 'text') {
+        // reset stored scroll position
+        scrollposition = 0;
+        localStorage.setItem('lang_scrollposition', scrollposition);
+     
+        // file reader supported
+        if (window.FileReader) {
 
-    // reset stored scroll position
-    scrollposition = 0;
-    localStorage.setItem('lang_scrollposition', scrollposition);
- 
-    // file reader supported
-    if (window.FileReader) {
+            var reader = new FileReader();
 
-        var reader = new FileReader();
+            // closure to capture the file information.
+            reader.onload = function(e) {
+                loadText(e.target.result);
 
-        // closure to capture the file information.
-        reader.onload = function(e) {
-            loadText(e.target.result);
+                // store text
+                localStorage.setItem('stored_text_file_content', e.target.result);
+            };
 
-            // store text
-            localStorage.setItem('stored_text_file_content', e.target.result);
-        };
-
-        // read in the file
-        reader.readAsText(evt.target.files[0]);
+            // read in the file
+            reader.readAsText(evt.target.files[0]);
+        }
+        else {
+            console.log('File reader not supported.');
+        }
     }
     else {
-        console.log('File reader not supported.');
+        console.log('This is not a text file!');
     }
 }
 
@@ -402,35 +412,16 @@ function jumpBack(jumpstep) {
 
 function playPause() {
 
-    // in browser which loads player late (no player.duration when canplay event called)
-    if (!player.duration) {
-        // wait
+    // if duration not detected on canplay event (some browsers show duration = 0 at that time)
+    if (correct_knob_duration) {
+        // get it now
         setTimeout(function() {
-
-            // check if player already loaded
             if (player.duration) {
-                // store duration so it could be used to set knob after reload
-                localStorage.setItem('stored_duration', player.duration);
-
-                // set knob
+                // and use it to set knob correctly
                 setKnob(player.duration, player.currentTime);
-
-                if (just_reloaded) {
-                    // jump to stored time
-                    player.currentTime = stored_audio_time;
-                    
-                    just_reloaded = 0;
-                }
+                correct_knob_duration = 0;
             }
-        }, 200); // TODO - could shorter time be used?
-    }
-    else {
-        if (just_reloaded) {
-            // jump to stored time
-            player.currentTime = stored_audio_time;
-
-            just_reloaded = 0;
-        }
+        }, 300);
     }
 
     // if not playing
