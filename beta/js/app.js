@@ -121,8 +121,8 @@ function handleSelectedText(text) {
 
             // remove trailing characters
             var len = text.length;
-            var lastchar = text.substr(len-1,1);
-            if (lastchar === "," || lastchar === "." || lastchar === '"' || lastchar === ")" || lastchar === ":") {
+            var last = text.substr(len-1,1);
+            if (last === "," || last === "." || last === '"' || last === ")" || last === ":" || last === "!" || last === "?") {
                 text = text.substring(0,len-1);
             }
 
@@ -155,7 +155,7 @@ function handleSelectedText(text) {
     }
 }
 
-function setKnob(dur, cur) {
+function setKnob(dur, cur) {console.log('setKnob', dur, cur);
     // get time for the player to jump to
     var jumpto = cur || stored_audio_time;
 
@@ -393,7 +393,7 @@ function loadDemo(demoid) {
 
 function jumpBack(jumpstep) {
     // get current time
-    current_time = player.currentTime;
+    var current_time = player.currentTime;console.log('jumpBack', current_time);
 
     if (current_time > jumpstep) {
         player.currentTime = current_time - jumpstep;
@@ -411,12 +411,12 @@ function jumpBack(jumpstep) {
     }
 }
 
-function playPause() {
+function playPause() {console.log('playPause', player.currentTime);
 
     // if duration not detected on canplay event (some browsers show duration = 0 at that time)
     if (correct_knob_duration) {
         // get it now
-        setTimeout(function() {
+        setTimeout(function() {console.log('correcting knob duration');
             if (player.duration) {
                 // and use it to set knob correctly
                 setKnob(player.duration, player.currentTime);
@@ -435,7 +435,7 @@ function playPause() {
         $('#pause_btn').show();
 
         // regularly update progress bar
-        interval = window.setInterval(function(){
+        interval = window.setInterval(function(){console.log('updating progress bar', player.currentTime);
             $('.knob').val(player.currentTime).trigger('change');
 
             // TRACKING
@@ -483,7 +483,7 @@ function recordReplay() {
 $(document).ready(function() {
 
     // get how much seconds to jump back
-    var jumpback = $(".jumpback").data('jump');
+    var jumpback = $("#jumpback").data('jump');
 
     // previously opened text file
     if (textfile) {
@@ -561,7 +561,7 @@ $(document).ready(function() {
     // PLAYER
     
     $(".knob").knob({
-        'change': function(e){
+        'change': function(e){console.log('knob changed by touch');
             player.currentTime = e;
             $('.knob').val(player.currentTime).trigger('change');
         }
@@ -584,7 +584,7 @@ $(document).ready(function() {
     });
 
     // jump N (defined in data attribute) seconds back
-    $(".jumpback").click(function() {
+    $("#jumpback").click(function() {console.log('jumpback', jumpback);
         jumpBack(jumpback);
     });
 

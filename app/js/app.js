@@ -117,8 +117,8 @@ function handleSelectedText(text) {
 
             // remove trailing characters
             var len = text.length;
-            var lastchar = text.substr(len-1,1);
-            if (lastchar === "," || lastchar === "." || lastchar === '"' || lastchar === ")" || lastchar === ":") {
+            var last = text.substr(len-1,1);
+            if (last === "," || last === "." || last === '"' || last === ")" || last === ":" || last === "!" || last === "?") {
                 text = text.substring(0,len-1);
             }
 
@@ -389,7 +389,7 @@ function loadDemo(demoid) {
 
 function jumpBack(jumpstep) {
     // get current time
-    current_time = player.currentTime;
+    var current_time = player.currentTime;
 
     if (current_time > jumpstep) {
         player.currentTime = current_time - jumpstep;
@@ -448,7 +448,7 @@ function playPause() {
 $(document).ready(function() {
 
     // get how much seconds to jump back
-    var jumpback = $(".jumpback").data('jump');
+    var jumpback = $("#jumpback").data('jump');
 
     // previously opened text file
     if (textfile) {
@@ -549,7 +549,7 @@ $(document).ready(function() {
     });
 
     // jump N (defined in data attribute) seconds back
-    $(".jumpback").click(function() {
+    $("#jumpback").click(function() {
         jumpBack(jumpback);
     });
 

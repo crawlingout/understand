@@ -1,5 +1,5 @@
-window.requestFileSystem = window.requestFileSystem || window.webkitRequestFileSystem;
-var fs = null;
+var server = 'https://www.simplyeasy.cz/understand-server/';
+//var server = '../understand-server/';
 
 var max_translation_length = 1; // number of words allowed to be translated - if changed, change also note in #whentoolong
 var from = localStorage.getItem('read_stored_lang_from') || 'es';
@@ -17,9 +17,6 @@ var just_reloaded = 1;
 
 // workaround: some browsers do not load duration immediately - stored duration is used to set knob
 var stored_duration = Number(localStorage.getItem('read_stored_duration')) || 0;
-
-var warning = '<i class="fa fa-exclamation-triangle"></i> \
-                <span>&nbsp;This app is in BETA state. Some features are supported only in Google Chrome.</span>';
 
 
 function errorHandler(e) {
@@ -56,8 +53,7 @@ function callBing(from, to, text) {
     $.ajax({
         type: 'POST',
         data: {"authtype": "js"},
-        //url: '../../server/localtoken.php', // local
-        url: 'https://www.simplyeasy.cz/services/token.php', // external
+        url: server+'token.php',
         success: function(data) {
 
             var s = document.createElement("script");
@@ -129,8 +125,8 @@ function handleSelectedText(text) {
 
             // remove trailing characters
             var len = text.length;
-            var lastchar = text.substr(len-1,1);
-            if (lastchar === "," || lastchar === "." || lastchar === '"' || lastchar === ")" || lastchar === ":") {;
+            var last = text.substr(len-1,1);
+            if (last === "," || last === "." || last === '"' || last === ")" || last === ":" || last === "!" || last === "?") {
                 text = text.substring(0,len-1);
             }
 
@@ -240,10 +236,8 @@ function handleTextFileSelect(evt) {
         // read in the file
         reader.readAsText(evt.target.files[0]);
     }
-    else {console.log('File reader not supported.');
-        // show 'browser not fully supported' message 
-        $('#warning').html(warning);
-        $('#warning').show();
+    else {
+        console.log('File reader not supported.');
     }
 }
 

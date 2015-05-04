@@ -9,11 +9,13 @@ html, body {
 }
 
 /* remove ugly dotted lines around clicked links and buttons in FF */
-a { outline: none; }
 button::-moz-focus-inner { border: 0; }
 
-/* remove highlight border around selected form controls in Chrome and Safari */
-*:focus { outline: none; }
+/* remove highlight border around selected controls in Chrome and Safari */
+* {
+    outline: none;
+    -webkit-tap-highlight-color:  rgba(255, 255, 255, 0);
+}
 
 #unsupported {
     display: none;
@@ -75,20 +77,22 @@ li {
 #content_wrapper {
 	background-color: #FFFFFF;
     border-bottom: 1px solid #E3E3E3;
-    height: 500px;
+    height: 490px;
     overflow: auto;
     position: relative;
     resize: vertical;
 }
 
 #backhome {
-    position: absolute;
-    padding: 18px;
-    font-size: 20px;
     color: silver;
     cursor: pointer;
+    font-size: 20px;
     left: 0;
+    padding: 18px;
+    position: absolute;
+    text-align: center;
     top: 0;
+    width: 30px;
     display: none;
 }
 
@@ -371,7 +375,7 @@ li {
 
 #recorder {
     color: #898989;
-    left: 178px;
+    left: 190px;
     position: absolute;
     top: 102px;
 }
@@ -382,6 +386,8 @@ li {
     cursor: pointer;
     float: left;
     padding: 10px 21px;
+    text-align: center;
+    width: 20px;
 }
 
 #recording {
@@ -410,25 +416,25 @@ li {
 }
 
 .circle_bg {
-    background-color: #FFFFFF;
+    background-color: #ffffff;
     border-radius: 60px;
-    box-shadow: 0 0 6px #C6C6C6;
-    height: 40px;
-    left: 35px;
+    box-shadow: 0 0 6px #c6c6c6;
+    height: 60px;
+    left: 30px;
     padding: 30px;
     position: absolute;
-    top: 10px;
-    width: 40px;
+    top: 0;
+    width: 60px;
 }
 
 .circle {
-	background-color: #FFFFFF;
-    border: 1px solid #FFFFFF;
+	background-color: #ffffff;
+    border: 1px solid #ffffff;
     border-radius: 40px;
     cursor: pointer;
     font-size: 28px;
     height: 28px;
-    left: 45px;
+    left: 50px;
     padding: 22px 24px 28px 26px;
     position: absolute;
     text-align: center;
@@ -439,9 +445,9 @@ li {
 
 #knob {
 	height: 130px;
-    left: 35px;
+    left: 30px;
     position: absolute;
-    top: 10px;
+    top: 0;
 }
 
 #knob input {
@@ -455,9 +461,9 @@ li {
     color: #898989;
     cursor: pointer;
     font-size: 14px;
-    height: 18px;
-    left: 185px;
-    line-height: 18px;
+    height: 25px;
+    left: 190px;
+    line-height: 25px;
     padding: 15px;
     position: absolute;
     text-align: center;
