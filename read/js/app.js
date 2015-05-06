@@ -7,16 +7,6 @@ var to = localStorage.getItem('read_stored_lang_to') || 'en';
 var previous_translated_words = [];
 var scrollposition = Number(localStorage.getItem('read_lang_scrollposition')) || 0;
 var textfile = localStorage.getItem('read_stored_text_file_content') || 0;
-var audiofile = localStorage.getItem('read_stored_audio_file_url') || 0;
-var player = 0;
-var stored_audio_time = Number(localStorage.getItem('read_stored_audio_time')) || 0;
-
-var interval = 0;
-
-var just_reloaded = 1;
-
-// workaround: some browsers do not load duration immediately - stored duration is used to set knob
-var stored_duration = Number(localStorage.getItem('read_stored_duration')) || 0;
 
 
 function errorHandler(e) {
@@ -186,17 +176,17 @@ function loadText(text) {
     // split paragraphs by empty lines
     var paragraphs = text.split("\n");
 
-    var content = '<p class="mycontent"> ';
+    var content = '<p><span class="mycontent"> ';
 
     for (var i=0, l=paragraphs.length; i<l; i++) {
         if (paragraphs[i] !== '\r' && paragraphs[i] !== '') {
             content = content + paragraphs[i]+' ';
         }
         else {
-            content = content + '</p><p class="mycontent"> ';
+            content = content + '</span></p><p><span class="mycontent"> ';
         }
     }
-    content = content + '</p>';
+    content = content + '</span></p>';
 
     // hideinstructions on how to use the site
     $('#instructions').hide();
@@ -259,7 +249,7 @@ $(document).ready(function() {
     
     // detect clicked word
     // based on http://stackoverflow.com/a/9304990/716001 - space at the beginning of each paragraph needed!
-    $('#content').on('click', 'p.mycontent', function(e) {
+    $('#content').on('click', 'span.mycontent', function(e) {
         s = window.getSelection();
         var range = s.getRangeAt(0);
         var node = s.anchorNode;

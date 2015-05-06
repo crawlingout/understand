@@ -1,5 +1,5 @@
-var server = 'https://www.simplyeasy.cz/understand-server/';
-//var server = '../understand-server/';
+//var server = 'https://www.simplyeasy.cz/understand-server/';
+var server = '../understand-server/';
 
 var from = localStorage.getItem('stored_lang_from') || 'es';
 var to = localStorage.getItem('stored_lang_to') || 'en';
@@ -10,8 +10,6 @@ var audiofile = localStorage.getItem('stored_audio_file_url') || 0;
 var player = 0;
 var stored_audio_time = Number(localStorage.getItem('stored_audio_time')) || 0;
 var uploaded_file_url = localStorage.getItem('uploaded_file_url') || 0;
-
-var interval = 0;
 
 // workaround: some browsers do not load duration on canplay event; in that case this flag is raised so duration could be obtained later
 var correct_knob_duration = 0;
@@ -70,8 +68,6 @@ function callBing(from, to, text) {
             $('#translatedword').text('UNTRANSLATED');
         }
     });
-
-    //showQuota(text.length);
 }
 
 function getTranslation(word) {
@@ -155,7 +151,7 @@ function handleSelectedText(text) {
     }
 }
 
-function setKnob(dur, cur) {console.log('setKnob', dur, cur);
+function setKnob(dur, cur) {
     // get time for the player to jump to
     var jumpto = cur || stored_audio_time;
 
@@ -166,6 +162,7 @@ function setKnob(dur, cur) {console.log('setKnob', dur, cur);
 }
 
 function loadAudioToPlayer(file) {
+
     // load audio file
     player.src = file;
 
@@ -177,7 +174,7 @@ function loadAudioToPlayer(file) {
 
     // when the player is ready
     var canplay_fired = 0; // workaround to prevent loop - some browsers fire canplay event again on player.currentTime = stored_audio_time
-    player.addEventListener("canplay", function() {
+    player.oncanplay = function() {
         if (!canplay_fired) {
             // set color of play/pause icon
             $('.circle').css('color', '#4ba3d9');
@@ -194,19 +191,35 @@ function loadAudioToPlayer(file) {
                 // raise flag so duration can be obtained later
                 correct_knob_duration = 1;
             }
+            canplay_fired = 1;
         }
-        canplay_fired = 1;
-    });
+    };
+
+    // keep updating knob when audio is playing
+    var diff = 0, last_time = stored_audio_time;
+    player.ontimeupdate = function() {
+
+        // workaround for problem with Android Chrome - randomly setting currentTime to 0 after player.play()
+        if (player.currentTime === 0 && stored_audio_time) {
+            player.currentTime = stored_audio_time + diff;console.log('FIXING PROBLEM', player.currentTime);
+        }
+
+        $('.knob').val(player.currentTime).trigger('change');
+
+        // TRACKING
+        // calculate time difference between timeupdate events
+        diff = (player.currentTime - last_time);
+        last_time = player.currentTime;
+        // track audio time
+        audioTime(diff);//console.log('diff', diff);
+    };
 
     // listener for finished audio
-    player.addEventListener("ended", function() {
+    player.onended = function() {
         // set icon to play
         $('#pause_btn').hide();
         $('#play_btn').show();
-
-        // reset stored time
-        localStorage.setItem('stored_audio_time', '0');
-    });
+    };
 }
 
 function resetPlayer() {
@@ -221,9 +234,6 @@ function resetPlayer() {
     localStorage.setItem('stored_audio_time', stored_audio_time);
     audiofile = 0;
     localStorage.removeItem('stored_audio_file_url');
-
-    // clear interval updating progress bar
-    window.clearInterval(interval);
 
     // set icon to play
     $('#pause_btn').hide();
@@ -259,6 +269,8 @@ function resetText() {
 }
 
 function handleAudioFileSelect(evt) {
+    resetPlayer();
+
     audiofile = evt.target.files[0];
 
     // load audio to player
@@ -317,17 +329,17 @@ function loadText(text) {
     // split paragraphs by empty lines
     var paragraphs = text.split("\n");
 
-    var content = '<p class="mycontent"> ';
+    var content = '<p><span class="mycontent"> ';
 
     for (var i=0, l=paragraphs.length; i<l; i++) {
         if (paragraphs[i] !== '\r' && paragraphs[i] !== '') {
             content = content + paragraphs[i]+' ';
         }
         else {
-            content = content + '</p><p class="mycontent"> ';
+            content = content + '</span></p><p><span class="mycontent"> ';
         }
     }
-    content = content + '</p>';
+    content = content + '</span></p>';
 
     // hideinstructions on how to use the site
     $('#instructions').hide();
@@ -393,39 +405,32 @@ function loadDemo(demoid) {
 
 function jumpBack(jumpstep) {
     // get current time
-    var current_time = player.currentTime;console.log('jumpBack', current_time);
+    var current_time = player.currentTime;
 
     if (current_time > jumpstep) {
         player.currentTime = current_time - jumpstep;
-
-        // TRACKING
-        audioTime(-jumpstep);
-
     }
-    else if (player.currentTime) {
+    else {
         player.currentTime = 0;
-
-        // TRACKING
-        audioTime(-current_time);
-
     }
 }
 
-function playPause() {console.log('playPause', player.currentTime);
+function playPause() {
+    stored_audio_time = player.currentTime;
 
     // if duration not detected on canplay event (some browsers show duration = 0 at that time)
     if (correct_knob_duration) {
         // get it now
-        setTimeout(function() {console.log('correcting knob duration');
+        setTimeout(function() {
             if (player.duration) {
                 // and use it to set knob correctly
-                setKnob(player.duration, player.currentTime);
+                setKnob(player.duration, stored_audio_time);
                 correct_knob_duration = 0;
             }
-        }, 300);
+        }, 200);
     }
 
-    // if not playing
+    // if not playing, play
     if (player.paused || player.ended) {
         // play
         player.play();
@@ -433,19 +438,8 @@ function playPause() {console.log('playPause', player.currentTime);
         // set icon to pause
         $('#play_btn').hide();
         $('#pause_btn').show();
-
-        // regularly update progress bar
-        interval = window.setInterval(function(){console.log('updating progress bar', player.currentTime);
-            $('.knob').val(player.currentTime).trigger('change');
-
-            // TRACKING
-            // track audio time
-            audioTime(1);
-            // display ratio between session time and audio time
-            showRatio();
-        }, 1000);
     }
-    // if playing
+    // if playing, pause
     else {
         // pause
         player.pause();
@@ -454,11 +448,8 @@ function playPause() {console.log('playPause', player.currentTime);
         $('#pause_btn').hide();
         $('#play_btn').show();
 
-        // pause interval updating progress bar
-        window.clearInterval(interval);
-
         // store time
-        localStorage.setItem('stored_audio_time', player.currentTime);
+        localStorage.setItem('stored_audio_time', stored_audio_time);
     }
 }
 
@@ -501,7 +492,7 @@ $(document).ready(function() {
 
     // detect clicked word
     // based on http://stackoverflow.com/a/9304990/716001 - space at the beginning of each paragraph needed!
-    $('#content').on('click', 'p.mycontent', function(e) {
+    $('#content').on('click', 'span.mycontent', function(e) {
         s = window.getSelection();
         var range = s.getRangeAt(0);
         var node = s.anchorNode;
@@ -561,14 +552,10 @@ $(document).ready(function() {
     // PLAYER
     
     $(".knob").knob({
-        'change': function(e){console.log('knob changed by touch');
+        'change': function(e){
             player.currentTime = e;
             $('.knob').val(player.currentTime).trigger('change');
         }
-    });
-
-    $("#audioFileSelect").click(function() {
-        resetPlayer();
     });
 
     // get audioplayer
@@ -584,7 +571,7 @@ $(document).ready(function() {
     });
 
     // jump N (defined in data attribute) seconds back
-    $("#jumpback").click(function() {console.log('jumpback', jumpback);
+    $("#jumpback").click(function() {
         jumpBack(jumpback);
     });
 
@@ -628,9 +615,6 @@ $(document).ready(function() {
     $('#backhome').click(function() {
         resetPlayer();
         resetText();
-
-        // TRACKING
-        resetTracking();
     });
 
 
@@ -770,34 +754,6 @@ $(document).ready(function() {
         }, 200);
     });
 
-
-    // TRACKING
-    // tracking controls
-    $('#start_tracking').on('click', function() {
-        tracking = 1;
-
-        $('#start_tracking').hide();
-        $('#track_session').hide();
-
-        $('#stop_tracking').show();
-        $('#tracking_info').show();
-
-        timer = setInterval(function() {
-            // track and display session time
-            sessionTime();
-        }, 1000);
-    });
-
-    $('#stop_tracking').on('click', function() {
-        tracking = 0;
-        $('#stop_tracking').hide();
-        $('#start_tracking').show();
-
-        clearInterval(timer);
-    });
-
-
-    //showQuota(0);
 
     // show BTC donation qr code on hover
     $('#qr').hover(function() {

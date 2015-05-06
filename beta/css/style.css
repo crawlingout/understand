@@ -641,25 +641,6 @@ li {
     padding: 5px 0 40px;
 }
 
-.track_btn, .track_info {
-    float: left;
-}
-
-.track_btn {
-    background-color: #4ba3d9;
-    border-radius: 2px;
-    color: white;
-    cursor: pointer;
-    margin-right: 10px;
-    text-align: center;
-    width: 52px;
-}
-
-#stop_tracking, #tracking_info {
-    display: none;
-}
-
-
 
 /*#jumpback span {
 	font-size: 18px;

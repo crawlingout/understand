@@ -125,14 +125,14 @@
             <div id="buttons">
                 <div id="text_file" class="btn">
                     <input type="file" id="text_files" name="text_files[]" style="display:none" />
-                    <div class="open_file" id="textFileSelect"><strong>Open</strong> your<span class="small">*</span><br /> <strong>text</strong> file</div>
+                    <div class="open_file" id="textFileSelect"><strong>Open</strong> your<br /> <strong>text</strong> file</div>
                     <div class="filetypes" title="supported file types">.txt - convert <a href="https://cloudconvert.com/pdf-to-txt" target="_blank">.pdf</a>, <a href="https://cloudconvert.com/epub-to-txt" target="_blank">.epub</a> and <a href="https://cloudconvert.com/" target="_blank">other formats</a> to .txt</div>
                 </div>
                 <div id="audio_file" class="btn">
                     <form enctype="multipart/form-data">
                         <input type="file" id="audio_files" name="fileToUpload" style="display:none" />
                     </form>
-                    <div class="open_file" id="audioFileSelect"><strong>Open</strong> your<span class="small">*</span><br /> <strong>audio</strong> file</div>
+                    <div class="open_file" id="audioFileSelect"><strong>Open</strong> your<br /> <strong>audio</strong> file</div>
                     <div class="filetypes" title="supported file types">.mp3</div>
                 </div>
 
@@ -237,20 +237,10 @@
 
             <!-- TRACKING -->
             <div id="tracking">
-                <!-- tracking controls -->
-                <div class="track_btn" id="start_tracking">START</div>
-                <div class="track_info" id="track_session">tracking this session</div>
-
-                <div class="track_btn" id="stop_tracking">STOP</div>
-
                 <!-- tracking info -->
                 <div class="track_info" id="tracking_info">
-                    <!-- reset button -->
-                    <div class="track_btn" id="reset_tracking" style="background-color: red;">RESET</div>
-
                     session time: <span id="session_time">0:00</span>, audio time: <span id="audio_time">0:00</span>, ratio: <span id="session_audio_ratio">-</span>%, translated words: <span id="track_translated_words">0</span>
                 </div>
-                <div class="clear"></div>
             </div>
 
             <div id="support">
