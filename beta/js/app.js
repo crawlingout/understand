@@ -1,5 +1,5 @@
-//var server = 'https://www.simplyeasy.cz/understand-server/';
-var server = '../understand-server/';
+var server = 'https://www.simplyeasy.cz/understand-server/';
+//var server = '../understand-server/';
 
 var from = localStorage.getItem('stored_lang_from') || 'es';
 var to = localStorage.getItem('stored_lang_to') || 'en';
@@ -60,9 +60,8 @@ function callBing(from, to, text) {
                 "&oncomplete=mycallback";
             document.body.appendChild(s);
 
-            // TRACKING
             // track and display number of translated words
-            showHowManyTranslated();
+            TRACK.addTranslatedWord();
         },
         error: function(xhr, type) {console.log('bing translator error');
             $('#translatedword').text('UNTRANSLATED');
@@ -201,17 +200,17 @@ function loadAudioToPlayer(file) {
 
         // workaround for problem with Android Chrome - randomly setting currentTime to 0 after player.play()
         if (player.currentTime === 0 && stored_audio_time) {
-            player.currentTime = stored_audio_time + diff;console.log('FIXING PROBLEM', player.currentTime);
+            player.currentTime = stored_audio_time + diff; console.log('FIXING PROBLEM', player.currentTime);
         }
 
         $('.knob').val(player.currentTime).trigger('change');
 
-        // TRACKING
         // calculate time difference between timeupdate events
         diff = (player.currentTime - last_time);
         last_time = player.currentTime;
+
         // track audio time
-        audioTime(diff);//console.log('diff', diff);
+        TRACK.addAudioTime(diff);//console.log('diff', diff);
     };
 
     // listener for finished audio
@@ -354,6 +353,9 @@ function loadText(text) {
     // store scroll position
     $('#content_wrapper').scroll(function() {
         localStorage.setItem('lang_scrollposition', this.scrollTop);
+
+        // tracking needs to know that user is still active
+        TRACK.userActive();
     });
 }
 
@@ -432,16 +434,18 @@ function playPause() {
 
     // if not playing, play
     if (player.paused || player.ended) {
-        // play
+        // PLAY
         player.play();
 
         // set icon to pause
         $('#play_btn').hide();
         $('#pause_btn').show();
+
+        TRACK.addPauseTime();
     }
     // if playing, pause
     else {
-        // pause
+        // PAUSE
         player.pause();
 
         // set icon to play
@@ -450,6 +454,10 @@ function playPause() {
 
         // store time
         localStorage.setItem('stored_audio_time', stored_audio_time);
+
+        // tracking needs to know that user is still active
+        TRACK.userActive();
+        TRACK.startPauseTimer();
     }
 }
 
@@ -511,6 +519,9 @@ $(document).ready(function() {
 
         var str = range.toString().trim();
         handleSelectedText(str);
+
+        // tracking needs to know that user is still active
+        TRACK.userActive();
     });
 
     // when longer text coppied to clipboard
