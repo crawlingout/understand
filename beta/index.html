@@ -33,7 +33,6 @@
 
     <!-- tracking -->
     <script type="text/javascript" src="js/moment-2.8.3.min.js"></script>
-    <script type="text/javascript" src="js/tracking.js"></script>
 
     <script type="text/javascript" src="js/app.js"></script>
 
@@ -239,7 +238,8 @@
             <div id="tracking">
                 <!-- tracking info -->
                 <div class="track_info" id="tracking_info">
-                    session time: ~<span id="session_time">0:00</span>, audio time: ~<span id="audio_time">0:00</span>, ratio: <span id="session_audio_ratio">-</span>%, translated words: <span id="track_translated_words">0</span>
+                    Today, you got through ~<span title="hours:minutes" id="audio_time">0:00</span> of audio time in ~<span title="hours:minutes" id="session_time">0:00</span> of work time (<span id="session_audio_ratio">-</span><span>%</span> ratio) and translated <span id="track_translated_words">0</span> words.<br />
+                    Total: ~<span title="hours:minutes" id="audio_time_total">0:00</span> of audio time in ~<span title="hours:minutes" id="session_time_total">0:00</span> of work time, <span id="track_translated_words_total">0</span> translated words.
                 </div>
             </div>
 

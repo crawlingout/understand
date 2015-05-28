@@ -3,8 +3,8 @@ var server = 'https://www.simplyeasy.cz/understand-server/';
 
 var from = localStorage.getItem('stored_lang_from') || 'es';
 var to = localStorage.getItem('stored_lang_to') || 'en';
-var previous_translated_words = [];
-var scrollposition = Number(localStorage.getItem('lang_scrollposition')) || 0;
+var previous_translated_words = JSON.parse(localStorage.getItem('previous_translated_words')) || [];
+var scrollposition = Number(localStorage.getItem('scrollposition')) || 0;
 var textfile = localStorage.getItem('stored_text_file_content') || 0;
 var audiofile = localStorage.getItem('stored_audio_file_url') || 0;
 var player = 0;
@@ -13,6 +13,154 @@ var uploaded_file_url = localStorage.getItem('uploaded_file_url') || 0;
 
 // workaround: some browsers do not load duration on canplay event; in that case this flag is raised so duration could be obtained later
 var correct_knob_duration = 0;
+
+
+// TRACKING
+
+var today = moment().format('YYYY-MM-DD');
+var idle = 55, allowed_idle = 5; // in minutes; default > allowed in order to start tracking only after user does someting after reload
+var pause_timer = 0, pause_time = 0;
+
+var data = JSON.parse(localStorage.getItem('data')) || {};
+
+function convertSeconds(seconds) {
+    var hours_minutes = '0:00', mmt, hours, minutes;
+
+    if (seconds > 0) {
+        mmt = moment.duration(seconds, 'seconds');
+        hours = mmt.hours();
+        minutes = mmt.minutes();
+
+        if (minutes < 10) {
+            minutes = '0'+minutes;
+        }
+
+        hours_minutes = hours+':'+minutes;
+    }
+
+    return hours_minutes;
+}
+
+function calculateRatio(at, st) {
+    if (at && st) {
+        return Math.floor((at/st)*100);
+    }
+    else {
+        return '-';
+    }
+}
+
+// display data other than number of translated words
+function displayTrackingData(day) {console.log('displayTrackingData');
+    // if the object for the language does not exist yet, create it
+    if (!data[from]) {
+        data[from] = {
+            'total': {
+                'st': 0,
+                'at': 0,
+                'tw': 0
+            },
+            'days': {}
+        };
+    }
+    // if the object for the day does not exist yet, create it
+    if (!data[from].days[day]) {
+        data[from].days[day] = {
+            'at': 0,
+            'st': 0,
+            'tw': 0
+        };
+    }console.log(data);
+
+    $("#audio_time").text(convertSeconds(data[from].days[day].at));
+    $("#session_time").text(convertSeconds(data[from].days[day].st));
+    $("#session_audio_ratio").text(calculateRatio(data[from].days[day].at, data[from].days[day].st));
+    $("#track_translated_words").text(data[from].days[day].tw);
+
+    $("#audio_time_total").text(convertSeconds(data[from].total.at));
+    $("#session_time_total").text(convertSeconds(data[from].total.st));
+    $("#track_translated_words_total").text(data[from].total.tw);
+}
+
+// store data other than number of translated wor
+function storeTrackingData() {console.log('storeTrackingData');
+    localStorage.setItem('data', JSON.stringify(data));
+
+    // TODO when storing at Firebase, only send and store the difference, do not keep sending all the data all the time
+}
+
+function addToDayAndTotal(addition, to) {
+    data[from].days[today][to] = data[from].days[today][to] + addition;
+    data[from].total[to] = data[from].total[to] + addition;
+}
+
+// external functions
+var TRACK = {};
+
+/*
+
+TIME-ADDING MECHANISM
+
+time is only added when player is playing
+- play time is added continually when playing
+- pause time is added after pause ends, if pause not too long
+
+*/
+
+
+// track audio time
+
+// !!!
+// this function runs every 250 ms - it needs to be light !!!
+TRACK.addAudioTime = function(difference) {//console.log('addAudioTime', difference);
+    addToDayAndTotal(difference, 'at');
+
+    // if not difference caused by jumpback or manual knob manipulation
+    if (difference > 0 && difference < 1) {
+        addToDayAndTotal(difference, 'st');
+
+        idle = 0;
+    }
+};
+
+// track session time
+TRACK.startPauseTimer = function() {console.log('startPauseTimer');
+    pause_timer = setInterval(function() {
+        pause_time++;
+    }, 1000);
+};
+
+// add pause time only if pause not loong -> idle
+TRACK.addPauseTime = function() {console.log('addPauseTime');
+    if (idle < allowed_idle) {
+        addToDayAndTotal(pause_time, 'st');
+    }
+    clearInterval(pause_timer);
+    pause_time = 0;
+};
+
+/*
+confirm user activity
+
+activated when:
+- user clicked on a word
+- user scrolled text
+- user pressed pause button
+- continually when player is playing
+*/
+TRACK.userActive = function() {console.log('userActive');
+    idle = 0;
+};
+
+// display number of translated words
+TRACK.addTranslatedWord = function () {
+    addToDayAndTotal(1, 'tw');
+    displayTrackingData(today);
+    storeTrackingData();
+};
+
+// ========
+
 
 function errorHandler(e) {
     console.log('error>', e.message);
@@ -44,7 +192,7 @@ function mycallback(response) {
     localStorage.setItem('previous_translated_words', JSON.stringify(previous_translated_words));
 }
 
-function callBing(from, to, text) {
+function callBing(from, to, text) {//console.log('calling Bing');
     $.ajax({
         type: 'POST',
         data: {"authtype": "js"},
@@ -210,7 +358,7 @@ function loadAudioToPlayer(file) {
         last_time = player.currentTime;
 
         // track audio time
-        TRACK.addAudioTime(diff);//console.log('diff', diff);
+        TRACK.addAudioTime(diff);
     };
 
     // listener for finished audio
@@ -257,7 +405,7 @@ function resetText() {
     $('#instructions').show();
 
     scrollposition = 0;
-    localStorage.setItem('lang_scrollposition', scrollposition);
+    localStorage.setItem('scrollposition', scrollposition);
     localStorage.removeItem('stored_text_file_content');
 
     // blue 'load text' button
@@ -352,10 +500,12 @@ function loadText(text) {
 
     // store scroll position
     $('#content_wrapper').scroll(function() {
-        localStorage.setItem('lang_scrollposition', this.scrollTop);
+        localStorage.setItem('scrollposition', this.scrollTop);
 
         // tracking needs to know that user is still active
-        TRACK.userActive();
+        if (this.scrollTop !== scrollposition) { // user actively scrolled, not just scroll event on load
+            TRACK.userActive();console.log('scrolled');
+        }
     });
 }
 
@@ -364,7 +514,7 @@ function handleTextFileSelect(evt) {
     if (evt.target.files[0].name.substr(evt.target.files[0].name.length - 3) === 'txt' && evt.target.files[0].type.substring(0,4) === 'text') {
         // reset stored scroll position
         scrollposition = 0;
-        localStorage.setItem('lang_scrollposition', scrollposition);
+        localStorage.setItem('scrollposition', scrollposition);
      
         // file reader supported
         if (window.FileReader) {
@@ -456,7 +606,7 @@ function playPause() {
         localStorage.setItem('stored_audio_time', stored_audio_time);
 
         // tracking needs to know that user is still active
-        TRACK.userActive();
+        TRACK.userActive();console.log('paused');
         TRACK.startPauseTimer();
     }
 }
@@ -521,7 +671,7 @@ $(document).ready(function() {
         handleSelectedText(str);
 
         // tracking needs to know that user is still active
-        TRACK.userActive();
+        TRACK.userActive();console.log('word clicked');
     });
 
     // when longer text coppied to clipboard
@@ -551,6 +701,7 @@ $(document).ready(function() {
     $('.select_lang').change(function() {
         if ($(this).attr('id') === 'from') {
             from = $(this).val();
+            displayTrackingData(today);
         }
         if ($(this).attr('id') === 'to') {
             to = $(this).val();
@@ -638,8 +789,7 @@ $(document).ready(function() {
 
         // swicth to the language of the demo
         $('#from').val($(this).parent().data('lang'));
-        from = $(this).parent().data('lang');
-        localStorage.setItem('stored_lang_from', from);
+        $('.select_lang').change();
     });
 
     // show demos pop-up
@@ -661,8 +811,6 @@ $(document).ready(function() {
 
     // load previously translated words
     var i;
-    previous_translated_words = JSON.parse(localStorage.getItem('previous_translated_words')) || [];
-
     for (i in previous_translated_words) {
         if (previous_translated_words[i][from] && previous_translated_words[i][to]) {
             prependPrevWord(previous_translated_words[i]);
@@ -781,4 +929,28 @@ $(document).ready(function() {
     function() {
         $('#betatext').hide();
     });
+
+
+    // TRACKING
+
+    var interval = setInterval(function() {
+        idle++;
+
+        // if not idle
+        if (idle < allowed_idle) {console.log('tracking');
+
+            // if new day started why this interval was running
+            if (today !== moment().format('YYYY-MM-DD')) {
+                today = moment().format('YYYY-MM-DD');
+            }
+
+            displayTrackingData(today);
+            storeTrackingData();
+        }
+    }, 60000); // 1 min
+
+    // show stored data on load
+    displayTrackingData(today);
+
+    // ========
 });

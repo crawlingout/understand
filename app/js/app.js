@@ -4,7 +4,7 @@ var server = 'https://www.simplyeasy.cz/understand-server/';
 var from = localStorage.getItem('stored_lang_from') || 'es';
 var to = localStorage.getItem('stored_lang_to') || 'en';
 var previous_translated_words = [];
-var scrollposition = Number(localStorage.getItem('lang_scrollposition')) || 0;
+var scrollposition = Number(localStorage.getItem('scrollposition')) || 0;
 var textfile = localStorage.getItem('stored_text_file_content') || 0;
 var audiofile = localStorage.getItem('stored_audio_file_url') || 0;
 var player = 0;
@@ -251,7 +251,7 @@ function resetText() {
     $('#instructions').show();
 
     scrollposition = 0;
-    localStorage.setItem('lang_scrollposition', scrollposition);
+    localStorage.setItem('scrollposition', scrollposition);
     localStorage.removeItem('stored_text_file_content');
 
     // blue 'load text' button
@@ -346,7 +346,7 @@ function loadText(text) {
 
     // store scroll position
     $('#content_wrapper').scroll(function() {
-        localStorage.setItem('lang_scrollposition', this.scrollTop);
+        localStorage.setItem('scrollposition', this.scrollTop);
     });
 }
 
@@ -355,7 +355,7 @@ function handleTextFileSelect(evt) {
     if (evt.target.files[0].name.substr(evt.target.files[0].name.length - 3) === 'txt' && evt.target.files[0].type.substring(0,4) === 'text') {
         // reset stored scroll position
         scrollposition = 0;
-        localStorage.setItem('lang_scrollposition', scrollposition);
+        localStorage.setItem('scrollposition', scrollposition);
      
         // file reader supported
         if (window.FileReader) {

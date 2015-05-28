@@ -635,10 +635,14 @@ li {
     border-bottom: 1px dotted silver;
     color: #6a6a6a;
     font-size: 13px;
-    height: 18px;
-    line-height: 18px;
+    height: 50px;
+    line-height: 26px;
     margin-bottom: 40px;
     padding: 5px 0 40px;
+}
+
+#tracking_info span {
+    color: #4ba3d9;
 }
 
 

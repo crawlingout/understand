@@ -5,7 +5,7 @@ var max_translation_length = 1; // number of words allowed to be translated - if
 var from = localStorage.getItem('read_stored_lang_from') || 'es';
 var to = localStorage.getItem('read_stored_lang_to') || 'en';
 var previous_translated_words = [];
-var scrollposition = Number(localStorage.getItem('read_lang_scrollposition')) || 0;
+var scrollposition = Number(localStorage.getItem('read_scrollposition')) || 0;
 var textfile = localStorage.getItem('read_stored_text_file_content') || 0;
 
 
@@ -155,7 +155,7 @@ function resetText() {
     $('#instructions').show();
 
     scrollposition = 0;
-    localStorage.setItem('read_lang_scrollposition', scrollposition);
+    localStorage.setItem('read_scrollposition', scrollposition);
     localStorage.removeItem('read_stored_text_file_content');
 
     // grey out the 'load text' button
@@ -200,7 +200,7 @@ function loadText(text) {
 
     // store scroll position
     $('#content_wrapper').scroll(function() {
-        localStorage.setItem('read_lang_scrollposition', this.scrollTop);
+        localStorage.setItem('read_scrollposition', this.scrollTop);
     });
 }
 
@@ -208,7 +208,7 @@ function handleTextFileSelect(evt) {
 
     // reset stored scroll position
     scrollposition = 0;
-    localStorage.setItem('read_lang_scrollposition', scrollposition);
+    localStorage.setItem('read_scrollposition', scrollposition);
  
     // file reader supported
     if (window.FileReader) {
