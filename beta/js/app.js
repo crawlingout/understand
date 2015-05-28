@@ -70,7 +70,7 @@ function displayTrackingData(day) {console.log('displayTrackingData');
             'st': 0,
             'tw': 0
         };
-    }console.log(data);
+    }
 
     $("#audio_time").text(convertSeconds(data[from].days[day].at));
     $("#session_time").text(convertSeconds(data[from].days[day].st));
@@ -611,6 +611,22 @@ function playPause() {
     }
 }
 
+function clearTranslatedWords() {console.log('clearTranslatedWords');
+    $('#selectedword').text('');
+    $('#previous_translated_words').empty();
+    $('#translations').hide();
+}
+
+function loadTranslatedWords() {console.log('loadTranslatedWords');
+    clearTranslatedWords();
+
+    for (var i=0, l=previous_translated_words.length; i<l; i++) {
+        if (previous_translated_words[i][from] && previous_translated_words[i][to]) {
+            prependPrevWord(previous_translated_words[i]);
+        }
+    }
+}
+
 
 // if just recorded my own voice -> replay
 // if not, record
@@ -707,6 +723,7 @@ $(document).ready(function() {
             to = $(this).val();
         }
         localStorage.setItem('stored_lang_'+$(this).attr('id'), $(this).val());
+        loadTranslatedWords();
     });
 
 
@@ -810,18 +827,20 @@ $(document).ready(function() {
 
 
     // load previously translated words
-    var i;
-    for (i in previous_translated_words) {
-        if (previous_translated_words[i][from] && previous_translated_words[i][to]) {
-            prependPrevWord(previous_translated_words[i]);
-        }
-    }
+    loadTranslatedWords();
 
     // remove previously translated words
     $('#remove_words').click(function() {
-        $('#previous_translated_words').empty();
-        previous_translated_words = [];
-        localStorage.setItem('previous_translated_words', '[]');
+        clearTranslatedWords();
+
+        // remove only words of the 'from' language that is selected
+        for (var j=previous_translated_words.length-1; j>=0; j--) {
+            if (previous_translated_words[j][from]) {
+                previous_translated_words.splice(j, 1);
+            }
+        }
+
+        localStorage.setItem('previous_translated_words', JSON.stringify(previous_translated_words));
     });
 
 
