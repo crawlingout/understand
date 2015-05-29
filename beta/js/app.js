@@ -560,10 +560,14 @@ function jumpBack(jumpstep) {
     var current_time = player.currentTime;
 
     if (current_time > jumpstep) {
-        player.currentTime = current_time - jumpstep;
+        player.currentTime = current_time - jumpstep;console.log('>0', player.currentTime);
+        stored_audio_time = player.currentTime;
+        localStorage.setItem('stored_audio_time', stored_audio_time);
     }
     else {
-        player.currentTime = 0;
+        player.currentTime = 0;console.log('=0', player.currentTime);
+        stored_audio_time = 0;
+        localStorage.setItem('stored_audio_time', stored_audio_time);
     }
 }
 

@@ -402,9 +402,13 @@ function jumpBack(jumpstep) {
 
     if (current_time > jumpstep) {
         player.currentTime = current_time - jumpstep;
+        stored_audio_time = player.currentTime;
+        localStorage.setItem('stored_audio_time', stored_audio_time);
     }
     else {
         player.currentTime = 0;
+        stored_audio_time = 0;
+        localStorage.setItem('stored_audio_time', stored_audio_time);
     }
 }
 
