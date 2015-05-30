@@ -494,7 +494,7 @@ li {
     border-top: 1px solid #e3e3e3;
     font-size: 14px;
     margin: 0;
-    padding: 40px 70px;
+    padding: 0 70px 40px;
     position: relative;
 }
 
@@ -635,14 +635,24 @@ li {
     border-bottom: 1px dotted silver;
     color: #6a6a6a;
     font-size: 13px;
-    height: 50px;
+    height: 90px;
     line-height: 26px;
     margin-bottom: 40px;
-    padding: 5px 0 40px;
+    padding: 0 0 40px;
+}
+
+#tracking_info {
+    padding: 40px 0;
 }
 
 #tracking_info span {
     color: #4ba3d9;
+}
+
+#idle {
+    width: 5px;
+    height: 5px;
+    background-color: #c4c4c4;
 }
 
 

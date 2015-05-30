@@ -286,6 +286,17 @@ li {
     line-height: 28px;
 }
 
+#links {
+    color: #9C9C9C;
+    font-size: 13px;
+    padding: 40px 70px;
+}
+
+#links a {
+    color: #4ba3d9;
+    text-decoration: none;
+}
+
 
 
 /*#jumpback span {

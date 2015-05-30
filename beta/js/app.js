@@ -51,7 +51,7 @@ function calculateRatio(at, st) {
 }
 
 // display data other than number of translated words
-function displayTrackingData(day) {console.log('displayTrackingData');
+function displayTrackingData(day) {//console.log('displayTrackingData');
     // if the object for the language does not exist yet, create it
     if (!data[from]) {
         data[from] = {
@@ -83,7 +83,7 @@ function displayTrackingData(day) {console.log('displayTrackingData');
 }
 
 // store data other than number of translated wor
-function storeTrackingData() {console.log('storeTrackingData');
+function storeTrackingData() {//console.log('storeTrackingData');
     localStorage.setItem('data', JSON.stringify(data));
 
     // TODO when storing at Firebase, only send and store the difference, do not keep sending all the data all the time
@@ -103,7 +103,7 @@ TIME-ADDING MECHANISM
 
 time is only added when player is playing
 - play time is added continually when playing
-- pause time is added after pause ends, if pause not too long
+- pause time is added after pause ends, if pause not too long (therefore, user has to press play button to really start tracking)
 
 */
 
@@ -111,7 +111,7 @@ time is only added when player is playing
 // track audio time
 
 // !!!
-// this function runs every 250 ms - it needs to be light !!!
+// this function runs every 250 ms - it needs to be lightweight !!!
 TRACK.addAudioTime = function(difference) {//console.log('addAudioTime', difference);
 
     // if diff NOT caused by manual knob manipulation
@@ -131,14 +131,14 @@ TRACK.addAudioTime = function(difference) {//console.log('addAudioTime', differe
 };
 
 // track session time
-TRACK.startPauseTimer = function() {console.log('startPauseTimer');
+TRACK.startPauseTimer = function() {//console.log('startPauseTimer');
     pause_timer = setInterval(function() {
         pause_time++;
     }, 1000);
 };
 
 // add pause time only if pause not loong -> idle
-TRACK.addPauseTime = function() {console.log('addPauseTime');
+TRACK.addPauseTime = function() {//console.log('addPauseTime');
     if (idle < allowed_idle) {
         addToDayAndTotal(pause_time, 'st');
     }
@@ -157,6 +157,9 @@ activated when:
 */
 TRACK.userActive = function() {console.log('userActive');
     idle = 0;
+
+    // show to the user that it is NOT in idle state
+    document.getElementById('idle').style.backgroundColor = '#4ba3d9';
 };
 
 // display number of translated words
@@ -510,7 +513,7 @@ function loadText(text) {
         localStorage.setItem('scrollposition', this.scrollTop);
 
         // tracking needs to know that user is still active
-        if (this.scrollTop !== scrollposition) { // user actively scrolled, not just scroll event on load
+        if (this.scrollTop !== scrollposition) { // user actively scrolled, not just scroll event triggered on load
             TRACK.userActive();console.log('scrolled');
         }
     });
@@ -603,6 +606,9 @@ function playPause() {
         $('#pause_btn').show();
 
         TRACK.addPauseTime();
+
+        // tracking needs to know that user is still active
+        TRACK.userActive();console.log('played');
     }
     // if playing, pause
     else {
@@ -616,19 +622,20 @@ function playPause() {
         // store time
         localStorage.setItem('stored_audio_time', stored_audio_time);
 
+        TRACK.startPauseTimer();
+
         // tracking needs to know that user is still active
         TRACK.userActive();console.log('paused');
-        TRACK.startPauseTimer();
     }
 }
 
-function clearTranslatedWords() {console.log('clearTranslatedWords');
+function clearTranslatedWords() {//console.log('clearTranslatedWords');
     $('#selectedword').text('');
     $('#previous_translated_words').empty();
     $('#translations').hide();
 }
 
-function loadTranslatedWords() {console.log('loadTranslatedWords');
+function loadTranslatedWords() {//console.log('loadTranslatedWords');
     clearTranslatedWords();
 
     for (var i=0, l=previous_translated_words.length; i<l; i++) {
@@ -698,7 +705,7 @@ $(document).ready(function() {
         handleSelectedText(str);
 
         // tracking needs to know that user is still active
-        TRACK.userActive();console.log('word clicked');
+        TRACK.userActive();//console.log('word clicked');
     });
 
     // when longer text coppied to clipboard
@@ -974,7 +981,7 @@ $(document).ready(function() {
         idle++;
 
         // if not idle
-        if (idle < allowed_idle) {console.log('tracking');
+        if (idle < allowed_idle) {//console.log('tracking');
 
             // if new day started why this interval was running
             if (today !== moment().format('YYYY-MM-DD')) {
@@ -983,6 +990,10 @@ $(document).ready(function() {
 
             displayTrackingData(today);
             storeTrackingData();
+        }
+        else {
+            // show to the user that it is in idle state
+            document.getElementById('idle').style.backgroundColor = '#c4c4c4';
         }
     }, 60000); // 1 min
 
