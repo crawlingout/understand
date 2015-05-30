@@ -113,13 +113,20 @@ time is only added when player is playing
 // !!!
 // this function runs every 250 ms - it needs to be light !!!
 TRACK.addAudioTime = function(difference) {//console.log('addAudioTime', difference);
-    addToDayAndTotal(difference, 'at');
 
-    // if not difference caused by jumpback or manual knob manipulation
-    if (difference > 0 && difference < 1) {
-        addToDayAndTotal(difference, 'st');
+    // if diff NOT caused by manual knob manipulation
+    // (bigger than -jumpback (or equal) and smaller than 1)
+    if (difference > -7 && difference < 1) {//console.log('NOT knob', difference);
 
-        idle = 0;
+        addToDayAndTotal(difference, 'at');
+
+        // if diff NOT caused by jumpback
+        if (difference > 0) {
+            // add to session time
+            addToDayAndTotal(difference, 'st');
+
+            idle = 0; // I think it's better not to count jumpbacks and knob manipulation as activity
+        }
     }
 };
 
@@ -868,14 +875,17 @@ $(document).ready(function() {
 
 
     // RECORDING
-    var recording_now = 0;
-    var ended;
+    var recording_now = 0, ended, was_playing;
     $('#recording').on('click', function() {
 
         // if audio book playing
         if (!(player.paused || player.ended)) {
             // pause audio book
             playPause();
+
+            // mark that the button was pressed when playing
+            // the app will jump back in audio and start playing again
+            was_playing = 1;
         }
 
         // mark as not replayed yet
@@ -923,14 +933,18 @@ $(document).ready(function() {
                 // done playing
                 $('#playback').removeClass('active');
 
-                // jump audio book back the same amount of seconds
-                if (myvoice.duration) {
-                    jumpBack(myvoice.duration);
-                }
-                // if audio book not playing
-                if (player.paused || player.ended) {
+                // if audio was playing when recording button was pressed
+                if (was_playing) {
+                    // jump audio book back the same amount of seconds
+                    if (myvoice.duration) {
+                        jumpBack(myvoice.duration);
+                    }
                     // play audio book
-                    playPause();
+                    if (player.paused || player.ended) {
+                        playPause();
+                    }
+
+                    was_playing = 0;
                 }
             }
         }, 200);
