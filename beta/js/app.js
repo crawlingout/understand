@@ -94,6 +94,10 @@ function addToDayAndTotal(addition, to) {
     data[from].total[to] = data[from].total[to] + addition;
 }
 
+function deleteTrackingData() {console.log('deleting');
+    localStorage.removeItem('data');
+}
+
 // external functions
 var TRACK = {};
 
