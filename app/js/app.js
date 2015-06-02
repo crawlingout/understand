@@ -114,7 +114,7 @@ function handleSelectedText(text) {
             // remove trailing characters
             var len = text.length;
             var last = text.substr(len-1,1);
-            if (last === "," || last === "." || last === '"' || last === ")" || last === ":" || last === "!" || last === "?") {
+            if (last === "," || last === "." || last === '"' || last === ")" || last === ":" || last === "!" || last === "?" || last === ";") {
                 text = text.substring(0,len-1);
             }
 

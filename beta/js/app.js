@@ -118,14 +118,19 @@ TRACK.addAudioTime = function(difference) {//console.log('addAudioTime', differe
     // (bigger than -jumpback (or equal) and smaller than 1)
     if (difference > -7 && difference < 1) {//console.log('NOT knob', difference);
 
-        addToDayAndTotal(difference, 'at');
-
         // if diff NOT caused by jumpback
         if (difference > 0) {
-            // add to session time
+            // add to session/audio time
             addToDayAndTotal(difference, 'st');
+            addToDayAndTotal(difference, 'at');
 
             idle = 0; // I think it's better not to count jumpbacks and knob manipulation as activity
+        }
+        else {
+            // only deduce jumpbacks from audio time if audio time is not pushed to negative values by this
+            if ((data[from].days[today].at + difference) > 0) {
+                addToDayAndTotal(difference, 'at');
+            }
         }
     }
 };
@@ -146,6 +151,20 @@ TRACK.addPauseTime = function() {//console.log('addPauseTime');
     pause_time = 0;
 };
 
+// check whether day changed since load
+TRACK.newDay = function() {
+    if (today !== moment().format('YYYY-MM-DD')) {
+        today = moment().format('YYYY-MM-DD');
+
+        displayTrackingData(today);
+    }
+};
+
+TRACK.displayAndStore = function() {
+    displayTrackingData(today);
+    storeTrackingData();
+};
+
 /*
 confirm user activity
 
@@ -155,7 +174,7 @@ activated when:
 - user pressed pause button
 - continually when player is playing
 */
-TRACK.userActive = function() {console.log('userActive');
+TRACK.userActive = function() {//console.log('userActive');
     idle = 0;
 
     // show to the user that it is NOT in idle state
@@ -164,9 +183,9 @@ TRACK.userActive = function() {console.log('userActive');
 
 // display number of translated words
 TRACK.addTranslatedWord = function () {
+    TRACK.newDay();
     addToDayAndTotal(1, 'tw');
-    displayTrackingData(today);
-    storeTrackingData();
+    TRACK.displayAndStore();
 };
 
 // ========
@@ -275,7 +294,7 @@ function handleSelectedText(text) {
             // remove trailing characters
             var len = text.length;
             var last = text.substr(len-1,1);
-            if (last === "," || last === "." || last === '"' || last === ")" || last === ":" || last === "!" || last === "?") {
+            if (last === "," || last === "." || last === '"' || last === ")" || last === ":" || last === "!" || last === "?" || last === ";") {
                 text = text.substring(0,len-1);
             }
 
@@ -514,7 +533,7 @@ function loadText(text) {
 
         // tracking needs to know that user is still active
         if (this.scrollTop !== scrollposition) { // user actively scrolled, not just scroll event triggered on load
-            TRACK.userActive();console.log('scrolled');
+            TRACK.userActive();//console.log('scrolled');
         }
     });
 }
@@ -570,15 +589,17 @@ function jumpBack(jumpstep) {
     var current_time = player.currentTime;
 
     if (current_time > jumpstep) {
-        player.currentTime = current_time - jumpstep;console.log('>0', player.currentTime);
+        player.currentTime = current_time - jumpstep;
         stored_audio_time = player.currentTime;
         localStorage.setItem('stored_audio_time', stored_audio_time);
     }
     else {
-        player.currentTime = 0;console.log('=0', player.currentTime);
+        player.currentTime = 0;
         stored_audio_time = 0;
         localStorage.setItem('stored_audio_time', stored_audio_time);
     }
+
+    TRACK.newDay();
 }
 
 function playPause() {
@@ -606,9 +627,8 @@ function playPause() {
         $('#pause_btn').show();
 
         TRACK.addPauseTime();
-
-        // tracking needs to know that user is still active
-        TRACK.userActive();console.log('played');
+        TRACK.newDay();
+        TRACK.userActive();//console.log('played');
     }
     // if playing, pause
     else {
@@ -623,9 +643,8 @@ function playPause() {
         localStorage.setItem('stored_audio_time', stored_audio_time);
 
         TRACK.startPauseTimer();
-
-        // tracking needs to know that user is still active
-        TRACK.userActive();console.log('paused');
+        TRACK.userActive();//console.log('paused');
+        TRACK.displayAndStore();
     }
 }
 
@@ -981,17 +1000,7 @@ $(document).ready(function() {
         idle++;
 
         // if not idle
-        if (idle < allowed_idle) {//console.log('tracking');
-
-            // if new day started why this interval was running
-            if (today !== moment().format('YYYY-MM-DD')) {
-                today = moment().format('YYYY-MM-DD');
-            }
-
-            displayTrackingData(today);
-            storeTrackingData();
-        }
-        else {
+        if (idle > allowed_idle) {//console.log('tracking');
             // show to the user that it is in idle state
             document.getElementById('idle').style.backgroundColor = '#c4c4c4';
         }
