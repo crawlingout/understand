@@ -41,7 +41,7 @@ function convertSeconds(seconds) {
     return hours_minutes;
 }
 
-function calculateRatio(at, st) {console.log('ratio', at, st);
+function calculateRatio(at, st) {
     if (at && st) {
         return Math.floor((at/st)*100);
     }
@@ -54,7 +54,7 @@ function calculateRatio(at, st) {console.log('ratio', at, st);
 var TRACK = {};
 
 // display data other than number of translated words
-TRACK.displayTrackingData = function(day) {//console.log('displayTrackingData');
+TRACK.displayTrackingData = function(day) {
     // if the object for the language does not exist yet, create it
     if (!data[from]) {
         data[from] = {
@@ -97,7 +97,7 @@ TRACK.addToDayAndTotal = function(addition, to) {
     data[from].total[to] = data[from].total[to] + addition;
 };
 
-deleteTrackingData = function() {console.log('deleting');
+deleteTrackingData = function() {
     localStorage.removeItem('data');
     document.getElementById('delete').innerHTML = '<br /><br />[ deleted ]';
 };
@@ -121,7 +121,7 @@ TRACK.addAudioTime = function(difference) {//console.log('addAudioTime', differe
 
     // if diff NOT caused by manual knob manipulation
     // (bigger than -jumpback (or equal) and smaller than 1)
-    if (difference > -7 && difference < 1) {//console.log('NOT knob', difference);
+    if (difference > -7 && difference < 1) {
 
         // if diff NOT caused by jumpback
         if (difference > 0) {
@@ -131,7 +131,7 @@ TRACK.addAudioTime = function(difference) {//console.log('addAudioTime', differe
         }
         else {
             // only deduce jumpbacks from audio time if audio time is not pushed to negative values by this
-            if ((data[from].days[today].at + difference) > 0) {//console.log(data[from].days[today].at);
+            if ((data[from].days[today].at + difference) > 0) {
                 TRACK.addToDayAndTotal(difference, 'at');
             }
         }
@@ -360,7 +360,7 @@ function loadAudioToPlayer(file) {
 
         // workaround for problem with Android Chrome - randomly setting currentTime to 0 after player.play()
         if (player.currentTime === 0 && stored_audio_time) {
-            player.currentTime = stored_audio_time + diff; console.log('FIXING PROBLEM', player.currentTime);
+            player.currentTime = stored_audio_time + diff;//console.log('FIXING PROBLEM', player.currentTime);
         }
 
         $('.knob').val(player.currentTime).trigger('change');
@@ -458,7 +458,7 @@ function handleAudioFileSelect(evt) {
         $.ajax({
             url: server+'upload.php',
             type: 'POST',
-            success: function(response) {console.log('upload: ', response);
+            success: function(response) {//console.log('upload: ', response);
                 // if NOT error
                 if (response.substring(0,5) !== 'Sorry') {
                     response = $.trim(response);
@@ -975,11 +975,11 @@ $(document).ready(function() {
     var interval = setInterval(function() {
 
         // if active
-        if (last_pause_time && moment().diff(last_pause_time) < allowed_idle) {console.log('tracking active');
+        if (last_pause_time && moment().diff(last_pause_time) < allowed_idle) {
             // set tracking indicator to 'active'
             document.getElementById('idle').style.backgroundColor = '#4ba3d9';
         }
-        else {console.log('tracking NOT active');
+        else {
             // // set tracking indicator to 'NOT active'
             document.getElementById('idle').style.backgroundColor = '#c4c4c4';
         }
