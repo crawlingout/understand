@@ -18,8 +18,8 @@ var correct_knob_duration = 0;
 // TRACKING
 
 var today = moment().format('YYYY-MM-DD');
-var idle = 55, allowed_idle = 5; // in minutes; default > allowed in order to start tracking only after user does someting after reload
-var pause_timer = 0, pause_time = 0;
+var allowed_idle = 300000; // 5 minutes in miliseconds
+var last_pause_time, pause_diff;
 
 var data = JSON.parse(localStorage.getItem('data')) || {};
 
@@ -41,7 +41,7 @@ function convertSeconds(seconds) {
     return hours_minutes;
 }
 
-function calculateRatio(at, st) {
+function calculateRatio(at, st) {console.log('ratio', at, st);
     if (at && st) {
         return Math.floor((at/st)*100);
     }
@@ -50,8 +50,11 @@ function calculateRatio(at, st) {
     }
 }
 
+// external functions
+var TRACK = {};
+
 // display data other than number of translated words
-function displayTrackingData(day) {//console.log('displayTrackingData');
+TRACK.displayTrackingData = function(day) {//console.log('displayTrackingData');
     // if the object for the language does not exist yet, create it
     if (!data[from]) {
         data[from] = {
@@ -80,26 +83,24 @@ function displayTrackingData(day) {//console.log('displayTrackingData');
     $("#audio_time_total").text(convertSeconds(data[from].total.at));
     $("#session_time_total").text(convertSeconds(data[from].total.st));
     $("#track_translated_words_total").text(data[from].total.tw);
-}
+};
 
 // store data other than number of translated wor
-function storeTrackingData() {//console.log('storeTrackingData');
+TRACK.storeTrackingData = function() {//console.log('storeTrackingData');
     localStorage.setItem('data', JSON.stringify(data));
 
     // TODO when storing at Firebase, only send and store the difference, do not keep sending all the data all the time
-}
+};
 
-function addToDayAndTotal(addition, to) {
+TRACK.addToDayAndTotal = function(addition, to) {
     data[from].days[today][to] = data[from].days[today][to] + addition;
     data[from].total[to] = data[from].total[to] + addition;
-}
+};
 
-function deleteTrackingData() {console.log('deleting');
+deleteTrackingData = function() {console.log('deleting');
     localStorage.removeItem('data');
-}
-
-// external functions
-var TRACK = {};
+    document.getElementById('delete').innerHTML = '<br /><br />[ deleted ]';
+};
 
 /*
 
@@ -125,15 +126,13 @@ TRACK.addAudioTime = function(difference) {//console.log('addAudioTime', differe
         // if diff NOT caused by jumpback
         if (difference > 0) {
             // add to session/audio time
-            addToDayAndTotal(difference, 'st');
-            addToDayAndTotal(difference, 'at');
-
-            idle = 0; // I think it's better not to count jumpbacks and knob manipulation as activity
+            TRACK.addToDayAndTotal(difference, 'st');
+            TRACK.addToDayAndTotal(difference, 'at');
         }
         else {
             // only deduce jumpbacks from audio time if audio time is not pushed to negative values by this
-            if ((data[from].days[today].at + difference) > 0) {
-                addToDayAndTotal(difference, 'at');
+            if ((data[from].days[today].at + difference) > 0) {//console.log(data[from].days[today].at);
+                TRACK.addToDayAndTotal(difference, 'at');
             }
         }
     }
@@ -141,18 +140,18 @@ TRACK.addAudioTime = function(difference) {//console.log('addAudioTime', differe
 
 // track session time
 TRACK.startPauseTimer = function() {//console.log('startPauseTimer');
-    pause_timer = setInterval(function() {
-        pause_time++;
-    }, 1000);
+    last_pause_time = moment();
 };
 
-// add pause time only if pause not loong -> idle
+// add pause time only if pause not loong
 TRACK.addPauseTime = function() {//console.log('addPauseTime');
-    if (idle < allowed_idle) {
-        addToDayAndTotal(pause_time, 'st');
+    if (last_pause_time) {
+        pause_diff = moment().diff(last_pause_time);
+
+        if (pause_diff < allowed_idle) {
+            TRACK.addToDayAndTotal((pause_diff/1000), 'st');
+        }
     }
-    clearInterval(pause_timer);
-    pause_time = 0;
 };
 
 // check whether day changed since load
@@ -160,36 +159,16 @@ TRACK.newDay = function() {
     if (today !== moment().format('YYYY-MM-DD')) {
         today = moment().format('YYYY-MM-DD');
 
-        displayTrackingData(today);
+        TRACK.displayTrackingData(today);
     }
-};
-
-TRACK.displayAndStore = function() {
-    displayTrackingData(today);
-    storeTrackingData();
-};
-
-/*
-confirm user activity
-
-activated when:
-- user clicked on a word
-- user scrolled text
-- user pressed pause button
-- continually when player is playing
-*/
-TRACK.userActive = function() {//console.log('userActive');
-    idle = 0;
-
-    // show to the user that it is NOT in idle state
-    document.getElementById('idle').style.backgroundColor = '#4ba3d9';
 };
 
 // display number of translated words
 TRACK.addTranslatedWord = function () {
     TRACK.newDay();
-    addToDayAndTotal(1, 'tw');
-    TRACK.displayAndStore();
+    TRACK.addToDayAndTotal(1, 'tw');
+    TRACK.displayTrackingData(today);
+    TRACK.storeTrackingData();
 };
 
 // ========
@@ -534,11 +513,6 @@ function loadText(text) {
     // store scroll position
     $('#content_wrapper').scroll(function() {
         localStorage.setItem('scrollposition', this.scrollTop);
-
-        // tracking needs to know that user is still active
-        if (this.scrollTop !== scrollposition) { // user actively scrolled, not just scroll event triggered on load
-            TRACK.userActive();//console.log('scrolled');
-        }
     });
 }
 
@@ -632,7 +606,7 @@ function playPause() {
 
         TRACK.addPauseTime();
         TRACK.newDay();
-        TRACK.userActive();//console.log('played');
+        document.getElementById('idle').style.backgroundColor = '#4ba3d9'; // set tracking indicator to 'active'
     }
     // if playing, pause
     else {
@@ -647,8 +621,8 @@ function playPause() {
         localStorage.setItem('stored_audio_time', stored_audio_time);
 
         TRACK.startPauseTimer();
-        TRACK.userActive();//console.log('paused');
-        TRACK.displayAndStore();
+        TRACK.displayTrackingData(today);
+        TRACK.storeTrackingData();
     }
 }
 
@@ -726,9 +700,6 @@ $(document).ready(function() {
 
         var str = range.toString().trim();
         handleSelectedText(str);
-
-        // tracking needs to know that user is still active
-        TRACK.userActive();//console.log('word clicked');
     });
 
     // when longer text coppied to clipboard
@@ -758,7 +729,7 @@ $(document).ready(function() {
     $('.select_lang').change(function() {
         if ($(this).attr('id') === 'from') {
             from = $(this).val();
-            displayTrackingData(today);
+            TRACK.displayTrackingData(today);
         }
         if ($(this).attr('id') === 'to') {
             to = $(this).val();
@@ -1000,18 +971,22 @@ $(document).ready(function() {
 
     // TRACKING
 
+    // display indicator of active tracking
     var interval = setInterval(function() {
-        idle++;
 
-        // if not idle
-        if (idle > allowed_idle) {//console.log('tracking');
-            // show to the user that it is in idle state
+        // if active
+        if (last_pause_time && moment().diff(last_pause_time) < allowed_idle) {console.log('tracking active');
+            // set tracking indicator to 'active'
+            document.getElementById('idle').style.backgroundColor = '#4ba3d9';
+        }
+        else {console.log('tracking NOT active');
+            // // set tracking indicator to 'NOT active'
             document.getElementById('idle').style.backgroundColor = '#c4c4c4';
         }
     }, 60000); // 1 min
 
     // show stored data on load
-    displayTrackingData(today);
+    TRACK.displayTrackingData(today);
 
     // ========
 });
