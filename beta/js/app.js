@@ -199,9 +199,11 @@ function mycallback(response) {
     new_word[from] = $('#selectedword').text();
     new_word[to] = response;
 
-    previous_translated_words.push(new_word);
-
-    localStorage.setItem('previous_translated_words', JSON.stringify(previous_translated_words));
+    // if element with previously translated words NOT hidden (in mobile version)
+    if ($('#previous_translated_words').is(":visible")) {
+        previous_translated_words.push(new_word);
+        localStorage.setItem('previous_translated_words', JSON.stringify(previous_translated_words));
+    }
 }
 
 function callBing(from, to, text) {//console.log('calling Bing');

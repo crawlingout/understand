@@ -4,7 +4,6 @@ html, body {
     height: 100%;
     margin: 0;
     min-height: 500px;
-    min-width: 1250px;
     padding: 0;
 }
 
@@ -77,7 +76,7 @@ li {
 #content_wrapper {
 	background-color: #FFFFFF;
     border-bottom: 1px solid #E3E3E3;
-    height: 490px;
+    height: 500px;
     overflow: auto;
     position: relative;
     resize: vertical;
@@ -355,7 +354,6 @@ li {
 }
 
 .column {
-    min-width: 200px;
     float: left;
     width: 35%;
 }
@@ -409,7 +407,7 @@ li {
 }
 
 #player {
-	height: 140px;
+	height: 130px;
     margin: 25px 25px 5px;
     position: relative;
     width: 180px;
@@ -477,16 +475,15 @@ li {
 }
 
 #settings select {
-    margin-bottom: 10px;
     padding: 2px;
-    width: 150px;
+    width: 160px;
 }
 
 .spacer {
-    display: block;
-    float: left;
     line-height: 30px;
-    width: 40px;
+    margin-bottom: 10px;
+    text-align: right;
+    max-width: 190px;
 }
 
 #bottom {
@@ -654,6 +651,89 @@ li {
     height: 5px;
     background-color: #c4c4c4;
 }
+
+
+
+
+/* mobile devices */
+@media screen and (max-width: 1100px) {
+
+    #right {
+        height: 50px;
+        left: 0;
+        min-width: 235px;
+        padding: 20px 0 0 50px;
+        position: relative;
+    }
+
+    #previous_translated_words_wrapper {
+        display: none;
+    }
+    
+    #left {
+        width: 100%;
+    }
+
+    #content {
+        background-color: #ffffff;
+        font-size: 19px;
+        line-height: 35px;
+        padding: 30px 40px 30px 70px;
+    }
+
+    .column {
+        min-width: 350px;
+    }
+
+    #buttons {
+        margin-left: 65px;
+        min-width: 330px;
+        min-height: 140px;
+    }
+
+    #settings {
+        min-height: 40px;
+        min-width: 500px;
+        padding-left: 65px;
+    }
+
+    #settings p {
+        float: left;
+        line-height: 30px;
+        margin: 0 2px 0 0;
+    }
+
+    .spacer {
+        float: left;
+        margin: 0 0 0 4px;
+    }
+
+    #settings select {
+        width: 120px;
+    }
+
+}
+
+@media screen and (max-height: 600px) {
+
+    #content_wrapper {
+        height: 350px;
+    }
+
+    .gap {
+        height: 1px;
+    }
+
+}
+
+@media screen and (max-width: 1100px) and (min-height: 700px) {
+
+    #content_wrapper {
+        height: 560px;
+    }
+}
+
+
 
 
 /*#jumpback span {
