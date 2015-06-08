@@ -1,9 +1,8 @@
 html, body {
-	background-color: #f9f9f9;
+    background-color: #f9f9f9;
     font-family: Arial,sans-serif;
     height: 100%;
     margin: 0;
-    min-height: 500px;
     padding: 0;
 }
 
@@ -54,7 +53,7 @@ li {
 }
 
 .clear {
-	clear: both;
+    clear: both;
 }
 
 .small {
@@ -74,9 +73,9 @@ li {
 }
 
 #content_wrapper {
-	background-color: #FFFFFF;
+    background-color: #FFFFFF;
     border-bottom: 1px solid #E3E3E3;
-    height: 500px;
+    height: 488px;
     overflow: auto;
     position: relative;
     resize: vertical;
@@ -244,16 +243,16 @@ li {
 }
 
 #translation_wrapper {
-	min-height: 60px;
+    min-height: 60px;
 }
 
 #translations {
-	padding: 0 20px;
+    padding: 0 20px;
     display: none;
 }
 
 #whentoolong {
-	display: none;
+    display: none;
     height: 20px;
     padding: 5px 20px;
     line-height: 20px;
@@ -261,7 +260,7 @@ li {
 }
 
 #selectedword {
-	background-color: #21b51f;
+    background-color: #21b51f;
     color: #FFFFFF;
     float: left;
     height: 20px;
@@ -269,7 +268,7 @@ li {
 }
 
 #translatedword {
-	background-color: #4ba3d9;
+    background-color: #4ba3d9;
     color: #FFFFFF;
     float: left;
     height: 20px;
@@ -277,7 +276,7 @@ li {
 }
 
 .failed {
-	color: red;
+    color: red;
     font-weight: bold;
 }
 
@@ -302,7 +301,7 @@ li {
 }
 
 #remove_words {
-	color: #CCCCCC;
+    color: #CCCCCC;
     cursor: pointer;
     font-size: 28px;
     margin-top: 15px;
@@ -316,7 +315,7 @@ li {
 }
 
 #right {
-	left: 1000px;
+    left: 1000px;
     min-width: 235px;
     padding: 30px 0 0 10px;
     position: absolute;
@@ -407,7 +406,7 @@ li {
 }
 
 #player {
-	height: 130px;
+    height: 130px;
     margin: 25px 25px 5px;
     position: relative;
     width: 180px;
@@ -426,7 +425,7 @@ li {
 }
 
 .circle {
-	background-color: #ffffff;
+    background-color: #ffffff;
     border: 1px solid #ffffff;
     border-radius: 40px;
     cursor: pointer;
@@ -442,7 +441,7 @@ li {
 }
 
 #knob {
-	height: 130px;
+    height: 130px;
     left: 30px;
     position: absolute;
     top: 0;
@@ -453,7 +452,7 @@ li {
 }
 
 .jumpback {
-	background-color: #ffffff;
+    background-color: #ffffff;
     border: 1px solid #dedede;
     border-radius: 60px;
     color: #898989;
@@ -476,7 +475,7 @@ li {
 
 #settings select {
     padding: 2px;
-    width: 160px;
+    width: 158px;
 }
 
 .spacer {
@@ -574,11 +573,6 @@ li {
     z-index: 999;
 }
 
-#share {
-    margin: 0;
-    padding: 40px 0 70px;
-}
-
 #article {
     border-top: 1px dotted silver;
     font-size: 15px;
@@ -587,17 +581,10 @@ li {
     width: 800px
 }
 
-.share {
-    float: left;
-    height: 25px;
-    padding: 0;
-    width: 125px;
-}
-
 #links {
     color: #9C9C9C;
     font-size: 13px;
-    padding: 40px 80px;
+    padding: 40px 70px;
 }
 
 #links a {
@@ -736,11 +723,7 @@ li {
 
 
 
-/*#jumpback span {
-	font-size: 18px;
-}*/
-
 .debug {
-	padding: 15px 15px 15px 20px;
-	color: gray;
+    padding: 15px 15px 15px 20px;
+    color: gray;
 }

@@ -3,15 +3,13 @@ html, body {
     font-family: Arial,sans-serif;
     height: 100%;
     margin: 0;
-    min-height: 500px;
-    min-width: 1250px;
     padding: 0;
 }
 
 /* remove ugly dotted lines around clicked links and buttons in FF */
 button::-moz-focus-inner { border: 0; }
 
-/* remove highlight border around selected form controls in Chrome and Safari */
+/* remove highlight border around selected controls in Chrome and Safari */
 * {
     outline: none;
     -webkit-tap-highlight-color:  rgba(255, 255, 255, 0);
@@ -77,7 +75,7 @@ li {
 #content_wrapper {
     background-color: #FFFFFF;
     border-bottom: 1px solid #E3E3E3;
-    height: 490px;
+    height: 488px;
     overflow: auto;
     position: relative;
     resize: vertical;
@@ -302,7 +300,6 @@ li {
     color: #bbbbbb;
 }
 
-
 #remove_words {
     color: #CCCCCC;
     cursor: pointer;
@@ -329,7 +326,6 @@ li {
     display: none;
 }
 
-
 #middle {
     position: relative;
     padding-bottom: 250px;
@@ -353,11 +349,10 @@ li {
 .filetypes {
     font-size: 11px;
     line-height: 14px;
-    width: 125px;;
+    width: 125px;
 }
 
 .column {
-    min-width: 200px;
     float: left;
     width: 35%;
 }
@@ -379,7 +374,7 @@ li {
 }
 
 #player {
-    height: 140px;
+    height: 130px;
     margin: 25px 25px 5px;
     position: relative;
     width: 180px;
@@ -447,16 +442,15 @@ li {
 }
 
 #settings select {
-    margin-bottom: 10px;
     padding: 2px;
-    width: 150px;
+    width: 158px;
 }
 
 .spacer {
-    display: block;
-    float: left;
     line-height: 30px;
-    width: 40px;
+    margin-bottom: 10px;
+    text-align: right;
+    max-width: 190px;
 }
 
 #bottom {
@@ -464,7 +458,7 @@ li {
     border-top: 1px solid #e3e3e3;
     font-size: 14px;
     margin: 0;
-    padding: 50px 70px 0;
+    padding: 0 70px;
     position: relative;
 }
 
@@ -493,7 +487,7 @@ li {
     color: #3e3e3e;
     font-size: 13px;
     line-height: 25px;
-    padding: 0 0 10px;
+    padding: 50px 0 10px;
     position: relative;
 }
 
@@ -607,9 +601,87 @@ li {
 
 
 
-/*#jumpback span {
-    font-size: 18px;
-}*/
+
+/* mobile devices */
+@media screen and (max-width: 1100px) {
+
+    #right {
+        height: 50px;
+        left: 0;
+        min-width: 235px;
+        padding: 20px 0 0 50px;
+        position: relative;
+    }
+
+    #previous_translated_words_wrapper {
+        display: none;
+    }
+    
+    #left {
+        width: 100%;
+    }
+
+    #content {
+        background-color: #ffffff;
+        font-size: 19px;
+        line-height: 35px;
+        padding: 30px 40px 30px 70px;
+    }
+
+    .column {
+        min-width: 350px;
+    }
+
+    #buttons {
+        margin-left: 65px;
+        min-width: 330px;
+        min-height: 140px;
+    }
+
+    #settings {
+        min-height: 40px;
+        min-width: 500px;
+        padding-left: 65px;
+    }
+
+    #settings p {
+        float: left;
+        line-height: 30px;
+        margin: 0 2px 0 0;
+    }
+
+    .spacer {
+        float: left;
+        margin: 0 0 0 4px;
+    }
+
+    #settings select {
+        width: 120px;
+    }
+
+}
+
+@media screen and (max-height: 600px) {
+
+    #content_wrapper {
+        height: 350px;
+    }
+
+    .gap {
+        height: 1px;
+    }
+
+}
+
+@media screen and (max-width: 1100px) and (min-height: 700px) {
+
+    #content_wrapper {
+        height: 560px;
+    }
+}
+
+
+
 
 .debug {
     padding: 15px 15px 15px 20px;

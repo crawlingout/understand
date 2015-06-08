@@ -7,7 +7,7 @@
     <meta name="author" content="Jan Bilek">
 
     <!-- this should eliminate delay waiting to see if tap is not actually double-tap -->
-    <meta name="viewport" content="width=device-width,user-scalable=no">
+    <meta name="viewport" content="width=device-width">
 
     <title>Flex your language-learning brain muscles with audiobooks</title>
 
@@ -51,8 +51,32 @@
 
 <body>
 
+<div id="right">
+
+    <!-- translated words -->
+    <div id="translated_words">
+
+        <div id="translation_wrapper">
+            <div id="whentoolong">Too long. <a id="googletranslate" target="_blank" href="https://translate.google.com/">Google Translate</a>?</div>
+            <div id="translations">
+                <a id="linktodict" target="_blank" href="https://translate.google.com/">
+                    <div id="selectedword"></div>
+                    <div id="translatedword">...</div>
+                </a>
+                <div class="clear"></div>
+            </div>
+        </div>
+        
+        <!-- previously translated words -->
+        <div id="previous_translated_words_wrapper">
+            <div id="previous_translated_words"></div>
+            <div id="remove_words" title="remove all stored words"><i class="fa fa-trash-o"></i></div>
+        </div>
+    </div>
+</div>
+
 <div id="left">
-    
+
     <div id="top">
         <div id="content_wrapper" data-language="en">
             <!-- BETA -->
@@ -134,94 +158,96 @@
         </div>
 
         <!-- language selectors -->
-        <div class="column" style="width:28%;">
+        <div class="column" style="width: 28%;">
             <div id="settings">
                 <p>Click on words to translate them</p>
-                <span class="spacer">from</span>
-                <select id="from" class="select_lang">
-                    <option value="ar">Arabic</option>
-                    <option value="bg">Bulgarian</option>
-                    <option value="ca">Catalan</option>
-                    <option value="zh-CHS">Chinese (Simplified)</option>
-                    <option value="zh-CHT">Chinese (Traditional)</option>
-                    <option value="cs">Czech</option>
-                    <option value="da">Danish</option>
-                    <option value="nl">Dutch</option>
-                    <option value="en">English</option>
-                    <option value="et">Estonian</option>
-                    <option value="fa">Persian (Farsi)</option>
-                    <option value="fi">Finnish</option>
-                    <option value="fr">French</option>
-                    <option value="de">German</option>
-                    <option value="el">Greek</option>
-                    <option value="he">Hebrew</option>
-                    <option value="hi">Hindi</option>
-                    <option value="hu">Hungarian</option>
-                    <option value="id">Indonesian</option>
-                    <option value="it">Italian</option>
-                    <option value="ja">Japanese</option>
-                    <option value="ko">Korean</option>
-                    <option value="lv">Latvian</option>
-                    <option value="lt">Lithuanian</option>
-                    <option value="ms">Malay</option>
-                    <option value="mww">Hmong Daw</option>
-                    <option value="no">Norwegian</option>
-                    <option value="pl">Polish</option>
-                    <option value="pt">Portuguese</option>
-                    <option value="ro">Romanian</option>
-                    <option value="ru">Russian</option>
-                    <option value="sk">Slovak</option>
-                    <option value="sl">Slovenian</option>
-                    <option value="es">Spanish</option>
-                    <option value="sv">Swedish</option>
-                    <option value="tr">Turkish</option>
-                    <option value="uk">Ukrainian</option>
-                    <option value="ur">Urdu</option>
-                    <option value="vi">Vietnamese</option>
-                </select>
+                <div class="spacer">from
+                    <select id="from" class="select_lang">
+                        <option value="ar">Arabic</option>
+                        <option value="bg">Bulgarian</option>
+                        <option value="ca">Catalan</option>
+                        <option value="zh-CHS">Chinese (Simplified)</option>
+                        <option value="zh-CHT">Chinese (Traditional)</option>
+                        <option value="cs">Czech</option>
+                        <option value="da">Danish</option>
+                        <option value="nl">Dutch</option>
+                        <option value="en">English</option>
+                        <option value="et">Estonian</option>
+                        <option value="fa">Persian (Farsi)</option>
+                        <option value="fi">Finnish</option>
+                        <option value="fr">French</option>
+                        <option value="de">German</option>
+                        <option value="el">Greek</option>
+                        <option value="he">Hebrew</option>
+                        <option value="hi">Hindi</option>
+                        <option value="hu">Hungarian</option>
+                        <option value="id">Indonesian</option>
+                        <option value="it">Italian</option>
+                        <option value="ja">Japanese</option>
+                        <option value="ko">Korean</option>
+                        <option value="lv">Latvian</option>
+                        <option value="lt">Lithuanian</option>
+                        <option value="ms">Malay</option>
+                        <option value="mww">Hmong Daw</option>
+                        <option value="no">Norwegian</option>
+                        <option value="pl">Polish</option>
+                        <option value="pt">Portuguese</option>
+                        <option value="ro">Romanian</option>
+                        <option value="ru">Russian</option>
+                        <option value="sk">Slovak</option>
+                        <option value="sl">Slovenian</option>
+                        <option value="es">Spanish</option>
+                        <option value="sv">Swedish</option>
+                        <option value="tr">Turkish</option>
+                        <option value="uk">Ukrainian</option>
+                        <option value="ur">Urdu</option>
+                        <option value="vi">Vietnamese</option>
+                    </select>
+                </div>
             
-                <br /><span class="spacer">to</span>
-                <select id="to" class="select_lang">
-                    <option value="ar">Arabic</option>
-                    <option value="bg">Bulgarian</option>
-                    <option value="ca">Catalan</option>
-                    <option value="zh-CHS">Chinese (Simplified)</option>
-                    <option value="zh-CHT">Chinese (Traditional)</option>
-                    <option value="cs">Czech</option>
-                    <option value="da">Danish</option>
-                    <option value="nl">Dutch</option>
-                    <option value="en">English</option>
-                    <option value="et">Estonian</option>
-                    <option value="fa">Persian (Farsi)</option>
-                    <option value="fi">Finnish</option>
-                    <option value="fr">French</option>
-                    <option value="de">German</option>
-                    <option value="el">Greek</option>
-                    <option value="he">Hebrew</option>
-                    <option value="hi">Hindi</option>
-                    <option value="hu">Hungarian</option>
-                    <option value="id">Indonesian</option>
-                    <option value="it">Italian</option>
-                    <option value="ja">Japanese</option>
-                    <option value="ko">Korean</option>
-                    <option value="lv">Latvian</option>
-                    <option value="lt">Lithuanian</option>
-                    <option value="ms">Malay</option>
-                    <option value="mww">Hmong Daw</option>
-                    <option value="no">Norwegian</option>
-                    <option value="pl">Polish</option>
-                    <option value="pt">Portuguese</option>
-                    <option value="ro">Romanian</option>
-                    <option value="ru">Russian</option>
-                    <option value="sk">Slovak</option>
-                    <option value="sl">Slovenian</option>
-                    <option value="es">Spanish</option>
-                    <option value="sv">Swedish</option>
-                    <option value="tr">Turkish</option>
-                    <option value="uk">Ukrainian</option>
-                    <option value="ur">Urdu</option>
-                    <option value="vi">Vietnamese</option>
-                </select>
+                <div class="spacer">to
+                    <select id="to" class="select_lang">
+                        <option value="ar">Arabic</option>
+                        <option value="bg">Bulgarian</option>
+                        <option value="ca">Catalan</option>
+                        <option value="zh-CHS">Chinese (Simplified)</option>
+                        <option value="zh-CHT">Chinese (Traditional)</option>
+                        <option value="cs">Czech</option>
+                        <option value="da">Danish</option>
+                        <option value="nl">Dutch</option>
+                        <option value="en">English</option>
+                        <option value="et">Estonian</option>
+                        <option value="fa">Persian (Farsi)</option>
+                        <option value="fi">Finnish</option>
+                        <option value="fr">French</option>
+                        <option value="de">German</option>
+                        <option value="el">Greek</option>
+                        <option value="he">Hebrew</option>
+                        <option value="hi">Hindi</option>
+                        <option value="hu">Hungarian</option>
+                        <option value="id">Indonesian</option>
+                        <option value="it">Italian</option>
+                        <option value="ja">Japanese</option>
+                        <option value="ko">Korean</option>
+                        <option value="lv">Latvian</option>
+                        <option value="lt">Lithuanian</option>
+                        <option value="ms">Malay</option>
+                        <option value="mww">Hmong Daw</option>
+                        <option value="no">Norwegian</option>
+                        <option value="pl">Polish</option>
+                        <option value="pt">Portuguese</option>
+                        <option value="ro">Romanian</option>
+                        <option value="ru">Russian</option>
+                        <option value="sk">Slovak</option>
+                        <option value="sl">Slovenian</option>
+                        <option value="es">Spanish</option>
+                        <option value="sv">Swedish</option>
+                        <option value="tr">Turkish</option>
+                        <option value="uk">Ukrainian</option>
+                        <option value="ur">Urdu</option>
+                        <option value="vi">Vietnamese</option>
+                    </select>
+                </div>
             </div>
         </div>
         <div class="clear"></div>
@@ -234,11 +260,10 @@
                 <div class="clear"></div>
                 <div class="gap"></div>
 
-                <p><strong>Planned features: </strong>the possibility to record your voice (so you can try to imitate the narrator and hear whether your pronunciation is correct), progress tracking, exporting translated words to flashcards, epub support and more. Do you want to be my beta tester? Let me know!</p>
+                <p><strong>Planned features: </strong>the ability to record/replay your voice (so you can try imitating the narrator and hear whether your pronunciation is correct), progress tracking, exporting translated words to flashcards, epub support and more. Do you want to be my beta tester? Let me know!</p>
                 <div class="gap"></div>
                 
-                <div class="inarrow">Support development</div><div class="arrow"></div>
-                <div class="txt"> Bitcoin donations appreciated: &nbsp;</div>
+                <div class="txt">Do you want to <strong>support further development</strong>? Donate BTC: &nbsp;</div>
                 <div id="btcaddr">1KzGUW3ttwaKNdi1uN3JW5MyxyMqr3qNcq</div>
                 <div id="qr">
                     [QR]
@@ -297,30 +322,6 @@
         <div id="links">
             2015 &copy; <a href="http://www.simplyeasy.cz/">Jan Bilek</a>&nbsp; | &nbsp; other projects:
             <a href="http://unexploredparadises.eu/">Photos of extraordinary travel destinations</a>
-        </div>
-    </div>
-</div>
-
-<div id="right">
-
-    <!-- translated words -->
-    <div id="translated_words">
-
-        <div id="translation_wrapper">
-            <div id="whentoolong">Too long. <a id="googletranslate" target="_blank" href="https://translate.google.cz/">Google Translate</a>?</div>
-            <div id="translations">
-                <a id="linktodict" target="_blank" href="https://translate.google.com/">
-                    <div id="selectedword"></div>
-                    <div id="translatedword">...</div>
-                </a>
-                <div class="clear"></div>
-            </div>
-        </div>
-        
-        <!-- previously translated words -->
-        <div id="previous_translated_words_wrapper">
-            <div id="previous_translated_words"></div>
-            <div id="remove_words" title="remove all stored words"><i class="fa fa-trash-o"></i></div>
         </div>
     </div>
 </div>

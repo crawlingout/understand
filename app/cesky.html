@@ -7,7 +7,7 @@
     <meta name="author" content="Jan Bilek">
 
     <!-- this should eliminate delay waiting to see if tap is not actually double-tap -->
-    <meta name="viewport" content="width=device-width,user-scalable=no">
+    <meta name="viewport" content="width=device-width">
 
     <title>Procvičujte cizí jazyky s audioknihami</title>
 
@@ -51,8 +51,32 @@
 
 <body>
 
+<div id="right">
+
+    <!-- translated words -->
+    <div id="translated_words">
+
+        <div id="translation_wrapper">
+            <div id="whentoolong">Moc dlouhé. <a id="googletranslate" target="_blank" href="https://translate.google.com/">Google Translate</a>?</div>
+            <div id="translations">
+                <a id="linktodict" target="_blank" href="https://translate.google.com/">
+                    <div id="selectedword"></div>
+                    <div id="translatedword">...</div>
+                </a>
+                <div class="clear"></div>
+            </div>
+        </div>
+        
+        <!-- previously translated words -->
+        <div id="previous_translated_words_wrapper">
+            <div id="previous_translated_words"></div>
+            <div id="remove_words" title="remove all stored words"><i class="fa fa-trash-o"></i></div>
+        </div>
+    </div>
+</div>
+
 <div id="left">
-    
+
     <div id="top">
         <div id="content_wrapper" data-language="cs">
             <!-- BETA -->
@@ -99,7 +123,7 @@
                 <div class="circle_bg"></div>
 
                 <div id="knob">
-                    <input class="knob" data-width="120" data-height="120" data-displayPrevious=true data-fgColor="#4ba3d9" data-bgColor="#FFFFFF" data-thickness=".2" value="0" data-displayInput=false>
+                    <input class="knob" data-width="120" data-height="120" data-displayPrevious=true data-fgColor="#4ba3d9" data-bgColor="#FFFFFF" data-thickness=".1" value="0" data-displayInput=false>
                 </div>
             
                 <div id="play_pause" class="circle">
@@ -134,94 +158,96 @@
         </div>
 
         <!-- language selectors -->
-        <div class="column" style="width:28%;">
+        <div class="column" style="width: 28%;">
             <div id="settings">
-                <p>Klikněte na slovo pro překlad</p>
-                <span class="spacer">z</span>
-                <select id="from" class="select_lang">
-                    <option value="ar">arabštiny</option>
-                    <option value="bg">bulharštiny</option>
-                    <option value="ca">katalánštiny</option>
-                    <option value="zh-CHS">čínštiny (zjednodušené)</option>
-                    <option value="zh-CHT">čínštiny (tradiční)</option>
-                    <option value="cs">češtiny</option>
-                    <option value="da">dánštiny</option>
-                    <option value="nl">holandštiny</option>
-                    <option value="en">angličtiny</option>
-                    <option value="et">estonštiny</option>
-                    <option value="fa">perštiny (Farsi)</option>
-                    <option value="fi">finštiny</option>
-                    <option value="fr">francouzštiny</option>
-                    <option value="de">němčiny</option>
-                    <option value="el">řečtiny</option>
-                    <option value="he">hebrejštiny</option>
-                    <option value="hi">hindštiny</option>
-                    <option value="hu">maďarštiny</option>
-                    <option value="id">indonézštiny</option>
-                    <option value="it">italštiny</option>
-                    <option value="ja">japonštiny</option>
-                    <option value="ko">korejštiny</option>
-                    <option value="lv">litevštiny</option>
-                    <option value="lt">lotyštiny</option>
-                    <option value="ms">malajštiny</option>
-                    <option value="mww">Hmong Daw</option>
-                    <option value="no">norštiny</option>
-                    <option value="pl">polštiny</option>
-                    <option value="pt">portugalštiny</option>
-                    <option value="ro">rumunštiny</option>
-                    <option value="ru">ruštiny</option>
-                    <option value="sk">slovenštiny</option>
-                    <option value="sl">slovinštiny</option>
-                    <option value="es">španělštiny</option>
-                    <option value="sv">švédštiny</option>
-                    <option value="tr">turečtiny</option>
-                    <option value="uk">ukrajinštiny</option>
-                    <option value="ur">urdštiny</option>
-                    <option value="vi">vietnamštiny</option>
-                </select>
+                <p>Kliknutím na slovo jej přeložíte</p>
+                <div class="spacer">z(e)
+                    <select id="from" class="select_lang">
+                        <option value="ar">arabštiny</option>
+                        <option value="bg">bulharštiny</option>
+                        <option value="ca">katalánštiny</option>
+                        <option value="zh-CHS">čínštiny (zjednodušené)</option>
+                        <option value="zh-CHT">čínštiny (tradiční)</option>
+                        <option value="cs">češtiny</option>
+                        <option value="da">dánštiny</option>
+                        <option value="nl">holandštiny</option>
+                        <option value="en">angličtiny</option>
+                        <option value="et">estonštiny</option>
+                        <option value="fa">perštiny (Farsi)</option>
+                        <option value="fi">finštiny</option>
+                        <option value="fr">francouzštiny</option>
+                        <option value="de">němčiny</option>
+                        <option value="el">řečtiny</option>
+                        <option value="he">hebrejštiny</option>
+                        <option value="hi">hindštiny</option>
+                        <option value="hu">maďarštiny</option>
+                        <option value="id">indonézštiny</option>
+                        <option value="it">italštiny</option>
+                        <option value="ja">japonštiny</option>
+                        <option value="ko">korejštiny</option>
+                        <option value="lv">litevštiny</option>
+                        <option value="lt">lotyštiny</option>
+                        <option value="ms">malajštiny</option>
+                        <option value="mww">Hmong Daw</option>
+                        <option value="no">norštiny</option>
+                        <option value="pl">polštiny</option>
+                        <option value="pt">portugalštiny</option>
+                        <option value="ro">rumunštiny</option>
+                        <option value="ru">ruštiny</option>
+                        <option value="sk">slovenštiny</option>
+                        <option value="sl">slovinštiny</option>
+                        <option value="es">španělštiny</option>
+                        <option value="sv">švédštiny</option>
+                        <option value="tr">turečtiny</option>
+                        <option value="uk">ukrajinštiny</option>
+                        <option value="ur">urdštiny</option>
+                        <option value="vi">vietnamštiny</option>
+                    </select>
+                </div>
             
-                <br /><span class="spacer">do</span>
-                <select id="to" class="select_lang">
-                    <option value="ar">arabštiny</option>
-                    <option value="bg">bulharštiny</option>
-                    <option value="ca">katalánštiny</option>
-                    <option value="zh-CHS">čínštiny (zjednodušené)</option>
-                    <option value="zh-CHT">čínštiny (tradiční)</option>
-                    <option value="cs">češtiny</option>
-                    <option value="da">dánštiny</option>
-                    <option value="nl">holandštiny</option>
-                    <option value="en">angličtiny</option>
-                    <option value="et">estonštiny</option>
-                    <option value="fa">perštiny (Farsi)</option>
-                    <option value="fi">finštiny</option>
-                    <option value="fr">francouzštiny</option>
-                    <option value="de">němčiny</option>
-                    <option value="el">řečtiny</option>
-                    <option value="he">hebrejštiny</option>
-                    <option value="hi">hindštiny</option>
-                    <option value="hu">maďarštiny</option>
-                    <option value="id">indonézštiny</option>
-                    <option value="it">italštiny</option>
-                    <option value="ja">japonštiny</option>
-                    <option value="ko">korejštiny</option>
-                    <option value="lv">litevštiny</option>
-                    <option value="lt">lotyštiny</option>
-                    <option value="ms">malajštiny</option>
-                    <option value="mww">Hmong Daw</option>
-                    <option value="no">norštiny</option>
-                    <option value="pl">polštiny</option>
-                    <option value="pt">portugalštiny</option>
-                    <option value="ro">rumunštiny</option>
-                    <option value="ru">ruštiny</option>
-                    <option value="sk">slovenštiny</option>
-                    <option value="sl">slovinštiny</option>
-                    <option value="es">španělštiny</option>
-                    <option value="sv">švédštiny</option>
-                    <option value="tr">turečtiny</option>
-                    <option value="uk">ukrajinštiny</option>
-                    <option value="ur">urdštiny</option>
-                    <option value="vi">vietnamštiny</option>
-                </select>
+                <div class="spacer">do
+                    <select id="to" class="select_lang">
+                        <option value="ar">arabštiny</option>
+                        <option value="bg">bulharštiny</option>
+                        <option value="ca">katalánštiny</option>
+                        <option value="zh-CHS">čínštiny (zjednodušené)</option>
+                        <option value="zh-CHT">čínštiny (tradiční)</option>
+                        <option value="cs">češtiny</option>
+                        <option value="da">dánštiny</option>
+                        <option value="nl">holandštiny</option>
+                        <option value="en">angličtiny</option>
+                        <option value="et">estonštiny</option>
+                        <option value="fa">perštiny (Farsi)</option>
+                        <option value="fi">finštiny</option>
+                        <option value="fr">francouzštiny</option>
+                        <option value="de">němčiny</option>
+                        <option value="el">řečtiny</option>
+                        <option value="he">hebrejštiny</option>
+                        <option value="hi">hindštiny</option>
+                        <option value="hu">maďarštiny</option>
+                        <option value="id">indonézštiny</option>
+                        <option value="it">italštiny</option>
+                        <option value="ja">japonštiny</option>
+                        <option value="ko">korejštiny</option>
+                        <option value="lv">litevštiny</option>
+                        <option value="lt">lotyštiny</option>
+                        <option value="ms">malajštiny</option>
+                        <option value="mww">Hmong Daw</option>
+                        <option value="no">norštiny</option>
+                        <option value="pl">polštiny</option>
+                        <option value="pt">portugalštiny</option>
+                        <option value="ro">rumunštiny</option>
+                        <option value="ru">ruštiny</option>
+                        <option value="sk">slovenštiny</option>
+                        <option value="sl">slovinštiny</option>
+                        <option value="es">španělštiny</option>
+                        <option value="sv">švédštiny</option>
+                        <option value="tr">turečtiny</option>
+                        <option value="uk">ukrajinštiny</option>
+                        <option value="ur">urdštiny</option>
+                        <option value="vi">vietnamštiny</option>
+                    </select>
+                </div>
             </div>
         </div>
         <div class="clear"></div>
@@ -234,11 +260,10 @@
                 <div class="clear"></div>
                 <div class="gap"></div>
 
-                <p><strong>Další plány pro vývoj aplikace: </strong>nahrávání vlastního hlasu, abyste mohli slyšet svoji výslovnost, když zkusíte imitovat vypravěče, sledování různých indikátorů vašeho zlepšování, exportování přeložených slov do flash cards, podpora pro epub formát a další. Chcete to otestovat? Napište mi!</p>
+                <p><strong>Další plány pro vývoj aplikace: </strong>nahrávání vlastního hlasu (abyste mohli slyšet svoji výslovnost, když zkusíte imitovat vypravěče), sledování různých indikátorů vašeho zlepšování, exportování přeložených slov do flash cards, podpora pro epub formát a další. Chcete to otestovat? Napište mi!</p>
                 <div class="gap"></div>
                 
-                <div class="inarrow">Podpořte vývoj</div><div class="arrow"></div>
-                <div class="txt"> Bitcoinové příspěvky přijímány s vděčností: &nbsp;</div>
+                <div class="txt">Chcete <strong>podpořit další vývoj</strong>? Přispějte BTC: &nbsp;</div>
                 <div id="btcaddr">1KzGUW3ttwaKNdi1uN3JW5MyxyMqr3qNcq</div>
                 <div id="qr">
                     [QR]
@@ -297,30 +322,6 @@
         <div id="links">
             2015 &copy; <a href="http://www.simplyeasy.cz/cs">Jan Bílek</a>&nbsp; | &nbsp; další projekty: 
             <a href="http://unexploredparadises.eu/">Photos of extraordinary travel destinations</a>
-        </div>
-    </div>
-</div>
-
-<div id="right">
-
-    <!-- translated words -->
-    <div id="translated_words">
-
-        <div id="translation_wrapper">
-            <div id="whentoolong">Moc dlouhé. <a id="googletranslate" target="_blank" href="https://translate.google.cz/">Google Translate</a>?</div>
-            <div id="translations">
-                <a id="linktodict" target="_blank" href="https://translate.google.com/">
-                    <div id="selectedword"></div>
-                    <div id="translatedword">...</div>
-                </a>
-                <div class="clear"></div>
-            </div>
-        </div>
-        
-        <!-- previously translated words -->
-        <div id="previous_translated_words_wrapper">
-            <div id="previous_translated_words"></div>
-            <div id="remove_words" title="remove all stored words"><i class="fa fa-trash-o"></i></div>
         </div>
     </div>
 </div>
