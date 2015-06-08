@@ -813,9 +813,12 @@ $(document).ready(function() {
 
     // DEMO
 
+    // select a demo
     $('.demo').click(function() {
 
         $("#more").hide();
+        $('html, body').scrollTop(0);
+
         loadDemo($(this).attr('id'));
 
         // swicth to the language of the demo
@@ -827,16 +830,18 @@ $(document).ready(function() {
     $('#tryitnow').click(function() {
         $('#more').show();
 
-        // scroll to the top of the page
-        $('html, body').animate({ scrollTop: 0 }, 'slow');
+        // jump to the top of the page
+        $('html, body').scrollTop(0);
     });
 
     // hide demos pop-up
     $(".overlay").click(function(){
         $(".hidepopup").hide();
+        $('html, body').scrollTop(0);
     });
     $(".closepopup").click(function(){
         $(".hidepopup").hide();
+        $('html, body').scrollTop(0);
     });
 
 
