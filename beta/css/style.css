@@ -359,6 +359,11 @@ li {
     padding: 0 20px 20px 0;
 }
 
+#languages {
+    padding-bottom: 4px;
+    width: 28%;
+}
+
 .btn {
     padding-right: 40px;
 }
@@ -372,7 +377,7 @@ li {
     color: #898989;
     left: 190px;
     position: absolute;
-    top: 102px;
+    top: 100px;
 }
 
 .rec {
@@ -405,7 +410,7 @@ li {
 
 #player {
     height: 130px;
-    margin: 25px 25px 5px;
+    margin: 23px 25px 5px;
     position: relative;
     width: 180px;
 }
@@ -468,7 +473,7 @@ li {
 
 #settings {
     font-size: 13px;
-    padding: 20px 10px;
+    padding: 15px 10px 25px;
 }
 
 #settings select {
@@ -632,9 +637,11 @@ li {
 }
 
 #idle {
-    width: 5px;
-    height: 5px;
     background-color: #c4c4c4;
+    height: 5px;
+    position: absolute;
+    top: -6px;
+    width: 5px;
 }
 
 
@@ -678,8 +685,8 @@ li {
 
     #settings {
         min-height: 40px;
-        min-width: 500px;
-        padding-left: 65px;
+        min-width: 490px;
+        padding: 0 0 10px 65px;
     }
 
     #settings p {
