@@ -115,8 +115,8 @@
     </div>
 
     <div id="middle">
-        <!-- player -->
-        <div class="column">
+        <div class="column" id="controls">
+            <!-- player -->
             <div id="player">
                 <audio id="audioplayer" preload="auto"></audio>
             
@@ -137,117 +137,113 @@
             <div data-jump="6" id="jumpback" class="jumpback" title=" vrátit 6 vteřin zpět (klávesová zkratka: šipka vlevo) "><span><i class="fa fa-caret-left"></i><i class="fa fa-caret-left"></i></span> 6 s</div>
         </div>
 
-        <!-- buttons -->
-        <div class="column">
-            <div id="buttons">
-                <div id="text_file" class="btn">
-                    <input type="file" id="text_files" name="text_files[]" style="display:none" />
-                    <div class="open_file" id="textFileSelect"><strong>Otevřít</strong><br /> <strong>text</strong></div>
-                    <div class="filetypes" title="supported file types">.txt (převeďte <a href="https://cloudconvert.com/pdf-to-txt" target="_blank">.pdf</a>, <a href="https://cloudconvert.com/epub-to-txt" target="_blank">.epub</a> a <a href="https://cloudconvert.com/" target="_blank">další formáty</a> do .txt)</div>
-                </div>
-                <div id="audio_file" class="btn">
-                    <form enctype="multipart/form-data">
-                        <input type="file" id="audio_files" name="fileToUpload" style="display:none" />
-                    </form>
-                    <div class="open_file" id="audioFileSelect"><strong>Otevřít</strong><br /> <strong>audio</strong></div>
-                    <div class="filetypes" title="supported file types">.mp3</div>
-                </div>
-
-                <div class="clear"></div>
+        <!-- file openers -->
+        <div class="column" id="files">
+            <div id="text_file" class="btn">
+                <input type="file" id="text_files" name="text_files[]" style="display:none" />
+                <div class="open_file" id="textFileSelect"><strong>Otevřít</strong><br /> <strong>text</strong></div>
+                <div class="filetypes" title="supported file types">.txt (převeďte <a href="https://cloudconvert.com/pdf-to-txt" target="_blank">.pdf</a>, <a href="https://cloudconvert.com/epub-to-txt" target="_blank">.epub</a> a <a href="https://cloudconvert.com/" target="_blank">další formáty</a> do .txt)</div>
             </div>
+            <div id="audio_file" class="btn">
+                <form enctype="multipart/form-data">
+                    <input type="file" id="audio_files" name="fileToUpload" style="display:none" />
+                </form>
+                <div class="open_file" id="audioFileSelect"><strong>Otevřít</strong><br /> <strong>audio</strong></div>
+                <div class="filetypes" title="supported file types">.mp3</div>
+            </div>
+            
+            <div class="clear"></div>
         </div>
 
         <!-- language selectors -->
         <div class="column" id="languages">
-            <div id="settings">
-                <p>Kliknutím na slovo jej přeložíte</p>
-                <div class="spacer">z(e)
-                    <select id="from" class="select_lang">
-                        <option value="ar">arabštiny</option>
-                        <option value="bg">bulharštiny</option>
-                        <option value="ca">katalánštiny</option>
-                        <option value="zh-CHS">čínštiny (zjednodušené)</option>
-                        <option value="zh-CHT">čínštiny (tradiční)</option>
-                        <option value="cs">češtiny</option>
-                        <option value="da">dánštiny</option>
-                        <option value="nl">holandštiny</option>
-                        <option value="en">angličtiny</option>
-                        <option value="et">estonštiny</option>
-                        <option value="fa">perštiny (Farsi)</option>
-                        <option value="fi">finštiny</option>
-                        <option value="fr">francouzštiny</option>
-                        <option value="de">němčiny</option>
-                        <option value="el">řečtiny</option>
-                        <option value="he">hebrejštiny</option>
-                        <option value="hi">hindštiny</option>
-                        <option value="hu">maďarštiny</option>
-                        <option value="id">indonézštiny</option>
-                        <option value="it">italštiny</option>
-                        <option value="ja">japonštiny</option>
-                        <option value="ko">korejštiny</option>
-                        <option value="lv">litevštiny</option>
-                        <option value="lt">lotyštiny</option>
-                        <option value="ms">malajštiny</option>
-                        <option value="mww">Hmong Daw</option>
-                        <option value="no">norštiny</option>
-                        <option value="pl">polštiny</option>
-                        <option value="pt">portugalštiny</option>
-                        <option value="ro">rumunštiny</option>
-                        <option value="ru">ruštiny</option>
-                        <option value="sk">slovenštiny</option>
-                        <option value="sl">slovinštiny</option>
-                        <option value="es">španělštiny</option>
-                        <option value="sv">švédštiny</option>
-                        <option value="tr">turečtiny</option>
-                        <option value="uk">ukrajinštiny</option>
-                        <option value="ur">urdštiny</option>
-                        <option value="vi">vietnamštiny</option>
-                    </select>
-                </div>
-            
-                <div class="spacer">do
-                    <select id="to" class="select_lang">
-                        <option value="ar">arabštiny</option>
-                        <option value="bg">bulharštiny</option>
-                        <option value="ca">katalánštiny</option>
-                        <option value="zh-CHS">čínštiny (zjednodušené)</option>
-                        <option value="zh-CHT">čínštiny (tradiční)</option>
-                        <option value="cs">češtiny</option>
-                        <option value="da">dánštiny</option>
-                        <option value="nl">holandštiny</option>
-                        <option value="en">angličtiny</option>
-                        <option value="et">estonštiny</option>
-                        <option value="fa">perštiny (Farsi)</option>
-                        <option value="fi">finštiny</option>
-                        <option value="fr">francouzštiny</option>
-                        <option value="de">němčiny</option>
-                        <option value="el">řečtiny</option>
-                        <option value="he">hebrejštiny</option>
-                        <option value="hi">hindštiny</option>
-                        <option value="hu">maďarštiny</option>
-                        <option value="id">indonézštiny</option>
-                        <option value="it">italštiny</option>
-                        <option value="ja">japonštiny</option>
-                        <option value="ko">korejštiny</option>
-                        <option value="lv">litevštiny</option>
-                        <option value="lt">lotyštiny</option>
-                        <option value="ms">malajštiny</option>
-                        <option value="mww">Hmong Daw</option>
-                        <option value="no">norštiny</option>
-                        <option value="pl">polštiny</option>
-                        <option value="pt">portugalštiny</option>
-                        <option value="ro">rumunštiny</option>
-                        <option value="ru">ruštiny</option>
-                        <option value="sk">slovenštiny</option>
-                        <option value="sl">slovinštiny</option>
-                        <option value="es">španělštiny</option>
-                        <option value="sv">švédštiny</option>
-                        <option value="tr">turečtiny</option>
-                        <option value="uk">ukrajinštiny</option>
-                        <option value="ur">urdštiny</option>
-                        <option value="vi">vietnamštiny</option>
-                    </select>
-                </div>
+            <p>&nbsp;Kliknutím na slovo jej přeložíte</p>
+            <div class="spacer">&nbsp;z
+                <select id="from" class="select_lang">
+                    <option value="ar">arabštiny</option>
+                    <option value="bg">bulharštiny</option>
+                    <option value="ca">katalánštiny</option>
+                    <option value="zh-CHS">čínštiny (zjednodušené)</option>
+                    <option value="zh-CHT">čínštiny (tradiční)</option>
+                    <option value="cs">češtiny</option>
+                    <option value="da">dánštiny</option>
+                    <option value="nl">holandštiny</option>
+                    <option value="en">angličtiny</option>
+                    <option value="et">estonštiny</option>
+                    <option value="fa">perštiny (Farsi)</option>
+                    <option value="fi">finštiny</option>
+                    <option value="fr">francouzštiny</option>
+                    <option value="de">němčiny</option>
+                    <option value="el">řečtiny</option>
+                    <option value="he">hebrejštiny</option>
+                    <option value="hi">hindštiny</option>
+                    <option value="hu">maďarštiny</option>
+                    <option value="id">indonézštiny</option>
+                    <option value="it">italštiny</option>
+                    <option value="ja">japonštiny</option>
+                    <option value="ko">korejštiny</option>
+                    <option value="lv">litevštiny</option>
+                    <option value="lt">lotyštiny</option>
+                    <option value="ms">malajštiny</option>
+                    <option value="mww">Hmong Daw</option>
+                    <option value="no">norštiny</option>
+                    <option value="pl">polštiny</option>
+                    <option value="pt">portugalštiny</option>
+                    <option value="ro">rumunštiny</option>
+                    <option value="ru">ruštiny</option>
+                    <option value="sk">slovenštiny</option>
+                    <option value="sl">slovinštiny</option>
+                    <option value="es">španělštiny</option>
+                    <option value="sv">švédštiny</option>
+                    <option value="tr">turečtiny</option>
+                    <option value="uk">ukrajinštiny</option>
+                    <option value="ur">urdštiny</option>
+                    <option value="vi">vietnamštiny</option>
+                </select>
+            </div>
+                        
+            <div class="spacer">&nbsp;do
+                <select id="to" class="select_lang">
+                    <option value="ar">arabštiny</option>
+                    <option value="bg">bulharštiny</option>
+                    <option value="ca">katalánštiny</option>
+                    <option value="zh-CHS">čínštiny (zjednodušené)</option>
+                    <option value="zh-CHT">čínštiny (tradiční)</option>
+                    <option value="cs">češtiny</option>
+                    <option value="da">dánštiny</option>
+                    <option value="nl">holandštiny</option>
+                    <option value="en">angličtiny</option>
+                    <option value="et">estonštiny</option>
+                    <option value="fa">perštiny (Farsi)</option>
+                    <option value="fi">finštiny</option>
+                    <option value="fr">francouzštiny</option>
+                    <option value="de">němčiny</option>
+                    <option value="el">řečtiny</option>
+                    <option value="he">hebrejštiny</option>
+                    <option value="hi">hindštiny</option>
+                    <option value="hu">maďarštiny</option>
+                    <option value="id">indonézštiny</option>
+                    <option value="it">italštiny</option>
+                    <option value="ja">japonštiny</option>
+                    <option value="ko">korejštiny</option>
+                    <option value="lv">litevštiny</option>
+                    <option value="lt">lotyštiny</option>
+                    <option value="ms">malajštiny</option>
+                    <option value="mww">Hmong Daw</option>
+                    <option value="no">norštiny</option>
+                    <option value="pl">polštiny</option>
+                    <option value="pt">portugalštiny</option>
+                    <option value="ro">rumunštiny</option>
+                    <option value="ru">ruštiny</option>
+                    <option value="sk">slovenštiny</option>
+                    <option value="sl">slovinštiny</option>
+                    <option value="es">španělštiny</option>
+                    <option value="sv">švédštiny</option>
+                    <option value="tr">turečtiny</option>
+                    <option value="uk">ukrajinštiny</option>
+                    <option value="ur">urdštiny</option>
+                    <option value="vi">vietnamštiny</option>
+                </select>
             </div>
         </div>
         <div class="clear"></div>

@@ -355,20 +355,15 @@ li {
 
 .column {
     float: left;
-    width: 35%;
 }
 
-#buttons {
-    padding: 0 20px 20px 0;
+#controls {
+    width: 295px;
 }
 
-#languages {
-    padding-bottom: 4px;
-    width: 28%;
-}
-
-.btn {
-    padding-right: 40px;
+#files {
+    padding: 0 5px 0 60px;
+    width: 290px;
 }
 
 #audio_file {
@@ -377,6 +372,24 @@ li {
 
 #text_file {
     float: right;
+}
+
+#languages {
+    font-size: 13px;
+    padding: 15px 0 30px 60px;
+    width: 210px;
+}
+
+#languages select {
+    padding: 2px;
+    width: 152px;
+}
+
+.spacer {
+    line-height: 30px;
+    margin-bottom: 10px;
+    text-align: right;
+    max-width: 190px;
 }
 
 #player {
@@ -440,23 +453,6 @@ li {
     text-align: center;
     top: 25px;
     width: 60px;
-}
-
-#settings {
-    font-size: 13px;
-    padding: 15px 10px 25px;
-}
-
-#settings select {
-    padding: 2px;
-    width: 158px;
-}
-
-.spacer {
-    line-height: 30px;
-    margin-bottom: 10px;
-    text-align: right;
-    max-width: 190px;
 }
 
 #bottom {
@@ -632,39 +628,39 @@ li {
         padding: 30px 40px 30px 70px;
     }
 
-    .column {
-        min-width: 350px;
-    }
-
-    #buttons {
-        margin-left: 65px;
-        min-width: 330px;
-        min-height: 140px;
-    }
-
-    #settings {
-        min-height: 40px;
-        min-width: 490px;
-        padding: 0 0 5px 65px;
-    }
-
-    #settings p {
-        float: left;
-        line-height: 30px;
-        margin: 0 2px 0 0;
-    }
-
-    .spacer {
-        float: left;
-        margin: 0 0 0 4px;
-    }
-
-    #settings select {
-        width: 120px;
-    }
-
     .popup {
         width: 100%;
+    }
+
+}
+
+@media screen and (max-width: 950px) {
+
+    #languages {
+        padding: 20px 0 20px 60px;
+        width: 600px;
+    }
+
+    #languages p {
+        float: left;
+        line-height: 30px;
+        margin: 0;
+    }
+
+    #languages .spacer {
+        float: left;
+    }
+
+    #languages select {
+        width: 118px;
+    }
+
+}
+
+@media screen and (max-width: 670px) {
+
+    #languages {
+        width: 310px;
     }
 
 }
