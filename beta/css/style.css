@@ -686,7 +686,7 @@ li {
     #settings {
         min-height: 40px;
         min-width: 490px;
-        padding: 0 0 10px 65px;
+        padding: 0 0 5px 65px;
     }
 
     #settings p {
