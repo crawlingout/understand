@@ -312,6 +312,10 @@ li {
         height: 100%;
     }
 
+    #content_wrapper {
+        box-shadow: 0 0 12px #747474;
+    }
+
     #content {
         background-color: #ffffff;
         font-size: 24px;
