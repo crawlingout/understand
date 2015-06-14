@@ -344,7 +344,4 @@ $(document).ready(function() {
         previous_translated_words = [];
         localStorage.setItem('read_previous_translated_words', '[]');
     });
-
-    // set window height on load
-    $('#content_wrapper').css({'height': ($(window).height()-90)+'px'});
 });

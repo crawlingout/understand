@@ -674,12 +674,4 @@ $(document).ready(function() {
     function() {
         $('#qrimage').hide();
     });
-
-    // show BETA warning on hover
-    $('#beta').hover(function() {
-        $('#betatext').show();
-    },
-    function() {
-        $('#betatext').hide();
-    });
 });

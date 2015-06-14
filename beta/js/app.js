@@ -967,14 +967,6 @@ $(document).ready(function() {
         $('#qrimage').hide();
     });
 
-    // show BETA warning on hover
-    $('#beta').hover(function() {
-        $('#betatext').show();
-    },
-    function() {
-        $('#betatext').hide();
-    });
-
 
     // TRACKING
 
