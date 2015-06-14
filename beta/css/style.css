@@ -595,13 +595,6 @@ li {
         height: calc(100% - 238px);
     }
 
-    #content {
-        background-color: #ffffff;
-        font-size: 19px;
-        line-height: 35px;
-        padding: 30px 40px 30px 70px;
-    }
-
     .popup {
         width: 100%;
     }
@@ -635,6 +628,12 @@ li {
 
     #languages {
         width: 310px;
+    }
+
+    #content {
+        font-size: 19px;
+        line-height: 35px;
+        padding: 30px 40px 30px 70px;
     }
 
 }
