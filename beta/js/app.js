@@ -996,7 +996,7 @@ $(document).ready(function() {
         }
         else {
             // // set tracking indicator to 'NOT active'
-            idle_indicator.style.color = '#c4c4c4';
+            idle_indicator.style.color = '#dcdcdc';
         }
     }, 60000); // 1 min
 
