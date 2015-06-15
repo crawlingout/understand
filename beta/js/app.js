@@ -980,6 +980,12 @@ $(document).ready(function() {
         $('#qrimage').hide();
     });
 
+    // email
+    var b = $('#r').text();
+    b=b.replace(" at ",String.fromCharCode(64));
+    b=b.replace(" dot ",String.fromCharCode(46));
+    $('#r').text(b);
+
 
     // TRACKING
 

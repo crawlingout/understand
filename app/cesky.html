@@ -245,7 +245,7 @@
 
             <div id="support">
 
-                <div class="inarrow">Napište mi</div><div class="arrow"></div> máte-li nějaké <strong>otázky</strong> nebo <strong>návrhy</strong> - <span class="r">jan at simplyeasy dot cz</span>
+                <div class="inarrow">Napište mi</div><div class="arrow"></div> máte-li nějaké <strong>otázky</strong> nebo <strong>návrhy</strong> - <span id="r">jan at simplyeasy dot cz</span>
                 <div class="clear"></div>
                 <div class="gap"></div>
 
@@ -364,7 +364,7 @@
 
             <p class="smaller">Are you a writer <strong>looking to promote your book?</strong> Would you consider publishing the first chapter here (+link to your site)?</p>
 
-            <p class="smaller">Please send me an email at <span class="r">jan at simplyeasy dot cz</span></p> -->
+            <p class="smaller">Please send me an email.</p> -->
 
             <div class="gap"></div>
             <div class="gap"></div>
@@ -378,18 +378,6 @@
 <div id="unsupported">
     I am sorry, this app needs to use some functionality not supported by your browser.
 </div>
-
-<script>
-    $(document).ready(function() {
-        var b;
-        $(".r").each(function() {
-            b = $(this).text();
-            b=b.replace(" at ",String.fromCharCode(64));
-            b=b.replace(" dot ",String.fromCharCode(46));
-            $(this).text(b);
-        });
-    });
-</script>
 
 </body>
 </html>
