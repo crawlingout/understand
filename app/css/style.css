@@ -61,8 +61,6 @@ li {
 }
 
 #left {
-    float: left;
-    height: 100%;
     position: relative;
     width: 1000px;
 }
@@ -71,8 +69,7 @@ li {
     background-color: #FFFFFF;
     border-bottom: 1px solid #E3E3E3;
     box-shadow: 0 10px 10px 0 #999999;
-    height: 448px;
-    height: calc(100% - 168px);
+    height: 400px;
     overflow: auto;
     position: relative;
     resize: vertical;
@@ -220,11 +217,6 @@ li {
     text-align: right;
     width: 180px;
 }
-.smallgap {
-    height: 5px;
-    width: 100%;
-}
-
 
 .gap {
     height: 15px;
@@ -614,7 +606,6 @@ li {
 
     #content_wrapper {
         box-shadow: 0 0 8px #999999;
-        height: calc(100% - 238px);
     }
 
     .popup {
@@ -656,18 +647,6 @@ li {
         font-size: 19px;
         line-height: 35px;
         padding: 30px 40px 30px 70px;
-    }
-
-}
-
-@media screen and (max-height: 600px) {
-
-    #content_wrapper {
-        height: 350px;
-    }
-
-    .gap {
-        height: 1px;
     }
 
 }

@@ -608,7 +608,7 @@ function playPause() {
 
         TRACK.addPauseTime();
         TRACK.newDay();
-        document.getElementById('idle').style.backgroundColor = '#4ba3d9'; // set tracking indicator to 'active'
+        document.getElementById('idle').style.color = '#4ba3d9'; // set tracking indicator to 'active'
     }
     // if playing, pause
     else {
@@ -663,6 +663,19 @@ function recordReplay() {
 
 
 $(document).ready(function() {
+
+    // position controls at bottom of screen
+    var content_wrapper_height = 0;
+    var window_height = $(window).height();
+    if ($(window).width() <= 1100) {
+         content_wrapper_height = window_height - 238;
+    }
+    else {
+        content_wrapper_height = window_height - 168;
+    }
+    if (content_wrapper_height > 400) {
+        $('#content_wrapper').css({'height': content_wrapper_height+'px'});
+    }
 
     // get how much seconds to jump back
     var jumpback = $("#jumpback").data('jump');
@@ -970,22 +983,32 @@ $(document).ready(function() {
 
     // TRACKING
 
+    // idle indicator
+    var idle_indicator = document.getElementById('idle');
+
     // display indicator of active tracking
     var interval = setInterval(function() {
 
         // if active
         if (last_pause_time && moment().diff(last_pause_time) < allowed_idle) {
             // set tracking indicator to 'active'
-            document.getElementById('idle').style.backgroundColor = '#4ba3d9';
+            idle_indicator.style.color = '#4ba3d9';
         }
         else {
             // // set tracking indicator to 'NOT active'
-            document.getElementById('idle').style.backgroundColor = '#c4c4c4';
+            idle_indicator.style.color = '#c4c4c4';
         }
     }, 60000); // 1 min
 
     // show stored data on load
     TRACK.displayTrackingData(today);
+
+    // slide to tracking
+    $('#idle').click(function(){
+        $('html, body').animate({
+            scrollTop: $("#tracking")[0].scrollHeight
+        });
+    });
 
     // ========
 });

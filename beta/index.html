@@ -86,10 +86,7 @@
         
         <div id="instructions">
             <div class="gap"></div>
-            <div class="gap"></div>
-            <div class="gap"></div>
             <h3>How to practice listening skills with audiobooks?</h3>
-            <div class="gap"></div>
             <div class="gap"></div>
     
             <p>
@@ -107,10 +104,14 @@
     
     
         <div id="content"></div>
+
+        <div title="close this book" id="backhome"><i class="fa fa-times"></i></div>
     </div>
-    <div title="close this book" id="backhome"><i class="fa fa-times"></i></div>
 
     <div id="middle">
+        <!-- tracking indicator -->
+        <div id="idle"><i class="fa fa-clock-o"></i></div>
+
         <!-- player -->
         <div class="column" id="controls">
             <div id="player">
@@ -259,7 +260,6 @@
 
             <!-- TRACKING -->
             <div id="tracking">
-                <div id="idle" title=" tracking indicator: if still blue, pause will be added to session time "> </div>
                 <!-- tracking info -->
                 <div class="track_info" id="tracking_info">
                     Today, you conquered ~<span title="hours:minutes" id="audio_time">0:00</span> of audio time in ~<span title="hours:minutes" id="session_time">0:00</span> of work time (<span id="session_audio_ratio">-</span><span>%</span> ratio) and translated <span id="track_translated_words">0</span> words.<br />

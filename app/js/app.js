@@ -455,6 +455,19 @@ function playPause() {
 
 $(document).ready(function() {
 
+    // position controls at bottom of screen
+    var content_wrapper_height = 0;
+    var window_height = $(window).height();
+    if ($(window).width() <= 1100) {
+         content_wrapper_height = window_height - 238;
+    }
+    else {
+        content_wrapper_height = window_height - 168;
+    }
+    if (content_wrapper_height > 400) {
+        $('#content_wrapper').css({'height': content_wrapper_height+'px'});
+    }
+
     // get how much seconds to jump back
     var jumpback = $("#jumpback").data('jump');
 
