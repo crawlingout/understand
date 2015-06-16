@@ -1012,7 +1012,8 @@ $(document).ready(function() {
     // slide to tracking
     $('#idle').click(function(){
         $('html, body').animate({
-            scrollTop: $("#tracking")[0].scrollHeight
+            // scroll to bottom of tracking element
+            scrollTop: $("#tracking")[0].scrollHeight + ($("#tracking").offset().top - $(window).height())
         });
     });
 
