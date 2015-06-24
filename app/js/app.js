@@ -452,10 +452,7 @@ function playPause() {
     }
 }
 
-
-$(document).ready(function() {
-
-    // position controls at bottom of screen
+function controlsToBottom() {
     var content_wrapper_height = 0;
     var window_height = $(window).height();
     if ($(window).width() <= 1100) {
@@ -467,6 +464,18 @@ $(document).ready(function() {
     if (content_wrapper_height > 400) {
         $('#content_wrapper').css({'height': content_wrapper_height+'px'});
     }
+}
+
+
+$(document).ready(function() {
+
+    // put controls to bottom of screen
+    // on load
+    controlsToBottom();
+    // and when mobile device orientation changes
+    window.addEventListener("orientationchange", function() {
+        setTimeout(controlsToBottom, 400);
+    }, false);
 
     // get how much seconds to jump back
     var jumpback = $("#jumpback").data('jump');
