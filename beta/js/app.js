@@ -998,20 +998,13 @@ $(document).ready(function() {
 
     // TRACKING
 
-    // idle indicator
-    var idle_indicator = document.getElementById('idle');
-
     // display indicator of active tracking
     var interval = setInterval(function() {
 
-        // if active
-        if (last_pause_time && (moment().diff(last_pause_time) < allowed_idle)) {
-            // set tracking indicator to 'active'
-            idle_indicator.style.color = '#4ba3d9';
-        }
-        else {
+        // if NOT active
+        if (last_pause_time && (moment().diff(last_pause_time) > allowed_idle)) {
             // // set tracking indicator to 'NOT active'
-            idle_indicator.style.color = '#d7d7d7';
+            document.getElementById('idle').style.color = '#d7d7d7';
         }
     }, 60000); // 1 min
 
