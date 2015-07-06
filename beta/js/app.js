@@ -95,7 +95,8 @@ TRACK.dataObjectExist = function(day) {
                 'st': 0,
                 'at': 0,
                 'dg': 1800, // daily goal in seconds - default 30 min
-                's': 0 // current streak in days
+                's': 0, // current streak in days
+                'rr': 20 // all thime high ratio in %
             },
             'days': {}
         };
@@ -151,15 +152,15 @@ TRACK.displayTrackingData = function(day) {//console.log('displayTrackingData');
 TRACK.currentStreak = function() {
     var yesterday = moment(today).subtract(1, 'days').format('YYYY-MM-DD');
 
-    // handle legacy code that did not store this info
+    // handle legacy code that did not store streak
     data[from].total.s = data[from].total.s || 0;
 
     // if goal achieved yesterday
     if (data[from].days[yesterday] && data[from].days[yesterday].ga) {
-        data[from].total.s++;
+        data[from].total.s = data[from].total.s + data[from].days[today].ga;
     }
     else {
-        data[from].total.s = 0;
+        data[from].total.s = 0 + data[from].days[today].ga;
     }
 
     if (data[from].total.s === 1) {
@@ -167,6 +168,40 @@ TRACK.currentStreak = function() {
     }
     else {
         $('#streak').text(data[from].total.s+ ' days');
+    }
+};
+
+TRACK.ratioStats = function() {
+
+    // handle legacy code that did not store record ratio
+    data[from].total.rr = data[from].total.rr || 0;
+
+    // loop last thirty days
+    var i, daily_record;
+    for (i = 1; i < 31; i++) {
+        daily_record = moment(today).subtract(i, 'days').format('YYYY-MM-DD') || 0;
+        // if day was recorded
+        if (data[from].days[daily_record]) {
+            // if goal was achieved that day
+            if (data[from].days[daily_record].ga) {
+                // if ratio for the day not stored
+                if (!data[from].days[daily_record].r) {
+                    // calculate ratio
+                    data[from].days[daily_record].r = calculateRatio(data[from].days[daily_record].at, data[from].days[daily_record].st);
+                }
+
+                // if ratio that day > record ratio
+                if (data[from].days[daily_record].r > data[from].total.rr) {
+                    // update record ratio
+                    data[from].total.rr = data[from].days[daily_record].r;
+                }
+            }
+        }
+    }
+    console.log(data[from].total.rr);
+    if (data[from].total.rr) {
+        $('#record_ratio').text(data[from].total.rr+'%');
+        $('#record_ratio_line').css({'height': (data[from].total.rr*2)+'px'}).removeClass('hidden');
     }
 };
 
@@ -251,6 +286,8 @@ TRACK.newDay = function() {
         $("#i_am_done").addClass('hidden');
         $("#idle").html('<i class="fa fa-clock-o"></i>');
         $("#ratio").removeClass('hidden');
+
+        TRACK.ratioStats();
     }
 
     TRACK.displayTrackingData(today); // 3
@@ -1119,6 +1156,7 @@ $(document).ready(function() {
     }
 
     TRACK.currentStreak();
+    TRACK.ratioStats();
 
     // slide page to show tracking
     $('#idle').click(function(){

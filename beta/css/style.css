@@ -187,7 +187,7 @@ li {
 }
 
 #selectedword {
-    background-color: #21b51f;
+    background-color: #77ec00;
     color: #FFFFFF;
     float: left;
     height: 20px;
@@ -220,7 +220,7 @@ li {
 }
 
 #previous_translated_words span {
-    color: #21b51f;
+    color: #77ec00;
 }
 
 #previous_translated_words em {
@@ -535,7 +535,7 @@ li {
     height: 250px;
     margin-top: 40px;
     position: relative;
-    width: 500px;
+    width: 495px;
 }
 
 #tracking h2 {
@@ -604,13 +604,63 @@ li {
     background-color: #4ba3d9;
 }
 
+#record_ratio_line {
+    height: 0;
+    border-bottom: 1px dotted orange;
+    border-left: 1px dotted orange;
+    bottom: 0;
+    color: orange;
+    left: 90px;
+    position: absolute;
+    width: 80px;
+}
+
+#record_ratio_line_top {
+    border-left: 4px solid orange;
+    border-top: 1px dotted orange;
+    height: 3px;
+    left: -91px;
+    position: absolute;
+    top: 0;
+    width: 88px;
+}
+
+.rr {
+    color: #cccccc;
+    font-size: 30px;
+    padding: 22px 0 0;
+    float: left;
+}
+
+.rr span {
+    color: orange;
+}
+
+#fraction {
+    float: left;
+    margin: 18px 10px 0 12px;
+    text-align: center;
+}
+
+.fraction {
+    color: #cccccc;
+    font-weight: bold;
+    height: 18px;
+    letter-spacing: 1px;
+    line-height: 15px;
+}
+
+#fraction_bottom {
+    border-top: 1px solid #cccccc;
+}
+
 #session_time_desc {
     color: #cccccc;
     position: absolute;
-    right: -100px;
-    text-align: center;
-    top: -34px;
-    width: 200px;
+    right: 12px;
+    text-align: right;
+    top: -28px;
+    width: 110px;
 }
 
 #ratio_audio_time {
@@ -624,12 +674,13 @@ li {
 }
 
 #ratio_audio_time_percent {
+    background-color: white;
     color: #4ba3d9;
     font-size: 30px;
     left: 12px;
     position: absolute;
     top: -12px;
-    width: 50px;
+    width: 62px;
 }
 
 #total {
@@ -643,7 +694,7 @@ li {
 .total {
     color: #cccccc;
     font-size: 30px;
-    padding: 25px 0 0;
+    padding: 20px 0 0;
 }
 
 .total span {
