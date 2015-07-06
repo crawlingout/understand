@@ -3,7 +3,7 @@ var server = 'https://www.simplyeasy.cz/understand-server/';
 
 var from = localStorage.getItem('stored_lang_from') || 'es';
 var to = localStorage.getItem('stored_lang_to') || 'en';
-var previous_translated_words = [];
+var previous_translated_words = JSON.parse(localStorage.getItem('previous_translated_words')) || [];
 var scrollposition = Number(localStorage.getItem('scrollposition')) || 0;
 var textfile = localStorage.getItem('stored_text_file_content') || 0;
 var audiofile = localStorage.getItem('stored_audio_file_url') || 0;
@@ -13,6 +13,154 @@ var uploaded_file_url = localStorage.getItem('uploaded_file_url') || 0;
 
 // workaround: some browsers do not load duration on canplay event; in that case this flag is raised so duration could be obtained later
 var correct_knob_duration = 0;
+
+
+// TRACKING
+
+var today = moment().format('YYYY-MM-DD');
+var allowed_idle = 300000; // 5 minutes in miliseconds
+var last_pause_time, pause_diff;
+
+var data = JSON.parse(localStorage.getItem('data')) || {};
+
+function convertSeconds(seconds) {
+    var hours_minutes = '0:00', mmt, hours, minutes;
+
+    if (seconds > 0) {
+        mmt = moment.duration(seconds, 'seconds');
+        hours = mmt.hours();
+        minutes = mmt.minutes();
+
+        if (minutes < 10) {
+            minutes = '0'+minutes;
+        }
+
+        hours_minutes = hours+':'+minutes;
+    }
+
+    return hours_minutes;
+}
+
+function calculateRatio(at, st) {
+    if (at && st) {
+        return Math.floor((at/st)*100);
+    }
+    else {
+        return '-';
+    }
+}
+
+// external functions
+var TRACK = {};
+
+// display data other than number of translated words
+TRACK.displayTrackingData = function(day) {
+    // if the object for the language does not exist yet, create it
+    if (!data[from]) {
+        data[from] = {
+            'total': {
+                'st': 0,
+                'at': 0
+            },
+            'days': {}
+        };
+    }
+    // if the object for the day does not exist yet, create it
+    if (!data[from].days[day]) {
+        data[from].days[day] = {
+            'at': 0,
+            'st': 0
+        };
+    }
+
+    $("#audio_time").text(convertSeconds(data[from].days[day].at));
+    $("#session_time").text(convertSeconds(data[from].days[day].st));
+    $("#session_audio_ratio").text(calculateRatio(data[from].days[day].at, data[from].days[day].st));
+
+    $("#audio_time_total").text(convertSeconds(data[from].total.at));
+    $("#session_time_total").text(convertSeconds(data[from].total.st));
+};
+
+// store data other than number of translated wor
+TRACK.storeTrackingData = function() {//console.log('storeTrackingData');
+    localStorage.setItem('data', JSON.stringify(data));
+
+    // TODO when storing at Firebase, only send and store the difference, do not keep sending all the data all the time
+};
+
+TRACK.addToDayAndTotal = function(addition, to) {
+    data[from].days[today][to] = data[from].days[today][to] + addition;
+    data[from].total[to] = data[from].total[to] + addition;
+};
+
+deleteTrackingData = function() {
+    localStorage.removeItem('data');
+    document.getElementById('delete').innerHTML = '<br /><br />[ deleted ]';
+};
+
+/*
+
+TIME-ADDING MECHANISM
+
+time is only added when player is playing
+- play time is added continually when playing
+- pause time is added after pause ends, if pause not too long (therefore, user has to press play button to really start tracking)
+
+*/
+
+
+// track audio time
+
+// !!!
+// this function runs every 250 ms - it needs to be lightweight !!!
+TRACK.addAudioTime = function(difference) {//console.log('addAudioTime', difference);
+
+    // if diff NOT caused by manual knob manipulation
+    // (bigger than -jumpback (or equal) and smaller than 1)
+    if (difference > -7 && difference < 1) {
+
+        // if diff NOT caused by jumpback
+        if (difference > 0) {
+            // add to session/audio time
+            TRACK.addToDayAndTotal(difference, 'st');
+            TRACK.addToDayAndTotal(difference, 'at');
+        }
+        else {
+            // only deduce jumpbacks from audio time if audio time is not pushed to negative values by this
+            if ((data[from].days[today].at + difference) > 0) {
+                TRACK.addToDayAndTotal(difference, 'at');
+            }
+        }
+    }
+};
+
+// track session time
+TRACK.startPauseTimer = function() {//console.log('startPauseTimer');
+    last_pause_time = moment();
+};
+
+// add pause time only if pause not loong
+TRACK.addPauseTime = function() {//console.log('addPauseTime');
+    if (last_pause_time) {
+        pause_diff = moment().diff(last_pause_time);
+
+        if (pause_diff < allowed_idle) {
+            TRACK.addToDayAndTotal((pause_diff/1000), 'st');
+        }
+    }
+};
+
+// check whether day changed since load
+TRACK.newDay = function() {
+    if (today !== moment().format('YYYY-MM-DD')) {
+        today = moment().format('YYYY-MM-DD');
+
+        TRACK.displayTrackingData(today);
+    }
+};
+
+// ========
+
 
 function errorHandler(e) {
     console.log('error>', e.message);
@@ -160,7 +308,7 @@ function setKnob(dur, cur) {
 }
 
 function loadAudioToPlayer(file) {
-    
+
     // load audio file
     player.src = file;
 
@@ -207,6 +355,9 @@ function loadAudioToPlayer(file) {
         // calculate time difference between timeupdate events
         diff = (player.currentTime - last_time);
         last_time = player.currentTime;
+
+        // track audio time
+        TRACK.addAudioTime(diff);
     };
 
     // listener for finished audio
@@ -294,7 +445,7 @@ function handleAudioFileSelect(evt) {
         $.ajax({
             url: server+'upload.php',
             type: 'POST',
-            success: function(response) {console.log('upload: ', response);
+            success: function(response) {
                 // if NOT error
                 if (response.substring(0,5) !== 'Sorry') {
                     response = $.trim(response);
@@ -412,6 +563,8 @@ function jumpBack(jumpstep) {
         stored_audio_time = 0;
         localStorage.setItem('stored_audio_time', stored_audio_time);
     }
+
+    TRACK.newDay();
 }
 
 function playPause() {
@@ -431,16 +584,20 @@ function playPause() {
 
     // if not playing, play
     if (player.paused || player.ended) {
-        // play
+        // PLAY
         player.play();
 
         // set icon to pause
         $('#play_btn').hide();
         $('#pause_btn').show();
+
+        TRACK.addPauseTime();
+        TRACK.newDay();
+        document.getElementById('idle').style.color = '#4ba3d9'; // set tracking indicator to 'active'
     }
     // if playing, pause
     else {
-        // pause
+        // PAUSE
         player.pause();
 
         // set icon to play
@@ -449,6 +606,26 @@ function playPause() {
 
         // store time
         localStorage.setItem('stored_audio_time', stored_audio_time);
+
+        TRACK.startPauseTimer();
+        TRACK.displayTrackingData(today);
+        TRACK.storeTrackingData();
+    }
+}
+
+function clearTranslatedWords() {
+    $('#selectedword').text('');
+    $('#previous_translated_words').empty();
+    $('#translations').hide();
+}
+
+function loadTranslatedWords() {
+    clearTranslatedWords();
+
+    for (var i=0, l=previous_translated_words.length; i<l; i++) {
+        if (previous_translated_words[i][from] && previous_translated_words[i][to]) {
+            prependPrevWord(previous_translated_words[i]);
+        }
     }
 }
 
@@ -544,11 +721,13 @@ $(document).ready(function() {
     $('.select_lang').change(function() {
         if ($(this).attr('id') === 'from') {
             from = $(this).val();
+            TRACK.displayTrackingData(today);
         }
         if ($(this).attr('id') === 'to') {
             to = $(this).val();
         }
         localStorage.setItem('stored_lang_'+$(this).attr('id'), $(this).val());
+        loadTranslatedWords();
     });
 
 
@@ -624,6 +803,7 @@ $(document).ready(function() {
 
     // DEMO
 
+    // select demo
     $('.demo').click(function() {
 
         $("#more").hide();
@@ -633,8 +813,7 @@ $(document).ready(function() {
 
         // swicth to the language of the demo
         $('#from').val($(this).parent().data('lang'));
-        from = $(this).parent().data('lang');
-        localStorage.setItem('stored_lang_from', from);
+        $('.select_lang').change();
     });
 
     // show demos pop-up
@@ -657,20 +836,20 @@ $(document).ready(function() {
 
 
     // load previously translated words
-    var i;
-    previous_translated_words = JSON.parse(localStorage.getItem('previous_translated_words')) || [];
-
-    for (i in previous_translated_words) {
-        if (previous_translated_words[i][from] && previous_translated_words[i][to]) {
-            prependPrevWord(previous_translated_words[i]);
-        }
-    }
+    loadTranslatedWords();
 
     // remove previously translated words
     $('#remove_words').click(function() {
-        $('#previous_translated_words').empty();
-        previous_translated_words = [];
-        localStorage.setItem('previous_translated_words', '[]');
+        clearTranslatedWords();
+
+        // remove only words of the 'from' language that is selected
+        for (var j=previous_translated_words.length-1; j>=0; j--) {
+            if (previous_translated_words[j][from]) {
+                previous_translated_words.splice(j, 1);
+            }
+        }
+
+        localStorage.setItem('previous_translated_words', JSON.stringify(previous_translated_words));
     });
 
 
@@ -702,4 +881,30 @@ $(document).ready(function() {
     b=b.replace(" at ",String.fromCharCode(64));
     b=b.replace(" dot ",String.fromCharCode(46));
     $('#r').text(b);
+
+
+    // TRACKING
+
+    // display indicator of active tracking
+    var interval = setInterval(function() {
+
+        // if NOT active
+        if (last_pause_time && (moment().diff(last_pause_time) > allowed_idle)) {
+            // // set tracking indicator to 'NOT active'
+            document.getElementById('idle').style.color = '#d7d7d7';
+        }
+    }, 60000); // 1 min
+
+    // show stored data on load
+    TRACK.displayTrackingData(today);
+
+    // slide to tracking
+    $('#idle').click(function(){
+        $('html, body').animate({
+            // scroll to bottom of tracking element
+            scrollTop: $("#tracking")[0].scrollHeight + ($("#tracking").offset().top - $(window).height())
+        });
+    });
+
+    // ========
 });

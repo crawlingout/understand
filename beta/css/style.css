@@ -29,6 +29,10 @@ a {
     cursor: pointer;
 }
 
+.hidden {
+    display: none;
+}
+
 h1 {
     color: #4ba3d9;
     font-family: arial,sans-serif;
@@ -85,7 +89,6 @@ li {
     text-align: center;
     top: 0;
     width: 30px;
-    display: none;
 }
 
 /* HP stuff removed */
@@ -116,10 +119,6 @@ li {
 
 .popup p.smaller {
     font-size: 12px;
-}
-
-#more {
-    display: none;
 }
 
 .closepopup {
@@ -170,7 +169,6 @@ li {
     font-size: 24px;
     line-height: 36px;
     padding: 30px 70px;
-    display: none;
 }
 
 #translation_wrapper {
@@ -179,11 +177,9 @@ li {
 
 #translations {
     padding: 0 20px;
-    display: none;
 }
 
 #whentoolong {
-    display: none;
     height: 20px;
     padding: 5px 20px;
     line-height: 20px;
@@ -253,10 +249,6 @@ li {
     top: 0;
 }
 
-#translated_words {
-    display: none;
-}
-
 #middle {
     background-color: #f9f9f9;
     box-shadow: 0 10px 10px 0 #999999;
@@ -287,6 +279,12 @@ li {
 
 .column {
     float: left;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
 }
 
 #controls {
@@ -392,15 +390,11 @@ li {
     color: #AEAEAE;
 }
 
-#knob {
+#playbutton {
     height: 130px;
     left: 30px;
     position: absolute;
     top: 0;
-}
-
-#knob input {
-    display: none;
 }
 
 #jumpback {
@@ -418,11 +412,6 @@ li {
     text-align: center;
     top: 25px;
     width: 60px;
-}
-
-#jumpback:active {
-    background-color: #f2f2f2;
-    color: #4ba3d9;
 }
 
 #bottom {
@@ -501,7 +490,6 @@ li {
 }
 
 #qrimage {
-    display: none;
     background-color: #FFFFFF;
     border: 1px solid #C0C0C0;
     bottom: 30px;
@@ -538,14 +526,127 @@ li {
     border-bottom: 1px dotted silver;
     color: #6a6a6a;
     font-size: 13px;
-    line-height: 26px;
+    height: 330px;
+    line-height: 26px
 }
 
-#tracking_info {
-    padding: 40px 0;
+#today {
+    float: left;
+    height: 250px;
+    margin-top: 40px;
+    position: relative;
+    width: 500px;
 }
 
-#tracking_info span {
+#tracking h2 {
+    color: #cccccc;
+    font-weight: normal;
+    margin: 10px 0 20px;
+}
+
+#today h2 span {
+    color: #4ba3d9;
+}
+
+#today_top {
+    border-bottom: 1px solid #a4a4a4;
+    height: 40px;
+    left: 20px;
+    position: absolute;
+    text-align: center;
+    top: 110px;
+    width: 145px;
+}
+
+#today_bottom {
+    height: 50px;
+    left: 20px;
+    position: absolute;
+    text-align: center;
+    top: 155px;
+    width: 145px;
+}
+
+#set_goal {
+    margin-left: 40px;
+    width: 60px;
+}
+
+.goal_setting {
+    cursor: pointer;
+    float: left;
+    font-size: 16px;
+    width: 30px;
+}
+
+#session_time {
+    color: #4ba3d9;
+    font-size: 30px;
+    font-weight: normal;
+    padding-bottom: 2px;
+}
+
+#today_ratio {
+    background-color: #eeeeee;
+    height: 200px;
+    left: 320px;
+    position: absolute;
+    top: 40px;
+    width: 4px;
+}
+
+#ratio {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 4px;
+    height: 0;
+    background-color: #4ba3d9;
+}
+
+#session_time_desc {
+    color: #cccccc;
+    position: absolute;
+    right: -100px;
+    text-align: center;
+    top: -34px;
+    width: 200px;
+}
+
+#ratio_audio_time {
+    color: #4ba3d9;
+    line-height: 18px;
+    position: absolute;
+    right: 12px;
+    text-align: right;
+    top: -10px;
+    width: 110px;
+}
+
+#ratio_audio_time_percent {
+    color: #4ba3d9;
+    font-size: 30px;
+    left: 12px;
+    position: absolute;
+    top: -12px;
+    width: 50px;
+}
+
+#total {
+    float: left;
+    height: 250px;
+    margin-top: 40px;
+    position: relative;
+    width: 350px;
+}
+
+.total {
+    color: #cccccc;
+    font-size: 30px;
+    padding: 25px 0 0;
+}
+
+.total span {
     color: #4ba3d9;
 }
 

@@ -26,6 +26,10 @@
     
     <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
     <script type="text/javascript" src="js/jquery.knob.js"></script>
+
+    <!-- tracking -->
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.3/moment.min.js"></script>
+
     <script type="text/javascript" src="js/app.js"></script>
 
     <!-- Facebook Open Graph -->
@@ -107,15 +111,18 @@
     <div title=" zavřete tuto knihu " id="backhome"><i class="fa fa-times"></i></div>
 
     <div id="middle">
+        <!-- tracking indicator -->
+        <div id="idle"><i class="fa fa-clock-o"></i></div>
+
+        <!-- player -->
         <div class="column" id="controls">
-            <!-- player -->
             <div id="player">
                 <audio id="audioplayer" preload="auto"></audio>
             
                 <div class="circle_bg"></div>
 
                 <div id="knob">
-                    <input class="knob" data-width="120" data-height="120" data-displayPrevious=true data-fgColor="#4ba3d9" data-bgColor="#FFFFFF" data-thickness=".1" value="0" data-displayInput=false>
+                    <input class="knob" data-width="120" data-height="120" data-displayPrevious=true data-fgColor="#4ba3d9" data-bgColor="#FFFFFF" data-thickness=".05" value="0" data-displayInput=false>
                 </div>
             
                 <div id="play_pause" class="circle">
@@ -241,6 +248,15 @@
         <div class="clear"></div>
 
         <div id="bottom">
+
+            <!-- TRACKING -->
+            <div id="tracking">
+                <!-- tracking info -->
+                <div class="track_info" id="tracking_info">
+                    Dnes: za ~<span title="hours:minutes" id="session_time">0:00</span> jste zvládli naposlouchat ~<span title="hours:minutes" id="audio_time">0:00</span> audio obsahu (<span id="session_audio_ratio">-</span><span>%</span>). 
+                    Celkem: ~<span title="hours:minutes" id="audio_time_total">0:00</span> audio obsahu za ~<span title="hours:minutes" id="session_time_total">0:00</span>.
+                </div>
+            </div>
 
             <div id="support">
 
