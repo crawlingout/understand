@@ -287,7 +287,7 @@ TRACK.newDay = function() {
         // reset previously achieved goal and ratio
         $("#i_am_done").addClass('hidden');
         $("#idle").html('<i class="fa fa-clock-o"></i>');
-        $("#ratio").removeClass('hidden');
+        $("#ratio").addClass('hidden');
 
         TRACK.ratioStats();
     }
