@@ -96,7 +96,7 @@ TRACK.dataObjectExist = function(day) {
                 'at': 0,
                 'dg': 1800, // daily goal in seconds - default 30 min
                 's': 0, // current streak in days
-                'rr': 20 // all thime high ratio in %
+                'rr': 0 // all thime high ratio in %
             },
             'days': {}
         };
@@ -138,12 +138,14 @@ TRACK.displayTrackingData = function(day) {//console.log('displayTrackingData');
     $('#knob_today').val(data[from].days[day].st).trigger('change');
 
     // if today's goal achieved
-    if (!data[from].days[day].ga && (data[from].days[day].st > data[from].total.dg)) {console.log('goal achieved');
+    if (!data[from].days[day].ga && (data[from].days[day].st > data[from].total.dg)) {
         $("#i_am_done").removeClass('hidden');
         $("#idle").html('<i class="fa fa-check-circle"></i>');
         data[from].days[day].ga = 1;
 
         TRACK.currentStreak();
+
+        TRACK.ratioStats();
 
         TRACK.storeTrackingData();
     }
@@ -178,7 +180,7 @@ TRACK.ratioStats = function() {
 
     // loop last thirty days
     var i, daily_record;
-    for (i = 1; i < 31; i++) {
+    for (i = 0; i < 31; i++) {
         daily_record = moment(today).subtract(i, 'days').format('YYYY-MM-DD') || 0;
         // if day was recorded
         if (data[from].days[daily_record]) {
@@ -198,7 +200,7 @@ TRACK.ratioStats = function() {
             }
         }
     }
-    console.log(data[from].total.rr);
+
     if (data[from].total.rr) {
         $('#record_ratio').text(data[from].total.rr+'%');
         $('#record_ratio_line').css({'height': (data[from].total.rr*2)+'px'}).removeClass('hidden');
@@ -730,7 +732,7 @@ function playPause() {
         document.getElementById('idle').style.color = '#4ba3d9'; // set tracking indicator to 'active'
 
         // if tracking interval not running yet
-        if (!tracking_interval) {console.log('setting tracking interval');
+        if (!tracking_interval) {
             // initialize tracking interval
             tracking_interval = setInterval(function() {
 
@@ -909,9 +911,8 @@ $(document).ready(function() {
     // PLAYER
     
     $(".knob").knob({
-        'change': function(e){console.log('knob change');
+        'change': function(e){
             player.currentTime = e;
-            //$('#knob_player').val(player.currentTime).trigger('change'); // TODO: whay was it here? can it be removed?
         }
     });
 
@@ -1150,7 +1151,7 @@ $(document).ready(function() {
     TRACK.displayTrackingData(today); // 3
 
     // if today's goal achieved
-    if (data[from].days[today].ga) {console.log('goal achieved');
+    if (data[from].days[today].ga) {
         $("#i_am_done").removeClass('hidden');
         $("#idle").html('<i class="fa fa-check-circle"></i>');
     }
