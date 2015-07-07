@@ -419,7 +419,7 @@ li {
     border-top: 1px solid #e3e3e3;
     font-size: 14px;
     margin: 0;
-    padding: 0 70px;
+    padding: 0 0 0 70px;
     position: relative;
 }
 
@@ -448,7 +448,7 @@ li {
     color: #3e3e3e;
     font-size: 13px;
     line-height: 25px;
-    padding: 50px 0;
+    padding: 0 0 50px;
     position: relative;
 }
 
@@ -521,27 +521,30 @@ li {
 }
 
 
+
 /* tracking */
+
 #tracking {
     border-bottom: 1px dotted silver;
     color: #6a6a6a;
     font-size: 13px;
     height: 330px;
-    line-height: 26px
+    line-height: 26px;
+    margin: 0 0 50px;
 }
 
 #today {
     float: left;
     height: 250px;
-    margin-top: 40px;
+    margin: 40px 0;
     position: relative;
-    width: 495px;
+    width: 540px;
 }
 
 #tracking h2 {
     color: #cccccc;
     font-weight: normal;
-    margin: 10px 0 20px;
+    margin: 10px 0 22px;
 }
 
 #today h2 span {
@@ -610,26 +613,17 @@ li {
     border-left: 1px dotted orange;
     bottom: 0;
     color: orange;
-    left: 90px;
+    left: 6px;
     position: absolute;
-    width: 80px;
-}
-
-#record_ratio_line_top {
-    border-left: 4px solid orange;
-    border-top: 1px dotted orange;
-    height: 3px;
-    left: -91px;
-    position: absolute;
-    top: 0;
-    width: 88px;
+    width: 10px;
 }
 
 .rr {
     color: #cccccc;
-    font-size: 30px;
-    padding: 22px 0 0;
     float: left;
+    font-size: 22px;
+    line-height: 26px;
+    padding: 22px 0 0;
 }
 
 .rr span {
@@ -647,11 +641,12 @@ li {
     font-weight: bold;
     height: 18px;
     letter-spacing: 1px;
-    line-height: 15px;
+    line-height: 16px;
 }
 
 #fraction_bottom {
     border-top: 1px solid #cccccc;
+    line-height: 18px;
 }
 
 #session_time_desc {
@@ -686,14 +681,15 @@ li {
 #total {
     float: left;
     height: 250px;
-    margin-top: 40px;
+    margin: 40px 25px 40px 0;
     position: relative;
-    width: 360px;
+    width: 280px;
 }
 
 .total {
     color: #cccccc;
-    font-size: 30px;
+    font-size: 22px;
+    line-height: 26px;
     padding: 20px 0 0;
 }
 
@@ -766,6 +762,14 @@ li {
 
     #languages select {
         width: 118px;
+    }
+
+    #today {
+        width: 420px;
+    }
+
+    #today_ratio {
+        left: 300px;
     }
 
 }
