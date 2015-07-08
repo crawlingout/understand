@@ -187,7 +187,7 @@ li {
 }
 
 #selectedword {
-    background-color: #77ec00;
+    background-color: #75e600;
     color: #FFFFFF;
     float: left;
     height: 20px;
@@ -220,7 +220,7 @@ li {
 }
 
 #previous_translated_words span {
-    color: #77ec00;
+    color: #75e600;
 }
 
 #previous_translated_words em {

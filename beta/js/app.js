@@ -115,8 +115,7 @@ TRACK.dataObjectExist = function(day) {
 // 2
 TRACK.setTodayKnob = function() {
     $('#goal_today').text(convertSeconds(data[from].total.dg));
-    $('#knob_today').trigger('configure', {max: data[from].total.dg});
-    $('#knob_today').val(data[from].days[today].st).trigger('change');
+    $('#knob_today').trigger('configure', {max: data[from].total.dg}).val(data[from].days[today].st).trigger('change');
 };
 
 // display data other than number of translated words
@@ -437,10 +436,7 @@ function setKnob(dur, cur) {
     // get time for the player to jump to
     var jumpto = cur || stored_audio_time;
 
-    $('#knob_player').trigger('configure', {
-        max: dur
-    });
-    $('#knob_player').val(jumpto).trigger('change');
+    $('#knob_player').trigger('configure', {max: dur}).val(jumpto).trigger('change');
 }
 
 function loadAudioToPlayer(file) {
@@ -915,6 +911,8 @@ $(document).ready(function() {
             player.currentTime = e;
         }
     });
+    // prevent jumping of player knob before audio duration is loaded
+    $('#knob_player').trigger('configure', {max: 100}).val(0).trigger('change');
 
     // get audioplayer
     player = document.getElementById('audioplayer');
