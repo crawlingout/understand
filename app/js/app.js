@@ -301,10 +301,7 @@ function setKnob(dur, cur) {
     // get time for the player to jump to
     var jumpto = cur || stored_audio_time;
 
-    $('.knob').trigger('configure', {
-        max: dur
-    });
-    $('.knob').val(jumpto).trigger('change');
+    $('#knob_player').trigger('configure', {max: dur}).val(jumpto).trigger('change');
 }
 
 function loadAudioToPlayer(file) {
@@ -740,6 +737,8 @@ $(document).ready(function() {
             $('.knob').val(player.currentTime).trigger('change');
         }
     });
+    // prevent jumping of player knob before audio duration is loaded
+    $('#knob_player').trigger('configure', {max: 100}).val(0).trigger('change');
 
     // get audioplayer
     player = document.getElementById('audioplayer');
