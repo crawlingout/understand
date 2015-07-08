@@ -127,7 +127,7 @@ TRACK.displayTrackingData = function(day) {//console.log('displayTrackingData');
     var ratio = calculateRatio(data[from].days[day].at, data[from].days[day].st);
     if (ratio > 0) {
         $("#session_audio_ratio").text(ratio);
-        $("#ratio").height(ratio*2);
+        $("#ratio").height(ratio*1.7);
         $("#ratio").removeClass('hidden');
     }
 
@@ -136,17 +136,28 @@ TRACK.displayTrackingData = function(day) {//console.log('displayTrackingData');
 
     $('#knob_today').val(data[from].days[day].st).trigger('change');
 
-    // if today's goal achieved
-    if (!data[from].days[day].ga && (data[from].days[day].st > data[from].total.dg)) {
-        $("#i_am_done").removeClass('hidden');
-        $("#idle").html('<i class="fa fa-check-circle"></i>');
-        data[from].days[day].ga = 1;
+    // today's goal not yet marked as achieved
+    if (!data[from].days[day].ga) {
+        // if today's goal achieved JUST NOW
+        if (data[from].days[day].st > data[from].total.dg) {
+            $("#i_am_done").removeClass('hidden');
+            $("#idle").html('<i class="fa fa-check-circle"></i>');
+            data[from].days[day].ga = 1;
 
-        TRACK.currentStreak();
+            TRACK.currentStreak();
 
-        TRACK.ratioStats();
-
-        TRACK.storeTrackingData();
+            TRACK.storeTrackingData();
+        }
+    }
+    // goal already achieved
+    else {
+        // if ratio higher than record and record higher than default 0
+        if (data[from].total.rr && (ratio > data[from].total.rr)) {
+            $("#higher_than_ever").removeClass('hidden');
+        }
+        else {
+            $("#higher_than_ever").addClass('hidden');
+        }
     }
 };
 
@@ -177,9 +188,9 @@ TRACK.ratioStats = function() {
     // handle legacy code that did not store record ratio
     data[from].total.rr = data[from].total.rr || 0;
 
-    // loop last thirty days
+    // loop last thirty days NOT including today
     var i, daily_record;
-    for (i = 0; i < 31; i++) {
+    for (i = 1; i < 31; i++) {
         daily_record = moment(today).subtract(i, 'days').format('YYYY-MM-DD') || 0;
         // if day was recorded
         if (data[from].days[daily_record]) {
@@ -202,7 +213,6 @@ TRACK.ratioStats = function() {
 
     if (data[from].total.rr) {
         $('#record_ratio').text(data[from].total.rr+'%');
-        $('#record_ratio_line').css({'height': (data[from].total.rr*2)+'px'}).removeClass('hidden');
     }
 };
 
@@ -997,7 +1007,7 @@ $(document).ready(function() {
         $('html, body').scrollTop(0);
     });
 
-    // hide demos pop-up
+    // hide pop-ups
     $(".overlay").click(function(){
         $(".hidepopup").addClass('hidden');
         $('html, body').scrollTop(0);

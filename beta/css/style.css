@@ -445,10 +445,12 @@ li {
 }
 
 #support {
+    border-top: 1px solid #e3e3e3;
     color: #3e3e3e;
     font-size: 13px;
     line-height: 25px;
-    padding: 0 0 50px;
+    margin-right: 70px;
+    padding: 50px 0;
     position: relative;
 }
 
@@ -525,18 +527,16 @@ li {
 /* tracking */
 
 #tracking {
-    border-bottom: 1px dotted silver;
-    color: #6a6a6a;
+    color: #aaaaaa;
     font-size: 13px;
-    height: 330px;
     line-height: 26px;
-    margin: 0 0 50px;
+    margin: 0 0 10px;
 }
 
 #today {
     float: left;
     height: 250px;
-    margin: 40px 0;
+    margin: 40px 0 0;
     position: relative;
     width: 540px;
 }
@@ -544,7 +544,7 @@ li {
 #tracking h2 {
     color: #cccccc;
     font-weight: normal;
-    margin: 10px 0 22px;
+    margin: 10px 0 15px;
 }
 
 #today h2 span {
@@ -552,7 +552,7 @@ li {
 }
 
 #today_top {
-    border-bottom: 1px solid #a4a4a4;
+    border-bottom: 1px solid #aaaaaa;
     height: 40px;
     left: 20px;
     position: absolute;
@@ -570,6 +570,14 @@ li {
     width: 145px;
 }
 
+
+#session_time {
+    color: #4ba3d9;
+    font-size: 30px;
+    font-weight: normal;
+    padding-bottom: 2px;
+}
+
 #set_goal {
     margin-left: 40px;
     width: 60px;
@@ -582,19 +590,12 @@ li {
     width: 30px;
 }
 
-#session_time {
-    color: #4ba3d9;
-    font-size: 30px;
-    font-weight: normal;
-    padding-bottom: 2px;
-}
-
 #today_ratio {
     background-color: #eeeeee;
-    height: 200px;
+    height: 170px;
     left: 320px;
     position: absolute;
-    top: 40px;
+    top: 70px;
     width: 4px;
 }
 
@@ -607,27 +608,17 @@ li {
     background-color: #4ba3d9;
 }
 
-#record_ratio_line {
-    height: 0;
-    border-bottom: 1px dotted orange;
-    border-left: 1px dotted orange;
-    bottom: 0;
-    color: orange;
-    left: 6px;
-    position: absolute;
-    width: 10px;
-}
-
 .rr {
     color: #cccccc;
     float: left;
     font-size: 22px;
     line-height: 26px;
     padding: 22px 0 0;
+    position: relative;
 }
 
 .rr span {
-    color: orange;
+    color: #4ba3d9;
 }
 
 #fraction {
@@ -649,33 +640,52 @@ li {
     line-height: 18px;
 }
 
-#session_time_desc {
-    color: #cccccc;
+#ratio_audio_time {
+    background-color: white;
+    font-size: 12px;
+    font-style: italic;
+    left: 12px;
+    line-height: 15px;
     position: absolute;
-    right: 12px;
-    text-align: right;
-    top: -28px;
-    width: 110px;
+    top: -14px;
+    width: 130px;
 }
 
-#ratio_audio_time {
+#audio_time {
     color: #4ba3d9;
-    line-height: 18px;
-    position: absolute;
-    right: 12px;
-    text-align: right;
-    top: -10px;
-    width: 110px;
+}
+
+#sess_time {
+    color: #b8b8b8;
+}
+
+#ratio_audio_time span {
+    font-style: normal;
+    font-weight: bold;
 }
 
 #ratio_audio_time_percent {
     background-color: white;
     color: #4ba3d9;
     font-size: 30px;
-    left: 12px;
     position: absolute;
+    right: 12px;
+    text-align: right;
     top: -12px;
-    width: 62px;
+}
+
+#higher_than_ever {
+    font-size: 15px;
+    left: -90px;
+    position: absolute;
+    text-align: center;
+    top: -40px;
+    width: 180px;
+}
+
+#higher_than_ever i {
+    color: #ffd300;
+    font-size: 16px;
 }
 
 #total {
@@ -765,11 +775,11 @@ li {
     }
 
     #today {
-        width: 420px;
+        width: 425px;
     }
 
     #today_ratio {
-        left: 300px;
+        left: 270px;
     }
 
 }
