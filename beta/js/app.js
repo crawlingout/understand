@@ -1146,6 +1146,14 @@ $(document).ready(function() {
     b=b.replace(" dot ",String.fromCharCode(46));
     $('#r').text(b);
 
+    // slide to FAQ
+    $('.go_to_faq').click(function(){
+        $('html, body').animate({
+            // scroll to bottom of tracking element
+            scrollTop: $("#faq").offset().top
+        }, 1000);
+    });
+
 
     // TRACKING
 
