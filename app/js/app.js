@@ -17,6 +17,7 @@ var correct_knob_duration = 0;
 
 // TRACKING
 
+var tracking_interval = 0;
 var today = moment().format('YYYY-MM-DD');
 var allowed_idle = 300000; // 5 minutes in miliseconds
 var last_pause_time, pause_diff;
@@ -24,18 +25,22 @@ var last_pause_time, pause_diff;
 var data = JSON.parse(localStorage.getItem('data')) || {};
 
 function convertSeconds(seconds) {
-    var hours_minutes = '0:00', mmt, hours, minutes;
+    var hours_minutes = '0 min', mmt, hours, minutes;
 
     if (seconds > 0) {
         mmt = moment.duration(seconds, 'seconds');
-        hours = mmt.hours();
-        minutes = mmt.minutes();
 
-        if (minutes < 10) {
-            minutes = '0'+minutes;
+        hours = mmt.hours() || '';
+        if (hours) {
+            hours = hours+' h ';
         }
 
-        hours_minutes = hours+':'+minutes;
+        minutes = mmt.minutes() || '';
+        if (minutes || !hours) { // show minutes if they are not 0 or hours are 0
+            minutes = mmt.minutes()+' min';
+        }
+
+        hours_minutes = hours+minutes;
     }
 
     return hours_minutes;
@@ -53,14 +58,45 @@ function calculateRatio(at, st) {
 // external functions
 var TRACK = {};
 
-// display data other than number of translated words
-TRACK.displayTrackingData = function(day) {
-    // if the object for the language does not exist yet, create it
+/*
+
+1. check the existence of / create tracking data object [language/day]
+2. set tracking knob
+3. display tracking data
+
+
+- new day
+1 - only when successfully checked (new day)
+3  - even when it's just checked (on jumpback, on play btn - adding time after pause)
+
+- in tracking interval
+3
+
+- when paused
+3
+
+- when 'from' language changed
+1,2,3
+
+- on load
+1,2,3
+
+- daily goal changed (plus or minus)
+2
+
+*/
+
+// if the object for the language does not exist yet, create it
+// 1
+TRACK.dataObjectExist = function(day) {
     if (!data[from]) {
         data[from] = {
             'total': {
                 'st': 0,
-                'at': 0
+                'at': 0,
+                'dg': 1800, // daily goal in seconds - default 30 min
+                's': 0, // current streak in days
+                'rr': 0 // all thime high ratio in %
             },
             'days': {}
         };
@@ -69,16 +105,115 @@ TRACK.displayTrackingData = function(day) {
     if (!data[from].days[day]) {
         data[from].days[day] = {
             'at': 0,
-            'st': 0
+            'st': 0,
+            'ga': 0
         };
     }
+};
 
+// set TODAY knob
+// 2
+TRACK.setTodayKnob = function() {
+    $('#goal_today').text(convertSeconds(data[from].total.dg));
+    $('#knob_today').trigger('configure', {max: data[from].total.dg}).val(data[from].days[today].st).trigger('change');
+};
+
+// display data other than number of translated words
+// 3
+TRACK.displayTrackingData = function(day) {//console.log('displayTrackingData');
     $("#audio_time").text(convertSeconds(data[from].days[day].at));
-    $("#session_time").text(convertSeconds(data[from].days[day].st));
-    $("#session_audio_ratio").text(calculateRatio(data[from].days[day].at, data[from].days[day].st));
+    $(".session_time").text(convertSeconds(data[from].days[day].st));
+
+    var ratio = calculateRatio(data[from].days[day].at, data[from].days[day].st);
+    if (ratio > 0) {
+        $("#session_audio_ratio").text(ratio);
+        $("#ratio").height(ratio*1.7);
+        $("#ratio").removeClass('hidden');
+    }
 
     $("#audio_time_total").text(convertSeconds(data[from].total.at));
     $("#session_time_total").text(convertSeconds(data[from].total.st));
+
+    $('#knob_today').val(data[from].days[day].st).trigger('change');
+
+    // today's goal not yet marked as achieved
+    if (!data[from].days[day].ga) {
+        // if today's goal achieved JUST NOW
+        if (data[from].days[day].st > data[from].total.dg) {
+            $("#i_am_done").removeClass('hidden');
+            $("#idle").html('<i class="fa fa-check-circle"></i>');
+            data[from].days[day].ga = 1;
+
+            TRACK.currentStreak();
+
+            TRACK.storeTrackingData();
+        }
+    }
+    // goal already achieved
+    else {
+        // if ratio higher than record and record higher than default 0
+        if (data[from].total.rr && (ratio > data[from].total.rr)) {
+            $("#higher_than_ever").removeClass('hidden');
+        }
+        else {
+            $("#higher_than_ever").addClass('hidden');
+        }
+    }
+};
+
+TRACK.currentStreak = function() {
+    var yesterday = moment(today).subtract(1, 'days').format('YYYY-MM-DD');
+
+    // handle legacy code that did not store streak
+    data[from].total.s = data[from].total.s || 0;
+
+    // if goal achieved yesterday
+    if (data[from].days[yesterday] && data[from].days[yesterday].ga) {
+        data[from].total.s = data[from].total.s + data[from].days[today].ga;
+    }
+    else {
+        data[from].total.s = 0 + data[from].days[today].ga;
+    }
+
+    if (data[from].total.s === 1) {
+        $('#streak').text(data[from].total.s+ ' day');
+    }
+    else {
+        $('#streak').text(data[from].total.s+ ' days');
+    }
+};
+
+TRACK.ratioStats = function() {
+
+    // handle legacy code that did not store record ratio
+    data[from].total.rr = data[from].total.rr || 0;
+
+    // loop last thirty days NOT including today
+    var i, daily_record;
+    for (i = 1; i < 31; i++) {
+        daily_record = moment(today).subtract(i, 'days').format('YYYY-MM-DD') || 0;
+        // if day was recorded
+        if (data[from].days[daily_record]) {
+            // if goal was achieved that day
+            if (data[from].days[daily_record].ga) {
+                // if ratio for the day not stored
+                if (!data[from].days[daily_record].r) {
+                    // calculate ratio
+                    data[from].days[daily_record].r = calculateRatio(data[from].days[daily_record].at, data[from].days[daily_record].st);
+                }
+
+                // if ratio that day > record ratio
+                if (data[from].days[daily_record].r > data[from].total.rr) {
+                    // update record ratio
+                    data[from].total.rr = data[from].days[daily_record].r;
+                }
+            }
+        }
+    }
+
+    if (data[from].total.rr) {
+        $('#record_ratio').text(data[from].total.rr+'%');
+    }
 };
 
 // store data other than number of translated wor
@@ -139,7 +274,7 @@ TRACK.startPauseTimer = function() {//console.log('startPauseTimer');
     last_pause_time = moment();
 };
 
-// add pause time only if pause not loong
+// add pause time only if pause not too long
 TRACK.addPauseTime = function() {//console.log('addPauseTime');
     if (last_pause_time) {
         pause_diff = moment().diff(last_pause_time);
@@ -152,11 +287,22 @@ TRACK.addPauseTime = function() {//console.log('addPauseTime');
 
 // check whether day changed since load
 TRACK.newDay = function() {
+    // if new day
     if (today !== moment().format('YYYY-MM-DD')) {
         today = moment().format('YYYY-MM-DD');
 
-        TRACK.displayTrackingData(today);
+        TRACK.dataObjectExist(today); // 1
+
+        // reset previously achieved goal and ratio
+        $("#i_am_done").addClass('hidden');
+        $("#idle").html('<i class="fa fa-clock-o"></i>');
+        $("#ratio").addClass('hidden');
+        $("#higher_than_ever").addClass('hidden');
+
+        TRACK.ratioStats();
     }
+
+    TRACK.displayTrackingData(today); // 3
 };
 
 // ========
@@ -259,7 +405,7 @@ function handleSelectedText(text) {
         // string NOT too long
         if (text.split(' ').length <= 1) {
             // hide warning text shown when text is too long
-            $('#whentoolong').hide();
+            $('#whentoolong').addClass('hidden');
 
             // remove trailing characters
             var len = text.length;
@@ -275,7 +421,7 @@ function handleSelectedText(text) {
             getTranslation(text);
 
             // unhide pair word_to_translate: translated_word
-            $('#translations').show();
+            $('#translations').removeClass('hidden');
 
             // create link to external dictionary or translator
             $('#linktodict').attr('href', linkToDict(text));
@@ -284,8 +430,8 @@ function handleSelectedText(text) {
             // create URL to google translate
             $('#googletranslate').attr('href','https://translate.google.com/#'+from+'/'+to+'/'+encodeURIComponent(text));
 
-            $('#whentoolong').show();
-            $('#translations').hide();
+            $('#whentoolong').removeClass('hidden');
+            $('#translations').addClass('hidden');
         }
 
         // if previous word not empty
@@ -347,7 +493,7 @@ function loadAudioToPlayer(file) {
             player.currentTime = stored_audio_time + diff;
         }
 
-        $('.knob').val(player.currentTime).trigger('change');
+        $('#knob_player').val(player.currentTime).trigger('change');
 
         // calculate time difference between timeupdate events
         diff = (player.currentTime - last_time);
@@ -360,8 +506,8 @@ function loadAudioToPlayer(file) {
     // listener for finished audio
     player.onended = function() {
         // set icon to play
-        $('#pause_btn').hide();
-        $('#play_btn').show();
+        $('#pause_btn').addClass('hidden');
+        $('#play_btn').removeClass('hidden');
     };
 }
 
@@ -379,11 +525,11 @@ function resetPlayer() {
     localStorage.removeItem('stored_audio_file_url');
 
     // set icon to play
-    $('#pause_btn').hide();
-    $('#play_btn').show();
+    $('#pause_btn').addClass('hidden');
+    $('#play_btn').removeClass('hidden');
 
     // reset audio progress bar
-    $('.knob').val(0).trigger('change');
+    $('#knob_player').val(0).trigger('change');
 
     // reset color of play icon
     $('.circle').css('color', '#AEAEAE');
@@ -396,9 +542,9 @@ function resetPlayer() {
 }
 
 function resetText() {
-    $('#backhome').hide();
-    $('#content').hide().html('');
-    $('#instructions').show();
+    $('#backhome').addClass('hidden');
+    $('#content').addClass('hidden').html('');
+    $('#instructions').removeClass('hidden');
 
     scrollposition = 0;
     localStorage.setItem('scrollposition', scrollposition);
@@ -484,12 +630,12 @@ function loadText(text) {
     }
     content = content + '</span></p>';
 
-    // hideinstructions on how to use the site
-    $('#instructions').hide();
-    $('#backhome').show();
-    $('#translated_words').show();
+    // hide instructions on how to use the site
+    $('#instructions').addClass('hidden');
+    $('#backhome').removeClass('hidden');
+    $('#translated_words').removeClass('hidden');
 
-    $('#content').show().html(content);
+    $('#content').removeClass('hidden').html(content);
 
     // jump to stored scroll position
     $('#content_wrapper').scrollTop(scrollposition);
@@ -561,7 +707,7 @@ function jumpBack(jumpstep) {
         localStorage.setItem('stored_audio_time', stored_audio_time);
     }
 
-    TRACK.newDay();
+    TRACK.newDay(); // because of jumping back when starting new session
 }
 
 function playPause() {
@@ -585,12 +731,31 @@ function playPause() {
         player.play();
 
         // set icon to pause
-        $('#play_btn').hide();
-        $('#pause_btn').show();
+        $('#play_btn').addClass('hidden');
+        $('#pause_btn').removeClass('hidden');
 
         TRACK.addPauseTime();
         TRACK.newDay();
         document.getElementById('idle').style.color = '#4ba3d9'; // set tracking indicator to 'active'
+
+        // if tracking interval not running yet
+        if (!tracking_interval) {
+            // initialize tracking interval
+            tracking_interval = setInterval(function() {
+
+                // if player NOT playing
+                if (player.paused || player.ended) {
+                    // if pause button last pushed long time ago
+                    if (last_pause_time && (moment().diff(last_pause_time) > allowed_idle)) {
+                        // set tracking indicator to 'NOT active'
+                        document.getElementById('idle').style.color = '#d7d7d7';
+                    }
+                }
+                else {
+                    TRACK.displayTrackingData(today); // 3
+                }
+            }, 10000); // 10 sec
+        }
     }
     // if playing, pause
     else {
@@ -598,14 +763,16 @@ function playPause() {
         player.pause();
 
         // set icon to play
-        $('#pause_btn').hide();
-        $('#play_btn').show();
+        $('#pause_btn').addClass('hidden');
+        $('#play_btn').removeClass('hidden');
 
         // store time
         localStorage.setItem('stored_audio_time', stored_audio_time);
 
         TRACK.startPauseTimer();
-        TRACK.displayTrackingData(today);
+
+        TRACK.displayTrackingData(today); // 3
+
         TRACK.storeTrackingData();
     }
 }
@@ -613,7 +780,7 @@ function playPause() {
 function clearTranslatedWords() {
     $('#selectedword').text('');
     $('#previous_translated_words').empty();
-    $('#translations').hide();
+    $('#translations').addClass('hidden');
 }
 
 function loadTranslatedWords() {
@@ -660,8 +827,8 @@ $(document).ready(function() {
     }
     else {
         // show instructions on how to use the site
-        $('#instructions').show();
-        $('#backhome').hide();
+        $('#instructions').removeClass('hidden');
+        $('#backhome').addClass('hidden');
     }
 
 
@@ -718,7 +885,10 @@ $(document).ready(function() {
     $('.select_lang').change(function() {
         if ($(this).attr('id') === 'from') {
             from = $(this).val();
-            TRACK.displayTrackingData(today);
+
+            TRACK.dataObjectExist(today); // 1
+            TRACK.setTodayKnob(); // 2
+            TRACK.displayTrackingData(today); // 3
         }
         if ($(this).attr('id') === 'to') {
             to = $(this).val();
@@ -734,7 +904,6 @@ $(document).ready(function() {
     $(".knob").knob({
         'change': function(e){
             player.currentTime = e;
-            $('.knob').val(player.currentTime).trigger('change');
         }
     });
     // prevent jumping of player knob before audio duration is loaded
@@ -805,7 +974,7 @@ $(document).ready(function() {
     // select demo
     $('.demo').click(function() {
 
-        $("#more").hide();
+        $("#more").addClass('hidden');
         $('html, body').scrollTop(0);
 
         loadDemo($(this).attr('id'));
@@ -817,19 +986,19 @@ $(document).ready(function() {
 
     // show demos pop-up
     $('#tryitnow').click(function() {
-        $('#more').show();
+        $('#more').removeClass('hidden');
 
         // jump to the top of the page
         $('html, body').scrollTop(0);
     });
 
-    // hide demos pop-up
+    // hide pop-ups
     $(".overlay").click(function(){
-        $(".hidepopup").hide();
+        $(".hidepopup").addClass('hidden');
         $('html, body').scrollTop(0);
     });
     $(".closepopup").click(function(){
-        $(".hidepopup").hide();
+        $(".hidepopup").addClass('hidden');
         $('html, body').scrollTop(0);
     });
 
@@ -869,10 +1038,10 @@ $(document).ready(function() {
 
     // show BTC donation qr code on hover
     $('#qr').hover(function() {
-        $('#qrimage').show();
+        $('#qrimage').removeClass('hidden');
     },
     function() {
-        $('#qrimage').hide();
+        $('#qrimage').addClass('hidden');
     });
 
     // email
@@ -881,28 +1050,62 @@ $(document).ready(function() {
     b=b.replace(" dot ",String.fromCharCode(46));
     $('#r').text(b);
 
+    // slide to FAQ
+    $('.go_to_faq').click(function(){
+        $('html, body').animate({
+            // scroll to bottom of tracking element
+            scrollTop: $("#faq").offset().top
+        }, 1000);
+    });
+
 
     // TRACKING
 
-    // display indicator of active tracking
-    var interval = setInterval(function() {
+    // if object does not exist yet, create it
+    TRACK.dataObjectExist(today); // 1
 
-        // if NOT active
-        if (last_pause_time && (moment().diff(last_pause_time) > allowed_idle)) {
-            // // set tracking indicator to 'NOT active'
-            document.getElementById('idle').style.color = '#d7d7d7';
-        }
-    }, 60000); // 1 min
+    // set TODAY knob
+    TRACK.setTodayKnob(); // 2
 
     // show stored data on load
-    TRACK.displayTrackingData(today);
+    TRACK.displayTrackingData(today); // 3
 
-    // slide to tracking
+    // if today's goal achieved
+    if (data[from].days[today].ga) {
+        $("#i_am_done").removeClass('hidden');
+        $("#idle").html('<i class="fa fa-check-circle"></i>');
+    }
+
+    TRACK.currentStreak();
+    TRACK.ratioStats();
+
+    // slide page to show tracking
     $('#idle').click(function(){
         $('html, body').animate({
             // scroll to bottom of tracking element
             scrollTop: $("#tracking")[0].scrollHeight + ($("#tracking").offset().top - $(window).height())
         });
+    });
+
+    // set daily goal
+    $('#minus').click(function(){
+        // if daily goal bigger than 15 min
+        if (data[from].total.dg > 900) {
+            // subtract 15 min
+            data[from].total.dg = data[from].total.dg - 900;
+
+            TRACK.setTodayKnob(); // 2
+
+            TRACK.storeTrackingData();
+        }
+    });
+    $('#plus').click(function(){
+        // add 15 min
+        data[from].total.dg = data[from].total.dg + 900;
+
+        TRACK.setTodayKnob(); // 2
+
+        TRACK.storeTrackingData();
     });
 
     // ========

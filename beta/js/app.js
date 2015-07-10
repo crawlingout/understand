@@ -630,7 +630,7 @@ function loadText(text) {
     }
     content = content + '</span></p>';
 
-    // hideinstructions on how to use the site
+    // hide instructions on how to use the site
     $('#instructions').addClass('hidden');
     $('#backhome').removeClass('hidden');
     $('#translated_words').removeClass('hidden');

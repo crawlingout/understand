@@ -30,7 +30,7 @@
     <!-- tracking -->
     <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.3/moment.min.js"></script>
 
-    <script type="text/javascript" src="js/app.js"></script>
+    <script type="text/javascript" src="js/app.min.js"></script>
 
     <!-- Facebook Open Graph -->
     <meta property="fb:app_id" content="1383406805282282"/>
@@ -58,11 +58,11 @@
 <div id="right">
 
     <!-- translated words -->
-    <div id="translated_words">
+    <div id="translated_words" class="hidden">
 
         <div id="translation_wrapper">
-            <div id="whentoolong">Too long. <a id="googletranslate" target="_blank" href="https://translate.google.com/">Google Translate</a>?</div>
-            <div id="translations">
+            <div id="whentoolong" class="hidden">Too long. <a id="googletranslate" target="_blank" href="https://translate.google.com/">Google Translate</a>?</div>
+            <div id="translations" class="hidden">
                 <a id="linktodict" target="_blank" href="https://translate.google.com/">
                     <div id="selectedword"></div>
                     <div id="translatedword">...</div>
@@ -97,7 +97,7 @@
             </p>
     
             <p>
-                Listen without reading. If you don't understand, read. If you don't know a word, click on it to see translation.
+                Listen without reading. Only when you don't understand, read. Click on words you don't know to see their translations.
             </p>
             <div class="gap"></div>
     
@@ -108,11 +108,11 @@
     
         <div id="content"></div>
     </div>
-     <div title=" close this book " id="backhome"><i class="fa fa-times"></i></div>
+     <div title=" close this book " id="backhome" class="hidden"><i class="fa fa-times"></i></div>
 
     <div id="middle">
         <!-- tracking indicator -->
-        <div id="idle"><i class="fa fa-clock-o"></i></div>
+        <div id="idle" title=" tracking "><i class="fa fa-clock-o"></i></div>
 
         <!-- player -->
         <div class="column" id="controls">
@@ -121,12 +121,12 @@
             
                 <div class="circle_bg"></div>
 
-                <div id="knob">
-                    <input id="knob_player" class="knob" data-width="120" data-height="120" data-displayPrevious=true data-fgColor="#4ba3d9" data-bgColor="#FFFFFF" data-thickness=".05" value="0" data-displayInput=false>
+                <div id="playbutton">
+                    <input id="knob_player" class="knob" data-width="120" data-height="120" data-displayPrevious=true data-fgColor="#4ba3d9" data-bgColor="#FFFFFF" data-thickness=".05" value="0" data-displayInput=false />
                 </div>
             
                 <div id="play_pause" class="circle">
-                    <span title=" play / pause (keyboard shortcut: right arrow) " id="pause_btn" style="display:none;"><i class="fa fa-pause"></i></span>
+                    <span title=" play / pause (keyboard shortcut: right arrow) " id="pause_btn" class="hidden"><i class="fa fa-pause"></i></span>
                     <span title=" play / pause (keyboard shortcut: right arrow) " id="play_btn" style="padding-left:5px;"><i class="fa fa-play"></i></span>
                 </div>
             
@@ -139,16 +139,16 @@
         <!-- files openers -->
         <div class="column" id="files">
             <div id="text_file" class="btn">
-                <input type="file" id="text_files" name="text_files[]" style="display:none" />
+                <input type="file" id="text_files" name="text_files[]" class="hidden" />
                 <div class="open_file" id="textFileSelect"><strong>Open</strong> your<br /> <strong>text</strong> file</div>
                 <div class="filetypes" title="supported file types">.txt - convert <a href="https://cloudconvert.com/pdf-to-txt" target="_blank">.pdf</a>, <a href="https://cloudconvert.com/epub-to-txt" target="_blank">.epub</a> and <a href="https://cloudconvert.com/" target="_blank">other formats</a> to .txt</div>
             </div>
             <div id="audio_file" class="btn">
                 <form enctype="multipart/form-data">
-                    <input type="file" id="audio_files" name="fileToUpload" style="display:none" />
+                    <input type="file" id="audio_files" name="fileToUpload" class="hidden" />
                 </form>
                 <div class="open_file" id="audioFileSelect"><strong>Open</strong> your<br /> <strong>audio</strong> file</div>
-                <div class="filetypes" title="supported file types">.mp3</div>
+                <div class="filetypes" title="supported file types">.mp3 - convert <a href="https://cloudconvert.com/ogg-to-mp3" target="_blank">.ogg</a> and <a href="https://cloudconvert.com/" target="_blank">other formats</a> to .mp3</div>
             </div>
             
             <div class="clear"></div>
@@ -251,10 +251,75 @@
 
             <!-- TRACKING -->
             <div id="tracking">
-                <!-- tracking info -->
-                <div class="track_info" id="tracking_info">
-                    Today: ~<span title="hours:minutes" id="audio_time">0:00</span> of audio time in ~<span title="hours:minutes" id="session_time">0:00</span> of work time (<span id="session_audio_ratio">-</span><span>%</span> ratio). 
-                    Total: ~<span title="hours:minutes" id="audio_time_total">0:00</span> of audio time in ~<span title="hours:minutes" id="session_time_total">0:00</span> of work time.
+                <div id="today">
+                    <h2>TODAY <span id="i_am_done" class="hidden">I AM DONE!</span></h2>
+
+                    <input id="knob_today" class="knob" data-width="185" data-height="185" data-displayPrevious=true data-fgColor="#4ba3d9" data-bgColor="#eeeeee" data-thickness=".035" value="0" data-displayInput=false data-readOnly=true />
+
+                    <div id="today_top">
+                        <div id="session_time" class="session_time">0 min</div>
+                    </div>
+
+                    <div id="today_bottom">
+                        of <span id="goal_today">30 min</span> goal
+                        <div id="set_goal">
+                            <div id="minus" class="goal_setting" title=" subtract 15 min ">&#8722;</div>
+                            <div id="plus" class="goal_setting" title=" add 15 min">+</div>
+                            <div class="clear"></div>
+                        </div>
+                    </div>
+
+                    <div id="today_ratio">
+                        <div id="higher_than_ever" class="hidden"><i class="fa fa-trophy"></i>&nbsp; HIGHER THAN EVER</div>
+                        <div id="ratio" class="hidden" title=" how much of the audiobook you've conquered in this session ">
+                            <div id="ratio_audio_time">
+                                <div>
+                                    <span id="audio_time">0 min</span> of audio in
+                                    <div class="go_to_faq" style="right: 20px;top: -6px;">
+                                        <i class="fa fa-question-circle"></i>
+                                    </div>
+                                </div>
+                                <div><span id="sess_time" class="session_time"></span> of work</div>
+                            </div>
+                            <div id="ratio_audio_time_percent">
+                                <span id="session_audio_ratio">0</span>%
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="total">
+                    <h2>TOTAL</h2>
+                    <div class="total"><span id="session_time_total">0 h 0 min</span> of work</div>
+
+                    <div class="total"><span id="audio_time_total">0 h 0 min</span> of audio</div>
+
+                    <div class="rr"><span id="record_ratio">0%</span> highest </div>
+                    <div class="left" style="height: 34px;margin: 18px 10px 0 12px">
+                        <div class="fraction">audio time</div>
+                        <div class="fraction fraction_bottom">work time</div>
+                    </div>
+                    <div class="rr">ratio 
+                        <div class="go_to_faq" style="right: -15px;top: 15px;">
+                            <i class="fa fa-question-circle"></i>
+                        </div>
+                    </div>
+                    <div class="clear"></div>
+
+                    <div class="total"><span id="streak">0 days</span> in a row</div>
+                </div>
+                <div class="clear"></div>
+            </div>
+
+            <div id="faq">
+                <div class="faq">
+                    <h3>
+                        <span class="left"><i class="fa fa-question-circle"></i> What is the </span>
+                        <span class="left" style="font-size: 13px;margin: 0 10px;">
+                            <span class="fraction">audio time</span>
+                            <span class="fraction fraction_bottom">work time</span>
+                        </span> ratio and why is it important?
+                    </h3>
+                    <p>The ratio between the length of an audio track and the actual time you spend getting through that track is a great indicator of your ability to understand. If you pause every few seconds and listen to each sentence multiple times, you will need 10 minutes to get through 1 minute of audio (10% ratio). If you understand everything without difficulty, you can listen at 100% ratio, continuously. If your ratio is increasing over time, you are improving.</p>
                 </div>
             </div>
 
@@ -268,7 +333,7 @@
                 <div id="btcaddr">1KzGUW3ttwaKNdi1uN3JW5MyxyMqr3qNcq</div>
                 <div id="qr">
                     [QR]
-                    <div id="qrimage"><img src="img/btc.png" alt="qr" width="198" height="198"></div>
+                    <div id="qrimage" class="hidden"><img src="img/btc.png" alt="qr" width="198" height="198"></div>
                 </div>
                 <div class="clear"></div>
 
@@ -285,7 +350,7 @@
 
 
 <!-- hidden demos -->
-<div id="more" class="hidepopup">
+<div id="more" class="hidepopup hidden">
     <div class="overlay"></div>
     <div class="popup">
         <div class="closepopup">&times;</div>
@@ -321,18 +386,6 @@
                 <div class="demo" id="capek-vrazednyutok"><span class="by">Karel Čapek</span><strong>Vražedný útok</strong> (povídka)</div>
             </div>
              -->
-
-            
-            <!-- <div class="gap"></div>
-            <h3>Audiobooks WANTED!</h3>
-
-            <p class="smaller">
-                Do you know about <strong>public domain</strong> or <strong>creative commons audiobooks</strong> written in comprehensible contemporary language?
-            </p>
-
-            <p class="smaller">Are you a writer <strong>looking to promote your book?</strong> Would you consider publishing the first chapter here (+link to your site)?</p>
-
-            <p class="smaller">Please send me an email.</p> -->
 
             <div class="gap"></div>
             <div class="gap"></div>
