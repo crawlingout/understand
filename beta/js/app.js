@@ -297,6 +297,7 @@ TRACK.newDay = function() {
         $("#i_am_done").addClass('hidden');
         $("#idle").html('<i class="fa fa-clock-o"></i>');
         $("#ratio").addClass('hidden');
+        $("#higher_than_ever").addClass('hidden');
 
         TRACK.ratioStats();
     }
