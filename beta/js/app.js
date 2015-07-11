@@ -17,7 +17,6 @@ var correct_knob_duration = 0;
 
 // TRACKING
 
-var tracking_interval = 0;
 var today = moment().format('YYYY-MM-DD');
 var allowed_idle = 300000; // 5 minutes in miliseconds
 var last_pause_time, pause_diff;
@@ -299,10 +298,13 @@ TRACK.newDay = function() {
         $("#ratio").addClass('hidden');
         $("#higher_than_ever").addClass('hidden');
 
-        TRACK.ratioStats();
-    }
+        // reset pause time - pause should not ruin beginning of new day, it's better to just drop it
+        last_pause_time = 0;
 
-    TRACK.displayTrackingData(today); // 3
+        TRACK.ratioStats();
+
+        TRACK.displayTrackingData(today); // 3
+    }
 };
 
 // ========
@@ -707,7 +709,7 @@ function jumpBack(jumpstep) {
         localStorage.setItem('stored_audio_time', stored_audio_time);
     }
 
-    TRACK.newDay(); // because of jumping back when starting new session
+    TRACK.displayTrackingData(today); // 3
 }
 
 function playPause() {
@@ -735,27 +737,8 @@ function playPause() {
         $('#pause_btn').removeClass('hidden');
 
         TRACK.addPauseTime();
-        TRACK.newDay();
+        TRACK.displayTrackingData(today); // 3
         document.getElementById('idle').style.color = '#4ba3d9'; // set tracking indicator to 'active'
-
-        // if tracking interval not running yet
-        if (!tracking_interval) {
-            // initialize tracking interval
-            tracking_interval = setInterval(function() {
-
-                // if player NOT playing
-                if (player.paused || player.ended) {
-                    // if pause button last pushed long time ago
-                    if (last_pause_time && (moment().diff(last_pause_time) > allowed_idle)) {
-                        // set tracking indicator to 'NOT active'
-                        document.getElementById('idle').style.color = '#d7d7d7';
-                    }
-                }
-                else {
-                    TRACK.displayTrackingData(today); // 3
-                }
-            }, 10000); // 10 sec
-        }
     }
     // if playing, pause
     else {
@@ -1175,6 +1158,25 @@ $(document).ready(function() {
 
     TRACK.currentStreak();
     TRACK.ratioStats();
+
+    // initialize tracking interval
+    var tracking_interval = setInterval(function() {
+
+        // if player NOT playing
+        if (player.paused || player.ended) {
+            // if pause button last pushed long time ago
+            if (last_pause_time && (moment().diff(last_pause_time) > allowed_idle)) {
+                // set tracking indicator to 'NOT active'
+                document.getElementById('idle').style.color = '#d7d7d7';
+            }
+
+            TRACK.newDay();
+        }
+        // if player playing
+        else {
+            TRACK.displayTrackingData(today); // 3
+        }
+    }, 10000); // 10 sec
 
     // slide page to show tracking
     $('#idle').click(function(){
