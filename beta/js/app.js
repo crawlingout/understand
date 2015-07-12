@@ -876,7 +876,7 @@ $(document).ready(function() {
     // if no 'to' language stored, select the language of originating site version (czech version / czech 'to' language)
     if (!localStorage.getItem('stored_lang_to')) {
         // set 'to' language
-        to = $("#content_wrapper").data('language');
+        to = ui_lang;
         // swicth 'to' selector to the language of the site
         $('#to').val(to);
 

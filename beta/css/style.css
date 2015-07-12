@@ -456,7 +456,7 @@ li {
 #support {
     border-bottom: 1px solid #e3e3e3;
     border-top: 1px solid #e3e3e3;
-    color: #3e3e3e;
+    color: #3c3c3c;
     font-size: 13px;
     line-height: 25px;
     margin-right: 70px;
@@ -609,27 +609,21 @@ li {
     position: relative;
 }
 
-.rr span {
+#record_ratio {
     color: #4ba3d9;
 }
 
-.fraction {
-    color: #cccccc;
-    display: block;
-    font-weight: bold;
-    height: 17px;
-    letter-spacing: 1px;
-    line-height: 16px;
-    text-align: center;
+.darker {
+    color: #9f9f9f;
 }
 
-.fraction_bottom {
-    border-top: 1px solid #cccccc;
-    line-height: 17px;
+.black {
+    color: black;
 }
 
 #ratio_audio_time {
     background-color: white;
+    color: #cdcdcd;
     font-size: 12px;
     font-style: italic;
     left: 12px;
@@ -641,15 +635,13 @@ li {
 
 #audio_time {
     color: #4ba3d9;
+    font-weight: bold;
+    font-style: normal;
 }
 
 #sess_time {
-    color: #b8b8b8;
-}
-
-#ratio_audio_time span {
-    font-style: normal;
     font-weight: bold;
+    font-style: normal;
 }
 
 #ratio_audio_time_percent {
@@ -725,6 +717,7 @@ li {
 }
 
 .faq p {
+    color: #3c3c3c;
     font-size: 15px;
     line-height: 28px;
 }
