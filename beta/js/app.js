@@ -15,6 +15,19 @@ var uploaded_file_url = localStorage.getItem('uploaded_file_url') || 0;
 var correct_knob_duration = 0;
 
 
+// UI localization
+var ui_loc = {
+    'en': {
+        'day': 'day',
+        'days': 'days'
+    },
+    'cs': {
+        'day': 'den',
+        'days': 'dnů'
+    }
+};
+
+
 // TRACKING
 
 var today = moment().format('YYYY-MM-DD');
@@ -175,10 +188,10 @@ TRACK.currentStreak = function() {
     }
 
     if (data[from].total.s === 1) {
-        $('#streak').text(data[from].total.s+ ' day');
+        $('#streak').text(data[from].total.s+ ' '+ui_loc[ui_lang].day);
     }
     else {
-        $('#streak').text(data[from].total.s+ ' days');
+        $('#streak').text(data[from].total.s+ ' '+ui_loc[ui_lang].days);
     }
 };
 
