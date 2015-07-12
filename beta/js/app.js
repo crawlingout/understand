@@ -285,6 +285,7 @@ TRACK.addPauseTime = function() {//console.log('addPauseTime');
 };
 
 // check whether day changed since load
+// checked in tracking interval when NOT playing
 TRACK.newDay = function() {
     // if new day
     if (today !== moment().format('YYYY-MM-DD')) {
@@ -737,7 +738,7 @@ function playPause() {
         $('#pause_btn').removeClass('hidden');
 
         TRACK.addPauseTime();
-        TRACK.displayTrackingData(today); // 3
+
         document.getElementById('idle').style.color = '#4ba3d9'; // set tracking indicator to 'active'
     }
     // if playing, pause
@@ -753,8 +754,6 @@ function playPause() {
         localStorage.setItem('stored_audio_time', stored_audio_time);
 
         TRACK.startPauseTimer();
-
-        TRACK.displayTrackingData(today); // 3
 
         TRACK.storeTrackingData();
     }
@@ -1162,7 +1161,7 @@ $(document).ready(function() {
     // initialize tracking interval
     var tracking_interval = setInterval(function() {
 
-        // if player NOT playing
+        // if NOT PLAYING
         if (player.paused || player.ended) {
             // if pause button last pushed long time ago
             if (last_pause_time && (moment().diff(last_pause_time) > allowed_idle)) {
@@ -1172,11 +1171,11 @@ $(document).ready(function() {
 
             TRACK.newDay();
         }
-        // if player playing
+        // if PLAYING
         else {
             TRACK.displayTrackingData(today); // 3
         }
-    }, 10000); // 10 sec
+    }, 1000); // 1 sec
 
     // slide page to show tracking
     $('#idle').click(function(){
