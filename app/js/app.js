@@ -9,7 +9,7 @@ var textfile = localStorage.getItem('stored_text_file_content') || 0;
 var audiofile = localStorage.getItem('stored_audio_file_url') || 0;
 var player = 0;
 var stored_audio_time = Number(localStorage.getItem('stored_audio_time')) || 0;
-var uploaded_file_url = localStorage.getItem('uploaded_file_url') || 0;
+var uploaded_file_id = localStorage.getItem('uploaded_file_id') || 0;
 
 // workaround: some browsers do not load duration on canplay event; in that case this flag is raised so duration could be obtained later
 var correct_knob_duration = 0;
@@ -142,6 +142,9 @@ TRACK.displayTrackingData = function(day) {//console.log('displayTrackingData');
         $("#session_audio_ratio").text(ratio);
         $("#ratio").height(ratio*1.7);
         $("#ratio").removeClass('hidden');
+    }
+    else {
+        $("#ratio").addClass('hidden');
     }
 
     $("#audio_time_total").text(convertSeconds(data[from].total.at));
@@ -594,8 +597,8 @@ function handleAudioFileSelect(evt) {
         var formData = new FormData($('form')[0]);
 
         // if previously uploaded file
-        if (uploaded_file_url) {
-            formData.append("previous", uploaded_file_url);
+        if (uploaded_file_id) {
+            formData.append("previous", uploaded_file_id);
         }
 
         $.ajax({
@@ -605,7 +608,7 @@ function handleAudioFileSelect(evt) {
                 // if NOT error
                 if (response.substring(0,5) !== 'Sorry') {
                     response = $.trim(response);
-                    localStorage.setItem('uploaded_file_url', response);
+                    localStorage.setItem('uploaded_file_id', response);
                     localStorage.setItem('stored_audio_file_url', server+'uploads/'+response+'.mp3');
                 }
             },

@@ -1,5 +1,5 @@
-var server = 'https://www.simplyeasy.cz/understand-server/';
-//var server = '../understand-server/';
+//var server = 'https://www.simplyeasy.cz/understand-server/';
+var server = '../understand-server/';
 
 var from = localStorage.getItem('stored_lang_from') || 'es';
 var to = localStorage.getItem('stored_lang_to') || 'en';
@@ -9,7 +9,7 @@ var textfile = localStorage.getItem('stored_text_file_content') || 0;
 var audiofile = localStorage.getItem('stored_audio_file_url') || 0;
 var player = 0;
 var stored_audio_time = Number(localStorage.getItem('stored_audio_time')) || 0;
-var uploaded_file_url = localStorage.getItem('uploaded_file_url') || 0;
+var uploaded_file_id = localStorage.getItem('uploaded_file_id') || 0;
 
 // workaround: some browsers do not load duration on canplay event; in that case this flag is raised so duration could be obtained later
 var correct_knob_duration = 0;
@@ -132,7 +132,7 @@ TRACK.setTodayKnob = function() {
 
 // display data other than number of translated words
 // 3
-TRACK.displayTrackingData = function(day) {//console.log('displayTrackingData');
+TRACK.displayTrackingData = function(day) {
     $("#audio_time").text(convertSeconds(data[from].days[day].at));
     $(".session_time").text(convertSeconds(data[from].days[day].st));
 
@@ -141,6 +141,9 @@ TRACK.displayTrackingData = function(day) {//console.log('displayTrackingData');
         $("#session_audio_ratio").text(ratio);
         $("#ratio").height(ratio*1.7);
         $("#ratio").removeClass('hidden');
+    }
+    else {
+        $("#ratio").addClass('hidden');
     }
 
     $("#audio_time_total").text(convertSeconds(data[from].total.at));
@@ -469,7 +472,7 @@ function setKnob(dur, cur) {
 function loadAudioToPlayer(file) {
 
     // load audio file
-    player.src = file;
+    player = new Audio(file);
 
     // un-green the 'load audio' button
     $('#audioFileSelect').css({
@@ -530,7 +533,7 @@ function loadAudioToPlayer(file) {
 function resetPlayer() {
 
     // if playing
-    if (!player.paused && !player.ended) {
+    if (player && !player.paused && !player.ended) {
         player.pause();
     }
 
@@ -597,8 +600,8 @@ function handleAudioFileSelect(evt) {
         var formData = new FormData($('form')[0]);
 
         // if previously uploaded file
-        if (uploaded_file_url) {
-            formData.append("previous", uploaded_file_url);
+        if (uploaded_file_id) {
+            formData.append("previous", uploaded_file_id);
         }
 
         $.ajax({
@@ -608,7 +611,7 @@ function handleAudioFileSelect(evt) {
                 // if NOT error
                 if (response.substring(0,5) !== 'Sorry') {
                     response = $.trim(response);
-                    localStorage.setItem('uploaded_file_url', response);
+                    localStorage.setItem('uploaded_file_id', response);
                     localStorage.setItem('stored_audio_file_url', server+'uploads/'+response+'.mp3');
                 }
             },
@@ -695,8 +698,6 @@ function handleTextFileSelect(evt) {
 }
 
 function loadDemo(demoid) {
-    resetPlayer();
-    resetText();
 
     $.get('../demo/'+demoid+'.txt', function(data) { 
         loadText(data);
@@ -742,7 +743,7 @@ function playPause() {
     }
 
     // if not playing, play
-    if (player.paused || player.ended) {
+    if (player.paused || player.ended) {console.log(player.buffered.end(player.buffered.length-1));
         // PLAY
         player.play();
 
@@ -920,9 +921,6 @@ $(document).ready(function() {
     // prevent jumping of player knob before audio duration is loaded
     $('#knob_player').trigger('configure', {max: 100}).val(0).trigger('change');
 
-    // get audioplayer
-    player = document.getElementById('audioplayer');
-
     // player controls
     $('#play_pause').click(function() {
         
@@ -967,9 +965,6 @@ $(document).ready(function() {
     if (audiofile) {
         // load the file
         loadAudioToPlayer(audiofile);
-    }
-    else {
-        resetPlayer();
     }
 
 
@@ -1052,7 +1047,7 @@ $(document).ready(function() {
 
 
     // RECORDING
-    var recording_now = 0, ended, was_playing;
+    var recording_now = 0, ended, was_playing, myvoice;
     $('#recording').on('click', function() {
 
         // if audio book playing
@@ -1095,8 +1090,8 @@ $(document).ready(function() {
 
         // play recording
         $.voice.replay(function(url){//console.log('played');
-            $("#myvoice").attr("src", url);
-            $("#myvoice")[0].play();
+            myvoice = new Audio(url);
+            myvoice.play();
 
             $('#recording').removeClass('active');
             $('#playback').addClass('active');
