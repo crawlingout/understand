@@ -469,25 +469,6 @@ li {
     padding: 0;
 }
 
-.inarrow {
-    background-color: #c4c4c4;
-    color: #ffffff;
-    float: left;
-    font-weight: bold;
-    line-height: 25px;
-    padding: 0 8px;
-}
-
-.arrow {
-    border-bottom: 12px solid rgba(0, 0, 0, 0);
-    border-left: 13px solid #c4c4c4;
-    border-top: 12px solid rgba(0, 0, 0, 0);
-    float: left;
-    height: 0;
-    margin-right: 7px;
-    width: 0;
-}
-
 #btcaddr {
     float: left;
     padding-right: 5px;
