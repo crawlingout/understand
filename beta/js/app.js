@@ -3,7 +3,6 @@ var server = 'https://www.simplyeasy.cz/understand-server/';
 
 var from = localStorage.getItem('stored_lang_from') || 'es';
 var to = localStorage.getItem('stored_lang_to') || 'en';
-var previous_translated_words = JSON.parse(localStorage.getItem('previous_translated_words')) || [];
 var scrollposition = Number(localStorage.getItem('scrollposition')) || 0;
 var textfile = localStorage.getItem('stored_text_file_content') || 0;
 var audiofile = localStorage.getItem('stored_audio_file_url') || 0;
@@ -347,16 +346,6 @@ function prependPrevWord(word) {
 
 function mycallback(response) {
     $('#translatedword').html(response);
-
-    var new_word = {};
-    new_word[from] = $('#selectedword').text();
-    new_word[to] = response;
-
-    // if element with previously translated words NOT hidden (in mobile version)
-    if ($('#previous_translated_words').is(":visible")) {
-        previous_translated_words.push(new_word);
-        localStorage.setItem('previous_translated_words', JSON.stringify(previous_translated_words));
-    }
 }
 
 function callBing(from, to, text) {
@@ -379,10 +368,6 @@ function callBing(from, to, text) {
             $('#translatedword').text('UNTRANSLATED');
         }
     });
-}
-
-function getTranslation(word) {
-    callBing(from, to, word);
 }
 
 function getTextSelection() {
@@ -437,7 +422,7 @@ function handleSelectedText(text) {
             $('#selectedword').text(text);
 
             // try to translate
-            getTranslation(text);
+            callBing(from, to, text);
 
             // unhide pair word_to_translate: translated_word
             $('#translations').removeClass('hidden');
@@ -453,8 +438,8 @@ function handleSelectedText(text) {
             $('#translations').addClass('hidden');
         }
 
-        // if previous word not empty
-        if (previous_word[from] !== '' && previous_word[to] !== '...') {
+        // if previous word not empty and right column visible (not mobile version)
+        if (previous_word[from] !== '' && previous_word[to] !== '...' && $('#previous_translated_words_wrapper').is(':visible')) {
 
             // prepend previously translated word into the list
             prependPrevWord(previous_word);
@@ -773,22 +758,6 @@ function playPause() {
     }
 }
 
-function clearTranslatedWords() {
-    $('#selectedword').text('');
-    $('#previous_translated_words').empty();
-    $('#translations').addClass('hidden');
-}
-
-function loadTranslatedWords() {
-    clearTranslatedWords();
-
-    for (var i=0, l=previous_translated_words.length; i<l; i++) {
-        if (previous_translated_words[i][from] && previous_translated_words[i][to]) {
-            prependPrevWord(previous_translated_words[i]);
-        }
-    }
-}
-
 // if just recorded my own voice -> replay
 // if not, record
 var already_replayed = 1; // this determines whether recorded audio has been replayed already
@@ -906,7 +875,6 @@ $(document).ready(function() {
             to = $(this).val();
         }
         localStorage.setItem('stored_lang_'+$(this).attr('id'), $(this).val());
-        loadTranslatedWords();
     });
 
 
@@ -1006,24 +974,6 @@ $(document).ready(function() {
     $(".closepopup").click(function(){
         $(".hidepopup").addClass('hidden');
         $('html, body').scrollTop(0);
-    });
-
-
-    // load previously translated words
-    loadTranslatedWords();
-
-    // remove previously translated words
-    $('#remove_words').click(function() {
-        clearTranslatedWords();
-
-        // remove only words of the 'from' language that is selected
-        for (var j=previous_translated_words.length-1; j>=0; j--) {
-            if (previous_translated_words[j][from]) {
-                previous_translated_words.splice(j, 1);
-            }
-        }
-
-        localStorage.setItem('previous_translated_words', JSON.stringify(previous_translated_words));
     });
 
 

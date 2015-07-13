@@ -295,20 +295,6 @@ li {
     color: #bbbbbb;
 }
 
-#remove_words {
-    color: #CCCCCC;
-    cursor: pointer;
-    font-size: 28px;
-    margin-top: 15px;
-    padding: 5px 0px;
-    text-align: center;
-    width: 30px;
-}
-
-#remove_words span {
-    font-size: 24px;
-}
-
 #right {
     left: 1000px;
     min-width: 235px;
