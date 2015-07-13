@@ -1,5 +1,5 @@
-//var server = 'https://www.simplyeasy.cz/understand-server/';
-var server = '../understand-server/';
+var server = 'https://www.simplyeasy.cz/understand-server/';
+//var server = '../understand-server/';
 
 var from = localStorage.getItem('stored_lang_from') || 'es';
 var to = localStorage.getItem('stored_lang_to') || 'en';
@@ -72,19 +72,15 @@ var TRACK = {};
 /*
 
 1. check the existence of / create tracking data object [language/day]
-2. set tracking knob
+2. set tracking knob (setting max. value, i.e. daily goal; not setting current value)
 3. display tracking data
 
 
 - new day
-1 - only when successfully checked (new day)
-3  - even when it's just checked (on jumpback, on play btn - adding time after pause)
+1,3
 
 - in tracking interval
-3
-
-- when paused
-3
+3 (only when playing)
 
 - when 'from' language changed
 1,2,3
@@ -92,8 +88,8 @@ var TRACK = {};
 - on load
 1,2,3
 
-- daily goal changed (plus or minus)
-2
+- daily goal changed
+2 (plus or minus)
 
 */
 
@@ -709,8 +705,6 @@ function jumpBack(jumpstep) {
         stored_audio_time = 0;
         localStorage.setItem('stored_audio_time', stored_audio_time);
     }
-
-    TRACK.displayTrackingData(today); // 3
 }
 
 function playPause() {
