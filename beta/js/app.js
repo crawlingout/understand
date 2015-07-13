@@ -258,7 +258,7 @@ time is only added when player is playing
 
 // !!!
 // this function runs every 250 ms - it needs to be lightweight !!!
-TRACK.addAudioTime = function(difference) {//console.log('addAudioTime', difference);
+TRACK.addAudioTime = function(difference) {
 
     // if diff NOT caused by manual knob manipulation
     // (bigger than -jumpback (or equal) and smaller than 1)
@@ -272,8 +272,9 @@ TRACK.addAudioTime = function(difference) {//console.log('addAudioTime', differe
         }
         else {
             // only deduce jumpbacks from audio time if audio time is not pushed to negative values by this
-            if ((data[from].days[today].at + difference) > 0) {
+            if (difference && (data[from].days[today].at + difference) > 0) {
                 TRACK.addToDayAndTotal(difference, 'at');
+                TRACK.displayTrackingData(today); // 3
             }
         }
     }
