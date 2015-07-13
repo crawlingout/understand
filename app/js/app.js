@@ -29,7 +29,6 @@ var ui_loc = {
 
 // TRACKING
 
-var tracking_interval = 0;
 var today = moment().format('YYYY-MM-DD');
 var allowed_idle = 300000; // 5 minutes in miliseconds
 var last_pause_time, pause_diff;
@@ -73,19 +72,15 @@ var TRACK = {};
 /*
 
 1. check the existence of / create tracking data object [language/day]
-2. set tracking knob
+2. set tracking knob (setting max. value, i.e. daily goal; not setting current value)
 3. display tracking data
 
 
 - new day
-1 - only when successfully checked (new day)
-3  - even when it's just checked (on jumpback, on play btn - adding time after pause)
+1,3
 
 - in tracking interval
-3
-
-- when paused
-3
+3 (only when playing)
 
 - when 'from' language changed
 1,2,3
@@ -93,8 +88,8 @@ var TRACK = {};
 - on load
 1,2,3
 
-- daily goal changed (plus or minus)
-2
+- daily goal changed
+2 (plus or minus)
 
 */
 
@@ -263,7 +258,7 @@ time is only added when player is playing
 
 // !!!
 // this function runs every 250 ms - it needs to be lightweight !!!
-TRACK.addAudioTime = function(difference) {//console.log('addAudioTime', difference);
+TRACK.addAudioTime = function(difference) {
 
     // if diff NOT caused by manual knob manipulation
     // (bigger than -jumpback (or equal) and smaller than 1)
@@ -277,8 +272,9 @@ TRACK.addAudioTime = function(difference) {//console.log('addAudioTime', differe
         }
         else {
             // only deduce jumpbacks from audio time if audio time is not pushed to negative values by this
-            if ((data[from].days[today].at + difference) > 0) {
+            if (difference && (data[from].days[today].at + difference) > 0) {
                 TRACK.addToDayAndTotal(difference, 'at');
+                TRACK.displayTrackingData(today); // 3
             }
         }
     }
@@ -301,6 +297,7 @@ TRACK.addPauseTime = function() {//console.log('addPauseTime');
 };
 
 // check whether day changed since load
+// checked in tracking interval when NOT playing
 TRACK.newDay = function() {
     // if new day
     if (today !== moment().format('YYYY-MM-DD')) {
@@ -314,10 +311,13 @@ TRACK.newDay = function() {
         $("#ratio").addClass('hidden');
         $("#higher_than_ever").addClass('hidden');
 
-        TRACK.ratioStats();
-    }
+        // reset pause time - pause should not ruin beginning of new day, it's better to just drop it
+        last_pause_time = 0;
 
-    TRACK.displayTrackingData(today); // 3
+        TRACK.ratioStats();
+
+        TRACK.displayTrackingData(today); // 3
+    }
 };
 
 // ========
@@ -706,8 +706,6 @@ function jumpBack(jumpstep) {
         stored_audio_time = 0;
         localStorage.setItem('stored_audio_time', stored_audio_time);
     }
-
-    TRACK.newDay(); // because of jumping back when starting new session
 }
 
 function playPause() {
@@ -735,27 +733,8 @@ function playPause() {
         $('#pause_btn').removeClass('hidden');
 
         TRACK.addPauseTime();
-        TRACK.newDay();
+
         document.getElementById('idle').style.color = '#4ba3d9'; // set tracking indicator to 'active'
-
-        // if tracking interval not running yet
-        if (!tracking_interval) {
-            // initialize tracking interval
-            tracking_interval = setInterval(function() {
-
-                // if player NOT playing
-                if (player.paused || player.ended) {
-                    // if pause button last pushed long time ago
-                    if (last_pause_time && (moment().diff(last_pause_time) > allowed_idle)) {
-                        // set tracking indicator to 'NOT active'
-                        document.getElementById('idle').style.color = '#d7d7d7';
-                    }
-                }
-                else {
-                    TRACK.displayTrackingData(today); // 3
-                }
-            }, 10000); // 10 sec
-        }
     }
     // if playing, pause
     else {
@@ -770,8 +749,6 @@ function playPause() {
         localStorage.setItem('stored_audio_time', stored_audio_time);
 
         TRACK.startPauseTimer();
-
-        TRACK.displayTrackingData(today); // 3
 
         TRACK.storeTrackingData();
     }
@@ -1037,6 +1014,25 @@ $(document).ready(function() {
 
     TRACK.currentStreak();
     TRACK.ratioStats();
+
+    // initialize tracking interval
+    var tracking_interval = setInterval(function() {
+
+        // if NOT PLAYING
+        if (player.paused || player.ended) {
+            // if pause button last pushed long time ago
+            if (last_pause_time && (moment().diff(last_pause_time) > allowed_idle)) {
+                // set tracking indicator to 'NOT active'
+                document.getElementById('idle').style.color = '#d7d7d7';
+            }
+
+            TRACK.newDay();
+        }
+        // if PLAYING
+        else {
+            TRACK.displayTrackingData(today); // 3
+        }
+    }, 1000); // 1 sec
 
     // slide page to show tracking
     $('#idle').click(function(){
