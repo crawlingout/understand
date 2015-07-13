@@ -454,7 +454,7 @@ function setKnob(dur, cur) {
 function loadAudioToPlayer(file) {
 
     // load audio file
-    player.src = file;
+    player = new Audio(file);
 
     // un-green the 'load audio' button
     $('#audioFileSelect').css({
@@ -515,7 +515,7 @@ function loadAudioToPlayer(file) {
 function resetPlayer() {
 
     // if playing
-    if (!player.paused && !player.ended) {
+    if (player && !player.paused && !player.ended) {
         player.pause();
     }
 
@@ -680,8 +680,7 @@ function handleTextFileSelect(evt) {
 }
 
 function loadDemo(demoid) {
-    resetPlayer();
-    resetText();
+    resetPlayer(); // because demo could be loaded when some audio file is already open
 
     $.get('../demo/'+demoid+'.txt', function(data) { 
         loadText(data);
@@ -893,9 +892,6 @@ $(document).ready(function() {
     // prevent jumping of player knob before audio duration is loaded
     $('#knob_player').trigger('configure', {max: 100}).val(0).trigger('change');
 
-    // get audioplayer
-    player = document.getElementById('audioplayer');
-
     // player controls
     $('#play_pause').click(function() {
         
@@ -940,9 +936,6 @@ $(document).ready(function() {
     if (audiofile) {
         // load the file
         loadAudioToPlayer(audiofile);
-    }
-    else {
-        resetPlayer();
     }
 
 
