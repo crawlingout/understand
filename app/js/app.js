@@ -317,6 +317,8 @@ TRACK.newDay = function() {
         TRACK.ratioStats();
 
         TRACK.displayTrackingData(today); // 3
+
+        TRACK.currentStreak();
     }
 };
 
