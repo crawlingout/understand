@@ -57,6 +57,10 @@ h3 i {
     color: #75e600;
 }
 
+h3#main {
+    margin: 0 0 50px;
+}
+
 ul {
     padding: 10px;
 }
@@ -276,10 +280,12 @@ li {
 }
 
 #previous_translated_words_wrapper {
-    padding: 5px 22px;
-    position: relative;
-    font-size: 13px;
+    border-bottom: 1px dotted silver;
     color: #4ba3d9;
+    font-size: 13px;
+    margin: 0 22px 30px;
+    padding: 5px 0 20px;
+    position: relative;
 }
 
 #previous_translated_words_wrapper p {
@@ -775,6 +781,10 @@ li {
         width: 100%;
     }
 
+    #ad {
+        display: none;
+    }
+
 }
 
 @media screen and (max-width: 950px) {
@@ -822,6 +832,23 @@ li {
 
 }
 
+#ad {
+    font-size: 12px;
+    padding: 0 0 0 22px;
+    width: 200px;
+}
+
+.reklama {
+    color: #c1c1c1;
+    font-size: 11px;
+    padding: 0 0 15px;
+}
+
+.ad {
+    color: #585858;
+    line-height: 22px;
+    padding-top: 10px;
+}
 
 
 
