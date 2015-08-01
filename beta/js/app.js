@@ -636,7 +636,6 @@ function loadText(text) {
     // hide instructions on how to use the site
     $('#instructions').addClass('hidden');
     $('#backhome').removeClass('hidden');
-    $('#translated_words').removeClass('hidden');
 
     $('#content').removeClass('hidden').html(content);
 
