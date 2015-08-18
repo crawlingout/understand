@@ -973,25 +973,19 @@ $(document).ready(function() {
     };
 
 
-    // show BTC donation qr code on hover
-    $('#qr').hover(function() {
-        $('#qrimage').removeClass('hidden');
-    },
-    function() {
-        $('#qrimage').addClass('hidden');
-    });
-
     // email
     var b = $('#r').text();
     b=b.replace(" at ",String.fromCharCode(64));
     b=b.replace(" dot ",String.fromCharCode(46));
     $('#r').text(b);
+    
 
     // slide to FAQ
-    $('.go_to_faq').click(function(){
+    $('.jump_to').click(function(){
+        var which_marker = $(this).data('marker');
         $('html, body').animate({
             // scroll to bottom of tracking element
-            scrollTop: $("#faq").offset().top
+            scrollTop: $("#"+which_marker).offset().top
         }, 1000);
     });
 

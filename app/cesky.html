@@ -104,11 +104,12 @@
             </p>
     
             <p>
-                Poslouchejte bez dívání se na text. Teprve když něčemu nerozumíte, přečtěte si text. Neznáte-li některé slovo, klikněte na něj pro překlad.
+                Poslouchejte bez dívání se na text. Teprve když něčemu nerozumíte, přečtěte si text. Neznáte-li některé slovo, klikněte na něj a zobrazí se vám jeho překlad.
             </p>
             <div class="gap"></div>
     
-            <p>Chcete se dozvědět víc? Přečtěte si <a target="_blank" href="http://magazin.simplyeasy.cz/jak-se-ucit-cizi-jazyky-pomoci-audioknih/">článek</a> nebo se podívejte na <span class="pseudolink" id="video">video</span>.
+            <p>Chcete se dozvědět víc? Můžete se podívat na <span class="pseudolink" id="video">krátké video</span> nebo si přečíst <span class="pseudolink jump_to" data-marker="faq">stručné instrukce</span>.<br />
+            Chcete se dozvědět ještě víc? Přečtěte si článek <a target="_blank" href="http://magazin.simplyeasy.cz/jak-se-ucit-cizi-jazyky-pomoci-audioknih/">Jak se učit cizí jazyky pomocí audioknih</a>.
             </p>
         </div>
     
@@ -280,7 +281,7 @@
                         <div id="ratio" class="hidden" title=" how much of the audiobook you've conquered in this session ">
                             <div id="ratio_audio_time">
                                 <span id="audio_time">0 min</span> <span class="darker">audia</span> za
-                                <span class="go_to_faq" style="padding: 0 0 0 5px;top: -5px;">
+                                <span class="go_to_faq jump_to" data-marker="ratio_explanation" style="padding: 0 0 0 5px;top: -5px;">
                                     <i class="fa fa-question-circle"></i>
                                 </span>
                                 <div><span id="sess_time" class="session_time"></span> <span class="darker">poslechu</span></div>
@@ -298,7 +299,7 @@
                     <div class="total"><span id="audio_time_total">0 h 0 min</span> audia</div>
 
                     <div class="rr"><span id="record_ratio">0%</span> rekordní <span class="darker">poměr A/P</span>
-                        <div class="go_to_faq" style="right: -16px;top: 14px;">
+                        <div class="go_to_faq jump_to" data-marker="ratio_explanation" style="right: -16px;top: 14px;">
                             <i class="fa fa-question-circle"></i>
                         </div>
                     </div>
@@ -309,23 +310,27 @@
                 <div class="clear"></div>
             </div>
 
-            <div id="support">
-
-                <strong>Napište mi</strong> máte-li nějaké otázky nebo návrhy - <span id="r">jan at simplyeasy dot cz</span>
-                <div class="gap"></div>
-                
-                <div class="txt">Chcete <strong>podpořit vývoj</strong>? Můžete přispět v BTC: &nbsp;</div>
-                <div id="btcaddr">1KzGUW3ttwaKNdi1uN3JW5MyxyMqr3qNcq</div>
-                <div id="qr">
-                    [QR]
-                    <div id="qrimage" class="hidden"><img src="img/btc.png" alt="qr" width="198" height="198"></div>
-                </div>
-                <div class="clear"></div>
-
-            </div>
-
             <div id="faq">
                 <div class="faq">
+                    <h3><i class="fa fa-question-circle"></i>&nbsp;Jak se učit jazyky pomocí audioknih?</h3>
+                    <p>Sežeňte si textovou i audio verzi nějaké opravdu hodně zajímavé knihy a začít se jí prokousávat s použitím následujícího postupu:</p>
+
+                    <ul>
+                        <li>
+                            <p>Začněte poslouchat audio bez toho, abyste se dívali na text. Nedívat se na text je důležité - cílem je natrénovat rozpoznávání slov ve zvucích, takže poslouchat a zároveň to číst by bylo jako trénovat na cyklistické závody na motorce. Proto jen poslouchejte a snažte se neztratit nit co nejdéle. Jakmile se přestanete chytat, zastavte audio.</p>
+                        </li>
+                        <li>
+                            <p>Pročtěte si pasáž, kterou jste si právě poslechli. Rozšifrujte jednotlivá slova v místech, kde vám všechno splynulo do nesrozumitelného proudu zvuků. Přeložte si neznámá slovíčka tím, že na ně kliknete.</p>
+                        </li>
+                        <li>
+                            <p>Pokud chcete, poslechněte si tu stejnou část ještě jednou, užijte si fakt, že teď už všemu rozumíte, a pokračujte posloucháním další pasáže. Cílem je stimulovat rozvoj jazykových dovedností tím, že vystavujete mozek nepřerušovaným sekvencím řeči a nedáváte si při tom čas na překládání v hlavě.</p>
+                        </li>
+                    </ul>
+
+                    <p>
+                        <strong>TIP</strong>: Pokaždé když narazíte ne slovo, které si budete potřebovat přeložit, budete v pokušení zkusit si ho vrýt do paměti jako když se memorujete slovíčka ze slovníčku. Smím-li vám radit, <strong>nedělejte to!</strong> Máte jediný cíl: rozumět ději. Čím víc se ponoříte do příběhu a čím víc se budete soustředit na to <strong>co</strong> se říká místo abyste věnovali pozornost tomu <strong>jak</strong> se to říká, tím více slov vám uvízne v hlavě.
+                    </p>
+                    <div id="ratio_explanation" class="gap"></div>
                     <h3>
                         <span class="left"><i class="fa fa-question-circle"></i></span>&nbsp;Co je to <span class="darker">poměr A/P</span> a proč je užitečné ho znát?
                     </h3>
@@ -333,6 +338,10 @@
                         <strong>Poměr A/P</strong> (<strong>A</strong>udio/<strong>P</strong>oslech) je poměr délky audio nahrávky vůči tomu, jak dlouho vám ve skutečnosti trvá si ji poslechnout. Tento poměr je dobrý indikátor toho, jak dobře jste schopni rozumět. Když musíte audio co chvíli zastavit a každou větu si potřebujete poslechnout několikrát, bude vám trvat 10 minut dostat se na konec minutového audia - váš poměr A/P bude jen 10%. Když bez obtíží všemu rozumíte, zvládnete za 10 minut poslechu 10 minut audia, což je poměr A/P 100%. Nízký poměr A/P tedy znamená, že rozumíte špatně, vysoký znamená, že rozumíte dobře. Jestliže je váš poměr mezi délkou audia a dobou poslechu každý den vyšší, ukazuje to, že se zlepšujete.
                     </p>
                 </div>
+            </div>
+
+            <div id="support">
+                <strong>Napište mi</strong>, pokud máte nějaké otázky nebo návrhy - <span id="r">jan at simplyeasy dot cz</span>
             </div>
         </div>
 
