@@ -227,7 +227,7 @@ TRACK.ratioStats = function() {
 };
 
 // store data other than number of translated wor
-TRACK.storeTrackingData = function() {//console.log('storeTrackingData');
+TRACK.storeTrackingData = function() {
     localStorage.setItem('data', JSON.stringify(data));
 
     // TODO when storing at Firebase, only send and store the difference, do not keep sending all the data all the time
@@ -281,12 +281,12 @@ TRACK.addAudioTime = function(difference) {
 };
 
 // track session time
-TRACK.startPauseTimer = function() {//console.log('startPauseTimer');
+TRACK.startPauseTimer = function() {
     last_pause_time = moment();
 };
 
 // add pause time only if pause not too long
-TRACK.addPauseTime = function() {//console.log('addPauseTime');
+TRACK.addPauseTime = function() {
     if (last_pause_time) {
         pause_diff = moment().diff(last_pause_time);
 
@@ -725,7 +725,7 @@ function playPause() {
     }
 
     // if not playing, play
-    if (player.paused || player.ended) {console.log(player.buffered.end(player.buffered.length-1));
+    if (player.paused || player.ended) {
         // PLAY
         player.play();
 
@@ -1012,7 +1012,7 @@ $(document).ready(function() {
 
         if (recording_now === 0) {
             // record my own voice
-            $.voice.record(function() {//console.log('recorded');
+            $.voice.record(function() {
                 recording_now = 1;
                 $('#playback').removeClass('active');
                 $('#recording').addClass('active');
@@ -1036,7 +1036,7 @@ $(document).ready(function() {
         already_replayed = 1;
 
         // play recording
-        $.voice.replay(function(url){//console.log('played');
+        $.voice.replay(function(url){
             myvoice = new Audio(url);
             myvoice.play();
 
