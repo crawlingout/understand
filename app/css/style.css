@@ -579,7 +579,7 @@ li {
 #today_ratio {
     background-color: #eeeeee;
     height: 170px;
-    left: 320px;
+    left: 360px;
     position: absolute;
     top: 70px;
     width: 4px;
@@ -620,9 +620,10 @@ li {
     color: #cdcdcd;
     font-size: 12px;
     font-style: italic;
-    left: 12px;
+    right: 12px;
     line-height: 15px;
     position: absolute;
+    text-align: right;
     top: -14px;
     width: 130px;
 }
@@ -643,8 +644,7 @@ li {
     color: #4ba3d9;
     font-size: 30px;
     position: absolute;
-    right: 12px;
-    text-align: right;
+    left: 12px;
     top: -12px;
 }
 
@@ -779,11 +779,15 @@ li {
     }
 
     #today {
-        width: 425px;
+        width: 440px;
     }
 
     #today_ratio {
-        left: 270px;
+        left: 320px;
+    }
+
+    #ratio_audio_time {
+        width: 125px;
     }
 
 }
