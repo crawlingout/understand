@@ -18,7 +18,7 @@
     <link rel="stylesheet" href="css/style.css" />
 
     <!-- Font Awesome -->
-    <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet" />
+    <link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet" />
 
     <!--[if lte IE 9]>
     <link href="css/ie.css" rel="stylesheet" type="text/css" />
@@ -79,12 +79,13 @@
 <div id="left">
 
     <div id="content_wrapper">
-        <!-- BETA -->
-        <div id="beta">
-            BETA
-        </div>
         
         <div id="instructions">
+            <!-- BETA -->
+            <div id="beta">
+                BETA
+            </div>
+
             <div class="gap"></div>
             <h3>How to learn languages with audiobooks?</h3>
             <div class="gap"></div>
@@ -98,14 +99,15 @@
             </p>
             <div class="gap"></div>
     
-            <p>Need more help? Read the <span class="pseudolink jump_to" data-marker="faq">instructions</span> or watch the <span class="pseudolink" id="video">video</span>.
+            <p>Need more help? Read the <span class="pseudolink jump_to" data-marker="faq">instructions</span> or watch the <span class="pseudolink" id="show_video">video</span>.
             </p>
         </div>
     
     
         <div id="content"></div>
     </div>
-    <div title=" close this book " id="backhome" class="hidden"><i class="fa fa-times"></i></div>
+    <div title=" go back to the main page " id="backhome" class="backhome hidden"><i class="fa fa-chevron-left"></i></div>
+    <div title=" close this book " id="closebook" class="backhome hidden"><i class="fa fa-times"></i></div>
 
     <div id="middle">
         <!-- tracking indicator -->
@@ -353,22 +355,29 @@
 </div>
 
 <!-- hidden demos -->
-<div id="more" class="hidepopup hidden">
+<div id="more" class="hidepopup">
     <div class="overlay"></div>
     <div class="popup">
-        <div class="closepopup">&times;</div>
+        <div class="closepopup"><i class="fa fa-times"></i></div>
 
         <div class="scrollable">
             <!-- English -->
             <h3>English</h3>
             <div data-lang="en">
-                <div class="demo" id="war"><span class="by">H. G. Wells</span><strong>The War of the Worlds</strong></div>
-                <div class="demo" id="island"><span class="by">Robert Louis Stevenson</span><strong>Treasure Island</strong></div>
-                <div class="demo" id="whiteship"><span class="by">H. P. Lovecraft</span><strong>The White Ship</strong> (short story)</div>
-                <div class="demo" id="oz"><span class="by">L. Frank Baum</span><strong>The Wonderful Wizard of Oz</strong></div>
                 <div class="demo" id="tom"><span class="by">Mark Twain</span><strong>The Adventures of Tom Sawyer</strong></div>
-                <div class="demo" id="peterpan"><span class="by">J. M. Barrie</span><strong>Peter Pan</strong></div>
+                <div class="demo" id="oz"><span class="by">L. Frank Baum</span><strong>The Wonderful Wizard of Oz</strong></div>
                 <div class="demo" id="alice"><span class="by">Lewis Carroll</span><strong>Alice's Adventures in Wonderland</strong></div>
+
+                <div class="thanks">These books are courtesy of the wonderful people at <a target="_blank" href="https://librivox.org/"><strong>LibriVox</strong></a>.</div>
+
+                <div class="external">
+                    <strong>External resources</strong>: some great podcasts (with transcripts): 
+                    <ul>
+                        <li><a target="_blank" href="http://www.thisamericanlife.org"><strong>This American Life</strong></a></li>
+                        <li><a target="_blank" href="http://freakonomics.com/radio/"><strong>Freakonomics Radio</strong></a></li>
+                        <li><a target="_blank" href="http://www.onthemedia.org/"><strong>On The Media</strong></a></li>
+                    </ul>
+                </div>
             </div>
             <div class="gap"></div>
 
@@ -380,7 +389,6 @@
             <div class="gap"></div> -->
             
             <!-- Czech -->
-            <!--
             <h3>Czech</h3>
             <div data-lang="cs">
                 <div class="demo" id="capek-valkasmloky"><span class="by">Karel Čapek</span><strong>Válka s mloky</strong></div>
@@ -388,19 +396,11 @@
                 <div class="demo" id="capek-telegram"><span class="by">Karel Čapek</span><strong>Telegram</strong> (povídka)</div>
                 <div class="demo" id="capek-vrazednyutok"><span class="by">Karel Čapek</span><strong>Vražedný útok</strong> (povídka)</div>
             </div>
-             -->
 
-            
-            <!-- <div class="gap"></div>
-            <h3>Audiobooks WANTED!</h3>
-
-            <p class="smaller">
-                Do you know about <strong>public domain</strong> or <strong>creative commons audiobooks</strong> written in comprehensible contemporary language?
-            </p>
-
-            <p class="smaller">Are you a writer <strong>looking to promote your book?</strong> Would you consider publishing the first chapter here (+link to your site)?</p>
-
-            <p class="smaller">Please send me an email.</p> -->
+             <div id="more">
+                <h3>But wait, there's more!</h3>
+                These are just a few examples that I selected so you could quickly try out my app. There are many places where you can find <strong>audiobooks</strong> that you can buy (<a target="_blank" href="http://www.downpour.com/">downpour.com</a>) or get for free: <a href="https://librivox.org/">LibriVox</a> (where you can get books in English and many <a target="_blank" href="https://librivox.org/search?primary_key=0&search_category=language&search_page=1&search_form=get_results">other languages</a>) or <a target="_blank" href="http://www.openculture.com/freeaudiobooks">open culture</a> (where you can download Isaac Asimov’s Epic <a target="_blank" href="http://www.openculture.com/2012/01/free_isaac_asimovs_foundation_trilogy.html">Foundation Trilogy</a>, the complete <a target="_blank" href="http://www.openculture.com/2011/12/the_chronicles_of_narnia_free.html">Chronicles of Narnia</a> by C.S. Lewis and many other books). And than there are <strong>podcasts</strong> (with transcripts) like <a target="_blank" href="http://www.thisamericanlife.org">This American Life (English)</a> or <a target="_blank" href="http://radioambulante.org/">Radio Ambulante (Spanish)</a>... some of them are so good that just listening to them is good enough reason to learn the language.
+             </div>
 
             <div class="gap"></div>
             <div class="gap"></div>
@@ -409,10 +409,25 @@
     </div>
 </div>
 
+<!-- hidden video -->
+<div id="video" class="hidepopup hidden">
+    <div class="overlay"></div>
+    <div class="popup">
+        <div class="closepopup"><i class="fa fa-times"></i></div>
 
-<!-- message for unsupported browsers, currently <= IE8 -->
+        <!-- responsive video embed via http://embedresponsively.com -->
+        <div id="myvideo">
+            <div class='embed-container'>
+                <iframe src='https://player.vimeo.com/video/44645929?title=0&byline=0&portrait=0' frameborder='0' webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- message for unsupported browsers, currently <= IE 9 -->
 <div id="unsupported">
-    I am sorry, this app needs to use some functionality not supported by your browser.
+    I am sorry, this app really needs to use some functionality that is not supported by your browser.
 </div>
 
 </body>

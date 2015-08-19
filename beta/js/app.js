@@ -545,7 +545,7 @@ function resetPlayer() {
 }
 
 function resetText() {
-    $('#backhome').addClass('hidden');
+    $('.backhome').addClass('hidden');
     $('#content').addClass('hidden').html('');
     $('#instructions').removeClass('hidden');
 
@@ -635,7 +635,7 @@ function loadText(text) {
 
     // hide instructions on how to use the site
     $('#instructions').addClass('hidden');
-    $('#backhome').removeClass('hidden');
+    $('.backhome').removeClass('hidden');
 
     $('#content').removeClass('hidden').html(content);
 
@@ -680,7 +680,7 @@ function handleTextFileSelect(evt) {
     }
 }
 
-function loadDemo(demoid) {
+function loadDemo(demoid) {//history.pushState({"test": "shit"}, null, '?test=hej');console.log('x');
     resetPlayer(); // because demo could be loaded when some audio file is already open
 
     $.get('../demo/'+demoid+'.txt', function(data) { 
@@ -806,7 +806,7 @@ $(document).ready(function() {
     else {
         // show instructions on how to use the site
         $('#instructions').removeClass('hidden');
-        $('#backhome').addClass('hidden');
+        $('.backhome').addClass('hidden');
     }
 
 
@@ -934,7 +934,7 @@ $(document).ready(function() {
 
 
     // CLEAR EVERYTHING AND GO BACK TO THE MAIN PAGE
-    $('#backhome').click(function() {
+    $('.backhome').click(function() {
         resetPlayer();
         resetText();
     });
@@ -970,6 +970,15 @@ $(document).ready(function() {
     });
     $(".closepopup").click(function(){
         $(".hidepopup").addClass('hidden');
+        $('html, body').scrollTop(0);
+    });
+
+
+    // show video
+    $('#show_video').click(function() {
+        $('#video').removeClass('hidden');
+
+        // jump to the top of the page
         $('html, body').scrollTop(0);
     });
 
