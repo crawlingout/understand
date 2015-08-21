@@ -58,7 +58,7 @@ h3 i {
 }
 
 ul {
-    padding: 0 10px;
+    padding: 10px;
 }
 
 li {
@@ -88,17 +88,28 @@ li {
     resize: vertical;
 }
 
-#backhome {
+#backhome, #closebook, .closepopup {
     color: silver;
     cursor: pointer;
-    font-size: 20px;
-    left: 0;
+    font-size: 18px;
     padding: 18px;
     position: absolute;
     text-align: center;
     top: 0;
     width: 30px;
 }
+#backhome {
+    left: 0;
+}
+#closebook {
+    right: 10px;
+}
+.closepopup {
+    right: 0;
+}
+
+
+/* HP */
 
 #other_languages {
     border-right: 1px dotted silver;
@@ -189,41 +200,53 @@ li {
     font-size: 12px;
 }
 
-.closepopup {
-    color: #C0C0C0;
-    cursor: pointer;
-    font-size: 22px;
-    font-weight: bold;
-    height: 20px;
-    position: absolute;
-    right: 15px;
-    top: 10px;
-    width: 20px;
-}
 
 .scrollable {
     background-color: #ffffff;
     border-bottom: 1px solid #eeeeee;
     border-top: 1px solid #eeeeee;
-    padding: 20px 30px;
+    padding: 80px 30px 40px;
+}
+
+.lang_title {
+    color: #c1c1c1;
+    float: left;
+    font-size: 28px;
+    font-weight: normal;
+    line-height: 38px;
+    margin: 0 0 0 20px;
+    width: 170px;
+}
+
+.lang_demos {
+    float: left;
+    min-width: 500px;
+    padding-bottom: 30px;
 }
 
 .demo {
-    border-bottom: 1px solid #F2F2F2;
     color: #4ba3d9;
     cursor: pointer;
     font-size: 14px;
     margin: 0 4px 4px 0;
-    padding: 10px;
+    padding: 5px 0 10px 20px;
 }
 
-.demo .by {
-    display: block;
-    float: left;
+.thanks {
+    color: #555454;
+    font-size: 13px;
     font-style: italic;
-    padding-right: 20px;
-    text-align: right;
-    width: 180px;
+    padding: 5px 15px 5px 20px;
+}
+
+#more {
+    font-size: 14px;
+    line-height: 30px;
+    padding: 0 22px;
+}
+
+.thanks a, #more a {
+    color: #7ecf00;
 }
 
 .gap {
@@ -454,12 +477,8 @@ li {
     line-height: 28px;
 }
 
-.no {
-    background-color: #f4f4f4;
-    border-radius: 4px;
-    color: #848484;
-    margin-right: 3px;
-    padding: 1px 7px;
+#tryitnow {
+    font-weight: bold;
 }
 
 #r {
@@ -724,6 +743,52 @@ li {
 
 
 
+/* video */
+
+#myvideo {
+    margin: 80px auto 95px;
+    max-width: 740px;
+}
+
+.embed-container {
+    position: relative;
+    padding-bottom: 54.2%;
+    height: 0;
+    overflow: hidden;
+    max-width: 720px;
+    margin: 35px 0;
+}
+.embed-container iframe, .embed-container object, .embed-container embed {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+
+
+/* ad */
+
+#ad {
+    font-size: 12px;
+    padding: 0 0 0 22px;
+    width: 200px;
+}
+
+.reklama {
+    color: #cbcbcb;
+    font-size: 11px;
+    padding: 0 0 15px;
+}
+
+.ad {
+    color: #585858;
+    line-height: 22px;
+    padding-top: 10px;
+}
+
+
+
 /* mobile devices */
 @media screen and (max-width: 1100px) {
 
@@ -804,24 +869,6 @@ li {
         padding: 30px 40px 30px 70px;
     }
 
-}
-
-#ad {
-    font-size: 12px;
-    padding: 0 0 0 22px;
-    width: 200px;
-}
-
-.reklama {
-    color: #cbcbcb;
-    font-size: 11px;
-    padding: 0 0 15px;
-}
-
-.ad {
-    color: #585858;
-    line-height: 22px;
-    padding-top: 10px;
 }
 
 

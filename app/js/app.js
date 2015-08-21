@@ -227,7 +227,7 @@ TRACK.ratioStats = function() {
 };
 
 // store data other than number of translated wor
-TRACK.storeTrackingData = function() {//console.log('storeTrackingData');
+TRACK.storeTrackingData = function() {
     localStorage.setItem('data', JSON.stringify(data));
 
     // TODO when storing at Firebase, only send and store the difference, do not keep sending all the data all the time
@@ -281,12 +281,12 @@ TRACK.addAudioTime = function(difference) {
 };
 
 // track session time
-TRACK.startPauseTimer = function() {//console.log('startPauseTimer');
+TRACK.startPauseTimer = function() {
     last_pause_time = moment();
 };
 
 // add pause time only if pause not too long
-TRACK.addPauseTime = function() {//console.log('addPauseTime');
+TRACK.addPauseTime = function() {
     if (last_pause_time) {
         pause_diff = moment().diff(last_pause_time);
 
@@ -545,7 +545,7 @@ function resetPlayer() {
 }
 
 function resetText() {
-    $('#backhome').addClass('hidden');
+    $('.backhome').addClass('hidden');
     $('#content').addClass('hidden').html('');
     $('#instructions').removeClass('hidden');
 
@@ -635,7 +635,7 @@ function loadText(text) {
 
     // hide instructions on how to use the site
     $('#instructions').addClass('hidden');
-    $('#backhome').removeClass('hidden');
+    $('.backhome').removeClass('hidden');
 
     $('#content').removeClass('hidden').html(content);
 
@@ -790,7 +790,7 @@ $(document).ready(function() {
     else {
         // show instructions on how to use the site
         $('#instructions').removeClass('hidden');
-        $('#backhome').addClass('hidden');
+        $('.backhome').addClass('hidden');
     }
 
 
@@ -918,7 +918,7 @@ $(document).ready(function() {
 
 
     // CLEAR EVERYTHING AND GO BACK TO THE MAIN PAGE
-    $('#backhome').click(function() {
+    $('.backhome').click(function() {
         resetPlayer();
         resetText();
     });
@@ -954,6 +954,15 @@ $(document).ready(function() {
     });
     $(".closepopup").click(function(){
         $(".hidepopup").addClass('hidden');
+        $('html, body').scrollTop(0);
+    });
+
+
+    // show video
+    $('#show_video').click(function() {
+        $('#video').removeClass('hidden');
+
+        // jump to the top of the page
         $('html, body').scrollTop(0);
     });
 
