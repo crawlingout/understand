@@ -17,8 +17,10 @@ var correct_knob_duration = 0;
 var $knob_player, $knob_today;
 
 // cache most used selectors
-var $audio_time, $session_time, $session_time_small, $ratio, $session_audio_ratio, $audio_time_total, $session_time_total, $i_am_done, $backhome,
-    $higher_than_ever, $translatedword, $selectedword, $translations, $whentoolong, $play_btn, $pause_btn, $play_pause, $jumpback, $from, $to, $idle;
+var $body, $audio_time, $session_time, $session_time_small, $ratio, $session_audio_ratio, $audio_time_total, $session_time_total, $i_am_done, $backhome,
+    $higher_than_ever, $translatedword, $selectedword, $translations, $whentoolong, $play_btn, $pause_btn, $play_pause, $jumpback, $from, $to, $idle,
+    $goal_today, $streak, $record_ratio, $previous_translated_words, $linktodict, $googletranslate, $previous_translated_words_wrapper,
+    $textFileSelect, $audioFileSelect, $content, $content_wrapper, $instructions, $tracking;
 
 // cache recording/playback selectors
 var $playback, $recording;
@@ -125,7 +127,7 @@ function loadAd() {
             }
             else {
                 // TODO - downpour.com audiobooks here or some other general ad
-                
+                console.log('other');
             }
         }
 
@@ -229,7 +231,7 @@ TRACK.dataObjectExist = function(day) {
 // set TODAY knob
 // 2
 TRACK.setTodayKnob = function() {
-    $('#goal_today').text(convertSeconds(data[from].total.dg));
+    $goal_today.text(convertSeconds(data[from].total.dg));
     $knob_today.trigger('configure', {max: data[from].total.dg}).val(data[from].days[today].st).trigger('change');
 };
 
@@ -266,8 +268,6 @@ TRACK.displayTrackingData = function(day) {
             data[from].days[day].ga = 1;
 
             TRACK.currentStreak();
-
-            TRACK.storeTrackingData();
         }
     }
     // goal already achieved
@@ -285,29 +285,45 @@ TRACK.displayTrackingData = function(day) {
 TRACK.currentStreak = function() {
     var yesterday = moment(today).subtract(1, 'days').format('YYYY-MM-DD');
 
-    // handle legacy code that did not store streak
-    data[from].total.s = data[from].total.s || 0;
+    // today's goal not added to streak yet
+    if (data[from].days[today].ga !== 'added') { // = 0 or 1;
 
-    // if goal achieved yesterday
-    if (data[from].days[yesterday] && data[from].days[yesterday].ga) {
-        data[from].total.s = data[from].total.s + data[from].days[today].ga;
-    }
-    else {
-        data[from].total.s = 0 + data[from].days[today].ga;
+        // today's goal just achieved
+        if (data[from].days[today].ga) {
+            // goal achieved yesterday
+            if (data[from].days[yesterday] && data[from].days[yesterday].ga) {
+                data[from].total.s = data[from].total.s + data[from].days[today].ga;
+            }
+            // goal not achieved yesterday
+            else {
+                data[from].total.s = 1;
+            }
+
+            // mark as counted
+            data[from].days[today].ga = 'added';
+
+            TRACK.storeTrackingData();
+        }
+        // not achieved yet
+        else {
+            // goal not achieved yesterday
+            if (!(data[from].days[yesterday] && data[from].days[yesterday].ga)) {
+                // reset streak to 0
+                data[from].total.s = 0;
+            }
+        }
     }
 
+    // display days of streak propperly (1 day or 2+ days)
     if (data[from].total.s === 1) {
-        $('#streak').text(data[from].total.s+ ' '+ui_loc[ui_lang].day);
+        $streak.text(data[from].total.s+ ' '+ui_loc[ui_lang].day);
     }
     else {
-        $('#streak').text(data[from].total.s+ ' '+ui_loc[ui_lang].days);
+        $streak.text(data[from].total.s+ ' '+ui_loc[ui_lang].days);
     }
 };
 
 TRACK.ratioStats = function() {
-
-    // handle legacy code that did not store record ratio
-    data[from].total.rr = data[from].total.rr || 0;
 
     // loop last thirty days NOT including today
     var i, daily_record;
@@ -333,7 +349,7 @@ TRACK.ratioStats = function() {
     }
 
     if (data[from].total.rr) {
-        $('#record_ratio').text(data[from].total.rr+'%');
+        $record_ratio.text(data[from].total.rr+'%');
     }
 };
 
@@ -408,7 +424,7 @@ TRACK.addPauseTime = function() {
 };
 
 // check whether day changed since load
-// checked in tracking interval when NOT playing
+// checked every second when NOT playing
 TRACK.newDay = function() {
     // if new day
     if (today !== moment().format('YYYY-MM-DD')) {
@@ -450,7 +466,7 @@ function linkToDict(text) {
 }
 
 function prependPrevWord(word) {
-    $('#previous_translated_words').
+    $previous_translated_words.
         prepend('<p><a target="_blank" href="'+linkToDict(word[from])+'"><span>'+word[from]+'</span>&nbsp;&nbsp;'+word[to]+' <em>></em></a></p>');
 }
 
@@ -475,12 +491,7 @@ function callBing(from, to, text) {
             document.body.appendChild(s);
         },
         error: function(xhr, type) {console.log('bing translator error');
-            if (ui_lang === 'cs') {
-                $translatedword.text('Překlad z '+$('#from option:selected').text()+' SELHAL.');
-            }
-            else {
-                $translatedword.text('Translation from '+$('#from option:selected').text()+' FAILED.');
-            }
+            $translatedword.text('ERROR');
         }
     });
 }
@@ -539,18 +550,18 @@ function handleSelectedText(text) {
             $translations.removeClass('hidden');
 
             // create link to external dictionary or translator
-            $('#linktodict').attr('href', linkToDict(text));
+            $linktodict.attr('href', linkToDict(text));
         }
         else {
             // create URL to google translate
-            $('#googletranslate').attr('href','https://translate.google.com/#'+from+'/'+to+'/'+encodeURIComponent(text));
+            $googletranslate.attr('href','https://translate.google.com/#'+from+'/'+to+'/'+encodeURIComponent(text));
 
             $whentoolong.removeClass('hidden');
             $translations.addClass('hidden');
         }
 
         // if previous word not empty and right column visible (not mobile version)
-        if (previous_word[from] !== '' && previous_word[to] !== '...' && $('#previous_translated_words_wrapper').is(':visible')) {
+        if (previous_word[from] !== '' && previous_word[to] !== '...' && $previous_translated_words_wrapper.is(':visible')) {
 
             // prepend previously translated word into the list
             prependPrevWord(previous_word);
@@ -570,8 +581,8 @@ function loadAudioToPlayer(file) {
     // load audio file
     player = new Audio(file);
 
-    // un-green the 'load audio' button
-    $('#audioFileSelect').css({
+    // gray out 'load audio' button
+    $audioFileSelect.css({
         "background-color": "#FFFFFF",
         "color": "#565656"
     });
@@ -650,7 +661,7 @@ function resetPlayer() {
     $play_pause.css('color', '#AEAEAE');
 
     // blue 'load audio' button
-    $('#audioFileSelect').css({
+    $audioFileSelect.css({
         "background-color": "#4ba3d9",
         "color": "#ffffff"
     });
@@ -658,15 +669,15 @@ function resetPlayer() {
 
 function resetText() {
     $backhome.addClass('hidden');
-    $('#content').addClass('hidden').text('');
-    $('#instructions').removeClass('hidden');
+    $content.addClass('hidden').text('');
+    $instructions.removeClass('hidden');
 
     scrollposition = 0;
     localStorage.setItem('scrollposition', scrollposition);
     localStorage.removeItem('stored_text_file_content');
 
     // blue 'load text' button
-    $('#textFileSelect').css({
+    $textFileSelect.css({
         "background-color": "#4ba3d9",
         "color": "#ffffff"
     });
@@ -725,7 +736,7 @@ function handleAudioFileSelect(evt) {
 function loadText(text) {
 
     // un-green the 'load text' button
-    $('#textFileSelect').css({
+    $textFileSelect.css({
         "background-color": "#FFFFFF",
         "color": "#565656"
     });
@@ -746,16 +757,16 @@ function loadText(text) {
     content = content + '</span></p>';
 
     // hide instructions on how to use the site
-    $('#instructions').addClass('hidden');
+    $instructions.addClass('hidden');
     $backhome.removeClass('hidden');
 
-    $('#content').removeClass('hidden').html(content);
+    $content.removeClass('hidden').html(content);
 
     // jump to stored scroll position
-    $('#content_wrapper').scrollTop(scrollposition);
+    $content_wrapper.scrollTop(scrollposition);
 
     // store scroll position
-    $('#content_wrapper').scroll(function() {
+    $content_wrapper.scroll(function() {
         localStorage.setItem('scrollposition', this.scrollTop);
     });
 }
@@ -796,7 +807,7 @@ function handleTextFileSelect(evt) {
     }
 }
 
-function loadDemo(demoid) {//history.pushState({"test": "shit"}, null, '?test=hej');console.log('x');
+function loadDemo(demoid) {
     resetPlayer(); // because demo could be loaded when some audio file is already open
 
     $.get('../demo/'+demoid+'.txt', function(data) { 
@@ -900,7 +911,7 @@ function controlsToBottom() {
         content_wrapper_height = window_height - 168;
     }
     if (content_wrapper_height > 400) {
-        $('#content_wrapper').css({'height': content_wrapper_height+'px'});
+        $content_wrapper.css({'height': content_wrapper_height+'px'});
     }
 }
 
@@ -908,6 +919,7 @@ function controlsToBottom() {
 $(document).ready(function() {
 
     // cache most used selectors
+    $body = $('html, body');
     $audio_time = $('#audio_time');
     $session_time = $('#session_time');
     $session_time_small = $('#session_time_small');
@@ -929,6 +941,19 @@ $(document).ready(function() {
     $from = $('#from');
     $to = $('#to');
     $backhome = $('.backhome');
+    $goal_today = $('#goal_today');
+    $streak = $('#streak');
+    $record_ratio = $('#record_ratio');
+    $previous_translated_words = $('#previous_translated_words');
+    $linktodict = $('#linktodict');
+    $googletranslate = $('#googletranslate');
+    $previous_translated_words_wrapper = $('#previous_translated_words_wrapper');
+    $textFileSelect = $('#textFileSelect');
+    $audioFileSelect = $('#audioFileSelect');
+    $content = $('#content');
+    $content_wrapper = $('#content_wrapper');
+    $instructions = $('#instructions');
+    $tracking = $('#tracking');
 
     $playback = $('#playback');
     $recording = $('#recording');
@@ -952,7 +977,7 @@ $(document).ready(function() {
     }
     else {
         // show instructions on how to use the site
-        $('#instructions').removeClass('hidden');
+        $instructions.removeClass('hidden');
         $backhome.addClass('hidden');
     }
 
@@ -962,7 +987,7 @@ $(document).ready(function() {
 
     // detect clicked word
     // based on http://stackoverflow.com/a/9304990/716001 - space at the beginning of each paragraph needed!
-    $('#content').on('click', 'span.mycontent', function(e) {
+    $content.on('click', 'span.mycontent', function(e) {
         s = window.getSelection();
         var range = s.getRangeAt(0);
         var node = s.anchorNode;
@@ -1100,10 +1125,10 @@ $(document).ready(function() {
     // DEMO
 
     // select demo
-    $('.demo').click(function() {
+    $('.demo').click(function() {history.pushState({"demo": 1}, 'what', '?demo=2');console.log('x');
 
         $('#more').addClass('hidden');
-        $('html, body').scrollTop(0);
+        $body.scrollTop(0);
 
         loadDemo($(this).attr('id'));
 
@@ -1117,17 +1142,17 @@ $(document).ready(function() {
         $('#more').removeClass('hidden');
 
         // jump to the top of the page
-        $('html, body').scrollTop(0);
+        $body.scrollTop(0);
     });
 
     // hide pop-ups
     $('.overlay').click(function(){
         $('.hidepopup').addClass('hidden');
-        $('html, body').scrollTop(0);
+        $body.scrollTop(0);
     });
     $('.closepopup').click(function(){
         $('.hidepopup').addClass('hidden');
-        $('html, body').scrollTop(0);
+        $body.scrollTop(0);
     });
 
 
@@ -1136,7 +1161,7 @@ $(document).ready(function() {
         $('#video').removeClass('hidden');
 
         // jump to the top of the page
-        $('html, body').scrollTop(0);
+        $body.scrollTop(0);
 
         var video = '<iframe src="https://player.vimeo.com/video/44645929?title=0&byline=0&portrait=0" frameborder="0" webkitAllowFullScreen '+
                     'mozallowfullscreen allowFullScreen></iframe>';
@@ -1251,7 +1276,7 @@ $(document).ready(function() {
     // slide to FAQ
     $('.jump_to').click(function(){
         var which_marker = $(this).data('marker');
-        $('html, body').animate({
+        $body.animate({
             // scroll to bottom of tracking element
             scrollTop: $('#'+which_marker).offset().top
         }, 1000);
@@ -1299,9 +1324,9 @@ $(document).ready(function() {
 
     // slide page to show tracking
     $idle.click(function(){
-        $('html, body').animate({
+        $body.animate({
             // scroll to bottom of tracking element
-            scrollTop: $('#tracking')[0].scrollHeight + ($('#tracking').offset().top - $(window).height())
+            scrollTop: $tracking[0].scrollHeight + ($tracking.offset().top - $(window).height())
         });
     });
 

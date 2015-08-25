@@ -156,8 +156,6 @@ TRACK.displayTrackingData = function(day) {
             data[from].days[day].ga = 1;
 
             TRACK.currentStreak();
-
-            TRACK.storeTrackingData();
         }
     }
     // goal already achieved
@@ -175,17 +173,36 @@ TRACK.displayTrackingData = function(day) {
 TRACK.currentStreak = function() {
     var yesterday = moment(today).subtract(1, 'days').format('YYYY-MM-DD');
 
-    // handle legacy code that did not store streak
-    data[from].total.s = data[from].total.s || 0;
+    // today's goal not added to streak yet
+    if (data[from].days[today].ga !== 'added') { // = 0 or 1;
 
-    // if goal achieved yesterday
-    if (data[from].days[yesterday] && data[from].days[yesterday].ga) {
-        data[from].total.s = data[from].total.s + data[from].days[today].ga;
-    }
-    else {
-        data[from].total.s = 0 + data[from].days[today].ga;
+        // today's goal just achieved
+        if (data[from].days[today].ga) {
+            // goal achieved yesterday
+            if (data[from].days[yesterday] && data[from].days[yesterday].ga) {
+                data[from].total.s = data[from].total.s + data[from].days[today].ga;
+            }
+            // goal not achieved yesterday
+            else {
+                data[from].total.s = 1;
+            }
+
+            // mark as counted
+            data[from].days[today].ga = 'added';
+
+            TRACK.storeTrackingData();
+        }
+        // not achieved yet
+        else {
+            // goal not achieved yesterday
+            if (!(data[from].days[yesterday] && data[from].days[yesterday].ga)) {
+                // reset streak to 0
+                data[from].total.s = 0;
+            }
+        }
     }
 
+    // display days of streak propperly (1 day or 2+ days)
     if (data[from].total.s === 1) {
         $('#streak').text(data[from].total.s+ ' '+ui_loc[ui_lang].day);
     }
