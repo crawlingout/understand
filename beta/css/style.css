@@ -58,7 +58,7 @@ h3 i {
 }
 
 ul {
-    padding: 10px;
+    padding: 1px 10px;
 }
 
 li {
@@ -611,7 +611,7 @@ li {
     font-style: normal;
 }
 
-#sess_time {
+#session_time_small {
     font-weight: bold;
     font-style: normal;
 }
@@ -730,19 +730,26 @@ li {
 #ad {
     font-size: 12px;
     padding: 0 0 0 22px;
-    width: 200px;
+    width: 240px;
 }
 
-.reklama {
+#ad_ad {
     color: #cbcbcb;
     font-size: 11px;
     padding: 0 0 15px;
 }
 
-.ad {
+#ad_txt {
     color: #585858;
     line-height: 22px;
-    padding-top: 10px;
+    padding-top: 15px;
+}
+
+.flag {
+    border-radius: 60px;
+    box-shadow: 0 0 8px #cccccc;
+    height: 60px;
+    width: 60px;
 }
 
 
@@ -774,8 +781,12 @@ li {
         width: 100%;
     }
 
-    #ad {
-        display: none;
+    #ad_txt {
+        max-width: 170px;
+        position: absolute;
+        right: 20px;
+        text-align: right;
+        top: 0;
     }
 
 }
@@ -825,6 +836,10 @@ li {
         font-size: 19px;
         line-height: 35px;
         padding: 30px 40px 30px 70px;
+    }
+
+    #ad_txt {
+        display: none;
     }
 
 }

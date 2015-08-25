@@ -13,8 +13,19 @@ var uploaded_file_id = localStorage.getItem('uploaded_file_id') || 0;
 // workaround: some browsers do not load duration on canplay event; in that case this flag is raised so duration could be obtained later
 var correct_knob_duration = 0;
 
+// cache knob elements
+var $knob_player, $knob_today;
+
+// cache most used selectors
+var $audio_time, $session_time, $session_time_small, $ratio, $session_audio_ratio, $audio_time_total, $session_time_total, $i_am_done, $backhome,
+    $higher_than_ever, $translatedword, $selectedword, $translations, $whentoolong, $play_btn, $pause_btn, $play_pause, $jumpback, $from, $to, $idle;
+
+// cache recording/playback selectors
+var $playback, $recording;
+
 
 // UI localization
+
 var ui_loc = {
     'en': {
         'day': 'day',
@@ -25,6 +36,103 @@ var ui_loc = {
         'days': 'dnů'
     }
 };
+
+
+// ads
+
+// Rocket Languages
+function linkRoketLanguage(l) {
+    var i = {
+        "es": {
+            "url": 'http://77ef3afiray8um7etjolygsnfp.hop.clickbank.net/',
+            "txt": 'Spanish'
+        },
+        "de": {
+            "url": 'http://7d691cmcf601un1mt7vedgblaf.hop.clickbank.net/',
+            "txt": 'German'
+        },
+        "ja": {
+            "url": 'http://98a829bdoen1qx0em-v103tdbr.hop.clickbank.net/',
+            "txt": 'Japanese'
+        },
+        "fr": {
+            "url": 'http://ef0cdafln3wbqtajvmqdk4ay53.hop.clickbank.net/',
+            "txt": 'French'
+        },
+        "it": {
+            "url": 'http://db30ebfcffr8ro7drkoatytm4i.hop.clickbank.net/',
+            "txt": 'Italian'
+        },
+        "ko": {
+            "url": 'http://5f20d6kklb--tz0o-i2agl3vfr.hop.clickbank.net/',
+            "txt": 'Korean'
+        },
+        "hi": {
+            "url": 'http://c12a55laoa09-nflph12muclf4.hop.clickbank.net/',
+            "txt": 'Hindi'
+        },
+        "pt": {
+            "url": 'http://66c31idgi9raxt5pocqsqc2m2u.hop.clickbank.net/',
+            "txt": 'Portuguese'
+        }
+    };
+    return 'Learn <strong>'+i[l].txt+'</strong> online<br> with <a target="_blank" href="'+i[l].url+'"><strong>Rocket '+i[l].txt+'</strong></a>.';
+}
+
+function loadAd() {
+
+    // hide ad
+    $('#ad').addClass('hidden');
+
+    // if book loaded
+    if (textfile) {
+
+        $('.ad_img').addClass('hidden');
+
+        var txt = document.getElementById('ad_txt');
+
+        if (to === 'cs') { // Czech audience
+            $('#hosting51').removeClass('hidden');
+            txt.innerHTML = 'Webhosting, virtuální servery (VPS), domény: <a target="_blank" '+
+                'href="http://klient.hosting51.cz/aff.php?aff=103"><strong>hosting 51</strong></a>.';
+        }
+        else if (to === 'es' && from === 'en') { // Spanish audience learning English
+
+            $('#en').removeClass('hidden');
+            txt.innerHTML = 'Aprende <strong>inglés</strong> en línea<br> con <a target="_blank" href="'+
+                'http://b794agnig8m2ppbosmtbqm1r28.hop.clickbank.net/"><strong>Rocket Inglés</strong></a>.';
+        }
+        else {
+            // if 'from' language offered by Rocket Languages
+            if (from === 'es' || from === 'de' || from === 'ja' || from === 'fr' || from === 'it' || from === 'ko' || from === 'hi' || from === 'pt') {
+                $('#'+from).removeClass('hidden');
+                txt.innerHTML = linkRoketLanguage(from);
+            }
+            else if (from === 'zh-CHS' || from === 'zh-CHT') {
+                $('#cn').removeClass('hidden');
+                txt.innerHTML = 'Learn <strong>Mandarin Chinese</strong> online<br> with <a target="_blank" href="'+
+                    'http://952929dbefn6uv7hf7sksoku1r.hop.clickbank.net/"><strong>Rocket Chinese</strong></a>.';
+            }
+            else if (from === 'he') {
+                $('#he').removeClass('hidden');
+                txt.innerHTML = 'Learn <strong>Hebrew</strong> online<br> with <a target="_blank" href="'+
+                    'http://021b4hncj2o5zw3gj1mlflfzbj.hop.clickbank.net/"><strong>Practical Hebrew</strong></a>.';
+            }
+            else if (from === 'en') {
+                $('#us').removeClass('hidden');
+                txt.innerHTML = 'Learn the <a target="_blank" href="'+
+                    'http://c2fbbineofw2yle8p2gb0o-2ek.hop.clickbank.net/"><strong>American accent</strong></a>.';
+            }
+            else {
+                // TODO - downpour.com audiobooks here or some other general ad
+                
+            }
+        }
+
+        // show ad
+        $('#ad').removeClass('hidden');
+    }
+}
 
 
 // TRACKING
@@ -122,36 +230,39 @@ TRACK.dataObjectExist = function(day) {
 // 2
 TRACK.setTodayKnob = function() {
     $('#goal_today').text(convertSeconds(data[from].total.dg));
-    $('#knob_today').trigger('configure', {max: data[from].total.dg}).val(data[from].days[today].st).trigger('change');
+    $knob_today.trigger('configure', {max: data[from].total.dg}).val(data[from].days[today].st).trigger('change');
 };
 
 // display data other than number of translated words
 // 3
+// runs every second when player playing - needs to be lightweight!!!
 TRACK.displayTrackingData = function(day) {
-    $("#audio_time").text(convertSeconds(data[from].days[day].at));
-    $(".session_time").text(convertSeconds(data[from].days[day].st));
+    $audio_time.text(convertSeconds(data[from].days[day].at));
+
+    var readable_session_time = convertSeconds(data[from].days[day].st);
+    $session_time.text(readable_session_time);
+    $session_time_small.text(readable_session_time);
 
     var ratio = calculateRatio(data[from].days[day].at, data[from].days[day].st);
     if (ratio > 0) {
-        $("#session_audio_ratio").text(ratio);
-        $("#ratio").height(ratio*1.7);
-        $("#ratio").removeClass('hidden');
+        $session_audio_ratio.text(ratio);
+        $ratio.height(ratio*1.7).removeClass('hidden');
     }
     else {
-        $("#ratio").addClass('hidden');
+        $ratio.addClass('hidden');
     }
 
-    $("#audio_time_total").text(convertSeconds(data[from].total.at));
-    $("#session_time_total").text(convertSeconds(data[from].total.st));
+    $audio_time_total.text(convertSeconds(data[from].total.at));
+    $session_time_total.text(convertSeconds(data[from].total.st));
 
-    $('#knob_today').val(data[from].days[day].st).trigger('change');
+    $knob_today.val(data[from].days[day].st).trigger('change');
 
     // today's goal not yet marked as achieved
     if (!data[from].days[day].ga) {
         // if today's goal achieved JUST NOW
         if (data[from].days[day].st > data[from].total.dg) {
-            $("#i_am_done").removeClass('hidden');
-            $("#idle").html('<i class="fa fa-check-circle"></i>');
+            $i_am_done.removeClass('hidden');
+            $idle.html('<i class="fa fa-check-circle"></i>');
             data[from].days[day].ga = 1;
 
             TRACK.currentStreak();
@@ -163,10 +274,10 @@ TRACK.displayTrackingData = function(day) {
     else {
         // if ratio higher than record and record higher than default 0
         if (data[from].total.rr && (ratio > data[from].total.rr)) {
-            $("#higher_than_ever").removeClass('hidden');
+            $higher_than_ever.removeClass('hidden');
         }
         else {
-            $("#higher_than_ever").addClass('hidden');
+            $higher_than_ever.addClass('hidden');
         }
     }
 };
@@ -306,10 +417,10 @@ TRACK.newDay = function() {
         TRACK.dataObjectExist(today); // 1
 
         // reset previously achieved goal and ratio
-        $("#i_am_done").addClass('hidden');
-        $("#idle").html('<i class="fa fa-clock-o"></i>');
-        $("#ratio").addClass('hidden');
-        $("#higher_than_ever").addClass('hidden');
+        $i_am_done.addClass('hidden');
+        $idle.html('<i class="fa fa-clock-o"></i>');
+        $ratio.addClass('hidden');
+        $higher_than_ever.addClass('hidden');
 
         // reset pause time - pause should not ruin beginning of new day, it's better to just drop it
         last_pause_time = 0;
@@ -344,7 +455,7 @@ function prependPrevWord(word) {
 }
 
 function mycallback(response) {
-    $('#translatedword').html(response);
+    $translatedword.text(response);
 }
 
 function callBing(from, to, text) {
@@ -364,7 +475,12 @@ function callBing(from, to, text) {
             document.body.appendChild(s);
         },
         error: function(xhr, type) {console.log('bing translator error');
-            $('#translatedword').text('UNTRANSLATED');
+            if (ui_lang === 'cs') {
+                $translatedword.text('Překlad z '+$('#from option:selected').text()+' SELHAL.');
+            }
+            else {
+                $translatedword.text('Translation from '+$('#from option:selected').text()+' FAILED.');
+            }
         }
     });
 }
@@ -392,15 +508,15 @@ function handleSelectedText(text) {
     var previous_word = {};
 
     // get previously selected word
-    previous_word[from] = $('#selectedword').html();
+    previous_word[from] = $selectedword.text();
 
     // get previously translated word
-    previous_word[to] = $('#translatedword').html();
+    previous_word[to] = $translatedword.text();
 
     // if not empty or the same word again
-    if (text !== '' && text !== ' ' && text !== '.' && text !== previous_word[from]) {
+    if (text !== '' && text !== ' ' && text !== previous_word[from]) {
         // clear previous result
-        $('#translatedword').html('...');
+        $translatedword.text('...');
 
         // strip spaces before/after words
         text = text.trim();
@@ -408,23 +524,19 @@ function handleSelectedText(text) {
         // string NOT too long
         if (text.split(' ').length <= 1) {
             // hide warning text shown when text is too long
-            $('#whentoolong').addClass('hidden');
+            $whentoolong.addClass('hidden');
 
-            // remove trailing characters
-            var len = text.length;
-            var last = text.substr(len-1,1);
-            if (last === "," || last === "." || last === '"' || last === ")" || last === ":" || last === "!" || last === "?" || last === ";") {
-                text = text.substring(0,len-1);
-            }
+            // remove weird leading and trailing characters
+            text = text.replace(/[,.?¿!¡:();„“”‚‘’"‹›«»—]/g, '');
 
             // insert word to be translated into visible element
-            $('#selectedword').text(text);
+            $selectedword.text(text);
 
             // try to translate
             callBing(from, to, text);
 
             // unhide pair word_to_translate: translated_word
-            $('#translations').removeClass('hidden');
+            $translations.removeClass('hidden');
 
             // create link to external dictionary or translator
             $('#linktodict').attr('href', linkToDict(text));
@@ -433,8 +545,8 @@ function handleSelectedText(text) {
             // create URL to google translate
             $('#googletranslate').attr('href','https://translate.google.com/#'+from+'/'+to+'/'+encodeURIComponent(text));
 
-            $('#whentoolong').removeClass('hidden');
-            $('#translations').addClass('hidden');
+            $whentoolong.removeClass('hidden');
+            $translations.addClass('hidden');
         }
 
         // if previous word not empty and right column visible (not mobile version)
@@ -450,7 +562,7 @@ function setKnob(dur, cur) {
     // get time for the player to jump to
     var jumpto = cur || stored_audio_time;
 
-    $('#knob_player').trigger('configure', {max: dur}).val(jumpto).trigger('change');
+    $knob_player.trigger('configure', {max: dur}).val(jumpto).trigger('change');
 }
 
 function loadAudioToPlayer(file) {
@@ -469,7 +581,7 @@ function loadAudioToPlayer(file) {
     player.oncanplay = function() {
         if (!canplay_fired) {
             // set color of play/pause icon
-            $('.circle').css('color', '#4ba3d9');
+            $play_pause.css('color', '#4ba3d9');
 
             // if duration loaded propperly
             if (player.duration) {
@@ -489,14 +601,14 @@ function loadAudioToPlayer(file) {
 
     // keep updating knob when audio is playing
     var diff = 0, last_time = stored_audio_time;
-    player.ontimeupdate = function() {
+    player.ontimeupdate = function() { // this runs every 250 ms - it needs to be lightweight !!!
 
         // workaround for problem with Android Chrome - randomly setting currentTime to 0 after player.play()
         if (player.currentTime === 0 && stored_audio_time) {
             player.currentTime = stored_audio_time + diff;
         }
 
-        $('#knob_player').val(player.currentTime).trigger('change');
+        $knob_player.val(player.currentTime).trigger('change');
 
         // calculate time difference between timeupdate events
         diff = (player.currentTime - last_time);
@@ -509,8 +621,8 @@ function loadAudioToPlayer(file) {
     // listener for finished audio
     player.onended = function() {
         // set icon to play
-        $('#pause_btn').addClass('hidden');
-        $('#play_btn').removeClass('hidden');
+        $pause_btn.addClass('hidden');
+        $play_btn.removeClass('hidden');
     };
 }
 
@@ -528,14 +640,14 @@ function resetPlayer() {
     localStorage.removeItem('stored_audio_file_url');
 
     // set icon to play
-    $('#pause_btn').addClass('hidden');
-    $('#play_btn').removeClass('hidden');
+    $pause_btn.addClass('hidden');
+    $play_btn.removeClass('hidden');
 
     // reset audio progress bar
-    $('#knob_player').val(0).trigger('change');
+    $knob_player.val(0).trigger('change');
 
     // reset color of play icon
-    $('.circle').css('color', '#AEAEAE');
+    $play_pause.css('color', '#AEAEAE');
 
     // blue 'load audio' button
     $('#audioFileSelect').css({
@@ -545,8 +657,8 @@ function resetPlayer() {
 }
 
 function resetText() {
-    $('.backhome').addClass('hidden');
-    $('#content').addClass('hidden').html('');
+    $backhome.addClass('hidden');
+    $('#content').addClass('hidden').text('');
     $('#instructions').removeClass('hidden');
 
     scrollposition = 0;
@@ -635,7 +747,7 @@ function loadText(text) {
 
     // hide instructions on how to use the site
     $('#instructions').addClass('hidden');
-    $('.backhome').removeClass('hidden');
+    $backhome.removeClass('hidden');
 
     $('#content').removeClass('hidden').html(content);
 
@@ -666,6 +778,10 @@ function handleTextFileSelect(evt) {
 
                 // store text
                 localStorage.setItem('stored_text_file_content', e.target.result);
+
+                // text is loaded, ad can be loaded
+                textfile = 1;
+                loadAd();
             };
 
             // read in the file
@@ -687,6 +803,9 @@ function loadDemo(demoid) {//history.pushState({"test": "shit"}, null, '?test=he
         loadText(data);
         localStorage.setItem('stored_text_file_content', data);
     });
+
+    // text is loaded, ad can be loaded
+    textfile = 1;
 
     audiofile = 'https://www.simplyeasy.cz/understand-server/files/'+demoid+'.mp3';
     loadAudioToPlayer(audiofile);
@@ -730,8 +849,8 @@ function playPause() {
         player.play();
 
         // set icon to pause
-        $('#play_btn').addClass('hidden');
-        $('#pause_btn').removeClass('hidden');
+        $play_btn.addClass('hidden');
+        $pause_btn.removeClass('hidden');
 
         TRACK.addPauseTime();
 
@@ -743,8 +862,8 @@ function playPause() {
         player.pause();
 
         // set icon to play
-        $('#pause_btn').addClass('hidden');
-        $('#play_btn').removeClass('hidden');
+        $pause_btn.addClass('hidden');
+        $play_btn.removeClass('hidden');
 
         // store time
         localStorage.setItem('stored_audio_time', stored_audio_time);
@@ -763,11 +882,11 @@ function recordReplay() {
     if (already_replayed === 0) {
 
         // play
-        $('#playback').click();
+        $playback.click();
     }
     else {
         // record
-        $('#recording').click();
+        $recording.click();
     }
 }
 
@@ -788,6 +907,32 @@ function controlsToBottom() {
 
 $(document).ready(function() {
 
+    // cache most used selectors
+    $audio_time = $('#audio_time');
+    $session_time = $('#session_time');
+    $session_time_small = $('#session_time_small');
+    $ratio = $('#ratio');
+    $session_audio_ratio = $('#session_audio_ratio');
+    $audio_time_total = $('#audio_time_total');
+    $session_time_total = $('#session_time_total');
+    $i_am_done = $('#i_am_done');
+    $idle = $('#idle');
+    $higher_than_ever = $('#higher_than_ever');
+    $translatedword = $('#translatedword');
+    $selectedword = $('#selectedword');
+    $translations = $('#translations');
+    $whentoolong = $('#whentoolong');
+    $play_btn = $('#play_btn');
+    $pause_btn = $('#pause_btn');
+    $play_pause = $('#play_pause');
+    $jumpback = $('#jumpback');
+    $from = $('#from');
+    $to = $('#to');
+    $backhome = $('.backhome');
+
+    $playback = $('#playback');
+    $recording = $('#recording');
+
     // put controls to bottom of screen
     // on load
     controlsToBottom();
@@ -797,16 +942,18 @@ $(document).ready(function() {
     }, false);
 
     // get how much seconds to jump back
-    var jumpback = $("#jumpback").data('jump');
+    var jumpback = $jumpback.data('jump');
 
     // previously opened text file
     if (textfile) {
         loadText(textfile);
+
+        loadAd();
     }
     else {
         // show instructions on how to use the site
         $('#instructions').removeClass('hidden');
-        $('.backhome').addClass('hidden');
+        $backhome.addClass('hidden');
     }
 
 
@@ -845,49 +992,59 @@ $(document).ready(function() {
         // set 'to' language
         to = ui_lang;
         // swicth 'to' selector to the language of the site
-        $('#to').val(to);
+        $to.val(to);
 
         // if 'from' language is not previously stored and 'to' language is not english, switch 'from' language to english
         if (!localStorage.getItem('stored_lang_from') && to !== 'en') {
             from = 'en';
-            $('#from').val('en');
+            $from.val('en');
         }
     }
 
 
     // preload selected from/to languages
-    $('#from').val(from);
-    $('#to').val(to);
+    $from.val(from);
+    $to.val(to);
 
     // change selected from/to languages
-    $('.select_lang').change(function() {
-        if ($(this).attr('id') === 'from') {
-            from = $(this).val();
+    $from.change(function() {
+        from = $(this).val();
 
-            TRACK.dataObjectExist(today); // 1
-            TRACK.setTodayKnob(); // 2
-            TRACK.displayTrackingData(today); // 3
-        }
-        if ($(this).attr('id') === 'to') {
-            to = $(this).val();
-        }
-        localStorage.setItem('stored_lang_'+$(this).attr('id'), $(this).val());
+        TRACK.dataObjectExist(today); // 1
+        TRACK.setTodayKnob(); // 2
+        TRACK.displayTrackingData(today); // 3
+
+        loadAd();
+
+        localStorage.setItem('stored_lang_from', from);
+    });
+    $to.change(function() {
+        to = $(this).val();
+
+        loadAd();
+
+        localStorage.setItem('stored_lang_to', to);
     });
 
 
 
     // PLAYER
     
-    $(".knob").knob({
+    $('.knob').knob({
         'change': function(e){
             player.currentTime = e;
         }
     });
+
+    // cache knob elements
+    $knob_player = $('#knob_player');
+    $knob_today = $('#knob_today');
+
     // prevent jumping of player knob before audio duration is loaded
-    $('#knob_player').trigger('configure', {max: 100}).val(0).trigger('change');
+    $knob_player.trigger('configure', {max: 100}).val(0).trigger('change');
 
     // player controls
-    $('#play_pause').click(function() {
+    $play_pause.click(function() {
         
         // if file loaded
         if (audiofile) {
@@ -896,7 +1053,7 @@ $(document).ready(function() {
     });
 
     // jump N (defined in data attribute) seconds back
-    $("#jumpback").click(function() {
+    $jumpback.click(function() {
         jumpBack(jumpback);
     });
 
@@ -934,7 +1091,7 @@ $(document).ready(function() {
 
 
     // CLEAR EVERYTHING AND GO BACK TO THE MAIN PAGE
-    $('.backhome').click(function() {
+    $backhome.click(function() {
         resetPlayer();
         resetText();
     });
@@ -945,14 +1102,14 @@ $(document).ready(function() {
     // select demo
     $('.demo').click(function() {
 
-        $("#more").addClass('hidden');
+        $('#more').addClass('hidden');
         $('html, body').scrollTop(0);
 
         loadDemo($(this).attr('id'));
 
-        // swicth to the language of the demo
-        $('#from').val($(this).parent().data('lang'));
-        $('.select_lang').change();
+        // switch to the language of the demo
+        $from.val($(this).parent().data('lang'));
+        $from.change();
     });
 
     // show demos pop-up
@@ -964,12 +1121,12 @@ $(document).ready(function() {
     });
 
     // hide pop-ups
-    $(".overlay").click(function(){
-        $(".hidepopup").addClass('hidden');
+    $('.overlay').click(function(){
+        $('.hidepopup').addClass('hidden');
         $('html, body').scrollTop(0);
     });
-    $(".closepopup").click(function(){
-        $(".hidepopup").addClass('hidden');
+    $('.closepopup').click(function(){
+        $('.hidepopup').addClass('hidden');
         $('html, body').scrollTop(0);
     });
 
@@ -980,6 +1137,11 @@ $(document).ready(function() {
 
         // jump to the top of the page
         $('html, body').scrollTop(0);
+
+        var video = '<iframe src="https://player.vimeo.com/video/44645929?title=0&byline=0&portrait=0" frameborder="0" webkitAllowFullScreen '+
+                    'mozallowfullscreen allowFullScreen></iframe>';
+
+        $('#embed').html(video);
     });
 
 
@@ -1004,7 +1166,7 @@ $(document).ready(function() {
 
     // RECORDING
     var recording_now = 0, ended, was_playing, myvoice;
-    $('#recording').on('click', function() {
+    $recording.on('click', function() {
 
         // if audio book playing
         if (!(player.paused || player.ended)) {
@@ -1023,8 +1185,8 @@ $(document).ready(function() {
             // record my own voice
             $.voice.record(function() {
                 recording_now = 1;
-                $('#playback').removeClass('active');
-                $('#recording').addClass('active');
+                $playback.removeClass('active');
+                $recording.addClass('active');
             });
         }
         // click on mic while already recording stops recording
@@ -1032,10 +1194,10 @@ $(document).ready(function() {
             // stop recording
             $.voice.stop();
             recording_now = 0;
-            $('#recording').removeClass('active');
+            $recording.removeClass('active');
         }
     });
-    $('#playback').on('click', function() {
+    $playback.on('click', function() {
 
         // stop recording
         $.voice.stop();
@@ -1049,8 +1211,8 @@ $(document).ready(function() {
             myvoice = new Audio(url);
             myvoice.play();
 
-            $('#recording').removeClass('active');
-            $('#playback').addClass('active');
+            $recording.removeClass('active');
+            $playback.addClass('active');
         }, "URL");
 
         // detect the end of recorded audio
@@ -1059,7 +1221,7 @@ $(document).ready(function() {
             if (myvoice.ended) {
                 clearInterval(ended);
                 // done playing
-                $('#playback').removeClass('active');
+                $playback.removeClass('active');
 
                 // if audio was playing when recording button was pressed
                 if (was_playing) {
@@ -1091,7 +1253,7 @@ $(document).ready(function() {
         var which_marker = $(this).data('marker');
         $('html, body').animate({
             // scroll to bottom of tracking element
-            scrollTop: $("#"+which_marker).offset().top
+            scrollTop: $('#'+which_marker).offset().top
         }, 1000);
     });
 
@@ -1109,8 +1271,8 @@ $(document).ready(function() {
 
     // if today's goal achieved
     if (data[from].days[today].ga) {
-        $("#i_am_done").removeClass('hidden');
-        $("#idle").html('<i class="fa fa-check-circle"></i>');
+        $i_am_done.removeClass('hidden');
+        $idle.html('<i class="fa fa-check-circle"></i>');
     }
 
     TRACK.currentStreak();
@@ -1136,10 +1298,10 @@ $(document).ready(function() {
     }, 1000); // 1 sec
 
     // slide page to show tracking
-    $('#idle').click(function(){
+    $idle.click(function(){
         $('html, body').animate({
             // scroll to bottom of tracking element
-            scrollTop: $("#tracking")[0].scrollHeight + ($("#tracking").offset().top - $(window).height())
+            scrollTop: $('#tracking')[0].scrollHeight + ($('#tracking').offset().top - $(window).height())
         });
     });
 

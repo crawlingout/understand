@@ -15,6 +15,7 @@ var correct_knob_duration = 0;
 
 
 // UI localization
+
 var ui_loc = {
     'en': {
         'day': 'day',
@@ -344,7 +345,7 @@ function prependPrevWord(word) {
 }
 
 function mycallback(response) {
-    $('#translatedword').html(response);
+    $('#translatedword').text(response);
 }
 
 function callBing(from, to, text) {
@@ -392,15 +393,15 @@ function handleSelectedText(text) {
     var previous_word = {};
 
     // get previously selected word
-    previous_word[from] = $('#selectedword').html();
+    previous_word[from] = $('#selectedword').text();
 
     // get previously translated word
-    previous_word[to] = $('#translatedword').html();
+    previous_word[to] = $('#translatedword').text();
 
     // if not empty or the same word again
-    if (text !== '' && text !== ' ' && text !== '.' && text !== previous_word[from]) {
+    if (text !== '' && text !== ' ' && text !== previous_word[from]) {
         // clear previous result
-        $('#translatedword').html('...');
+        $('#translatedword').text('...');
 
         // strip spaces before/after words
         text = text.trim();
@@ -410,12 +411,8 @@ function handleSelectedText(text) {
             // hide warning text shown when text is too long
             $('#whentoolong').addClass('hidden');
 
-            // remove trailing characters
-            var len = text.length;
-            var last = text.substr(len-1,1);
-            if (last === "," || last === "." || last === '"' || last === ")" || last === ":" || last === "!" || last === "?" || last === ";") {
-                text = text.substring(0,len-1);
-            }
+            // remove weird leading and trailing characters
+            text = text.replace(/[,.?¿!¡:();„“”‚‘’"‹›«»—]/g, '');
 
             // insert word to be translated into visible element
             $('#selectedword').text(text);
@@ -469,7 +466,7 @@ function loadAudioToPlayer(file) {
     player.oncanplay = function() {
         if (!canplay_fired) {
             // set color of play/pause icon
-            $('.circle').css('color', '#4ba3d9');
+            $('#play_pause').css('color', '#4ba3d9');
 
             // if duration loaded propperly
             if (player.duration) {
@@ -535,7 +532,7 @@ function resetPlayer() {
     $('#knob_player').val(0).trigger('change');
 
     // reset color of play icon
-    $('.circle').css('color', '#AEAEAE');
+    $('#play_pause').css('color', '#AEAEAE');
 
     // blue 'load audio' button
     $('#audioFileSelect').css({
@@ -546,7 +543,7 @@ function resetPlayer() {
 
 function resetText() {
     $('.backhome').addClass('hidden');
-    $('#content').addClass('hidden').html('');
+    $('#content').addClass('hidden').text('');
     $('#instructions').removeClass('hidden');
 
     scrollposition = 0;
@@ -844,18 +841,23 @@ $(document).ready(function() {
     $('#to').val(to);
 
     // change selected from/to languages
-    $('.select_lang').change(function() {
-        if ($(this).attr('id') === 'from') {
-            from = $(this).val();
+    $('#from').change(function() {
+        from = $(this).val();
 
-            TRACK.dataObjectExist(today); // 1
-            TRACK.setTodayKnob(); // 2
-            TRACK.displayTrackingData(today); // 3
-        }
-        if ($(this).attr('id') === 'to') {
-            to = $(this).val();
-        }
-        localStorage.setItem('stored_lang_'+$(this).attr('id'), $(this).val());
+        TRACK.dataObjectExist(today); // 1
+        TRACK.setTodayKnob(); // 2
+        TRACK.displayTrackingData(today); // 3
+
+        loadAd();
+
+        localStorage.setItem('stored_lang_from', from);
+    });
+    $('#to').change(function() {
+        to = $(this).val();
+
+        loadAd();
+
+        localStorage.setItem('stored_lang_to', to);
     });
 
 
@@ -936,7 +938,7 @@ $(document).ready(function() {
 
         // swicth to the language of the demo
         $('#from').val($(this).parent().data('lang'));
-        $('.select_lang').change();
+        $('#from').change();
     });
 
     // show demos pop-up

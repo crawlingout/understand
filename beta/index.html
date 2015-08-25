@@ -39,7 +39,7 @@
 
     <!-- Facebook Open Graph -->
     <meta property="fb:app_id" content="1383406805282282"/>
-    <meta property="og:image" content="https://understand.simplyeasy.cz/app/img/man-listening.jpg"/>
+    <meta property="og:image" content="https://understand.simplyeasy.cz/img/man-listening.jpg"/>
     <meta property="og:type" content="website"/>
     <meta property="og:url" content="https://understand.simplyeasy.cz/"/>
     <meta property="og:title" content="Flex your language-learning brain muscles with audiobooks"/>
@@ -70,10 +70,28 @@
         </div>
     </div>
 
+    <!-- reklama -->
+    <div id="ad" class="hidden">
+        <div id="ad_ad">AD</div>
+
+        <!-- images -->
+        <img id="hosting51" class="ad_img" src="../img/hosting51.png" alt="hosting 51" width="149" height="36">
+        <img id="cn" class="ad_img flag hidden" src="../img/cn.svg" alt=" ">
+        <img id="de" class="ad_img flag hidden" src="../img/de.svg" alt=" ">
+        <img id="en" class="ad_img flag hidden" src="../img/en.svg" alt=" ">
+        <img id="es" class="ad_img flag hidden" src="../img/es.svg" alt=" ">
+        <img id="fr" class="ad_img flag hidden" src="../img/fr.svg" alt=" ">
+        <img id="he" class="ad_img flag hidden" src="../img/he.svg" alt=" ">
+        <img id="it" class="ad_img flag hidden" src="../img/it.svg" alt=" ">
+        <img id="ja" class="ad_img flag hidden" src="../img/ja.svg" alt=" ">
+        <img id="ko" class="ad_img flag hidden" src="../img/ko.svg" alt=" ">
+        <img id="pt" class="ad_img flag hidden" src="../img/pt.svg" alt=" ">
+        <img id="us" class="ad_img flag hidden" src="../img/us.svg" alt=" ">
+
+        <div id="ad_txt"></div>
+    </div>
+
     <div class="debug" id="debug1"></div>
-    <div class="debug" id="debug2"></div>
-    <div class="debug" id="debug3"></div>
-    <div class="debug" id="debug4"></div>
 </div>
 
 <div id="left">
@@ -163,7 +181,7 @@
 
         <!-- language selectors -->
         <div class="column" id="languages">
-            <p>&nbsp;Click on words to translate them</p>
+            <p>&nbsp;&nbsp;Translate clicked words</p>
             <div class="spacer">&nbsp;from
                 <select id="from" class="select_lang">
                     <option value="ar">Arabic</option>
@@ -281,11 +299,11 @@
                         <div id="ratio" class="hidden" title=" how much of the audiobook you've conquered in this session ">
                             <div id="ratio_audio_time">
                                 <span id="audio_time">0 min</span> of <span class="darker">audio</span> in
-                                <div><span id="sess_time" class="session_time"></span> of <span class="darker">listening</span></div>
+                                <div><span id="session_time_small" class="session_time"></span> of <span class="darker">listening</span></div>
                             </div>
                             <div id="ratio_audio_time_percent">
                                 <span id="session_audio_ratio">0</span>%
-                                <span class="go_to_faq jump_to" data-marker="ratio_explanation" style="padding: 0 0 0 2px;top: -14px;">
+                                <span class="go_to_faq jump_to" data-marker="ratio_explanation" style="padding: 0 0 0 2px;right: -14px;top: -14px;">
                                     <i class="fa fa-question-circle"></i>
                                 </span>
                             </div>
@@ -397,12 +415,9 @@
     <div class="overlay"></div>
     <div class="popup">
         <div class="closepopup"><i class="fa fa-times"></i></div>
-
-        <!-- responsive video embed via http://embedresponsively.com -->
         <div id="myvideo">
-            <div class='embed-container'>
-                <iframe src='https://player.vimeo.com/video/44645929?title=0&byline=0&portrait=0' frameborder='0' webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>
-            </div>
+            <!-- responsive video embed via http://embedresponsively.com -->
+            <div id="embed" class="embed-container"></div>
         </div>
     </div>
 </div>
