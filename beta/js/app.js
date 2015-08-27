@@ -681,10 +681,16 @@ function resetText() {
         "background-color": "#4ba3d9",
         "color": "#ffffff"
     });
+
+    // if there is some query string in URL (afted demo was opened), remove it
+    noParams();
 }
 
 function handleAudioFileSelect(evt) {
     resetPlayer();
+
+    // if there is some query string in URL (afted demo was opened), remove it
+    noParams();
 
     audiofile = evt.target.files[0];
 
@@ -807,12 +813,11 @@ function handleTextFileSelect(evt) {
     }
 }
 
-function loadDemo(demoid) {
+function loadDemo(demoid, demolang) {
     resetPlayer(); // because demo could be loaded when some audio file is already open
 
     $.get('../demo/'+demoid+'.txt', function(data) { 
         loadText(data);
-        localStorage.setItem('stored_text_file_content', data);
     });
 
     // text is loaded, ad can be loaded
@@ -820,7 +825,10 @@ function loadDemo(demoid) {
 
     audiofile = 'https://www.simplyeasy.cz/understand-server/files/'+demoid+'.mp3';
     loadAudioToPlayer(audiofile);
-    localStorage.setItem('stored_audio_file_url', audiofile);
+
+    // switch to the language of the demo
+    $from.val(demolang);
+    $from.change();
 }
 
 function jumpBack(jumpstep) {
@@ -912,6 +920,26 @@ function controlsToBottom() {
     }
     if (content_wrapper_height > 400) {
         $content_wrapper.css({'height': content_wrapper_height+'px'});
+    }
+}
+
+// get URL params
+// based on https://css-tricks.com/snippets/javascript/get-url-variables/
+function getQueryVariable(query, param) {
+       var vars = query.split("&");
+       for (var i=0;i<vars.length;i++) {
+                var pair = vars[i].split("=");
+                if (pair[0] == param) {
+                return pair[1];
+            }
+       }
+       return(false);
+}
+
+// remove query string from URL (if there is any left, for example after closing demo)
+function noParams() {
+    if (window.location.search.substring(1)) {
+        history.replaceState({}, 'understand', location.href.split("?")[0]);
     }
 }
 
@@ -1124,68 +1152,47 @@ $(document).ready(function() {
 
     // DEMO
 
-    // select demo
-    $('.demo').click(function() {history.pushState({"demo": 1}, 'what', '?demo=2');console.log('x');
+    // check URL params
+    var url_query = window.location.search.substring(1);
 
-        $('#more').addClass('hidden');
-        $body.scrollTop(0);
+    // and if there are any
+    if (url_query) {
+        var id = getQueryVariable(url_query, 'id');
+        var lang = getQueryVariable(url_query, 'lang');
 
-        loadDemo($(this).attr('id'));
-
-        // switch to the language of the demo
-        $from.val($(this).parent().data('lang'));
-        $from.change();
-    });
-
-    // show demos pop-up
-    $('#tryitnow').click(function() {
-        $('#more').removeClass('hidden');
-
-        // jump to the top of the page
-        $body.scrollTop(0);
-    });
-
-    // hide pop-ups
-    $('.overlay').click(function(){
-        $('.hidepopup').addClass('hidden');
-        $body.scrollTop(0);
-    });
-    $('.closepopup').click(function(){
-        $('.hidepopup').addClass('hidden');
-        $body.scrollTop(0);
-    });
-
-
-    // show video
-    $('#show_video').click(function() {
-        $('#video').removeClass('hidden');
-
-        // jump to the top of the page
-        $body.scrollTop(0);
-
-        var video = '<iframe src="https://player.vimeo.com/video/44645929?title=0&byline=0&portrait=0" frameborder="0" webkitAllowFullScreen '+
-                    'mozallowfullscreen allowFullScreen></iframe>';
-
-        $('#embed').html(video);
-    });
+        // load demo
+        if (id && lang) {
+            loadDemo(id, lang);
+        }
+    }
 
 
     // keyboard shortcuts
     window.onkeyup = function(e) {
-       var key = e.keyCode ? e.keyCode : e.which;
+        var key = e.keyCode ? e.keyCode : e.which;
 
-       if (key == 37) { // left arrow
-           // jump back
-           jumpBack(jumpback);
-       }
-       else if (key == 39) { // right arrow
-           // play/pause
-           playPause();
-       }
-       else if (key == 16) { // shift
-           // record/replay
-           recordReplay();
-       }
+        if (key == 37) { // left arrow
+            // jump back
+            jumpBack(jumpback);
+        }
+        else if (key == 39) { // right arrow
+            // play/pause
+            playPause();
+        }
+        else if (key == 13) { // enter
+            // record/replay
+            recordReplay();
+        }
+        else if (key == 16) { // shift
+            // click on last translated word(s) link
+            // should stay undocumented feature? BETA only?
+            if ($googletranslate.is(':visible')) {
+                $googletranslate[0].click();
+            }
+            else if ($selectedword.text()) {
+                $linktodict[0].click();
+            }
+        }
     };
 
 
