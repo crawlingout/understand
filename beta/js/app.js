@@ -42,6 +42,8 @@ var ui_loc = {
 
 // ads
 
+var AD = {};
+
 // Rocket Languages
 function linkRoketLanguage(l) {
     var i = {
@@ -81,7 +83,7 @@ function linkRoketLanguage(l) {
     return 'Learn <strong>'+i[l].txt+'</strong> online<br> with <a target="_blank" href="'+i[l].url+'"><strong>Rocket '+i[l].txt+'</strong></a>.';
 }
 
-function loadAd() {
+AD.loadAd = function() {
 
     // hide ad
     $('#ad').addClass('hidden');
@@ -134,7 +136,7 @@ function loadAd() {
         // show ad
         $('#ad').removeClass('hidden');
     }
-}
+};
 
 
 // TRACKING
@@ -798,7 +800,7 @@ function handleTextFileSelect(evt) {
 
                 // text is loaded, ad can be loaded
                 textfile = 1;
-                loadAd();
+                AD.loadAd();
             };
 
             // read in the file
@@ -1001,7 +1003,7 @@ $(document).ready(function() {
     if (textfile) {
         loadText(textfile);
 
-        loadAd();
+        AD.loadAd();
     }
     else {
         // show instructions on how to use the site
@@ -1067,14 +1069,14 @@ $(document).ready(function() {
         TRACK.setTodayKnob(); // 2
         TRACK.displayTrackingData(today); // 3
 
-        loadAd();
+        AD.loadAd();
 
         localStorage.setItem('stored_lang_from', from);
     });
     $to.change(function() {
         to = $(this).val();
 
-        loadAd();
+        AD.loadAd();
 
         localStorage.setItem('stored_lang_to', to);
     });

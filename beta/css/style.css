@@ -105,7 +105,14 @@ li {
     right: 10px;
 }
 
+
 /* HP stuff removed */
+
+
+.gap {
+    height: 15px;
+    width: 100%;
+}
 
 #content {
     background-color: #FFFFFF;
