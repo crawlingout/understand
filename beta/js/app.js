@@ -1,5 +1,5 @@
-//var server = 'https://www.simplyeasy.cz/understand-server/';
-var server = '../understand-server/';
+var server = 'https://www.simplyeasy.cz/understand-server/';
+//var server = '../understand-server/';
 
 var from = localStorage.getItem('stored_lang_from') || 'es';
 var to = localStorage.getItem('stored_lang_to') || 'en';
