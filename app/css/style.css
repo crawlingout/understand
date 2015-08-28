@@ -219,7 +219,7 @@ li {
     font-weight: bold;
 }
 
-#previous_translated_words_wrapper {
+#previous_translated_words {
     color: #4ba3d9;
     font-size: 13px;
     margin: 0 22px 30px;
@@ -227,7 +227,7 @@ li {
     position: relative;
 }
 
-#previous_translated_words_wrapper p {
+#previous_translated_words p {
     line-height: 20px;
     margin: 0 0 15px;
 }
@@ -693,7 +693,7 @@ li {
         position: relative;
     }
 
-    #previous_translated_words_wrapper {
+    #previous_translated_words {
         display: none;
     }
     

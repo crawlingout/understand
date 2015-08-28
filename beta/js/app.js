@@ -1,5 +1,5 @@
-var server = 'https://www.simplyeasy.cz/understand-server/';
-//var server = '../understand-server/';
+//var server = 'https://www.simplyeasy.cz/understand-server/';
+var server = '../understand-server/';
 
 var from = localStorage.getItem('stored_lang_from') || 'es';
 var to = localStorage.getItem('stored_lang_to') || 'en';
@@ -19,8 +19,8 @@ var $knob_player, $knob_today;
 // cache most used selectors
 var $body, $audio_time, $session_time, $session_time_small, $ratio, $session_audio_ratio, $audio_time_total, $session_time_total, $i_am_done, $backhome,
     $higher_than_ever, $translatedword, $selectedword, $translations, $whentoolong, $play_btn, $pause_btn, $play_pause, $jumpback, $from, $to, $idle,
-    $goal_today, $streak, $record_ratio, $previous_translated_words, $linktodict, $googletranslate, $previous_translated_words_wrapper,
-    $textFileSelect, $audioFileSelect, $content, $content_wrapper, $instructions, $tracking;
+    $goal_today, $streak, $record_ratio, $previous_translated_words, $linktodict, $googletranslate, $textFileSelect, $audioFileSelect, $content,
+    $content_wrapper, $instructions, $tracking;
 
 // cache recording/playback selectors
 var $playback, $recording;
@@ -526,45 +526,53 @@ function handleSelectedText(text) {
     // get previously translated word
     previous_word[to] = $translatedword.text();
 
-    // if not empty or the same word again
-    if (text !== '' && text !== ' ' && text !== previous_word[from]) {
-        // clear previous result
-        $translatedword.text('...');
+    // strip spaces before/after words
+    text = text.trim();
 
-        // strip spaces before/after words
-        text = text.trim();
+    // if not empty or the same word again
+    if (text !== '') {
 
         // string NOT too long
         if (text.split(' ').length <= 1) {
-            // hide warning text shown when text is too long
-            $whentoolong.addClass('hidden');
-
             // remove weird leading and trailing characters
             text = text.replace(/[,.?¿!¡:();„“”‚‘’"‹›«»—]/g, '');
 
-            // insert word to be translated into visible element
-            $selectedword.text(text);
+            // not the same word again
+            if (text !== previous_word[from]) {
 
-            // try to translate
-            callBing(from, to, text);
+                // clear previous result
+                $translatedword.text('...');
 
-            // unhide pair word_to_translate: translated_word
-            $translations.removeClass('hidden');
+                // hide warning text shown when text is too long
+                $whentoolong.addClass('hidden');
 
-            // create link to external dictionary or translator
-            $linktodict.attr('href', linkToDict(text));
+                // insert word to be translated into visible element
+                $selectedword.text(text);
+
+                // try to translate
+                callBing(from, to, text);
+
+                // unhide pair word_to_translate: translated_word
+                $translations.removeClass('hidden');
+
+                // create link to external dictionary or translator
+                $linktodict.attr('href', linkToDict(text));
+            }
         }
+        // long translation string -> Google Translate
         else {
             // create URL to google translate
             $googletranslate.attr('href','https://translate.google.com/#'+from+'/'+to+'/'+encodeURIComponent(text));
 
             $whentoolong.removeClass('hidden');
             $translations.addClass('hidden');
+
+            // prevent repeated inserting the last translated word into list of translated words each time translation string is long in a row
+            $selectedword.text('');
         }
 
         // if previous word not empty and right column visible (not mobile version)
-        if (previous_word[from] !== '' && previous_word[to] !== '...' && $previous_translated_words_wrapper.is(':visible')) {
-
+        if (previous_word[from] !== '' && previous_word[to] !== '...' && previous_word[to] !== 'ERROR' && $previous_translated_words.is(':visible')) {
             // prepend previously translated word into the list
             prependPrevWord(previous_word);
         }
@@ -977,7 +985,6 @@ $(document).ready(function() {
     $previous_translated_words = $('#previous_translated_words');
     $linktodict = $('#linktodict');
     $googletranslate = $('#googletranslate');
-    $previous_translated_words_wrapper = $('#previous_translated_words_wrapper');
     $textFileSelect = $('#textFileSelect');
     $audioFileSelect = $('#audioFileSelect');
     $content = $('#content');
