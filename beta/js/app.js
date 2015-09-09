@@ -1,5 +1,5 @@
-var server = 'https://www.simplyeasy.cz/understand-server/';
-//var server = '../understand-server/';
+//var server = 'https://www.simplyeasy.cz/understand-server/';
+var server = '../understand-server/';
 
 var from = localStorage.getItem('stored_lang_from') || 'es';
 var to = localStorage.getItem('stored_lang_to') || 'en';
@@ -44,44 +44,97 @@ var ui_loc = {
 
 var AD = {};
 
-// Rocket Languages
-function linkRoketLanguage(l) {
-    var i = {
-        "es": {
-            "url": 'http://77ef3afiray8um7etjolygsnfp.hop.clickbank.net/',
-            "txt": 'Spanish'
-        },
-        "de": {
-            "url": 'http://7d691cmcf601un1mt7vedgblaf.hop.clickbank.net/',
-            "txt": 'German'
-        },
-        "ja": {
-            "url": 'http://98a829bdoen1qx0em-v103tdbr.hop.clickbank.net/',
-            "txt": 'Japanese'
-        },
-        "fr": {
-            "url": 'http://ef0cdafln3wbqtajvmqdk4ay53.hop.clickbank.net/',
-            "txt": 'French'
-        },
-        "it": {
-            "url": 'http://db30ebfcffr8ro7drkoatytm4i.hop.clickbank.net/',
-            "txt": 'Italian'
-        },
-        "ko": {
-            "url": 'http://5f20d6kklb--tz0o-i2agl3vfr.hop.clickbank.net/',
-            "txt": 'Korean'
-        },
-        "hi": {
-            "url": 'http://c12a55laoa09-nflph12muclf4.hop.clickbank.net/',
-            "txt": 'Hindi'
-        },
-        "pt": {
-            "url": 'http://66c31idgi9raxt5pocqsqc2m2u.hop.clickbank.net/',
-            "txt": 'Portuguese'
-        }
-    };
-    return 'Learn <strong>'+i[l].txt+'</strong> online<br> with <a target="_blank" href="'+i[l].url+'"><strong>Rocket '+i[l].txt+'</strong></a>.';
+var ads = {
+    "es": {
+        "ads": [
+            {"url": 'http://77ef3afiray8um7etjolygsnfp.hop.clickbank.net/', "txt": "Rocket Spanish", "logo": "rocket"}
+        ], "lng": 'Spanish'
+    },
+    "de": {
+        "ads": [
+            {"url": 'http://7d691cmcf601un1mt7vedgblaf.hop.clickbank.net/', "txt": "Rocket German", "logo": "rocket"}
+        ], "lng": 'German'
+    },
+    "ja": {
+        "ads": [
+            {"url": 'http://98a829bdoen1qx0em-v103tdbr.hop.clickbank.net/', "txt": "Rocket Japanese","logo": "rocket"}
+        ], "lng": 'Japanese'
+    },
+    "fr": {
+        "ads": [
+            {"url": 'http://ef0cdafln3wbqtajvmqdk4ay53.hop.clickbank.net/', "txt": "Rocket French", "logo": "rocket"}
+        ], "lng": 'French'
+    },
+    "it": {
+        "ads": [
+            {"url": 'http://db30ebfcffr8ro7drkoatytm4i.hop.clickbank.net/', "txt": "Rocket Italian", "logo": "rocket"}
+        ], "lng": 'Italian'
+    },
+    "ko": {
+        "ads": [
+            {"url": 'http://5f20d6kklb--tz0o-i2agl3vfr.hop.clickbank.net/', "txt": "Rocket Korean", "logo": "rocket"}
+        ], "lng": 'Korean'
+    },
+    "hi": {
+        "ads": [
+            {"url": 'http://c12a55laoa09-nflph12muclf4.hop.clickbank.net/', "txt": "Rocket Hindi", "logo": "rocket"}
+        ], "lng": 'Hindi'
+    },
+    "pt": {
+        "ads": [
+            {"url": 'http://66c31idgi9raxt5pocqsqc2m2u.hop.clickbank.net/', "txt": "Rocket Portuguese", "logo": "rocket"}
+        ], "lng": 'Portuguese'
+    },
+    "zh-CHS": {
+        "ads": [
+            {"url": 'http://952929dbefn6uv7hf7sksoku1r.hop.clickbank.net/', "txt": "Rocket Chinese", "logo": "rocket"}
+        ], "lng": 'Chinese'
+    },
+    "zh-CHT": {
+        "ads": [
+            {"url": 'http://952929dbefn6uv7hf7sksoku1r.hop.clickbank.net/', "txt": "Rocket Chinese", "logo": "rocket"}
+        ], "lng": 'Chinese'
+    },
+    "he": {
+        "ads": [
+            {"url": 'http://021b4hncj2o5zw3gj1mlflfzbj.hop.clickbank.net/', "txt": "Practical Hebrew", "logo": "hebrew"}
+        ], "lng": 'Hebrew'
+    },
+    "en": {
+        "ads": [
+            {"url": 'http://021b4hncj2o5zw3gj1mlflfzbj.hop.clickbank.net/', "txt": "Rosetta Stone", "logo": "fluenz"}
+        ], "lng": 'Hebrew'
+    }
+};
+
+/*
+ * Returns a random integer between min (inclusive) and max (inclusive)
+ * based on http://stackoverflow.com/a/1527820/716001
+ */
+function getRandomInt(min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
 }
+
+function createAd(l) {
+    if (ads[l]) {
+        // select ad
+        var number_of_ads = ads[l].ads.length;
+        var ad = ads[l].ads[getRandomInt(0, number_of_ads-1)];
+
+        // insert ad
+        var ad_txt = document.getElementById('ad_txt');
+        ad_txt.innerHTML = 'Learn <strong>'+ads[l].lng+'</strong> with<br> <a target="_blank" href="'+ad.url+'"><strong>'+ad.txt+'</strong></a>.';
+        $('#'+ad.logo).attr("href", ad.url).removeClass('hidden');
+
+        // show ad
+        $('#ad').removeClass('hidden');
+    }
+}
+
+/*
+amazon link template:
+http://amzn.com/ASIN/?tag=simplyeasy-20
+*/
 
 AD.loadAd = function() {
 
@@ -93,48 +146,18 @@ AD.loadAd = function() {
 
         $('.ad_img').addClass('hidden');
 
-        var txt = document.getElementById('ad_txt');
+        if (to === 'es' && from === 'en') { // Spanish audience learning English
 
-        if (to === 'cs') { // Czech audience
-            $('#hosting51').removeClass('hidden');
-            txt.innerHTML = 'Webhosting, virtuální servery (VPS), domény: <a target="_blank" '+
-                'href="http://klient.hosting51.cz/aff.php?aff=103"><strong>hosting 51</strong></a>.';
-        }
-        else if (to === 'es' && from === 'en') { // Spanish audience learning English
-
-            $('#en').removeClass('hidden');
-            txt.innerHTML = 'Aprende <strong>inglés</strong> en línea<br> con <a target="_blank" href="'+
+            $('#rocket').attr("href", "http://b794agnig8m2ppbosmtbqm1r28.hop.clickbank.net/").removeClass('hidden');
+            document.getElementById('ad_txt').innerHTML = 'Aprende <strong>inglés</strong> con <br><a target="_blank" href="'+
                 'http://b794agnig8m2ppbosmtbqm1r28.hop.clickbank.net/"><strong>Rocket Inglés</strong></a>.';
+
+            // show ad
+            $('#ad').removeClass('hidden');
         }
         else {
-            // if 'from' language offered by Rocket Languages
-            if (from === 'es' || from === 'de' || from === 'ja' || from === 'fr' || from === 'it' || from === 'ko' || from === 'hi' || from === 'pt') {
-                $('#'+from).removeClass('hidden');
-                txt.innerHTML = linkRoketLanguage(from);
-            }
-            else if (from === 'zh-CHS' || from === 'zh-CHT') {
-                $('#cn').removeClass('hidden');
-                txt.innerHTML = 'Learn <strong>Mandarin Chinese</strong> online<br> with <a target="_blank" href="'+
-                    'http://952929dbefn6uv7hf7sksoku1r.hop.clickbank.net/"><strong>Rocket Chinese</strong></a>.';
-            }
-            else if (from === 'he') {
-                $('#he').removeClass('hidden');
-                txt.innerHTML = 'Learn <strong>Hebrew</strong> online<br> with <a target="_blank" href="'+
-                    'http://021b4hncj2o5zw3gj1mlflfzbj.hop.clickbank.net/"><strong>Practical Hebrew</strong></a>.';
-            }
-            else if (from === 'en') {
-                $('#us').removeClass('hidden');
-                txt.innerHTML = 'Learn the <a target="_blank" href="'+
-                    'http://c2fbbineofw2yle8p2gb0o-2ek.hop.clickbank.net/"><strong>American accent</strong></a>.';
-            }
-            else {
-                // TODO - downpour.com audiobooks here or some other general ad
-                console.log('other');
-            }
+            createAd(from);
         }
-
-        // show ad
-        $('#ad').removeClass('hidden');
     }
 };
 

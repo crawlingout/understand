@@ -623,7 +623,6 @@ li {
 /* ad */
 
 #ad {
-    font-size: 12px;
     padding: 0 0 0 22px;
     width: 240px;
 }
@@ -631,20 +630,20 @@ li {
 #ad_ad {
     color: #cbcbcb;
     font-size: 11px;
-    padding: 0 0 15px;
+    padding: 0 0 10px;
 }
 
 #ad_txt {
     color: #585858;
-    line-height: 22px;
-    padding-top: 15px;
+    font-size: 15px;
+    line-height: 24px;
+    padding-top: 1px;
 }
 
-.flag {
-    border-radius: 60px;
-    box-shadow: 0 0 8px #cccccc;
-    height: 60px;
-    width: 60px;
+.ad_img {
+    float: left;
+    height: 50px;
+    margin-right: 13px;
 }
 
 
@@ -677,11 +676,13 @@ li {
     }
 
     #ad_txt {
+        font-size: 12px;
+        line-height: 20px;
         max-width: 170px;
         position: absolute;
         right: 20px;
         text-align: right;
-        top: 0;
+        top: 10px;
     }
 
 }

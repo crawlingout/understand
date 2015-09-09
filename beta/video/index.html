@@ -15,60 +15,13 @@
     <meta name="keywords" content="language, foreign language, learning, understanding" />
     <meta name="description" content="Stop translating in your head and improve your ability to understand native speakers." />
 
+    <link rel="stylesheet" href="style.css" />
+
     <!-- Font Awesome -->
     <link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet" />
 
-    <style>
-body {
-    font-family: arial,sans-serif;
-}
-
-a {
-    text-decoration: none;
-}
-
-#backhome {
-    color: silver;
-    display: block;
-    font-size: 18px;
-    padding: 18px;
-    width: 100px;
-}
-
-h1 {
-    color: #9d9d9d;
-    font-size: 28px;
-    font-weight: normal;
-    margin: 0;
-    padding: 0 0 20px;
-}
-
-#myvideo {
-    margin: 20px auto 95px;
-    max-width: 740px;
-}
-
-.embed-container {
-    position: relative;
-    padding-bottom: 54.2%;
-    height: 0;
-    overflow: hidden;
-    max-width: 720px;
-    margin: 20px 0;
-}
-.embed-container iframe, .embed-container object, .embed-container embed {
-    position: absolute;
-    top: 0; left: 0;
-    width: 100%;
-    height: 100%;
-}
-
-p {
-    font-size: 14px;
-    margin: 50px 0;
-    line-height: 22px;
-}
-    </style>
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+    <script type="text/javascript" src="animation.js"></script>
 
     <!-- Facebook Open Graph -->
     <meta property="fb:app_id" content="1383406805282282"/>
@@ -82,14 +35,100 @@ p {
 <body>
     <a id="backhome" href="../" title=" back to the main page "><i class="fa fa-chevron-left"></i>&nbsp;&nbsp; HOME</a></a>
     <div id="myvideo">
-        <h1>How to use audiobooks and podcasts to learn languages</h1>
+        <h1>How to learn languages with audiobooks and podcasts</h1>
 
-        <!-- responsive video embed via http://embedresponsively.com -->
-        <div id="embed" class="embed-container">
-            <iframe src="https://player.vimeo.com/video/44645929?title=0&byline=0&portrait=0" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>
+        <div id="animation">
+
+            <div id="i_1" class="info hidden">Let's open my audiobook...</div>
+            <div id="i_2" class="info hidden">...and its text version.</div>
+            <div id="i_3" class="info hidden">I will not read it now.</div>
+            <div id="i_4" class="info hidden">It's important to listen first!</div>
+            <div id="i_5" class="info hidden">Whoa, too fast!</div>
+            <div id="i_6" class="info hidden">I need to go back a little...</div>
+            <div id="i_7" class="info hidden">...and hear it again.</div>
+            <div id="i_8" class="info hidden">Aha.</div>
+            <div id="i_9" class="info hidden">Now I get it.</div>
+            <div id="i_10" class="info hidden">I did not catch this. Back!</div>
+            <div id="i_11" class="info hidden">I still don't get it.</div>
+            <div id="i_12" class="info hidden">I need to read this.</div>
+            <div id="i_13" class="info hidden">Ah, I see.</div>
+            <div id="i_14" class="info hidden">But what does <em>talla</em> mean?</div>
+            <div id="i_15" class="info hidden">Here is the translation...</div>
+            <div id="i_16" class="info hidden">...and I can continue listening.</div>
+            <div id="i_17" class="infoend hidden">And that's it.</div>
+            <div id="i_18" class="infoend hidden">It's that simple.</div>
+            <div id="i_19" class="infoend hidden">Don't memorize anything.</div>
+            <div id="i_20" class="infoend hidden">Simply let this app help you understand and enjoy the story.</div>
+            <div id="i_21" class="infoend hidden">A language is more than just vocabulary and grammar.</div>
+            <div id="i_22" class="infoend hidden">It's the art of recognizing words in sounds.</div>
+            <div id="i_23" class="infoend hidden">The art of understanding without translating in your head.</div>
+            <div id="i_24" class="infoend hidden">The art needs to be practiced.</div>
+            <div id="i_25" class="infoend hidden"><a href="../">Start now &nbsp;<i class="fa fa-angle-right"></i></a></div>
+
+            <div id="filebox" class="hidden">
+                <div id="fileboxtop"></div>
+
+                <div id="selected_audio" class="file hidden"><i class="fa fa-volume-up"></i> &nbsp;Really Interesting Story - audio.mp3</div>
+                <div id="unselected_audio" class="file"><i class="fa fa-volume-up"></i> &nbsp;Really Interesting Story - audio.mp3</div>
+
+                <div id="selected_text" class="file hidden"><i class="fa fa-file-text"></i> &nbsp;Really Interesting Story - text.txt</div>
+                <div id="unselected_text" class="file"><i class="fa fa-file-text-o"></i> &nbsp;Really Interesting Story - text.txt</div>
+
+                <div id="fileboxbottom">
+                    <div id="cancel" class="filebox_btn">Cancel</div>
+                    <div id="open" class="filebox_btn">Open</div>
+                </div>
+            </div>
+
+            <div id="simulation">
+                <div id="startvideo"><i class="fa fa-play"></i></div>
+                <div id="cursor">
+                    <img src="../../img/cursor.png" width="17" height="17" alt="I">
+                </div>
+                
+                <div id="left">
+                    <div id="top">
+                        <div id="text" class="hidden">
+                            <p>
+                                ¿Qué es un hobbit? Supongo que los hobbits necesitan hoy que se los describa de algún modo, ya que se volvieron bastante raros y tímidos con la Gente Grande, como nos llaman. Son (o fueron) gente menuda de la mitad de nuestra talla, y más pequeños que los enanos barbados. Los hobbits no tienen barba.
+                            </p>
+                            <p>
+                                Hay poca o ninguna magia en ellos, excepto esa común y cotidiana que los ayuda a desaparecer en silencio y rápidamente, cuando gente grande y estúpida como vosotros o yo se acerca sin mirar por dónde va, con un ruido de elefantes que puede oírse a una milla de distancia.
+                            </p>
+                        </div>
+                    </div>
+            
+                    <div id="bottom">
+                        <div id="play">
+                            <i class="fa fa-play"></i>
+                        </div>
+                        <div id="pause" class="hidden" style="padding: 20px 19px 20px 21px;color: #4ba3d9;">
+                            <i class="fa fa-pause"></i>
+                        </div>
+                        <div id="jumpback">
+                            <i class="fa fa-caret-left"></i><i class="fa fa-caret-left"></i>
+                        </div>
+                        <div id="audiofile" class="button">AUDIO</div>
+                        <div id="textfile" class="button">TEXT</div>
+            
+                        <div id="fromlang" class="selector">FROM language</div>
+                        <div id="tolang" class="selector">TO language</div>
+                    </div>
+                </div>
+            
+                <div id="right" class="hidden">
+                    <div id="to_translate" class="word">talla</div>
+                    <div id="translated" class="word">height</div>
+                    <div class="clear"></div>
+                </div>
+            </div>
+            <div id="replay" class="hidden" title=" Replay "><i class="fa fa-repeat"></i></div>
+        </div>
+        <div id="thanks">
+            Narrated by <a href="https://www.facebook.com/lecturasdeyamil"> Yamil Cuéllar</a> - muchísimas gracias :-)
         </div>
 
-        <p>Do you have any questions? Anything is not clear? Please contact me at <span id="r">jan at simplyeasy dot cz</span></p>
+        <p>Do you have any questions? Please contact me at <span id="r">jan at simplyeasy dot cz</span></p>
     </div>
 
 <script>
