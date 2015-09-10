@@ -663,21 +663,35 @@ li {
 /* ad */
 
 #ad {
-    font-size: 12px;
     padding: 0 0 0 22px;
-    width: 200px;
+    width: 240px;
 }
 
-.reklama {
+#ad_ad {
     color: #cbcbcb;
     font-size: 11px;
-    padding: 0 0 15px;
+    padding: 0 0 10px;
 }
 
-.ad {
+#ad_txt {
     color: #585858;
-    line-height: 22px;
-    padding-top: 10px;
+    font-size: 15px;
+    line-height: 24px;
+    padding-top: 1px;
+}
+
+.ad_img {
+    float: left;
+    height: 50px;
+    margin-right: 13px;
+}
+
+#ad .round {
+    border-radius: 5px;
+}
+
+#ad .shadow {
+    box-shadow: 1px 1px 2px #b3b3b3;
 }
 
 
@@ -709,8 +723,14 @@ li {
         width: 100%;
     }
 
-    #ad {
-        display: none;
+    #ad_txt {
+        font-size: 12px;
+        line-height: 20px;
+        max-width: 170px;
+        position: absolute;
+        right: 20px;
+        text-align: right;
+        top: 10px;
     }
 
 }
@@ -760,6 +780,10 @@ li {
         font-size: 19px;
         line-height: 35px;
         padding: 30px 40px 30px 70px;
+    }
+
+    #ad_txt {
+        display: none;
     }
 
 }
