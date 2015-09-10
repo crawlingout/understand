@@ -206,23 +206,48 @@ p {
     left: 285px;
 }
 
+#clickedwords {
+    font-size: 11px;
+    left: 400px;
+    position: absolute;
+    top: 7px;
+}
+
+.selectorlabel {
+    font-size: 12px;
+    left: 400px;
+    line-height: 20px;
+    position: absolute;
+    text-align: right;
+    width: 35px;
+}
+
+#from {
+    top: 26px;
+}
+
+#to {
+    top: 54px;
+}
+
 .selector {
     background-color: white;
     border: 1px solid #cdcdcd;
-    font-size: 13px;
-    left: 400px;
-    line-height: 24px;
+    color: #252525;
+    font-size: 12px;
+    left: 439px;
+    line-height: 20px;
     padding-left: 10px;
     position: absolute;
-    width: 115px;
+    width: 62px;
 }
 
 #fromlang {
-    top: 11px;
+    top: 26px;
 }
 
 #tolang {
-    top: 44px;
+    top: 54px;
 }
 
 #filebox {
