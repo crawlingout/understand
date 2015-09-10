@@ -167,7 +167,7 @@ function createAd(from, to) {
     }
 }
 
-AD.loadAd = function() {
+AD.loadAd = function() {console.log('loadAd');
 
     // hide ad
     $('#ad').addClass('hidden');
@@ -849,9 +849,11 @@ function handleTextFileSelect(evt) {
                 // store text
                 localStorage.setItem('stored_text_file_content', e.target.result);
 
-                // text is loaded, ad can be loaded
-                textfile = 1;
-                AD.loadAd();
+                // ad can be loaded if text is loaded 1st time (do not reload ad when just opening another file)
+                if (!textfile) {
+                    textfile = 1;
+                    AD.loadAd();
+                }
             };
 
             // read in the file
@@ -872,9 +874,6 @@ function loadDemo(demoid, demolang) {
     $.get('../demo/'+demoid+'.txt', function(data) { 
         loadText(data);
     });
-
-    // text is loaded, ad can be loaded
-    textfile = 1;
 
     audiofile = 'https://www.simplyeasy.cz/understand-server/files/'+demoid+'.mp3';
     loadAudioToPlayer(audiofile);
