@@ -167,7 +167,7 @@ function createAd(from, to) {
     }
 }
 
-AD.loadAd = function() {console.log('loadAd');
+AD.loadAd = function() {
 
     // hide ad
     $('#ad').addClass('hidden');
