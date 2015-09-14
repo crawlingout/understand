@@ -15,102 +15,10 @@
     <meta name="keywords" content="language, foreign language, learning, understanding" />
     <meta name="description" content="Stop translating in your head and improve your ability to understand native speakers." />
 
+    <link rel="stylesheet" href="style.css" />
+
     <!-- Font Awesome -->
     <link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet" />
-
-    <style>
-body {
-    font-family: Arial,sans-serif;
-}
-
-/* remove ugly dotted lines around clicked links and buttons in FF */
-button::-moz-focus-inner { border: 0; }
-
-/* remove highlight border around selected controls in Chrome and Safari */
-* {
-    outline: none;
-    -webkit-tap-highlight-color:  rgba(255, 255, 255, 0);
-}
-
-h1 {
-    color: #9d9d9d;
-    font-size: 30px;
-    font-weight: normal;
-    margin: 0;
-    padding: 0 0 20px;
-}
-
-h2 {
-    border-bottom: 1px solid silver;
-    color: #9d9d9d;
-    font-size: 15px;
-    margin: 0 0 60px;
-    padding: 0 0 20px;
-}
-
-#backhome {
-    color: silver;
-    display: block;
-    font-size: 18px;
-    padding: 18px;
-    width: 100px;
-}
-
-#demos {
-    font-size: 14px;
-    line-height: 30px;
-    margin: 0 auto;
-    max-width: 750px;
-    padding: 20px 30px 80px;
-}
-
-a {
-    color: #7ecf00;
-    text-decoration: none;
-}
-
-.lang_title {
-    color: #c1c1c1;
-    font-size: 28px;
-    font-weight: normal;
-    line-height: 38px;
-    padding: 0 0 20px;
-    width: 270px;
-}
-
-.lang_demos {
-    min-width: 500px;
-    padding-bottom: 30px;
-}
-
-.demo {
-    color: #4ba3d9;
-    display: block;
-    font-size: 14px;
-    margin: 0 4px 4px 0;
-    padding: 5px 0 10px;
-}
-
-.thanks {
-    color: #555454;
-    font-size: 13px;
-    font-style: italic;
-    padding: 5px 0;
-}
-
-h3 {
-    color: #c1c1c1;
-    font-size: 28px;
-    font-weight: normal;
-    line-height: 38px;
-    margin: 25px 0;
-}
-
-.gap {
-    height: 15px;
-    width: 100%;
-}
-    </style>
 
     <!-- Facebook Open Graph -->
     <meta property="fb:app_id" content="1383406805282282"/>
@@ -125,18 +33,25 @@ h3 {
     <a id="backhome" href="../cesky.html" title=" back to the main page "><i class="fa fa-chevron-left"></i>&nbsp;&nbsp; DOMŮ</a>
 
     <div id="demos">
-        <h1>Knihy na ukázku</h1>
+        <h1>Ukázky</h1>
 
         <h2>Klikněte na kterýkoli z těchto titulů a můžete začít poslouchat a číst.</h2>
+
+        <div id="shortcuts">
+            <!-- Demos in: <a href="#english">English</a><br>
+            <a href="#other">OTHER RESOURCES</a> -->
+        </div>
             
         <!-- Czech -->
-        <!-- <div class="lang_title">Česky</div>
+        <!-- <a name="czech"></a>
+        <div class="lang_title">Česky</div>
         <div class="lang_demos" data-lang="cs">
             <a class="demo" href="../cesky.html?id=capek-vrazednyutok&lang=cs"><strong>Vražedný útok</strong> by Karel Čapek</a>
         </div>
         <div class="gap clear"></div> -->
 
         <!-- English -->
+        <a name="english"></a>
         <div class="lang_title">Anglicky</div>
         <div class="lang_demos" data-lang="en">
             <a class="demo" href="../cesky.html?id=tom&lang=en"><strong>The Adventures of Tom Sawyer</strong> - Mark Twain</a>
@@ -148,8 +63,11 @@ h3 {
         <div class="gap clear"></div>
 
         <div id="more">
-            <h3>A to není vše!</h3>
-            Těchto pár knih a podcastů jsem vybral jen jako ukázku, abyste mohli jedním kliknutím vyzkoušet tuto aplikaci. Na internetu je nepřeberně míst, kde si můžete <strong>audioknihy</strong> <a target="_blank" href="http://www.downpour.com/">koupit</a> nebo i zdarma stáhnout. Mnoho titulů v angličtině i <a target="_blank" href="https://librivox.org/search?primary_key=0&search_category=language&search_page=1&search_form=get_results">jiných jazycích</a> najdete na <a href="https://librivox.org/">LibriVox</a>. Na <a target="_blank" href="http://www.openculture.com/freeaudiobooks">open culture</a> si můžete stáhnout epickou trilogii od Isaaca Asimova <a target="_blank" href="http://www.openculture.com/2012/01/free_isaac_asimovs_foundation_trilogy.html">Nadace</a>, <a target="_blank" href="http://www.openculture.com/2011/12/the_chronicles_of_narnia_free.html">Letopisy Narnie</a> od C.S. Lewise a řadu dalších knih. A podobné je to s <strong>podcastsy</strong>. Najdete jich spoustu, a mnohé z nich jsou mimořádně zajímavé, jako třeba <a target="_blank" href="http://www.thisamericanlife.org">This American Life</a> (anglicky) nebo <a target="_blank" href="http://radioambulante.org/">Radio Ambulante</a> (španělsky) a mnoho jiných... některé z nich jsou tak dobré, že už samy o sobě stojí za to se ten jazyk naučit.
+            <a name="other"></a>
+            <h3>Další zdroje</h3>
+            <p><strong>Audioknihy</strong> - můžete si je <a target="_blank" href="http://www.downpour.com/">koupit</a> nebo i zdarma stáhnout např. na stránkách jako <a href="https://librivox.org/">LibriVox</a>, kde najdete mnoho titulů v angličtině i <a target="_blank" href="https://librivox.org/search?primary_key=0&search_category=language&search_page=1&search_form=get_results">jiných jazycích</a>. Na <a target="_blank" href="http://www.openculture.com/freeaudiobooks">Open Culture</a> si můžete stáhnout trilogiia <a target="_blank" href="http://www.openculture.com/2012/01/free_isaac_asimovs_foundation_trilogy.html">Nadace</a> od Isaaca Asimov, <a target="_blank" href="http://www.openculture.com/2011/12/the_chronicles_of_narnia_free.html">Letopisy Narnie</a> od C.S. Lewise a řadu dalších knih.</p>
+
+            <p><strong>Podcastsy</strong> - <a target="_blank" href="http://www.thisamericanlife.org">This American Life</a> (anglicky) nebo <a target="_blank" href="http://radioambulante.org/">Radio Ambulante</a> (španělsky) a jsou výborné příklady. Řada podcastů má i transkripty. Některé mimořádně výjimečné podcasty jsou <a href="http://fourhourworkweek.com/podcast/">tak dobré</a>, že samy o sobě stojí za to se ten jazyk naučit.</p>
         </div>
     </div>
 
