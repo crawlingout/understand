@@ -279,11 +279,12 @@ li {
 }
 
 #controls {
-    width: 295px;
+    position: relative;
+    width: 320px;
 }
 
 #files {
-    padding: 0 5px 0 60px;
+    padding: 0 5px 0 50px;
     width: 290px;
 }
 
@@ -297,7 +298,7 @@ li {
 
 #languages {
     font-size: 13px;
-    padding: 15px 0 30px 60px;
+    padding: 15px 0 30px 50px;
     width: 210px;
 }
 
@@ -374,11 +375,11 @@ li {
 
 #bottom {
     background-color: #ffffff;
-    border-top: 1px solid #e3e3e3;
     font-size: 14px;
     margin: 0;
-    padding: 0 0 0 70px;
+    padding: 0 0 0 45px;
     position: relative;
+    z-index: 100;
 }
 
 #instructions {
@@ -399,7 +400,7 @@ li {
     color: #3c3c3c;
     font-size: 13px;
     line-height: 25px;
-    margin-right: 70px;
+    margin: 0 70px 0 25px;
     padding: 50px 0;
     position: relative;
 }
@@ -429,10 +430,12 @@ li {
 /* tracking */
 
 #tracking {
+    border-top: 1px solid #e3e3e3;
     color: #aaaaaa;
     font-size: 13px;
     line-height: 26px;
     margin: 0 0 10px;
+    padding-left: 25px;
 }
 
 #today {
@@ -606,7 +609,7 @@ li {
     color: #d7d7d7;
     cursor: pointer;
     font-size: 16px;
-    height: 18px;
+    height: 300px;
     left: 0;
     padding: 10px 15px 14px;
     position: absolute;
@@ -628,7 +631,7 @@ li {
 
 #faq {
     border-top: 1px solid #e3e3e3;
-    margin-right: 70px;
+    margin: 0 70px 0 25px;
     padding: 30px 0 60px;
 }
 
@@ -721,8 +724,16 @@ li {
 
 @media screen and (max-width: 950px) {
 
+    #controls {
+        margin-left: 15px;
+    }
+
+    #files {
+        padding: 0 5px 15px 78px;
+    }
+
     #languages {
-        padding: 20px 0 20px 60px;
+        padding: 20px 0 20px 75px;
         width: 600px;
     }
 
@@ -750,6 +761,10 @@ li {
 
     #ratio_audio_time {
         width: 125px;
+    }
+
+    .mobilehide {
+        display: none;
     }
 
 }

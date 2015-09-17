@@ -705,15 +705,15 @@ li {
 @media screen and (max-width: 950px) {
 
     #controls {
-        margin-left: 20px;
+        margin-left: 15px;
     }
 
     #files {
-        padding: 0 5px 15px 80px;
+        padding: 0 5px 15px 78px;
     }
 
     #languages {
-        padding: 20px 0 20px 80px;
+        padding: 20px 0 20px 75px;
         width: 600px;
     }
 
@@ -741,6 +741,10 @@ li {
 
     #ratio_audio_time {
         width: 125px;
+    }
+
+    .mobilehide {
+        display: none;
     }
 
 }
