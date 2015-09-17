@@ -713,6 +713,10 @@ li {
         top: 10px;
     }
 
+    .ad_img, #ad_txt {
+        display: none;
+    }
+
 }
 
 @media screen and (max-width: 950px) {
@@ -762,15 +766,8 @@ li {
         padding: 30px 40px 30px 70px;
     }
 
-    #ad_txt {
+    #ad {
         display: none;
     }
 
-}
-
-
-
-.debug {
-    padding: 15px 15px 15px 20px;
-    color: gray;
 }
