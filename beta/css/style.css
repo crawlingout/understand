@@ -226,11 +226,12 @@ li {
 }
 
 #controls {
-    width: 295px;
+    position: relative;
+    width: 320px;
 }
 
 #files {
-    padding: 0 5px 0 60px;
+    padding: 0 5px 0 50px;
     width: 290px;
 }
 
@@ -244,7 +245,7 @@ li {
 
 #languages {
     font-size: 13px;
-    padding: 15px 0 30px 60px;
+    padding: 15px 0 30px 50px;
     width: 210px;
 }
 
@@ -588,7 +589,7 @@ li {
     color: #d7d7d7;
     cursor: pointer;
     font-size: 16px;
-    height: 250px;
+    height: 300px;
     left: 0;
     padding: 10px 15px 14px;
     position: absolute;
@@ -703,8 +704,16 @@ li {
 
 @media screen and (max-width: 950px) {
 
+    #controls {
+        margin-left: 20px;
+    }
+
+    #files {
+        padding: 0 5px 15px 80px;
+    }
+
     #languages {
-        padding: 20px 0 20px 60px;
+        padding: 20px 0 20px 80px;
         width: 600px;
     }
 
