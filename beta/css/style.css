@@ -693,6 +693,10 @@ li {
         top: 10px;
     }
 
+    .ad_img, #ad_ad {
+        display: none;
+    }
+
 }
 
 @media screen and (max-width: 950px) {
