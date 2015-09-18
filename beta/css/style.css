@@ -19,6 +19,10 @@ button::-moz-focus-inner { border: 0; }
     display: none;
 }
 
+img {
+    border: none;
+}
+
 a {
     color: #4ba3d9;
     text-decoration: none;
@@ -636,9 +640,9 @@ li {
     padding: 0 0 10px;
 }
 
-#ad_txt {
+.ad_txt {
     color: #585858;
-    font-size: 15px;
+    font-size: 14px;
     line-height: 24px;
     padding-top: 1px;
 }
@@ -647,6 +651,12 @@ li {
     float: left;
     height: 50px;
     margin-right: 13px;
+}
+
+.ad_book img {
+    border: 1px solid #bbb8b8;
+    height: 160px;
+    margin-bottom: 10px;
 }
 
 #ad .round {
@@ -686,7 +696,7 @@ li {
         width: 100%;
     }
 
-    #ad_txt {
+    .ad_txt {
         font-size: 12px;
         line-height: 20px;
         max-width: 170px;
@@ -696,7 +706,7 @@ li {
         top: 10px;
     }
 
-    .ad_img, #ad_ad {
+    .ad_img, .ad_book, #ad_ad {
         display: none;
     }
 

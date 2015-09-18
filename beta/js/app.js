@@ -20,7 +20,7 @@ var $knob_player, $knob_today;
 var $body, $audio_time, $session_time, $session_time_small, $ratio, $session_audio_ratio, $audio_time_total, $session_time_total, $i_am_done, $backhome,
     $higher_than_ever, $translatedword, $selectedword, $translations, $whentoolong, $play_btn, $pause_btn, $play_pause, $jumpback, $from, $to, $idle,
     $goal_today, $streak, $record_ratio, $previous_translated_words, $linktodict, $googletranslate, $textFileSelect, $audioFileSelect, $content,
-    $content_wrapper, $instructions, $tracking;
+    $content_wrapper, $instructions, $tracking, $ad_templated;
 
 // cache recording/playback selectors
 var $playback, $recording;
@@ -122,6 +122,10 @@ var ads = {
         ], 
         "es": [
             {"url": 'http://b794agnig8m2ppbosmtbqm1r28.hop.clickbank.net/', "txt": "Rocket Inglés", "logo": "rocket", "lng": 'inglés'}
+        ],
+        "templates" : [
+            {"template": 'downpour'}, {"template": 'mrmercedes'}, {"template": 'everythingeventual'}, {"template": 'lifeaftertheft'},
+            {"template": 'freewill'}, {"template": 'dragontattoo'}
         ]
     }
 };
@@ -143,14 +147,21 @@ function getRandomInt(min, max) {
 function createAd(from, to) {
     if (ads[from]) {
         var relevant_ads;
+        var ad_txt = document.getElementById('ad_txt');
 
         // if there is at least one localised ad for selected 'to' language
         if (ads[from][to]) {
-            // merge localised ads into non-localised ads
+            // merge localised ads with non-localised ads
             relevant_ads = ads[from][to].concat(ads[from].ads);
         }
         else {
             relevant_ads = ads[from].ads;
+        }
+
+        // if there are any templated ads
+        if (ads[from].templates) {
+            // merge templated ads with generated ads
+            relevant_ads = relevant_ads.concat(ads[from].templates);
         }
 
         // select ad
@@ -158,9 +169,19 @@ function createAd(from, to) {
         var ad = relevant_ads[getRandomInt(0, number_of_ads-1)];
 
         // insert ad
-        var ad_txt = document.getElementById('ad_txt');
-        ad_txt.innerHTML = 'Learn <strong>'+ad.lng+'</strong> with<br> <a target="_blank" href="'+ad.url+'"><strong>'+ad.txt+'</strong></a>.';
-        $('#'+ad.logo).attr("href", ad.url).removeClass('hidden');
+        if (ad.template) {
+            // empty previous ad
+            ad_txt.innerHTML = '';
+
+            $("#ad_templated").load("ad-templates.html #"+ad.template);
+        }
+        else {
+            // empty previous ad
+            $ad_templated.html('');
+
+            ad_txt.innerHTML = 'Learn <strong>'+ad.lng+'</strong> with<br> <a target="_blank" href="'+ad.url+'"><strong>'+ad.txt+'</strong></a>.';
+            $('#'+ad.logo).attr("href", ad.url).removeClass('hidden');
+        }
 
         // show ad
         $('#ad').removeClass('hidden');
@@ -1033,6 +1054,7 @@ $(document).ready(function() {
     $content_wrapper = $('#content_wrapper');
     $instructions = $('#instructions');
     $tracking = $('#tracking');
+    $ad_templated = $("#ad_templated");
 
     $playback = $('#playback');
     $recording = $('#recording');
