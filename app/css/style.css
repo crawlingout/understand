@@ -705,6 +705,7 @@ li {
     }
     
     #left {
+        min-width: 510px;
         width: 100%;
     }
 
@@ -788,7 +789,7 @@ li {
     #content {
         font-size: 19px;
         line-height: 35px;
-        padding: 30px 40px 30px 70px;
+        padding: 30px 60px;
     }
 
     #ad {
