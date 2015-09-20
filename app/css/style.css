@@ -735,10 +735,6 @@ li {
 
 @media screen and (max-width: 950px) {
 
-    #controls {
-        margin-left: 15px;
-    }
-
     #files {
         padding: 0 5px 15px 78px;
     }
