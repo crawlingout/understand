@@ -209,14 +209,19 @@ var last_pause_time, pause_diff;
 var data = JSON.parse(localStorage.getItem('data')) || {};
 
 function convertSeconds(seconds) {
-    var hours_minutes = '0 min', mmt, hours, minutes;
+    var hours_minutes = '0 min', mmt, days, hours, minutes;
 
     if (seconds > 0) {
         mmt = moment.duration(seconds, 'seconds');
 
-        hours = mmt.hours() || '';
-        if (hours) {
+        hours = mmt.hours();
+        days = mmt.days();
+        if (hours || days) {
+            hours = hours + (24 * days);
             hours = hours+' h ';
+        }
+        else {
+            hours = '';
         }
 
         minutes = mmt.minutes() || '';
