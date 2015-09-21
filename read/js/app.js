@@ -152,7 +152,7 @@ function handleSelectedText(text) {
 }
 
 function resetText() {
-    $('#backhome').hide();
+    $('.backhome').hide();
     $('#content').hide().html('');
     $('#instructions').show();
 
@@ -192,7 +192,7 @@ function loadText(text) {
 
     // hideinstructions on how to use the site
     $('#instructions').hide();
-    $('#backhome').show();
+    $('.backhome').show();
     $('#translated_words').show();
 
     $('#content').show().html(content);
@@ -242,7 +242,7 @@ $(document).ready(function() {
     else {
         // show instructions on how to use the site
         $('#instructions').show();
-        $('#backhome').hide();
+        $('.backhome').hide();
     }
 
 
@@ -323,7 +323,7 @@ $(document).ready(function() {
 
 
     // CLEAR EVERYTHING AND GO BACK TO THE MAIN PAGE
-    $('#backhome').click(function() {
+    $('.backhome').click(function() {
         resetText();
     });
 

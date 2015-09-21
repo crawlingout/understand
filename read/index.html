@@ -159,30 +159,33 @@
     
     <div id="content_wrapper" data-language="en">
             
-            <div id="instructions">
+        <div id="instructions">
 
-                <a href="../">&lt;</a>
+            <a href="../"><i class="fa fa-chevron-left"></i></a>
 
-        
-                <p><br />
-                    Open <strong>text</strong> file of your own book (.txt - convert <a href="https://cloudconvert.com/pdf-to-txt" target="_blank">.pdf</a>, <a href="https://cloudconvert.com/epub-to-txt" target="_blank">.epub</a> and <a href="https://cloudconvert.com/" target="_blank">other formats</a> to .txt).
-                </p>
-                <div class="gap"></div>
-        
-                <div class="btn">
-                    <input type="file" id="text_files" name="text_files[]" style="display:none" />
-                    <div class="open_file" id="textFileSelect"><strong>Open</strong> your<br /> <strong>text</strong> file</div>
-                </div>
+    
+            <p><br />
+                You can open your <strong>text</strong> files in .txt format. You need to <a href="https://cloudconvert.com/" target="_blank">convert</a> other formats to .txt.
+            </p>
+            <div class="gap"></div>
+    
+            <div class="btn">
+                <input type="file" id="text_files" name="text_files[]" style="display:none" />
+                <div class="open_file" id="textFileSelect"><strong>Open</strong> your<br /> <strong>text</strong> file</div>
             </div>
-        
-        
-            <div id="content"></div>
         </div>
-        <div title="close this book and go back to the main page" id="backhome"><i class="fa fa-times"></i></div>    
+    
+    
+        <div id="content"></div>
+    </div>
+    <div title=" go back to the main page " id="back" class="backhome hidden"><i class="fa fa-chevron-left"></i></div>
+    <div title=" close this book " id="closebook" class="backhome hidden"><i class="fa fa-times"></i></div>   
 
     <!-- footer -->
     <div id="links">
-        2015 &copy; <a href="http://www.simplyeasy.cz/">Jan Bilek</a>&nbsp; | &nbsp; other projects:
+        2015 &copy; <a href="http://www.simplyeasy.cz/">Jan Bilek</a>
+        <br><br>
+        Other projects:
         <a href="http://unexploredparadises.eu/">Photos of extraordinary travel destinations</a>
     </div>
 </div>

@@ -97,17 +97,21 @@ li {
     position: relative;
 }
 
-#backhome {
+.backhome {
     color: silver;
     cursor: pointer;
-    font-size: 20px;
-    left: 0;
+    font-size: 18px;
     padding: 18px;
     position: absolute;
     text-align: center;
     top: 0;
     width: 30px;
-    display: none;
+}
+#back {
+    left: 0;
+}
+#closebook {
+    right: 10px;
 }
 
 .gap {
