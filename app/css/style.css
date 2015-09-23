@@ -387,7 +387,7 @@ li {
 }
 
 #instructions {
-    padding: 50px 70px 20px;
+    padding: 60px 70px 10px;
 }
 
 #instructions p {
@@ -422,11 +422,16 @@ li {
 }
 
 #beta {
-    color: #d9d9d9;
-    font-size: 22px;
+    color: #c9c9c9;
+    font-size: 17px;
+    font-style: italic;
     position: absolute;
-    right: 70px;
-    top: 25px;
+    right: 130px;
+    top: 50px;
+}
+
+#beta span {
+    color: #999999;
 }
 
 
