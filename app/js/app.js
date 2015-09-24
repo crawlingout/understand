@@ -121,7 +121,7 @@ var ads = {
             {"url": 'http://b794agnig8m2ppbosmtbqm1r28.hop.clickbank.net/', "txt": "Rocket Inglés", "logo": "rocket", "lng": 'inglés'}
         ],
         "templates" : [
-            {"template": 'downpour'}, {"template": 'mrmercedes'}, {"template": 'everythingeventual'}, {"template": 'lifeaftertheft'},
+            {"template": 'downpour'}, {"template": 'mrmercedes'}, {"template": 'everythingseventual'}, {"template": 'lifeaftertheft'},
             {"template": 'freewill'}, {"template": 'dragontattoo'}
         ]
     }
@@ -166,13 +166,13 @@ function createAd(from, to) {
         var ad = relevant_ads[getRandomInt(0, number_of_ads-1)];
 
         // insert ad
-        if (ad.template) {
+        if (ad.template) { // loading ad from template
             // empty previous ad
             ad_txt.innerHTML = '';
 
-            $("#ad_templated").load("ad-templates.html #"+ad.template);
+            $ad_templated.html($("#"+ad.template).html());
         }
-        else {
+        else { // generating ad
             // empty previous ad
             $ad_templated.html('');
 
