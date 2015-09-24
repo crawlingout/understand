@@ -126,10 +126,6 @@ li {
     padding: 30px 70px;
 }
 
-#translation_wrapper {
-    min-height: 60px;
-}
-
 #translations {
     padding: 0 20px;
 }
@@ -166,7 +162,7 @@ li {
     color: #4ba3d9;
     font-size: 13px;
     margin: 0 22px 30px;
-    padding: 5px 0 20px;
+    padding: 35px 0 20px;
     position: relative;
 }
 
@@ -186,7 +182,7 @@ li {
 #right {
     left: 1000px;
     min-width: 235px;
-    padding: 30px 0 0 10px;
+    padding: 50px 0 0 10px;
     position: absolute;
     top: 0;
 }
@@ -678,11 +674,19 @@ li {
 @media screen and (max-width: 1100px) {
 
     #right {
-        height: 50px;
+        height: 60px;
         left: 0;
         min-width: 235px;
-        padding: 20px 0 0 50px;
+        padding: 15px 0 0 50px;
         position: relative;
+    }
+
+    #translations {
+        padding: 6px 20px 50px;
+    }
+
+    #whentoolong {
+        padding: 9px 20px 50px;
     }
 
     #previous_translated_words {
@@ -705,11 +709,6 @@ li {
     .ad_txt {
         font-size: 12px;
         line-height: 20px;
-        max-width: 170px;
-        position: absolute;
-        right: 20px;
-        text-align: right;
-        top: 10px;
     }
 
     .ad_img, .ad_book, #ad_ad {
