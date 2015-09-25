@@ -20,7 +20,7 @@ var $knob_player, $knob_today;
 var $body, $audio_time, $session_time, $session_time_small, $ratio, $session_audio_ratio, $audio_time_total, $session_time_total, $i_am_done, $backhome,
     $higher_than_ever, $translatedword, $selectedword, $translations, $whentoolong, $play_btn, $pause_btn, $play_pause, $jumpback, $from, $to, $idle,
     $goal_today, $streak, $record_ratio, $previous_translated_words, $linktodict, $googletranslate, $textFileSelect, $audioFileSelect, $content,
-    $content_wrapper, $instructions, $tracking, $ad_templated;
+    $content_wrapper, $instructions, $tracking;
 
 // cache recording/playback selectors
 var $playback, $recording;
@@ -36,169 +36,6 @@ var ui_loc = {
     'cs': {
         'day': 'den',
         'days': 'dnů'
-    }
-};
-
-
-// REKLAMA
-
-var AD = {};
-
-var ads = {
-    "es": {
-        "ads": [
-            {"url": 'http://77ef3afiray8um7etjolygsnfp.hop.clickbank.net/', "txt": "Rocket Spanish", "logo": "rocket", "lng": 'Spanish'},
-            {"url": 'http://amzn.com/1617160857/?tag=simplyeasy-20', "txt": "Rosetta Stone", "logo": "rosetta", "lng": 'Spanish'},
-            {"url": 'http://amzn.com/B002ZF31NQ/?tag=simplyeasy-20', "txt": "Fluenz", "logo": "fluenz", "lng": 'Spanish'}
-        ]
-    },
-    "de": {
-        "ads": [
-            {"url": 'http://7d691cmcf601un1mt7vedgblaf.hop.clickbank.net/', "txt": "Rocket German", "logo": "rocket", "lng": 'German'},
-            {"url": 'http://amzn.com/1617160075/?tag=simplyeasy-20', "txt": "Rosetta Stone", "logo": "rosetta", "lng": 'German'},
-            {"url": 'http://amzn.com/B0083TP500/?tag=simplyeasy-20', "txt": "Fluenz", "logo": "fluenz", "lng": 'German'}
-        ]
-    },
-    "ja": {
-        "ads": [
-            {"url": 'http://98a829bdoen1qx0em-v103tdbr.hop.clickbank.net/', "txt": "Rocket Japanese","logo": "rocket", "lng": 'Japanese'},
-            {"url": 'http://amzn.com/1617160482/?tag=simplyeasy-20', "txt": "Rosetta Stone", "logo": "rosetta", "lng": 'Japanese'},
-            {"url": 'http://l2mastery.com/language-guides/master-japanese/', "txt": "John Fotheringham", "logo": "ja", "lng": 'Japanese'}
-        ]
-    },
-    "fr": {
-        "ads": [
-            {"url": 'http://ef0cdafln3wbqtajvmqdk4ay53.hop.clickbank.net/', "txt": "Rocket French", "logo": "rocket", "lng": 'French'},
-            {"url": 'http://amzn.com/1608299988/?tag=simplyeasy-20', "txt": "Rosetta Stone", "logo": "rosetta", "lng": 'French'},
-            {"url": 'http://amzn.com/B004CRNACW/?tag=simplyeasy-20', "txt": "Fluenz", "logo": "fluenz", "lng": 'French'}
-        ]
-    },
-    "it": {
-        "ads": [
-            {"url": 'http://db30ebfcffr8ro7drkoatytm4i.hop.clickbank.net/', "txt": "Rocket Italian", "logo": "rocket", "lng": 'Italian'},
-            {"url": 'http://amzn.com/1617160407/?tag=simplyeasy-20', "txt": "Rosetta Stone", "logo": "rosetta", "lng": 'Italian'},
-            {"url": 'http://amzn.com/B00A3N5W9S/?tag=simplyeasy-20', "txt": "Fluenz", "logo": "fluenz", "lng": 'Italian'}
-        ]
-    },
-    "ko": {
-        "ads": [
-            {"url": 'http://5f20d6kklb--tz0o-i2agl3vfr.hop.clickbank.net/', "txt": "Rocket Korean", "logo": "rocket", "lng": 'Korean'}
-        ]
-    },
-    "hi": {
-        "ads": [
-            {"url": 'http://c12a55laoa09-nflph12muclf4.hop.clickbank.net/', "txt": "Rocket Hindi", "logo": "rocket", "lng": 'Hindi'}
-        ]
-    },
-    "pt": {
-        "ads": [
-            {"url": 'http://66c31idgi9raxt5pocqsqc2m2u.hop.clickbank.net/', "txt": "Rocket Portuguese", "logo": "rocket", "lng": 'Portuguese'},
-            {"url": 'http://amzn.com/1617160725/?tag=simplyeasy-20', "txt": "Rosetta Stone", "logo": "rosetta", "lng": 'Portuguese'},
-            {"url": 'http://amzn.com/B00Q5PYFV4/?tag=simplyeasy-20', "txt": "Fluenz", "logo": "fluenz", "lng": 'Portuguese'}
-        ]
-    },
-    "zh-CHS": {
-        "ads": [
-            {"url": 'http://952929dbefn6uv7hf7sksoku1r.hop.clickbank.net/', "txt": "Rocket Chinese", "logo": "rocket", "lng": 'Chinese'},
-            {"url": 'http://amzn.com/1617168718/?tag=simplyeasy-20', "txt": "Rosetta Stone", "logo": "rosetta", "lng": 'Chinese'},
-            {"url": 'http://amzn.com/B00310UXQW/?tag=simplyeasy-20', "txt": "Fluenz", "logo": "fluenz", "lng": 'Chinese'}
-        ]
-    },
-    "zh-CHT": {
-        "ads": [
-            {"url": 'http://952929dbefn6uv7hf7sksoku1r.hop.clickbank.net/', "txt": "Rocket Chinese", "logo": "rocket", "lng": 'Chinese'},
-            {"url": 'http://amzn.com/1617168718/?tag=simplyeasy-20', "txt": "Rosetta Stone", "logo": "rosetta", "lng": 'Chinese'},
-            {"url": 'http://amzn.com/B00310UXQW/?tag=simplyeasy-20', "txt": "Fluenz", "logo": "fluenz", "lng": 'Chinese'}
-        ]
-    },
-    "he": {
-        "ads": [
-            {"url": 'http://021b4hncj2o5zw3gj1mlflfzbj.hop.clickbank.net/', "txt": "Practical Hebrew", "logo": "hebrew", "lng": 'Hebrew'}
-        ]
-    },
-    "en": {
-        "ads": [
-            {"url": 'http://amzn.com/1608299775/?tag=simplyeasy-20', "txt": "Rosetta Stone", "logo": "rosetta", "lng": 'English'}
-        ], 
-        "es": [
-            {"url": 'http://b794agnig8m2ppbosmtbqm1r28.hop.clickbank.net/', "txt": "Rocket Inglés", "logo": "rocket", "lng": 'inglés'}
-        ],
-        "templates" : [
-            {"template": 'downpour'}, {"template": 'mrmercedes'}, {"template": 'everythingseventual'}, {"template": 'lifeaftertheft'},
-            {"template": 'freewill'}, {"template": 'dragontattoo'}
-        ]
-    }
-};
-
-/*
-amazon link template:
-http://amzn.com/ASIN/?tag=simplyeasy-20
-*/
-
-
-/*
- * Returns a random integer between min (inclusive) and max (inclusive)
- * based on http://stackoverflow.com/a/1527820/716001
- */
-function getRandomInt(min, max) {
-    return Math.floor(Math.random() * (max - min + 1)) + min;
-}
-
-function createAd(from, to) {
-    if (ads[from]) {
-        var relevant_ads;
-        var ad_txt = document.getElementById('ad_txt');
-
-        // if there is at least one localised ad for selected 'to' language
-        if (ads[from][to]) {
-            // merge localised ads with non-localised ads
-            relevant_ads = ads[from][to].concat(ads[from].ads);
-        }
-        else {
-            relevant_ads = ads[from].ads;
-        }
-
-        // if there are any templated ads
-        if (ads[from].templates) {
-            // merge templated ads with generated ads
-            relevant_ads = relevant_ads.concat(ads[from].templates);
-        }
-
-        // select ad
-        var number_of_ads = relevant_ads.length;
-        var ad = relevant_ads[getRandomInt(0, number_of_ads-1)];
-
-        // insert ad
-        if (ad.template) { // loading ad from template
-            // empty previous ad
-            ad_txt.innerHTML = '';
-
-            $ad_templated.html($("#"+ad.template).html());
-        }
-        else { // generating ad
-            // empty previous ad
-            $ad_templated.html('');
-
-            ad_txt.innerHTML = 'Learn <strong>'+ad.lng+'</strong> with<br> <a target="_blank" href="'+ad.url+'"><strong>'+ad.txt+'</strong></a>.';
-            $('#'+ad.logo).attr("href", ad.url).removeClass('hidden');
-        }
-
-        // show ad
-        $('#ad').removeClass('hidden');
-    }
-}
-
-AD.loadAd = function() {
-
-    // hide ad
-    $('#ad').addClass('hidden');
-
-    // if book loaded
-    if (textfile) {
-
-        $('.ad_img').addClass('hidden');
-
-        createAd(from, to);
     }
 };
 
@@ -874,12 +711,6 @@ function handleTextFileSelect(evt) {
 
                 // store text
                 localStorage.setItem('stored_text_file_content', e.target.result);
-
-                // ad can be loaded if text is loaded 1st time (do not reload ad when just opening another file)
-                if (!textfile) {
-                    textfile = 1;
-                    AD.loadAd();
-                }
             };
 
             // read in the file
@@ -1059,7 +890,6 @@ $(document).ready(function() {
     $content_wrapper = $('#content_wrapper');
     $instructions = $('#instructions');
     $tracking = $('#tracking');
-    $ad_templated = $("#ad_templated");
 
     $playback = $('#playback');
     $recording = $('#recording');
@@ -1078,8 +908,6 @@ $(document).ready(function() {
     // previously opened text file
     if (textfile) {
         loadText(textfile);
-
-        AD.loadAd();
     }
     else {
         // show instructions on how to use the site
@@ -1145,14 +973,10 @@ $(document).ready(function() {
         TRACK.setTodayKnob(); // 2
         TRACK.displayTrackingData(today); // 3
 
-        AD.loadAd();
-
         localStorage.setItem('stored_lang_from', from);
     });
     $to.change(function() {
         to = $(this).val();
-
-        AD.loadAd();
 
         localStorage.setItem('stored_lang_to', to);
     });
@@ -1437,4 +1261,29 @@ $(document).ready(function() {
     });
 
     // ========
+
+    // Hotjar Tracking Code for understand.simplyeasy.cz
+    (function(h,o,t,j,a,r){
+        h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments);};
+        h._hjSettings={hjid:79605,hjsv:5};
+        a=o.getElementsByTagName('head')[0];
+        r=o.createElement('script');r.async=1;
+        r.src=t+h._hjSettings.hjid+j+h._hjSettings.hjsv;
+        a.appendChild(r);
+    })(window,document,'//static.hotjar.com/c/hotjar-','.js?sv=');
+
+    // HelpCrunch
+    (function(w,d){
+        w.HelpCrunch=function(){w.HelpCrunch.q.push(arguments);};w.HelpCrunch.q=[];
+        var s=document.createElement('script');s.async=1;s.type='text/javascript';s.src='https://honzzz.helpcrunch.com/compiled/sdk.js';
+        d.body.appendChild(s);
+    })(window, document);
+
+    HelpCrunch('init', 'honzzz', {
+        applicationId: 117,
+        applicationSecret: 'kIpJ1ACkWUz2f8fR1drIfrTBRX1jVZRMdjSDmkPX+x8hciZvIvflfGXFa8zfg8D9aoHTPGDCsD0+F9V8I2xRiQ=='
+    });
+
+    HelpCrunch('showChatWidget', {position: 'right'});
+
 });
