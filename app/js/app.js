@@ -708,6 +708,11 @@ function handleTextFileSelect(evt) {
 
                 // store text
                 localStorage.setItem('stored_text_file_content', e.target.result);
+
+                // track in Hotjar
+                if (typeof hj === "function") {
+                    hj('vpv', '/text-loaded/');
+                }
             };
 
             // read in the file
@@ -1160,16 +1165,25 @@ $(document).ready(function() {
     })(window,document,'//static.hotjar.com/c/hotjar-','.js?sv=');
 
     // HelpCrunch
+    var helpcrunch_data =  {
+        applicationId: 117,
+        applicationSecret: 'kIpJ1ACkWUz2f8fR1drIfrTBRX1jVZRMdjSDmkPX+x8hciZvIvflfGXFa8zfg8D9aoHTPGDCsD0+F9V8I2xRiQ=='
+    };
+
+    // insert user ID if available
+    if (uploaded_file_id) {
+        helpcrunch_data.user = {
+            'user_id': uploaded_file_id
+        };
+    }
+
     (function(w,d){
         w.HelpCrunch=function(){w.HelpCrunch.q.push(arguments);};w.HelpCrunch.q=[];
         var s=document.createElement('script');s.async=1;s.type='text/javascript';s.src='https://honzzz.helpcrunch.com/compiled/sdk.js';
         d.body.appendChild(s);
     })(window, document);
 
-    HelpCrunch('init', 'honzzz', {
-        applicationId: 117,
-        applicationSecret: 'kIpJ1ACkWUz2f8fR1drIfrTBRX1jVZRMdjSDmkPX+x8hciZvIvflfGXFa8zfg8D9aoHTPGDCsD0+F9V8I2xRiQ=='
-    });
+    HelpCrunch('init', 'honzzz', helpcrunch_data);
 
     HelpCrunch('showChatWidget', {position: 'right'});
 });
