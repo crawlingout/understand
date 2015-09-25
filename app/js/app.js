@@ -711,7 +711,7 @@ function handleTextFileSelect(evt) {
 
                 // track in Hotjar
                 if (typeof hj === "function") {
-                    hj('vpv', '/text-loaded/');
+                    hj('vpv', '/app/text-loaded/');
                 }
             };
 
@@ -1081,6 +1081,11 @@ $(document).ready(function() {
             // scroll to bottom of tracking element
             scrollTop: $('#'+which_marker).offset().top
         }, 1000);
+
+        // track in Hotjar
+        if (typeof hj === "function") {
+            if (which_marker === 'faq') {hj('vpv', '/app/instructions');}
+        }
     });
 
 
