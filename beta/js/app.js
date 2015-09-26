@@ -1090,9 +1090,10 @@ $(document).ready(function() {
             // record/replay
             recordReplay();
         }
-        else if (key == 16) { // shift
+        // shift pressed but not with other keys (=browser keyboard shortcut), also HelpCrunch chat not opened
+        // should stay undocumented feature?
+        else if ((key == 16) && !(e.ctrlKey || e.metaKey) && !$('.helpcrunch-chat').is(':visible')) {
             // click on last translated word(s) link
-            // should stay undocumented feature? BETA only?
             if ($googletranslate.is(':visible')) {
                 $googletranslate[0].click();
             }
@@ -1274,6 +1275,37 @@ $(document).ready(function() {
 
     // Hotjar and HelpCrunch removed from beta
 
-    console.log(uploaded_file_id);
+    // Hotjar Tracking Code for understand.simplyeasy.cz
+    (function(h,o,t,j,a,r){
+        h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments);};
+        h._hjSettings={hjid:79605,hjsv:5};
+        a=o.getElementsByTagName('head')[0];
+        r=o.createElement('script');r.async=1;
+        r.src=t+h._hjSettings.hjid+j+h._hjSettings.hjsv;
+        a.appendChild(r);
+    })(window,document,'//static.hotjar.com/c/hotjar-','.js?sv=');
+
+    // HelpCrunch
+    var helpcrunch_data =  {
+        applicationId: 117,
+        applicationSecret: 'kIpJ1ACkWUz2f8fR1drIfrTBRX1jVZRMdjSDmkPX+x8hciZvIvflfGXFa8zfg8D9aoHTPGDCsD0+F9V8I2xRiQ=='
+    };
+
+    // insert user ID if available
+    if (uploaded_file_id) {
+        helpcrunch_data.user = {
+            'user_id': uploaded_file_id
+        };
+    }
+
+    (function(w,d){
+        w.HelpCrunch=function(){w.HelpCrunch.q.push(arguments);};w.HelpCrunch.q=[];
+        var s=document.createElement('script');s.async=1;s.type='text/javascript';s.src='https://honzzz.helpcrunch.com/compiled/sdk.js';
+        d.body.appendChild(s);
+    })(window, document);
+
+    HelpCrunch('init', 'honzzz', helpcrunch_data);
+
+    HelpCrunch('showChatWidget', {position: 'right'});
 
 });

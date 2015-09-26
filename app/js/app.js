@@ -1064,6 +1064,17 @@ $(document).ready(function() {
             // play/pause
             playPause();
         }
+        // shift pressed but not with other keys (=browser keyboard shortcut), also HelpCrunch chat not opened
+        // should stay undocumented feature?
+        else if ((key == 16) && !(e.ctrlKey || e.metaKey) && !$('.helpcrunch-chat').is(':visible')) {
+            // click on last translated word(s) link
+            if ($googletranslate.is(':visible')) {
+                $googletranslate[0].click();
+            }
+            else if ($selectedword.text()) {
+                $linktodict[0].click();
+            }
+        }
     };
 
 
