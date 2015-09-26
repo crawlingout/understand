@@ -1,0 +1,82 @@
+html, body {
+    background-color: #f9f9f9;
+    font-family: Arial,sans-serif;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+/* remove ugly dotted lines around clicked links and buttons in FF */
+button::-moz-focus-inner { border: 0; }
+
+/* remove highlight border around selected controls in Chrome and Safari */
+* {
+    outline: none;
+    -webkit-tap-highlight-color:  rgba(255, 255, 255, 0);
+}
+
+a {
+    color: #4ba3d9;
+    text-decoration: none;
+}
+
+h1 {
+    color: #4ba3d9;
+    font-family: arial,sans-serif;
+    font-size: 38px;
+    font-weight: 300;
+    margin: 10px 0 40px;
+}
+
+#other_languages {
+    color: #8b8b8b;
+    height: 80px;
+    line-height: 25px;
+    margin: 0;
+    padding: 5px 30px 5px 0;
+    text-align: right;
+}
+
+.other_lang {
+    display: block;
+    float: right;
+    font-size: 15px;
+    margin: 0 0 0 40px;
+    text-transform: uppercase;
+}
+
+#envelope {
+    margin: 0 auto;
+    max-width: 700px;
+    padding: 15px 50px 100px;
+}
+
+#envelope p {
+    color: #8b8b8b;
+    font-size: 18px;
+    line-height: 35px;
+}
+
+#getstarted {
+    height: 80px;
+    margin: 60px 0 0;
+}
+
+#getstarted a {
+    background-color: #4ba3d9;
+    border-radius: 8px;
+    color: white;
+    display: block;
+    font-size: 28px;
+    padding: 10px 0;
+    text-align: center;
+    width: 200px;
+}
+
+#norisk {
+    color: #747474;
+    font-size: 14px;
+    padding: 20px 5px;
+    text-align: center;
+    width: 200px;
+}
