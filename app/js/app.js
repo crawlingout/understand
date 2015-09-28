@@ -908,25 +908,29 @@ $(document).ready(function() {
 
     // detect clicked word
     // based on http://stackoverflow.com/a/9304990/716001 - space at the beginning of each paragraph needed!
-    $content.on('mouseup', 'span.mycontent', function(e) {
-        s = window.getSelection();
+    $content.on('mouseup', function(e) {
+        var s = window.getSelection();
         var range = s.getRangeAt(0);
-        var node = s.anchorNode;
 
-        while (range.toString().indexOf(' ') !== 0) {
-            range.setStart(node, (range.startOffset - 1));
-        }
+        // just word clicked (no text highlighted) and it is text that is being clicked (not space between paragraphs)
+        if (s.toString().length === 0 && $(e.target).is('span.mycontent')) {
+            var node = s.anchorNode;
+            
+            while (range.toString().indexOf(' ') !== 0) {
+                range.setStart(node, (range.startOffset - 1));
+            }
 
-        range.setStart(node, (range.startOffset + 1));
-        if (range.endOffset < node.length) {
-            // keep selecting letters until space after word is selected
-            do {
-                range.setEnd(node, range.endOffset + 1);
+            range.setStart(node, (range.startOffset + 1));
+            if (range.endOffset < node.length) {
+                // keep selecting letters until space after word is selected
+                do {
+                    range.setEnd(node, range.endOffset + 1);
 
-            } while (range.toString().indexOf(' ') === -1);
+                } while (range.toString().indexOf(' ') === -1);
 
-            // unselect space after selected word
-            range.setEnd(node, range.endOffset - 1);
+                // unselect space after selected word
+                range.setEnd(node, range.endOffset - 1);
+            }
         }
 
         var str = range.toString().trim();
