@@ -1,5 +1,5 @@
-//var server = 'https://www.simplyeasy.cz/understand-server/';
-var server = '../understand-server/';
+var server = 'https://www.simplyeasy.cz/understand-server/';
+//var server = '../understand-server/';
 
 var from = localStorage.getItem('stored_lang_from') || 'es';
 var to = localStorage.getItem('stored_lang_to') || 'en';
@@ -930,25 +930,29 @@ $(document).ready(function() {
 
     // detect clicked word
     // based on http://stackoverflow.com/a/9304990/716001 - space at the beginning of each paragraph needed!
-    $content.on('mouseup', 'span.mycontent', function(e) {
+    $content.on('mouseup', function(e) {
+    //$content.on('mouseup', 'span.mycontent', function(e) {
         s = window.getSelection();
         var range = s.getRangeAt(0);
         var node = s.anchorNode;
 
-        while (range.toString().indexOf(' ') !== 0) {
-            range.setStart(node, (range.startOffset - 1));
-        }
+        // if there is no space (= no longer text highlighted, just word clicked or selected) ind text is being clicked (not space between paragraphs)
+        if (range.toString().trim().indexOf(' ') === -1 && range.startOffset) {
+            while (range.toString().indexOf(' ') !== 0) {
+                range.setStart(node, (range.startOffset - 1));
+            }
 
-        range.setStart(node, (range.startOffset + 1));
-        if (range.endOffset < node.length) {
-            // keep selecting letters until space after word is selected
-            do {
-                range.setEnd(node, range.endOffset + 1);
+            range.setStart(node, (range.startOffset + 1));
+            if (range.endOffset < node.length) {
+                // keep selecting letters until space after word is selected
+                do {
+                    range.setEnd(node, range.endOffset + 1);
 
-            } while (range.toString().indexOf(' ') === -1);
+                } while (range.toString().indexOf(' ') === -1);
 
-            // unselect space after selected word
-            range.setEnd(node, range.endOffset - 1);
+                // unselect space after selected word
+                range.setEnd(node, range.endOffset - 1);
+            }
         }
 
         var str = range.toString().trim();

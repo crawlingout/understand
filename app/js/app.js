@@ -908,7 +908,7 @@ $(document).ready(function() {
 
     // detect clicked word
     // based on http://stackoverflow.com/a/9304990/716001 - space at the beginning of each paragraph needed!
-    $content.on('click', 'span.mycontent', function(e) {
+    $content.on('mouseup', 'span.mycontent', function(e) {
         s = window.getSelection();
         var range = s.getRangeAt(0);
         var node = s.anchorNode;
@@ -917,12 +917,16 @@ $(document).ready(function() {
             range.setStart(node, (range.startOffset - 1));
         }
 
-        range.setStart(node, range.startOffset + 1);
+        range.setStart(node, (range.startOffset + 1));
         if (range.endOffset < node.length) {
+            // keep selecting letters until space after word is selected
             do {
                 range.setEnd(node, range.endOffset + 1);
 
-            } while (range.toString().indexOf(' ') === -1 && range.toString().trim() !== '');
+            } while (range.toString().indexOf(' ') === -1);
+
+            // unselect space after selected word
+            range.setEnd(node, range.endOffset - 1);
         }
 
         var str = range.toString().trim();

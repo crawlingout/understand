@@ -125,6 +125,10 @@ li {
     font-size: 13px;
 }
 
+#googletranslate:visited {
+    color: #9d9d9d;
+}
+
 #selectedword {
     background-color: #75e600;
     color: #FFFFFF;
