@@ -931,13 +931,13 @@ $(document).ready(function() {
     // detect clicked word
     // based on http://stackoverflow.com/a/9304990/716001 - space at the beginning of each paragraph needed!
     $content.on('mouseup', function(e) {
-    //$content.on('mouseup', 'span.mycontent', function(e) {
-        s = window.getSelection();
+        var s = window.getSelection();
         var range = s.getRangeAt(0);
-        var node = s.anchorNode;
 
-        // if there is no space (= no longer text highlighted, just word clicked or selected) ind text is being clicked (not space between paragraphs)
-        if (range.toString().trim().indexOf(' ') === -1 && range.startOffset) {
+        // just word clicked (no text highlighted) and it is text that is being clicked (not space between paragraphs)
+        if (s.toString().length === 0 && $(e.target).is('span.mycontent')) {
+            var node = s.anchorNode;
+            
             while (range.toString().indexOf(' ') !== 0) {
                 range.setStart(node, (range.startOffset - 1));
             }

@@ -111,7 +111,7 @@ li {
     font-family: Times, serif;
     font-size: 24px;
     line-height: 36px;
-    margin: 70px;
+    padding: 30px 70px;
 }
 
 #translations {
@@ -710,7 +710,7 @@ li {
     #content {
         font-size: 19px;
         line-height: 35px;
-        margin: 60px;
+        padding: 30px 60px;
     }
 
     #right {
