@@ -73,6 +73,10 @@ $(document).ready(function() {
     // start video
     $simulation.click(function() {
 
+        // workaround to enable sounds in callbacks on mobile devices
+        hobbit.play();hobbit.pause();
+        click.play();click.pause();
+
         // hide play button
         $startvideo.addClass('hidden');
 
@@ -285,27 +289,5 @@ $(document).ready(function() {
         $simulation.click();
     });
 
-    // Hotjar Tracking Code for understand.simplyeasy.cz
-    (function(h,o,t,j,a,r){
-        h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments);};
-        h._hjSettings={hjid:79605,hjsv:5};
-        a=o.getElementsByTagName('head')[0];
-        r=o.createElement('script');r.async=1;
-        r.src=t+h._hjSettings.hjid+j+h._hjSettings.hjsv;
-        a.appendChild(r);
-    })(window,document,'//static.hotjar.com/c/hotjar-','.js?sv=');
-
-    // HelpCrunch
-    (function(w,d){
-        w.HelpCrunch=function(){w.HelpCrunch.q.push(arguments);};w.HelpCrunch.q=[];
-        var s=document.createElement('script');s.async=1;s.type='text/javascript';s.src='https://honzzz.helpcrunch.com/compiled/sdk.js';
-        d.body.appendChild(s);
-    })(window, document);
-
-    HelpCrunch('init', 'honzzz', {
-        applicationId: 117,
-        applicationSecret: 'kIpJ1ACkWUz2f8fR1drIfrTBRX1jVZRMdjSDmkPX+x8hciZvIvflfGXFa8zfg8D9aoHTPGDCsD0+F9V8I2xRiQ=='
-    });
-
-    HelpCrunch('showChatWidget', {position: 'right'});
+    // Hotjar and HelpCrunch not included in beta
 });

@@ -73,6 +73,10 @@ $(document).ready(function() {
     // start video
     $simulation.click(function() {
 
+        // workaround to enable sounds in callbacks on mobile devices
+        hobbit.play();hobbit.pause();
+        click.play();click.pause();
+
         // hide play button
         $startvideo.addClass('hidden');
 
