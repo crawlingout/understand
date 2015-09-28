@@ -629,6 +629,7 @@ li {
     .helpcrunch-status-bar {
         top: 10px !important;
         bottom: auto !important;
+        position: absolute !important;
     }
 
 }

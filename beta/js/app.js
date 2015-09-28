@@ -1,5 +1,5 @@
-var server = 'https://www.simplyeasy.cz/understand-server/';
-//var server = '../understand-server/';
+//var server = 'https://www.simplyeasy.cz/understand-server/';
+var server = '../understand-server/';
 
 var from = localStorage.getItem('stored_lang_from') || 'es';
 var to = localStorage.getItem('stored_lang_to') || 'en';
@@ -657,6 +657,9 @@ function handleAudioFileSelect(evt) {
 
 function loadText(text) {
 
+    // hide instructions on how to use the site
+    $instructions.addClass('hidden');
+
     // un-green the 'load text' button
     $textFileSelect.css({
         "background-color": "#FFFFFF",
@@ -678,8 +681,6 @@ function loadText(text) {
     }
     content = content + '</span></p>';
 
-    // hide instructions on how to use the site
-    $instructions.addClass('hidden');
     $backhome.removeClass('hidden');
 
     $content.removeClass('hidden').html(content);
@@ -731,6 +732,9 @@ function handleTextFileSelect(evt) {
 }
 
 function loadDemo(demoid, demolang) {
+
+    $instructions.addClass('hidden'); // it's here - although it's also in loadText - to prevent flickering of instructions before loading text
+
     resetPlayer(); // because demo could be loaded when some audio file is already open
 
     $.get('../demo/'+demoid+'.txt', function(data) { 
@@ -926,7 +930,7 @@ $(document).ready(function() {
 
     // detect clicked word
     // based on http://stackoverflow.com/a/9304990/716001 - space at the beginning of each paragraph needed!
-    $content.on('click', 'span.mycontent', function(e) {
+    $content.on('mouseup', 'span.mycontent', function(e) {
         s = window.getSelection();
         var range = s.getRangeAt(0);
         var node = s.anchorNode;
@@ -935,12 +939,16 @@ $(document).ready(function() {
             range.setStart(node, (range.startOffset - 1));
         }
 
-        range.setStart(node, range.startOffset + 1);
+        range.setStart(node, (range.startOffset + 1));
         if (range.endOffset < node.length) {
+            // keep selecting letters until space after word is selected
             do {
                 range.setEnd(node, range.endOffset + 1);
 
-            } while (range.toString().indexOf(' ') === -1 && range.toString().trim() !== '');
+            } while (range.toString().indexOf(' ') === -1);
+
+            // unselect space after selected word
+            range.setEnd(node, range.endOffset - 1);
         }
 
         var str = range.toString().trim();

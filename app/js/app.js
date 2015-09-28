@@ -654,6 +654,9 @@ function handleAudioFileSelect(evt) {
 
 function loadText(text) {
 
+    // hide instructions on how to use the site
+    $instructions.addClass('hidden');
+
     // un-green the 'load text' button
     $textFileSelect.css({
         "background-color": "#FFFFFF",
@@ -675,8 +678,6 @@ function loadText(text) {
     }
     content = content + '</span></p>';
 
-    // hide instructions on how to use the site
-    $instructions.addClass('hidden');
     $backhome.removeClass('hidden');
 
     $content.removeClass('hidden').html(content);
@@ -728,6 +729,9 @@ function handleTextFileSelect(evt) {
 }
 
 function loadDemo(demoid, demolang) {
+
+    $instructions.addClass('hidden'); // it's here - although it's also in loadText - to prevent flickering of instructions before loading text
+
     resetPlayer(); // because demo could be loaded when some audio file is already open
 
     $.get('../demo/'+demoid+'.txt', function(data) { 
