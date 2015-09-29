@@ -114,15 +114,20 @@ li {
     padding: 30px 70px;
 }
 
+#translated_words {
+    font-size: 14px;
+}
+
 #translations {
+    font-size: 16px;
     padding: 0 20px;
 }
 
 #whentoolong {
+    color: #4a4a4a;
     height: 20px;
-    padding: 5px 20px;
     line-height: 20px;
-    font-size: 13px;
+    padding: 5px 20px;;
 }
 
 #googletranslate:visited {
@@ -134,6 +139,7 @@ li {
     color: #FFFFFF;
     float: left;
     height: 20px;
+    line-height: 20px;
     padding: 5px 8px;
 }
 
@@ -142,6 +148,7 @@ li {
     color: #FFFFFF;
     float: left;
     height: 20px;
+    line-height: 20px;
     padding: 5px 8px;
 }
 
@@ -152,7 +159,6 @@ li {
 
 #previous_translated_words {
     color: #4ba3d9;
-    font-size: 13px;
     margin: 0 22px 30px;
     padding: 35px 0 20px;
     position: relative;
@@ -160,11 +166,11 @@ li {
 
 #previous_translated_words p {
     line-height: 20px;
-    margin: 0 0 15px;
+    margin: 0 0 18px;
 }
 
 #previous_translated_words span {
-    color: #75e600;
+    color: #6bd300;
 }
 
 #previous_translated_words em {
