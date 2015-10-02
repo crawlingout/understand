@@ -445,7 +445,7 @@ function handleSelectedText(text) {
         $translatedword.text('...');
 
         // regex to remove weird leading and trailing characters
-        text = text.replace(/^\W+|\W+$/g, "");
+        text = text.replace(/^[,.?¿!¡:();„“”‚‘'’"‹›«»—]+|[,.?¿!¡:();„“”‚‘'’"‹›«»—]+$/g, '');
 
         // hide warning text shown when text is too long
         $whentoolong.addClass('hidden');
