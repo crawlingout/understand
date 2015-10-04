@@ -1307,7 +1307,7 @@ $(document).ready(function() {
     });
 
     $videoreplay.click(function() {
-        $videoafter.removeClass('hidden');
+        $videoafter.addClass('hidden');
         $videocover.click();
     });
 
