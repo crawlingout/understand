@@ -1184,6 +1184,7 @@ $(document).ready(function() {
 
     var $videocover = $('#videocover');
     var $videoafter = $('#videoafter');
+    var $videoreplay = $('#videoreplay');
 
     $videocover.click(function() {
 
