@@ -996,6 +996,10 @@ $(document).ready(function() {
         if (audiofile) {
             playPause();
         }
+        else {
+            // play explainer video
+            $videocover.click();
+        }
     });
 
     // jump N (defined in data attribute) seconds back
@@ -1070,7 +1074,9 @@ $(document).ready(function() {
         }
         else if (key == 39) { // right arrow
             // play/pause
-            playPause();
+            if (audiofile) {
+                playPause();
+            }
         }
         // shift pressed but not with other keys (=browser keyboard shortcut), also HelpCrunch chat not opened
         // should stay undocumented feature?
