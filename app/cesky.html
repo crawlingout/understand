@@ -74,24 +74,44 @@
     <div id="content_wrapper">
         
         <div id="instructions">
-            <!-- BETA -->
-            <div id="beta">
-                <span>UNDERSTAND</span>_BETA
+            <div id="menu">
+                <a href="demos">UKÁZKY</a> <span class="pseudolink jump_to" data-marker="faq">FAQ</span>
             </div>
 
             <div class="gap"></div>
             <h3>Učte se jazyky pomocí autentického audio obsahu</h3>
-            <div class="gap"></div>
-    
-            <p>
-                1. &nbsp; Otevřete si <strong>audio</strong> i <strong>text</strong> nějaké zajímavé audioknihy nebo podcastu - můžete vyzkoušet naše <a href="demos/cesky.html"><strong>ukázky</strong></a>.
-            </p>
-            <p>
-                2. &nbsp; Poslouchejte bez dívání se na text. Jen když nerozumíte, čtěte text. Neznáte-li některé slovo, klikněte na něj pro překlad.
-            </p>
-            <p>
-                –&nbsp; &nbsp; Něco není úplně jasné? Podívejte se na <a href="video/cesky.html"><strong>video</strong></a> nebo si přečtěte <span class="pseudolink jump_to" data-marker="faq"><strong>instrukce</strong></span>.
-            </p>
+
+            <div id="video">
+                <div id="videocover" style='background: rgba(0, 0, 0, 0) url("video/cs.png") repeat scroll -2px -3px;'>
+                    <div id="videostart" title=" How to use this app? ">
+                        <i class="fa fa-play"></i>
+                    </div>
+                </div>
+
+                <video id="videofile" preload="auto" width="710" height="420" poster="video/poster.png">
+                    <source src='video/cs.mp4' type='video/mp4'>
+                
+                    <!-- only visible when video not supported -->
+                    Your browser does not support the video tag.
+                </video>
+
+                <div id="videoafter" class="hidden">
+                    Otevřete si vlastní soubory nebo vyzkoušejte naše <a href="demos/cesky.html"><strong>ukázky</strong></a>.
+                    <div id="videoreplay" title=" Replay "><i class="fa fa-repeat"></i></div>
+                </div>
+
+                <div id="videothanks">
+                    Audio ukázku čte <a href="https://www.facebook.com/lecturasdeyamil"> Yamil Cuéllar</a> - muchísimas gracias :-)
+                </div>
+            </div>
+
+            <div id="textinstructions">
+                <ul>
+                    <li>Otevřete si <strong>audio</strong> i <strong>text</strong> nějaké zajímavé audioknihy nebo podcastu - můžete vyzkoušet naše <a href="demos/cesky.html"><strong>ukázky</strong></a>.</li>
+                    <li>Poslouchejte bez dívání se na text. Jen když nerozumíte, čtěte text. Kliknutím na slovo zobrazíte jeho překlad.</li>
+                    <li>Něco není úplně jasné? Podívejte se na <a href="video/cs.mp4"><strong>video</strong></a> nebo si přečtěte <span class="pseudolink jump_to" data-marker="faq"><strong>instrukce</strong></span>.</li>
+                </ul>
+            </div>
         </div>
     
     

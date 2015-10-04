@@ -74,26 +74,44 @@
     <div id="content_wrapper">
         
         <div id="instructions">
-            <!-- BETA -->
-            <div id="beta">
-                <span>UNDERSTAND</span>_BETA
+            <div id="menu">
+                <a href="demos">DEMOS</a> <span class="pseudolink jump_to" data-marker="faq">FAQ</span>
             </div>
 
             <div class="gap"></div>
             <h3>Use authentic audio content to learn languages</h3>
-            <div class="gap"></div>
-    
-            <p>
-                1. &nbsp; Open both <strong>audio</strong> and <strong>text</strong> files of some interesting content (audiobooks, podcasts) - you can also try one of our <a href="demos"><strong>demos</strong></a>.
-            </p>
-    
-            <p>
-                2. &nbsp; Listen without reading. Only when you don't understand, read. Click on words you don't know to see their translations.
-            </p>
-    
-            <p>
-                –&nbsp; &nbsp; Do you need more help? Read the <span class="pseudolink jump_to" data-marker="faq"><strong>instructions</strong></span> or watch the <a href="video"><strong>video</strong></a>.
-            </p>
+
+            <div id="video">
+                <div id="videocover" style='background: rgba(0, 0, 0, 0) url("video/en.png") repeat scroll -2px -3px;'>
+                    <div id="videostart" title=" How to use this app? ">
+                        <i class="fa fa-play"></i>
+                    </div>
+                </div>
+
+                <video id="videofile" preload="auto" width="710" height="420" poster="video/poster.png">
+                    <source src='video/en.mp4' type='video/mp4'>
+                
+                    <!-- only visible when video not supported -->
+                    Your browser does not support the video tag.
+                </video>
+
+                <div id="videoafter" class="hidden">
+                    Open your own files or try one of our <a href="demos"><strong>demos</strong></a>.
+                    <div id="videoreplay" title=" Replay "><i class="fa fa-repeat"></i></div>
+                </div>
+
+                <div id="videothanks">
+                    Narrated by <a href="https://www.facebook.com/lecturasdeyamil"> Yamil Cuéllar</a> - muchísimas gracias :-)
+                </div>
+            </div>
+
+            <div id="textinstructions">
+                <ul>
+                    <li>Open both <strong>audio</strong> and <strong>text</strong> files of some interesting content (audiobooks, podcasts) - or try our <a href="demos"><strong>demos</strong></a>.</li>
+                    <li>Listen without reading. Only when you don't understand, read. Click on words to see their translations.</li>
+                    <li>Need more help? Read the <span class="pseudolink jump_to" data-marker="faq"><strong>instructions</strong></span> or watch the <a href="video/en.mp4"><strong>video</strong></a>.</li>
+                </ul>
+            </div>
         </div>
     
     

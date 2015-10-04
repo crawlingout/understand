@@ -193,11 +193,11 @@ li {
 }
 
 .open_file {
-    background-color: #4ba3d9;
+    background-color: #ffffff;
     border: 1px solid #DEDEDE;
     border-radius: 8px;
     box-shadow: 0 0 6px #DEDEDE;
-    color: #ffffff;
+    color: #444444;
     cursor: pointer;
     font-size: 13px;
     line-height: 20px;
@@ -360,13 +360,19 @@ li {
     z-index: 100;
 }
 
-#instructions {
-    padding: 60px 70px 10px;
+#menu {
+    color: #c9c9c9;
+    font-size: 16px;
+    font-weight: bold;
+    text-align: right;
 }
 
-#instructions p {
-    font-size: 15px;
-    line-height: 30px;
+#menu span {
+    padding-left: 40px;
+}
+
+#instructions {
+    margin: 30px 90px 0 70px;
 }
 
 #r {
@@ -393,19 +399,6 @@ li {
 #links a {
     color: #4ba3d9;
     text-decoration: none;
-}
-
-#beta {
-    color: #c9c9c9;
-    font-size: 17px;
-    font-style: italic;
-    position: absolute;
-    right: 130px;
-    top: 50px;
-}
-
-#beta span {
-    color: #999999;
 }
 
 
@@ -626,6 +619,82 @@ li {
 
 
 
+/* VIDEO */
+
+#video {
+    position: relative;
+    width: 710px;
+}
+
+#videofile {
+    border: 1px solid #dedede;
+}
+
+#videocover {
+    height: 420px;
+    margin: 1px;
+    position: absolute;
+    width: 710px;
+}
+
+#videostart {
+    background-color: #4ba3d9;
+    border-radius: 10px;
+    color: white;
+    cursor: pointer;
+    font-size: 40px;
+    height: 40px;
+    left: 300px;
+    line-height: 40px;
+    padding: 15px 30px 15px 39px;
+    position: absolute;
+    text-align: center;
+    top: 165px;
+    width: 40px;
+    z-index: 99;
+}
+
+#videoafter {
+    background-color: white;
+    color: #6a6a6a;
+    font-size: 20px;
+    left: 2px;
+    position: absolute;
+    text-align: center;
+    top: 130px;
+    width: 708px;
+}
+
+#videoreplay {
+    color: #dddddd;
+    font-size: 50px;
+    padding-top: 80px;
+}
+
+#videoreplay i {
+    cursor: pointer;
+}
+
+#videothanks {
+    color: #9f9f9f;
+    font-size: 11px;
+    padding: 4px;
+    text-align: right;
+    width: 700px;
+}
+
+#textinstructions {
+    display: none;
+}
+
+#textinstructions li {
+    font-size: 15px;
+    line-height: 30px;
+    padding-bottom: 15px;
+}
+
+
+
 /* mobile devices */
 @media screen and (max-width: 1100px) {
 
@@ -660,6 +729,14 @@ li {
 
     .popup {
         width: 100%;
+    }
+
+    #video {
+        display: none;
+    }
+
+    #textinstructions {
+        display: block;
     }
 
 }

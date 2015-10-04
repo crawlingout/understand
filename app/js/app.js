@@ -496,8 +496,7 @@ function loadAudioToPlayer(file) {
 
     // gray out 'load audio' button
     $audioFileSelect.css({
-        "background-color": "#FFFFFF",
-        "color": "#565656"
+        "background-color": "#f9f9f9"
     });
 
     // when the player is ready
@@ -573,10 +572,9 @@ function resetPlayer() {
     // reset color of play icon
     $play_pause.css('color', '#AEAEAE');
 
-    // blue 'load audio' button
+    // white out 'load audio' button
     $audioFileSelect.css({
-        "background-color": "#4ba3d9",
-        "color": "#ffffff"
+        "background-color": "#ffffff"
     });
 }
 
@@ -589,10 +587,9 @@ function resetText() {
     localStorage.setItem('scrollposition', scrollposition);
     localStorage.removeItem('stored_text_file_content');
 
-    // blue 'load text' button
+    // white out 'load text' button
     $textFileSelect.css({
-        "background-color": "#4ba3d9",
-        "color": "#ffffff"
+        "background-color": "#ffffff"
     });
 
     // if there is some query string in URL (afted demo was opened), remove it
@@ -657,10 +654,9 @@ function loadText(text) {
     // hide instructions on how to use the site
     $instructions.addClass('hidden');
 
-    // un-green the 'load text' button
+    // gray out 'load text' button
     $textFileSelect.css({
-        "background-color": "#FFFFFF",
-        "color": "#565656"
+        "background-color": "#f9f9f9"
     });
     
     // split paragraphs by empty lines
@@ -1181,6 +1177,36 @@ $(document).ready(function() {
     });
 
     // ========
+
+
+    // explainer video
+    var video = document.getElementById('videofile');
+
+    var $videocover = $('#videocover');
+    var $videoafter = $('#videoafter');
+
+    $videocover.click(function() {
+
+        // hide cover
+        $videocover.addClass('hidden');
+
+        if (video.paused || video.ended) {
+            video.play();
+        }
+        else {
+            video.pause();
+        }
+
+        video.addEventListener('ended',function() {
+            $videoafter.removeClass('hidden');
+        });
+    });
+
+    $videoreplay.click(function() {
+        $videoafter.removeClass('hidden');
+        $videocover.click();
+    });
+
 
     // Hotjar Tracking Code for understand.simplyeasy.cz
     (function(h,o,t,j,a,r){

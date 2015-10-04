@@ -28,9 +28,11 @@ h2 {
 }
 
 #backhome {
-    color: silver;
+    color: #4ba3d9;
     display: block;
-    font-size: 18px;
+    font-size: 16px;
+    font-weight: bold;
+    margin: 0 40px 20px;
     padding: 18px;
     width: 100px;
 }
@@ -38,9 +40,8 @@ h2 {
 #demos {
     font-size: 14px;
     line-height: 30px;
-    margin: 0 auto;
     max-width: 750px;
-    padding: 20px 30px 400px;
+    padding: 20px 70px 400px;
 }
 
 a {
