@@ -20,7 +20,7 @@ var $knob_player, $knob_today;
 var $body, $audio_time, $session_time, $session_time_small, $ratio, $session_audio_ratio, $audio_time_total, $session_time_total, $i_am_done, $backhome,
     $higher_than_ever, $translatedword, $selectedword, $translations, $whentoolong, $play_btn, $pause_btn, $play_pause, $jumpback, $from, $to, $idle,
     $goal_today, $streak, $record_ratio, $previous_translated_words, $linktodict, $googletranslate, $textFileSelect, $audioFileSelect, $content,
-    $content_wrapper, $instructions, $tracking;
+    $content_wrapper, $instructions, $tracking, $videocover, $videoafter, $videoreplay;
 
 
 // UI localization
@@ -445,7 +445,7 @@ function handleSelectedText(text) {
         $translatedword.text('...');
 
         // regex to remove weird leading and trailing characters
-        text = text.replace(/^[,.?¿!¡:();„“”‚‘'’"‹›«»—]+|[,.?¿!¡:();„“”‚‘'’"‹›«»—]+$/g, '');
+        text = text.replace(/^[,.?¿!¡:();„“”‚‘'’"‹›«»-—]+|[,.?¿!¡:();„“”‚‘'’"‹›«»-—]+$/g, '');
 
         // hide warning text shown when text is too long
         $whentoolong.addClass('hidden');
@@ -705,11 +705,6 @@ function handleTextFileSelect(evt) {
 
                 // store text
                 localStorage.setItem('stored_text_file_content', e.target.result);
-
-                // track in Hotjar
-                if (typeof hj === "function") {
-                    hj('vpv', '/app/text-loaded/');
-                }
             };
 
             // read in the file
@@ -876,6 +871,9 @@ $(document).ready(function() {
     $content_wrapper = $('#content_wrapper');
     $instructions = $('#instructions');
     $tracking = $('#tracking');
+    $videocover = $('#videocover');
+    $videoafter = $('#videoafter');
+    $videoreplay = $('#videoreplay');
 
     // put controls to bottom of screen
     // on load
@@ -997,8 +995,10 @@ $(document).ready(function() {
             playPause();
         }
         else {
-            // play explainer video
-            $videocover.click();
+            // play explainer video if visible
+            if ($videocover.is(':visible')) {
+                $videocover.click();
+            }
         }
     });
 
@@ -1106,11 +1106,6 @@ $(document).ready(function() {
             // scroll to bottom of tracking element
             scrollTop: $('#'+which_marker).offset().top
         }, 1000);
-
-        // track in Hotjar
-        if (typeof hj === "function") {
-            if (which_marker === 'faq') {hj('vpv', '/app/instructions');}
-        }
     });
 
 
@@ -1187,10 +1182,6 @@ $(document).ready(function() {
 
     // explainer video
     var video = document.getElementById('videofile');
-
-    var $videocover = $('#videocover');
-    var $videoafter = $('#videoafter');
-    var $videoreplay = $('#videoreplay');
 
     $videocover.click(function() {
 

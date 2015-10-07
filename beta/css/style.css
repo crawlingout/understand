@@ -78,7 +78,7 @@ li {
     background-color: #FFFFFF;
     border-bottom: 1px solid #E3E3E3;
     box-shadow: 0 10px 10px 0 #999999;
-    height: 400px;
+    height: 300px;
     overflow: auto;
     position: relative;
     resize: vertical;
@@ -111,7 +111,8 @@ li {
     font-family: Times, serif;
     font-size: 24px;
     line-height: 36px;
-    padding: 30px 70px;
+    margin: 0 70px;
+    padding: 30px 0;
 }
 
 #translated_words {
@@ -411,15 +412,14 @@ li {
     font-size: 13px;
     line-height: 26px;
     margin: 0 0 10px;
-    padding-left: 25px;
+    padding: 40px 0 0 25px;
 }
 
 #today {
     float: left;
-    height: 250px;
-    margin: 40px 0 0;
+    height: 245px;
     position: relative;
-    width: 540px;
+    width: 200px;
 }
 
 #tracking h2 {
@@ -473,10 +473,10 @@ li {
 
 #today_ratio {
     background-color: #eeeeee;
+    float: left;
     height: 170px;
-    left: 360px;
-    position: absolute;
-    top: 70px;
+    margin: 70px 175px 0 160px;
+    position: relative;
     width: 4px;
 }
 
@@ -560,7 +560,7 @@ li {
 #total {
     float: left;
     height: 250px;
-    margin: 40px 25px 40px 0;
+    margin: 0 25px 40px 0;
     position: relative;
     width: 280px;
 }
@@ -719,7 +719,6 @@ li {
     }
     
     #left {
-        min-width: 510px;
         width: 100%;
     }
 
@@ -766,12 +765,8 @@ li {
         width: 118px;
     }
 
-    #today {
-        width: 440px;
-    }
-
     #today_ratio {
-        left: 320px;
+        margin: 70px 120px 50px;
     }
 
     #ratio_audio_time {
@@ -784,16 +779,20 @@ li {
 
 }
 
-@media screen and (max-width: 670px) {
+@media screen and (max-width: 705px) {
 
     #languages {
         width: 310px;
     }
 
+    #instructions {
+        margin: 20px;
+    }
+
     #content {
-        font-size: 19px;
+        font-size: 16px;
         line-height: 35px;
-        padding: 30px 60px;
+        margin: 0 30px;
     }
 
     #right {
