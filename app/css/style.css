@@ -666,7 +666,7 @@ li {
 @media screen and (max-width: 1300px) {
 
     .helpcrunch-label {
-        display: none;
+        display: none !important;
     }
 }
 
@@ -778,6 +778,10 @@ li {
 
     #right {
         padding: 15px 0 0 40px;
+    }
+
+    .helpcrunch-status-bar {
+        display: none !important;
     }
 
 }
