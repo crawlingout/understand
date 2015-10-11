@@ -396,7 +396,7 @@ function callBing(from, to, text) {
                 "&oncomplete=mycallback";
             document.body.appendChild(s);
         },
-        error: function(xhr, type) {console.log('bing translator error');
+        error: function(xhr, type) {
             $translatedword.text('ERROR');
         }
     });
@@ -1130,80 +1130,94 @@ $(document).ready(function() {
 
 
     // RECORDING
-    var recording_now = 0, ended, was_playing, myvoice;
-    $recording.on('click', function() {
 
-        // if audio book playing
-        if (!(player.paused || player.ended)) {
-            // pause audio book
-            playPause();
+    // test audio API support
+    if (window.AudioContext || window.webkitAudioContext) {
+        var recording_now = 0, ended, was_playing, myvoice;
+        $recording.on('click', function() {
 
-            // mark that the button was pressed when playing
-            // the app will jump back in audio and start playing again
-            was_playing = 1;
-        }
+            // if audio book playing
+            if (player.currentTime && !player.paused && !player.ended) {
+                // pause audio book
+                playPause();
 
-        // mark as not replayed yet
-        already_replayed = 0;
-
-        if (recording_now === 0) {
-            // record my own voice
-            $.voice.record(function() {
-                recording_now = 1;
-                $playback.removeClass('active');
-                $recording.addClass('active');
-            });
-        }
-        // click on mic while already recording stops recording
-        else {
-            // stop recording
-            $.voice.stop();
-            recording_now = 0;
-            $recording.removeClass('active');
-        }
-    });
-    $playback.on('click', function() {
-
-        // stop recording
-        $.voice.stop();
-        recording_now = 0;
-
-        // mark as played
-        already_replayed = 1;
-
-        // play recording
-        $.voice.replay(function(url){
-            myvoice = new Audio(url);
-            myvoice.play();
-
-            $recording.removeClass('active');
-            $playback.addClass('active');
-        }, "URL");
-
-        // detect the end of recorded audio
-        // this could not be done via event listener - event 'ended' does not fire reliably in chrome
-        ended = setInterval(function(){
-            if (myvoice.ended) {
-                clearInterval(ended);
-                // done playing
-                $playback.removeClass('active');
-
-                // if audio was playing when recording button was pressed
-                if (was_playing) {
-                    // jump audio book back the same amount of seconds
-                    if (myvoice.duration) {
-                        jumpBack(myvoice.duration);
-                    }
-                    // play audio book
-                    if (player.paused || player.ended) {
-                        playPause();
-                    }
-
-                    was_playing = 0;
-                }
+                // mark that the button was pressed when playing
+                // the app will jump back in audio and start playing again
+                was_playing = 1;
             }
-        }, 200);
-    });
+
+            // mark as not replayed yet
+            already_replayed = 0;
+
+            if (recording_now === 0) {
+                // record my own voice
+                Fr.voice.record(false, function() {
+                    recording_now = 1;
+                    $playback.removeClass('active');
+                    $recording.addClass('active');
+                });
+            }
+            // click on mic while already recording stops recording
+            else {
+                // stop recording
+                Fr.voice.stop();
+                recording_now = 0;
+                $recording.removeClass('active');
+            }
+        });
+        $playback.on('click', function() {
+
+            // if not replaying already
+            if (!$playback.hasClass('active')) {
+
+                // stop recording
+                Fr.voice.stop();
+                $recording.removeClass('active');
+
+                recording_now = 0;
+
+                // mark as played
+                already_replayed = 1;
+
+                // play recording
+                Fr.voice.replay(function(url){
+                    myvoice = new Audio(url);
+                    myvoice.play();
+
+                    $playback.addClass('active');
+
+                    // detect the end of recorded audio
+                    // this could not be done via event listener - event 'ended' does not fire reliably in chrome
+                    ended = setInterval(function(){
+                        if (myvoice.ended) {
+                            clearInterval(ended);
+                            // done playing
+                            $playback.removeClass('active');
+
+                            // if audio was playing when recording button was pressed
+                            if (was_playing) {
+                                // jump audio book back the same amount of seconds
+                                if (myvoice.duration) {
+                                    jumpBack(myvoice.duration);
+                                }
+                                // play audio book
+                                if (player.paused || player.ended) {
+                                    playPause();
+                                }
+
+                                was_playing = 0;
+                            }
+                        }
+                    }, 200);
+                }, "URL");
+            }
+        });
+    }
+    else { // web audio API not supported
+        $('.rec').css({'color': "#c4c4c4", 'background-color': "transparent"}).click(function() {
+            alert('Audio recording does not work in this browser :-(');
+        });
+    }
 
 
     // email
