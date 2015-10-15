@@ -230,7 +230,10 @@ li {
 #progressbar {
     background-color: #f2f2f2;
     height: 3px;
-    width: 100%;
+    left: 60px;
+    position: absolute;
+    top: 18px;
+    width: 300px;
 }
 
 #progress {
@@ -255,18 +258,18 @@ li {
     left: 0;
     line-height: 25px;
     padding: 20px;
-    top: 30px;
+    top: 28px;
     width: 25px;
 }
 
 #play_pause {
-    font-size: 28px;
-    height: 28px;
-    left: 78px;
-    line-height: 28px;
+    font-size: 24px;
+    height: 24px;
+    left: 80px;
+    line-height: 24px;
     padding: 30px;
     top: 20px;
-    width: 28px;
+    width: 24px;
 }
 
 #recorder {
@@ -561,7 +564,6 @@ li {
     border-right: 1px solid #e3e3e3;
     border-top: 1px solid #e3e3e3;
     color: #d7d7d7;
-    cursor: pointer;
     font-size: 16px;
     height: 300px;
     left: 0;
@@ -682,6 +684,13 @@ li {
     height: 5px;
 }
 
+@media screen and (max-width: 1300px) {
+
+    .helpcrunch-label {
+        display: none !important;
+    }
+}
+
 /* screen not wide enough */
 @media screen and (max-width: 1100px) {
 
@@ -723,6 +732,12 @@ li {
 
     #textinstructions {
         display: block;
+    }
+
+    .helpcrunch-status-bar {
+        top: 10px !important;
+        bottom: auto !important;
+        position: absolute !important;
     }
 
 }
@@ -769,8 +784,14 @@ li {
     }
 
     #controls {
-        margin: 0 25px;
+        margin: 0 20px;
         height: 80px;
+    }
+
+    #progressbar {
+        left: 0;
+        top: 0;
+        width: 100%;
     }
 
     #jumpback, #play_pause, #recording, #playback {
@@ -784,7 +805,7 @@ li {
     }
 
     #jumpback {
-        top: 10px;
+        top: 8px;
     }
 
     #recorder {
@@ -817,7 +838,7 @@ li {
     #idle {
         background-color: transparent;
         border: none;
-        padding: 4px;
+        padding: 4px 0 4px 10px;
         top: 60px;
     }
 
@@ -835,6 +856,10 @@ li {
 
     #backhome {
         margin: 12px;
+    }
+
+    .helpcrunch-status-bar {
+        display: none !important;
     }
 
 }
@@ -856,6 +881,12 @@ li {
         height: 80px;
     }
 
+    #progressbar {
+        left: 0;
+        top: 0;
+        width: 100%;
+    }
+
     #jumpback, #play_pause, #recording, #playback {
         background-color: transparent;
         border: none;
@@ -863,11 +894,11 @@ li {
 
     #play_pause {
         top: 5px;
-        padding: 20px 30px;
+        padding: 22px 30px;
     }
 
     #jumpback {
-        top: 10px;
+        top: 8px;
     }
 
     #recorder {
@@ -875,13 +906,6 @@ li {
     }
 
     #idle {
-        top: 55px;
+        top: 56px;
     }
-}
-
-
-
-.debug {
-    padding: 15px 15px 15px 20px;
-    color: gray;
 }

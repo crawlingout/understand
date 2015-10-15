@@ -9,11 +9,11 @@
     <!-- this should eliminate delay waiting to see if tap is not actually double-tap -->
     <meta name="viewport" content="width=device-width, user-scalable=no">
 
-    <title>Flex your language-learning brain muscles with audiobooks</title>
+    <title>Learn languages with authentic audio content</title>
 
     <meta name="robots" content="all" />
     <meta name="keywords" content="language, foreign language, learning, understanding" />
-    <meta name="description" content="Stop translating in your head and improve your ability to understand native speakers." />
+    <meta name="description" content="Stop translating in your head and learn to understand native speakers." />
 
     <link rel="stylesheet" href="css/style.css" />
 
@@ -41,8 +41,8 @@
     <meta property="og:image" content="https://understand.simplyeasy.cz/img/man-listening.jpg"/>
     <meta property="og:type" content="website"/>
     <meta property="og:url" content="https://understand.simplyeasy.cz/"/>
-    <meta property="og:title" content="Flex your language-learning brain muscles with audiobooks"/>
-    <meta property="og:description" content="Stop translating in your head and improve your ability to understand native speakers."/>
+    <meta property="og:title" content="Learn languages with authentic audio content"/>
+    <meta property="og:description" content="Stop translating in your head and learn to understand native speakers."/>
 </head>
 
 <body>
@@ -64,8 +64,6 @@
         <!-- previously translated words -->
         <div id="previous_translated_words"></div>
     </div>
-
-    <div class="debug" id="debug1"></div>
 </div>
 
 <div id="left">
@@ -81,7 +79,7 @@
             <h3>Use authentic audio content to learn languages</h3>
 
             <div id="video">
-                <div id="videocover" style='background: rgba(0, 0, 0, 0) url("video/en.png") repeat scroll -2px -3px;'>
+                <div id="videocover" style='background: rgba(0, 0, 0, 0) url("video/en.png") repeat scroll -3px -5px;'>
                     <div id="videostart" title=" How to use this app? ">
                         <i class="fa fa-play"></i>
                     </div>
@@ -124,12 +122,13 @@
         <!-- tracking indicator -->
         <div id="idle" title=" tracking "><i class="fa fa-clock-o"></i></div>
 
+        <!-- progress bar -->
+        <div id="progressbar">
+            <div id="progress"></div>
+        </div>
+
         <!-- player -->
         <div class="column" id="controls">
-            <!-- progress bar -->
-            <div id="progressbar">
-                <div id="progress"></div>
-            </div>
 
             <!-- jump N seconds back -->
             <div data-jump="6" id="jumpback" class="circle" title=" jump 6 seconds back (keyboard shortcut: left arrow) "><span><i class="fa fa-caret-left"></i><i class="fa fa-caret-left"></i></span></div>
@@ -142,10 +141,11 @@
 
             <!-- recording -->
             <div id="recorder">
-                <div id="recording" class="rec" title="record your own voice">
+                <audio id="rec" type="audio/wav" src="data:audio/wav;base64,UklGRigAAABXQVZFZm10IBIAAAABAAEARKwAAIhYAQACABAAAABkYXRhAgAAAAEA" title=" record/replay your own voice (keyboard shortcut: enter) "></audio>
+                <div id="recording" class="rec">
                     <i class="fa fa-microphone"></i>
                 </div>
-                <div id="playback" class="rec" title="re-play your own voice"><i class="fa fa-volume-up"></i></div>
+                <div id="playback" class="rec"><i class="fa fa-volume-up"></i></div>
                 <div class="clear"></div>
             </div>
         </div>
@@ -300,7 +300,8 @@
 
                     <div class="total"><span id="audio_time_total">0 h 0 min</span> of audio</div>
 
-                    <div class="rr"><span id="record_ratio">0%</span> highest daily <span class="darker">A/W ratio</span> 
+                    <div class="rr">
+                        <span id="record_ratio">0%</span> highest daily <span class="darker">A/W ratio</span> 
                         <div class="go_to_faq jump_to" data-marker="ratio_explanation" style="right: -15px;top: 15px;">
                             <i class="fa fa-question-circle"></i>
                         </div>

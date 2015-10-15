@@ -4,6 +4,7 @@ html, body {
     height: 100%;
     margin: 0;
     padding: 0;
+    min-width: 350px;
 }
 
 /* remove ugly dotted lines around clicked links and buttons in FF */
@@ -76,29 +77,26 @@ li {
 
 #content_wrapper {
     background-color: #FFFFFF;
-    border-bottom: 1px solid #E3E3E3;
+    border-bottom: 1px solid #e3e3e3;
     box-shadow: 0 10px 10px 0 #999999;
     height: 400px;
+    min-height: 80px;
     overflow: auto;
     position: relative;
     resize: vertical;
 }
 
-.backhome {
-    color: silver;
+#backhome {
+    color: #4ba3d9;
     cursor: pointer;
-    font-size: 18px;
-    padding: 18px;
+    font-size: 22px;
+    left: 8px;
+    line-height: 20px;
+    margin: 18px;
     position: absolute;
     text-align: center;
-    top: 0;
-    width: 30px;
-}
-#back {
-    left: 0;
-}
-#closebook {
-    right: 10px;
+    top: 8px;
+    width: 20px;
 }
 
 .gap {
@@ -194,9 +192,8 @@ li {
 
 .open_file {
     background-color: #ffffff;
-    border: 1px solid #DEDEDE;
+    border: 1px solid #dedede;
     border-radius: 8px;
-    box-shadow: 0 0 6px #DEDEDE;
     color: #444444;
     cursor: pointer;
     font-size: 13px;
@@ -224,13 +221,91 @@ li {
 }
 
 #controls {
+    height: 120px;
+    margin: 18px 0 0 60px;
     position: relative;
-    width: 320px;
+    width: 305px;
+}
+
+#progressbar {
+    background-color: #f2f2f2;
+    height: 3px;
+    left: 60px;
+    position: absolute;
+    top: 18px;
+    width: 300px;
+}
+
+#progress {
+    height: 3px;
+    background-color: #4ba3d9;
+    width: 0
+}
+
+.circle {
+    background-color: #ffffff;
+    border: 1px solid #dedede;
+    border-radius: 60px;
+    color: #9c9c9c;
+    cursor: pointer;
+    position: absolute;
+    text-align: center;
+}
+
+#jumpback {
+    font-size: 22px;
+    height: 25px;
+    left: 0;
+    line-height: 25px;
+    padding: 20px;
+    top: 28px;
+    width: 25px;
+}
+
+#play_pause {
+    font-size: 24px;
+    height: 24px;
+    left: 80px;
+    line-height: 24px;
+    padding: 30px;
+    top: 20px;
+    width: 24px;
+}
+
+#recorder {
+    color: #9c9c9c;
+    left: 180px;
+    position: absolute;
+    top: 34px;
+}
+
+.rec {
+    background-color: white;
+    border: 1px solid #dadada;
+    cursor: pointer;
+    float: left;
+    padding: 20px;
+    text-align: center;
+    width: 20px;
+}
+
+#recording {
+    border-radius: 35px 0 0 35px;
+    border-right: medium none;
+}
+
+#playback {
+    border-radius: 0 35px 35px 0;
+}
+
+.active {
+    background-color: #f9f9f9;
+    color: #4ba3d9;
 }
 
 #files {
-    padding: 0 5px 0 50px;
-    width: 290px;
+    padding: 0 5px 20px 40px;
+    width: 280px;
 }
 
 #audio_file {
@@ -243,7 +318,7 @@ li {
 
 #languages {
     font-size: 13px;
-    padding: 15px 0 30px 50px;
+    padding: 10px 0 25px 30px;
     width: 210px;
 }
 
@@ -257,65 +332,6 @@ li {
     margin-bottom: 10px;
     text-align: right;
     max-width: 190px;
-}
-
-#player {
-    height: 130px;
-    margin: 23px 25px 5px;
-    position: relative;
-    width: 180px;
-}
-
-.circle_bg {
-    background-color: #ffffff;
-    border-radius: 60px;
-    box-shadow: 0 0 6px #c6c6c6;
-    height: 60px;
-    left: 30px;
-    padding: 30px;
-    position: absolute;
-    top: 0;
-    width: 60px;
-}
-
-.circle {
-    background-color: #ffffff;
-    border: 1px solid #ffffff;
-    border-radius: 40px;
-    cursor: pointer;
-    font-size: 28px;
-    height: 28px;
-    left: 50px;
-    padding: 22px 24px 28px 26px;
-    position: absolute;
-    text-align: center;
-    top: 20px;
-    width: 28px;
-    color: #AEAEAE;
-}
-
-#playbutton {
-    height: 130px;
-    left: 30px;
-    position: absolute;
-    top: 0;
-}
-
-#jumpback {
-    background-color: #ffffff;
-    border: 1px solid #dedede;
-    border-radius: 60px;
-    color: #898989;
-    cursor: pointer;
-    font-size: 20px;
-    height: 25px;
-    left: 190px;
-    line-height: 25px;
-    padding: 15px;
-    position: absolute;
-    text-align: center;
-    top: 25px;
-    width: 60px;
 }
 
 #bottom {
@@ -378,169 +394,167 @@ li {
     font-size: 13px;
     line-height: 26px;
     margin: 0 0 10px;
-    padding-left: 25px;
+    padding: 40px 0 0 25px;
 }
 
 #today {
     float: left;
-    height: 250px;
-    margin: 40px 0 0;
+    height: 300px;
+    width: 460px;
+}
+
+#goal {
+    background-color: #f5f5f5;
+    height: 150px;
+    margin: 100px 0 0 80px;
     position: relative;
-    width: 540px;
+    width: 50px;
+}
+
+#goal_top {
+    height: 80px;
+    left: -75px;
+    line-height: 25px;
+    position: absolute;
+    text-align: center;
+    top: -110px;
+    width: 200px;
+}
+
+#achieved {
+    color: #4ba3d9;
+    font-size: 22px;
+    height: 30px;
+}
+
+#daily_goal {
+    position: relative;
+}
+
+#goal_today {
+    color: #bababa;
+    font-size: 22px;
+}
+
+.goal_setting {
+    color: #4ba3d9;
+    cursor: pointer;
+    font-size: 20px;
+    position: absolute;
+    top: -1px;
+    width: 30px;
+}
+
+#minus {
+    left: 20px;
+}
+
+#plus {
+    right: 20px;
+}
+
+#listened, #ratio {
+    width: 100%;
+    position: absolute;
+    bottom: 0;
+    background-color: #4ba3d9;
+}
+
+#listened {
+    background-color: #4ba3d9;
+}
+
+.chart_label {
+    color: #bababa;
+    font-size: 20px;
+    left: 58px;
+    line-height: 22px;
+    position: absolute;
+    width: 200px;
+}
+
+.chart_label.session {
+    top: -22px;
+}
+
+.chart_label.audio {
+    top: 1px;
+}
+
+#ratio_label {
+    color: #9d9d9d;
+    font-size: 15px;
+    left: -108px;
+    line-height: 24px;
+    position: absolute;
+    text-align: right;
+    top: -22px;
+    width: 100px;
+}
+
+#ratio_percents {
+    font-size: 24px;
+}
+
+.color_listening {
+    color: #4ba3d9;
+}
+
+.color_audio {
+    color: #0b7fc6;
+}
+
+#ratio {
+    background-color: #0b7fc6;
+}
+
+#higher_than_ever {
+    font-size: 25px;
+    position: absolute;
+    right: 0;
+    text-align: center;
+    top: -25px;
+    width: 55px;
+    color: #ffd300;
 }
 
 #tracking h2 {
     color: #cccccc;
+    font-size: 22px;
     font-weight: normal;
-    margin: 10px 0 20px;
+    margin: 15px 0 20px
 }
 
-#today h2 span {
-    color: #4ba3d9;
-}
-
-#today_top {
-    border-bottom: 1px solid #aaaaaa;
-    height: 40px;
-    left: 20px;
-    position: absolute;
-    text-align: center;
-    top: 110px;
-    width: 145px;
-}
-
-#today_bottom {
-    height: 50px;
-    left: 20px;
-    position: absolute;
-    text-align: center;
-    top: 155px;
-    width: 145px;
-}
-
-
-#session_time {
-    color: #4ba3d9;
-    font-size: 30px;
-    font-weight: normal;
-    padding-bottom: 2px;
-}
-
-#set_goal {
-    margin-left: 40px;
-    width: 60px;
-}
-
-.goal_setting {
-    cursor: pointer;
+#total {
     float: left;
-    font-size: 16px;
-    width: 30px;
-}
-
-#today_ratio {
-    background-color: #eeeeee;
-    height: 170px;
-    left: 360px;
-    position: absolute;
-    top: 70px;
-    width: 4px;
-}
-
-#ratio {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 4px;
-    height: 0;
-    background-color: #4ba3d9;
+    height: 250px;
+    margin: 10px 10px 40px 0;
+    position: relative;
+    width: 280px;
 }
 
 .rr {
     color: #cccccc;
     float: left;
     font-size: 22px;
-    line-height: 26px;
+    line-height: 24px;
     padding: 22px 0 0;
     position: relative;
-}
-
-#record_ratio {
-    color: #4ba3d9;
-}
-
-.darker {
-    color: #9f9f9f;
-}
-
-.black {
-    color: black;
-}
-
-#ratio_audio_time {
-    background-color: white;
-    color: #cdcdcd;
-    font-size: 12px;
-    font-style: italic;
-    right: 12px;
-    line-height: 15px;
-    position: absolute;
-    text-align: right;
-    top: -14px;
-    width: 130px;
-}
-
-#audio_time {
-    color: #4ba3d9;
-    font-weight: bold;
-    font-style: normal;
-}
-
-#session_time_small {
-    font-weight: bold;
-    font-style: normal;
-}
-
-#ratio_audio_time_percent {
-    background-color: white;
-    color: #4ba3d9;
-    font-size: 30px;
-    position: absolute;
-    left: 12px;
-    top: -12px;
-}
-
-#higher_than_ever {
-    font-size: 15px;
-    left: -90px;
-    position: absolute;
-    text-align: center;
-    top: -40px;
-    width: 180px;
-}
-
-#higher_than_ever i {
-    color: #ffd300;
-    font-size: 16px;
-}
-
-#total {
-    float: left;
-    height: 250px;
-    margin: 40px 25px 40px 0;
-    position: relative;
-    width: 280px;
 }
 
 .total {
     color: #cccccc;
     font-size: 22px;
-    line-height: 26px;
+    line-height: 24px;
     padding: 20px 0 0;
 }
 
-.total span {
+.total span, #record_ratio {
     color: #4ba3d9;
+}
+
+.darker {
+    color: #9f9f9f;
 }
 
 #idle {
@@ -550,14 +564,13 @@ li {
     border-right: 1px solid #e3e3e3;
     border-top: 1px solid #e3e3e3;
     color: #d7d7d7;
-    cursor: pointer;
     font-size: 16px;
     height: 300px;
     left: 0;
     padding: 10px 15px 14px;
     position: absolute;
     text-align: center;
-    top: 125px;
+    top: 115px;
     z-index: 99;
 }
 
@@ -663,6 +676,14 @@ li {
 
 
 /* mobile devices */
+
+/* detect CSS breaking points in JS by checking visibility */
+#widerthan725px, #lowerthan600px {
+    display: none;
+    width: 5px;
+    height: 5px;
+}
+
 @media screen and (max-width: 1300px) {
 
     .helpcrunch-label {
@@ -670,6 +691,7 @@ li {
     }
 }
 
+/* screen not wide enough */
 @media screen and (max-width: 1100px) {
 
     #right {
@@ -693,7 +715,6 @@ li {
     }
     
     #left {
-        min-width: 510px;
         width: 100%;
     }
 
@@ -723,12 +744,8 @@ li {
 
 @media screen and (max-width: 950px) {
 
-    #files {
-        padding: 0 5px 15px 78px;
-    }
-
     #languages {
-        padding: 20px 0 20px 75px;
+        padding: 20px 0 20px 70px;
         width: 600px;
     }
 
@@ -747,15 +764,11 @@ li {
     }
 
     #today {
-        width: 440px;
+        width: 325px;
     }
 
-    #today_ratio {
-        left: 320px;
-    }
-
-    #ratio_audio_time {
-        width: 125px;
+    #goal {
+        margin: 100px 0 0 60px;
     }
 
     .mobilehide {
@@ -764,24 +777,135 @@ li {
 
 }
 
-@media screen and (max-width: 670px) {
+@media screen and (max-width: 725px) {
+
+    #widerthan725px {
+        display: block;
+    }
+
+    #controls {
+        margin: 0 20px;
+        height: 80px;
+    }
+
+    #progressbar {
+        left: 0;
+        top: 0;
+        width: 100%;
+    }
+
+    #jumpback, #play_pause, #recording, #playback {
+        background-color: transparent;
+        border: none;
+    }
+
+    #play_pause {
+        top: 5px;
+        padding: 20px 30px;
+    }
+
+    #jumpback {
+        top: 8px;
+    }
+
+    #recorder {
+        top: 12px;
+    }
+
+    #files {
+        margin-right: 40px;
+    }
 
     #languages {
-        width: 310px;
+        width: 325px;
+    }
+
+    #instructions {
+        margin: 20px;
     }
 
     #content {
-        font-size: 19px;
+        font-size: 16px;
         line-height: 35px;
-        padding: 30px 60px;
+        padding: 30px 20px 30px 30px;
     }
 
     #right {
-        padding: 15px 0 0 40px;
+        height: 50px;
+        padding: 5px 0 0 10px;
+    }
+
+    #idle {
+        background-color: transparent;
+        border: none;
+        padding: 4px 0 4px 10px;
+        top: 60px;
+    }
+
+    #bottom {
+        padding: 0;
+    }
+
+    #files, #languages, #links {
+        padding-left: 25px;
+    }
+
+    #faq, #support {
+        margin-right: 25px;
+    }
+
+    #backhome {
+        margin: 12px;
     }
 
     .helpcrunch-status-bar {
         display: none !important;
     }
 
+}
+
+/* screen not high enough */
+@media screen and (max-height: 600px) {
+
+    #lowerthan600px {
+        display: block;
+    }
+
+    #right {
+        height: 50px;
+        padding: 5px 0 0 10px;
+    }
+
+    #controls {
+        margin-top: 0;
+        height: 80px;
+    }
+
+    #progressbar {
+        left: 0;
+        top: 0;
+        width: 100%;
+    }
+
+    #jumpback, #play_pause, #recording, #playback {
+        background-color: transparent;
+        border: none;
+    }
+
+    #play_pause {
+        top: 5px;
+        padding: 22px 30px;
+    }
+
+    #jumpback {
+        top: 8px;
+    }
+
+    #recorder {
+        top: 12px;
+    }
+
+    #idle {
+        top: 56px;
+    }
 }

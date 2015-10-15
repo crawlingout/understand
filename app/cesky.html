@@ -25,10 +25,13 @@
     <![endif]-->
     
     <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
-    <script type="text/javascript" src="js/jquery.knob.js"></script>
+
+    <!-- sound recording -->
+    <script type="text/javascript" src="js/recorder.js"></script>
+    <script type="text/javascript" src="js/jquery.voice.js"></script>
 
     <!-- tracking -->
-    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.3/moment.min.js"></script>
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.6/moment.min.js"></script>
 
     <script type="text/javascript">var ui_lang='cs'</script>
     <script type="text/javascript" src="js/app.min.js"></script>
@@ -82,7 +85,7 @@
             <h3>Učte se jazyky pomocí autentického audio obsahu</h3>
 
             <div id="video">
-                <div id="videocover" style='background: rgba(0, 0, 0, 0) url("video/cs.png") repeat scroll -2px -3px;'>
+                <div id="videocover" style='background: rgba(0, 0, 0, 0) url("video/cs.png") repeat scroll -4px -3px;'>
                     <div id="videostart" title=" How to use this app? ">
                         <i class="fa fa-play"></i>
                     </div>
@@ -117,32 +120,39 @@
     
         <div id="content"></div>
     </div>
-    <div title=" zpět na úvodní stránku " id="back" class="backhome hidden"><i class="fa fa-chevron-left"></i></div>
-    <div title=" zavřít tuto knihu " id="closebook" class="backhome hidden"><i class="fa fa-times"></i></div>
+    <div title=" zpět na úvodní stránku " id="backhome" class="hidden"><i class="fa fa-chevron-circle-left"></i></div>
 
     <div id="middle">
+
         <!-- tracking indicator -->
         <div id="idle" title=" tracking "><i class="fa fa-clock-o"></i></div>
 
+        <!-- progress bar -->
+        <div id="progressbar">
+            <div id="progress"></div>
+        </div>
+
         <!-- player -->
         <div class="column" id="controls">
-            <div id="player">
-
-                <div class="circle_bg"></div>
-
-                <div id="playbutton">
-                    <input id="knob_player" class="knob" data-width="120" data-height="120" data-displayPrevious=true data-fgColor="#4ba3d9" data-bgColor="#FFFFFF" data-thickness=".05" value="0" data-displayInput=false />
-                </div>
-            
-                <div id="play_pause" class="circle">
-                    <span title=" play / pause (klávesová zkratka: šipka vpravo) " id="pause_btn" class="hidden"><i class="fa fa-pause"></i></span>
-                    <span title=" play / pause (klávesová zkratka: šipka vpravo) " id="play_btn" style="padding-left:5px;"><i class="fa fa-play"></i></span>
-                </div>
-            
-            </div>
 
             <!-- jump N seconds back -->
-            <div data-jump="6" id="jumpback" class="jumpback" title=" vrátit 6 vteřin zpět (klávesová zkratka: šipka vlevo) "><span><i class="fa fa-caret-left"></i><i class="fa fa-caret-left"></i></span></div>
+            <div data-jump="6" id="jumpback" class="circle" title=" vrátit 6 vteřin zpět (klávesová zkratka: šipka vlevo) "><span><i class="fa fa-caret-left"></i><i class="fa fa-caret-left"></i></span></div>
+
+            <!-- play/pause -->
+            <div id="play_pause" class="circle">
+                <span title=" play / pause (klávesová zkratka: šipka vpravo) " id="pause_btn" class="hidden"><i class="fa fa-pause"></i></span>
+                <span title=" play / pause (klávesová zkratka: šipka vpravo) " id="play_btn" style="padding-left:5px;"><i class="fa fa-play"></i></span>
+            </div>
+
+            <!-- recording -->
+            <div id="recorder">
+                <audio id="rec" type="audio/wav" src="data:audio/wav;base64,UklGRigAAABXQVZFZm10IBIAAAABAAEARKwAAIhYAQACABAAAABkYXRhAgAAAAEA" title=" nahrát/přehrát vlastní audio (klávesová zkratka: enter) "></audio>
+                <div id="recording" class="rec">
+                    <i class="fa fa-microphone"></i>
+                </div>
+                <div id="playback" class="rec"><i class="fa fa-volume-up"></i></div>
+                <div class="clear"></div>
+            </div>
         </div>
 
         <!-- file openers -->
@@ -261,46 +271,42 @@
             <!-- TRACKING -->
             <div id="tracking">
                 <div id="today">
-                    <h2>DNES <span id="i_am_done" class="hidden">MÁM HOTOVO!</span></h2>
-
-                    <input id="knob_today" class="knob" data-width="185" data-height="185" data-displayPrevious=true data-fgColor="#4ba3d9" data-bgColor="#eeeeee" data-thickness=".035" value="0" data-displayInput=false data-readOnly=true />
-
-                    <div id="today_top">
-                        <div id="session_time" class="session_time">0 min</div>
-                    </div>
-
-                    <div id="today_bottom">
-                        dnešní cíl: <span id="goal_today">30 min</span>
-                        <div id="set_goal">
-                            <div id="minus" class="goal_setting" title=" subtract 15 min ">&#8722;</div>
-                            <div id="plus" class="goal_setting" title=" add 15 min">+</div>
-                            <div class="clear"></div>
-                        </div>
-                    </div>
-
-                    <div id="today_ratio" title=" dnešní poměr A/P ">
-                        <div id="higher_than_ever" class="hidden"><i class="fa fa-trophy"></i>&nbsp; NOVÝ REKORD</div>
-                        <div id="ratio" class="hidden" title=" how much of the audiobook you've conquered in this session ">
-                            <div id="ratio_audio_time">
-                                <span id="audio_time">0 min</span> <span class="darker">audia</span> za
-                                <div><span id="session_time_small" class="session_time"></span> <span class="darker">poslechu</span></div>
+                    <div id="goal">
+                        <div id="goal_top">
+                            <div id="achieved">
+                                <span id="i_am_done" class="hidden"><i class="fa fa-check-circle"></i></span>
                             </div>
-                            <div id="ratio_audio_time_percent">
-                                <span id="session_audio_ratio">0</span>%
-                                <span class="go_to_faq jump_to" data-marker="ratio_explanation" style="padding: 0 0 0 2px;right: -14px;top: -14px;">
-                                    <i class="fa fa-question-circle"></i>
-                                </span>
+
+                            <div id="daily_goal">
+                                <div id="minus" class="goal_setting" title=" odečíst 15 min ">&#8722;</div>
+                                DENNÍ CÍL
+                                <div id="plus" class="goal_setting" title=" přidat 15 min">+</div>
+                            </div>
+
+                            <div id="goal_today">30 min</div>
+                        </div>
+                        <div id="listened">
+                            <div class="chart_label session"><span id="session_time" class="color_listening">0 min</span> <span class="color_listening">P</span>oslechu</div>
+                            <div id="ratio">
+                                <div class="chart_label audio"><span id="audio_time" class="color_audio">0 min</span> of <span class="color_audio">A</span>udia</div>
+                                <div id="ratio_label">
+                                    <div id="higher_than_ever" class="hidden" title=" ZATÍM NEJLEPŠÍ DENNÍ POMĚR A/P! "><i class="fa fa-trophy"></i></div>
+                                    poměr <span class="color_audio">A</span>/<span class="color_listening">P</span>
+                                    <div id="ratio_percents"><span id="session_audio_ratio">-</span> %</div> 
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
+
                 <div id="total">
                     <h2>CELKEM</h2>
                     <div class="total"><span id="session_time_total">0 h 0 min</span> poslechu</div>
 
                     <div class="total"><span id="audio_time_total">0 h 0 min</span> audia</div>
 
-                    <div class="rr"><span id="record_ratio">0%</span> nejvyšší <span class="darker">poměr A/P</span>
+                    <div class="rr">
+                        <span id="record_ratio">0%</span> nejvyšší <span class="darker">poměr A/P</span>
                         <div class="go_to_faq jump_to" data-marker="ratio_explanation" style="right: -16px;top: 14px;">
                             <i class="fa fa-question-circle"></i>
                         </div>
@@ -334,7 +340,7 @@
                     </p>
 
                     <p>
-                        Pokud se chcete dozvědět víc, přečtěte si článek, který podrobně vysvětluje <a target="_blank" href="http://blog.simplyeasy.cz/jak-se-naucit-cizi-jazyk-pomoci-audioknih/">jak se učit jazyky pomocí autentického audio obsahu</a>.
+                        Pokud se chcete dozvědět víc, přečtěte si článek, který podrobně vysvětluje <a target="_blank" href="http://blog.simplyeasy.cz/jak-se-naucit-cizi-jazyk-pomoci-zajimaveho-audio-obsahu/">jak se učit jazyky pomocí autentického audio obsahu</a>.
                     </p>
 
                     <div id="ratio_explanation" class="gap"></div>
@@ -359,6 +365,9 @@
             Další projekty: 
             <a href="http://unexploredparadises.eu/">Photos of extraordinary travel destinations</a>
         </div>
+
+        <!-- detect CSS breaking points in JS by checking visibility -->
+        <div id="widerthan725px"></div><div id="lowerthan600px"></div>
     </div>
 </div>
 

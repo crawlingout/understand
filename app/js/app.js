@@ -11,16 +11,16 @@ var stored_audio_time = Number(localStorage.getItem('stored_audio_time')) || 0;
 var uploaded_file_id = localStorage.getItem('uploaded_file_id') || 0;
 
 // workaround: some browsers do not load duration on canplay event; in that case this flag is raised so duration could be obtained later
-var correct_knob_duration = 0;
-
-// cache knob elements
-var $knob_player, $knob_today;
+var correct_progress_bar = 0;
 
 // cache most used selectors
-var $body, $audio_time, $session_time, $session_time_small, $ratio, $session_audio_ratio, $audio_time_total, $session_time_total, $i_am_done, $backhome,
+var $body, $audio_time, $session_time, $ratio, $session_audio_ratio, $audio_time_total, $session_time_total, $i_am_done, $backhome,
     $higher_than_ever, $translatedword, $selectedword, $translations, $whentoolong, $play_btn, $pause_btn, $play_pause, $jumpback, $from, $to, $idle,
     $goal_today, $streak, $record_ratio, $previous_translated_words, $linktodict, $googletranslate, $textFileSelect, $audioFileSelect, $content,
-    $content_wrapper, $instructions, $tracking, $videocover, $videoafter, $videoreplay;
+    $content_wrapper, $instructions, $tracking, $videocover, $videoafter, $videoreplay, $listened, $progress;
+
+// cache recording/playback selectors
+var $playback, $recording;
 
 
 // UI localization
@@ -42,6 +42,8 @@ var ui_loc = {
 var today = moment().format('YYYY-MM-DD');
 var allowed_idle = 300000; // 5 minutes in miliseconds
 var last_pause_time, pause_diff;
+var subtract_from_pause_time = 0; // this variable is used to subtract recording/replying time from pause time
+var paused_updating_tracking_charts = 0; // pause updating tracking data (prevent jumping when recording time is subtracted)
 
 var data = JSON.parse(localStorage.getItem('data')) || {};
 
@@ -73,11 +75,19 @@ function convertSeconds(seconds) {
 }
 
 function calculateRatio(at, st) {
+    var r;
     if (at && st) {
-        return Math.floor((at/st)*100);
+        r = Math.floor((at/st)*100);
+
+        if (r > 100) {
+            return 100;
+        }
+        else {
+            return r;
+        }
     }
     else {
-        return '-';
+        return 0;
     }
 }
 
@@ -87,7 +97,7 @@ var TRACK = {};
 /*
 
 1. check the existence of / create tracking data object [language/day]
-2. set tracking knob (setting max. value, i.e. daily goal; not setting current value)
+2. get and display today's goal
 3. display tracking data
 
 
@@ -103,8 +113,8 @@ var TRACK = {};
 - on load
 1,2,3
 
-- daily goal changed
-2 (plus or minus)
+- daily goal changed (plus or minus)
+2,3
 
 */
 
@@ -133,56 +143,52 @@ TRACK.dataObjectExist = function(day) {
     }
 };
 
-// set TODAY knob
+// get and display today's goal
 // 2
-TRACK.setTodayKnob = function() {
+TRACK.displayDailyGoal = function() {
     $goal_today.text(convertSeconds(data[from].total.dg));
-    $knob_today.trigger('configure', {max: data[from].total.dg}).val(data[from].days[today].st).trigger('change');
 };
 
 // display data other than number of translated words
 // 3
 // runs every second when player playing - needs to be lightweight!!!
 TRACK.displayTrackingData = function(day) {
-    $audio_time.text(convertSeconds(data[from].days[day].at));
+    if (!paused_updating_tracking_charts) {
+        $audio_time.text(convertSeconds(data[from].days[day].at));
 
-    var readable_session_time = convertSeconds(data[from].days[day].st);
-    $session_time.text(readable_session_time);
-    $session_time_small.text(readable_session_time);
+        var readable_session_time = convertSeconds(data[from].days[day].st);
+        $session_time.text(readable_session_time);
 
-    var ratio = calculateRatio(data[from].days[day].at, data[from].days[day].st);
-    if (ratio > 0) {
+        var listened = calculateRatio(data[from].days[day].st, data[from].total.dg);
+        $listened.height((listened*1.5)+'px');
+
+        var ratio = calculateRatio(data[from].days[day].at, data[from].days[day].st);
         $session_audio_ratio.text(ratio);
-        $ratio.height(ratio*1.7).removeClass('hidden');
-    }
-    else {
-        $ratio.addClass('hidden');
-    }
+        $ratio.height((listened*ratio*0.015)+'px');
 
-    $audio_time_total.text(convertSeconds(data[from].total.at));
-    $session_time_total.text(convertSeconds(data[from].total.st));
+        $audio_time_total.text(convertSeconds(data[from].total.at));
+        $session_time_total.text(convertSeconds(data[from].total.st));
 
-    $knob_today.val(data[from].days[day].st).trigger('change');
+        // today's goal not yet marked as achieved
+        if (!data[from].days[day].ga) {
+            // if today's goal achieved JUST NOW
+            if (data[from].days[day].st > data[from].total.dg) {
+                $i_am_done.removeClass('hidden');
+                $idle.html('<i class="fa fa-check-circle"></i>');
+                data[from].days[day].ga = 1;
 
-    // today's goal not yet marked as achieved
-    if (!data[from].days[day].ga) {
-        // if today's goal achieved JUST NOW
-        if (data[from].days[day].st > data[from].total.dg) {
-            $i_am_done.removeClass('hidden');
-            $idle.html('<i class="fa fa-check-circle"></i>');
-            data[from].days[day].ga = 1;
-
-            TRACK.currentStreak();
+                TRACK.currentStreak();
+            }
         }
-    }
-    // goal already achieved
-    else {
-        // if ratio higher than record and record higher than default 0
-        if (data[from].total.rr && (ratio > data[from].total.rr)) {
-            $higher_than_ever.removeClass('hidden');
-        }
+        // goal already achieved
         else {
-            $higher_than_ever.addClass('hidden');
+            // if ratio higher than record and record higher than default 0
+            if (data[from].total.rr && (ratio > data[from].total.rr)) {
+                $higher_than_ever.removeClass('hidden');
+            }
+            else {
+                $higher_than_ever.addClass('hidden');
+            }
         }
     }
 };
@@ -272,7 +278,7 @@ TRACK.addToDayAndTotal = function(addition, to) {
 
 deleteTrackingData = function() {
     localStorage.removeItem('data');
-    document.getElementById('delete').innerHTML = '<br /><br />[ deleted ]';
+    document.getElementById('delete').innerHTML = '[ deleted ]';
 };
 
 /*
@@ -292,7 +298,7 @@ time is only added when player is playing
 // this function runs every 250 ms - it needs to be lightweight !!!
 TRACK.addAudioTime = function(difference) {
 
-    // if diff NOT caused by manual knob manipulation
+    // if diff NOT caused by manual manipulation
     // (bigger than -jumpback (or equal) and smaller than 1)
     if (difference > -7 && difference < 1) {
 
@@ -321,6 +327,7 @@ TRACK.startPauseTimer = function() {
 TRACK.addPauseTime = function() {
     if (last_pause_time) {
         pause_diff = moment().diff(last_pause_time);
+        subtract_from_pause_time = 0; 
 
         if (pause_diff < allowed_idle) {
             TRACK.addToDayAndTotal((pause_diff/1000), 'st');
@@ -337,10 +344,9 @@ TRACK.newDay = function() {
 
         TRACK.dataObjectExist(today); // 1
 
-        // reset previously achieved goal and ratio
+        // reset previously achieved goal
         $i_am_done.addClass('hidden');
         $idle.html('<i class="fa fa-clock-o"></i>');
-        $ratio.addClass('hidden');
         $higher_than_ever.addClass('hidden');
 
         // reset pause time - pause should not ruin beginning of new day, it's better to just drop it
@@ -395,7 +401,7 @@ function callBing(from, to, text) {
                 "&oncomplete=mycallback";
             document.body.appendChild(s);
         },
-        error: function(xhr, type) {console.log('bing translator error');
+        error: function(xhr, type) {
             $translatedword.text('ERROR');
         }
     });
@@ -445,7 +451,8 @@ function handleSelectedText(text) {
         $translatedword.text('...');
 
         // regex to remove weird leading and trailing characters
-        text = text.replace(/^[,.?¿!¡:();„“”‚‘'’"‹›«»-—]+|[,.?¿!¡:();„“”‚‘'’"‹›«»-—]+$/g, '');
+        // test quotation marks - „‚“‘'"test“‘”’'"
+        text = text.replace(/^[¿¡(„‚“‘'"‹›«»—-]+|[,.:;?!)“”‘’'"‹›«»—-]+$/g, ''); // hyphen needs to be at the end (or escaped \-)
 
         // hide warning text shown when text is too long
         $whentoolong.addClass('hidden');
@@ -482,11 +489,9 @@ function handleSelectedText(text) {
     return true;
 }
 
-function setKnob(dur, cur) {
-    // get time for the player to jump to
-    var jumpto = cur || stored_audio_time;
-
-    $knob_player.trigger('configure', {max: dur}).val(jumpto).trigger('change');
+function setProgressBar() {
+    var progress = (player.currentTime/player.duration)*100 || 0;
+    $progress.width(progress+'%');
 }
 
 function loadAudioToPlayer(file) {
@@ -511,18 +516,18 @@ function loadAudioToPlayer(file) {
                 // set player to stored time
                 player.currentTime = stored_audio_time;
 
-                // set knob
-                setKnob(player.duration, stored_audio_time);
+                // set player's progress bar
+                setProgressBar();
             }
             else {
                 // raise flag so duration can be obtained later
-                correct_knob_duration = 1;
+                correct_progress_bar = 1;
             }
             canplay_fired = 1;
         }
     };
 
-    // keep updating knob when audio is playing
+    // keep updating player's progress bar when audio is playing
     var diff = 0, last_time = stored_audio_time;
     player.ontimeupdate = function() { // this runs every 250 ms - it needs to be lightweight !!!
 
@@ -531,7 +536,8 @@ function loadAudioToPlayer(file) {
             player.currentTime = stored_audio_time + diff;
         }
 
-        $knob_player.val(player.currentTime).trigger('change');
+        // update player's progress bar
+        setProgressBar();
 
         // calculate time difference between timeupdate events
         diff = (player.currentTime - last_time);
@@ -567,7 +573,7 @@ function resetPlayer() {
     $play_btn.removeClass('hidden');
 
     // reset audio progress bar
-    $knob_player.val(0).trigger('change');
+    $progress.width('0%');
 
     // reset color of play icon
     $play_pause.css('color', '#AEAEAE');
@@ -757,13 +763,13 @@ function playPause() {
     stored_audio_time = player.currentTime;
 
     // if duration not detected on canplay event (some browsers show duration = 0 at that time)
-    if (correct_knob_duration) {
+    if (correct_progress_bar) {
         // get it now
         setTimeout(function() {
             if (player.duration) {
-                // and use it to set knob correctly
-                setKnob(player.duration, stored_audio_time);
-                correct_knob_duration = 0;
+                // and use it to set player's progress bar correctly
+                setProgressBar();
+                correct_progress_bar = 0;
             }
         }, 200);
     }
@@ -799,16 +805,57 @@ function playPause() {
     }
 }
 
+// recording state determines whether recorded audio has been replayed already
+// 0 - new audio created
+// 1 - new audio started playing
+// 2 - new audio finished playing
+var recording_state = 2;
+
+// if just recorded my own voice -> replay
+// if not, record
+function recordReplay() {
+    // if already played and finished
+    if (recording_state === 2) {
+        // record
+        $recording.click();
+    }
+    else {
+        // play
+        $playback.click();
+    }
+}
+
 function controlsToBottom() {
     var content_wrapper_height = 0;
     var window_height = $(window).height();
-    if ($(window).width() <= 1100) {
-         content_wrapper_height = window_height - 238;
+
+    // check CSS media query breaking points
+    var lt600px = $lowerthan600px.is(':visible');
+    var wt1100px = $previous_translated_words.is(':visible');
+    var wt725px = $widerthan725px.is(':visible');
+
+    if (wt1100px) { // wide
+        content_wrapper_height = window_height - 158;
+
+        if (lt600px) { // and low
+            content_wrapper_height = content_wrapper_height + 65;
+        }
+
     }
-    else {
-        content_wrapper_height = window_height - 168;
+    else { // narrow
+        if (wt725px) {
+            content_wrapper_height = window_height - 140;
+        }
+        else { // narrower
+            content_wrapper_height = window_height - 228;
+
+            if (lt600px) { // and low
+                content_wrapper_height = content_wrapper_height + 80;
+            }
+        }
     }
-    if (content_wrapper_height > 400) {
+
+    if (content_wrapper_height) {
         $content_wrapper.css({'height': content_wrapper_height+'px'});
     }
 }
@@ -840,7 +887,6 @@ $(document).ready(function() {
     $body = $('html, body');
     $audio_time = $('#audio_time');
     $session_time = $('#session_time');
-    $session_time_small = $('#session_time_small');
     $ratio = $('#ratio');
     $session_audio_ratio = $('#session_audio_ratio');
     $audio_time_total = $('#audio_time_total');
@@ -858,7 +904,7 @@ $(document).ready(function() {
     $jumpback = $('#jumpback');
     $from = $('#from');
     $to = $('#to');
-    $backhome = $('.backhome');
+    $backhome = $('#backhome');
     $goal_today = $('#goal_today');
     $streak = $('#streak');
     $record_ratio = $('#record_ratio');
@@ -874,6 +920,15 @@ $(document).ready(function() {
     $videocover = $('#videocover');
     $videoafter = $('#videoafter');
     $videoreplay = $('#videoreplay');
+    $listened = $('#listened');
+    $progress = $('#progress');
+
+    $playback = $('#playback');
+    $recording = $('#recording');
+
+    // check CSS media query breaking points
+    $widerthan725px = $('#widerthan725px');
+    $lowerthan600px = $('#lowerthan600px');
 
     // put controls to bottom of screen
     // on load
@@ -959,7 +1014,7 @@ $(document).ready(function() {
         from = $(this).val();
 
         TRACK.dataObjectExist(today); // 1
-        TRACK.setTodayKnob(); // 2
+        TRACK.displayDailyGoal(); // 2
         TRACK.displayTrackingData(today); // 3
 
         localStorage.setItem('stored_lang_from', from);
@@ -973,19 +1028,6 @@ $(document).ready(function() {
 
 
     // PLAYER
-    
-    $('.knob').knob({
-        'change': function(e){
-            player.currentTime = e;
-        }
-    });
-
-    // cache knob elements
-    $knob_player = $('#knob_player');
-    $knob_today = $('#knob_today');
-
-    // prevent jumping of player knob before audio duration is loaded
-    $knob_player.trigger('configure', {max: 100}).val(0).trigger('change');
 
     // player controls
     $play_pause.click(function() {
@@ -1078,6 +1120,10 @@ $(document).ready(function() {
                 playPause();
             }
         }
+        else if (key == 13) { // enter
+            // record/replay
+            recordReplay();
+        }
         // shift pressed but not with other keys (=browser keyboard shortcut), also HelpCrunch chat not opened
         // should stay undocumented feature?
         else if ((key == 16) && !(e.ctrlKey || e.metaKey) && !$('.helpcrunch-chat').is(':visible')) {
@@ -1090,6 +1136,158 @@ $(document).ready(function() {
             }
         }
     };
+
+
+    // RECORDING
+
+    // test audio API support
+    // TODO - currently also touch devices blocked via !('ontouchstart' in window) - debug on android and remove
+    if (!('ontouchstart' in window) && window.AudioContext || window.webkitAudioContext) {
+
+        var was_playing, init_replay = 1, rec = document.getElementById('rec');
+
+        // detect the end of recorded audio
+        rec.onended = function() {
+            $playback.removeClass('active');
+            recording_state = 2;
+
+            // suptract recording/replaying time from pause time (in ms)
+            subtract_from_pause_time = 2000*rec.duration;
+
+            // if audio was playing when recording button was pressed
+            if (was_playing) {
+                // jump in audiobook back the same amount of seconds
+                if (!isNaN(rec.duration)) {
+                    // pause updating tracking chart
+                    paused_updating_tracking_charts = 1;
+
+                    jumpBack(rec.duration);
+
+                    // if duration of recording (and therefore jumpback) > 7, subtract it from tracked audio time manually
+                    // only changes < 7 are subtracted by TRACK.addAudioTime (to prevent manual changes from changing audio time)
+                    if (rec.duration > 7) {
+                        TRACK.addToDayAndTotal(-rec.duration, 'at');
+                    }
+
+                    // subtract jumpback also from session time
+                    TRACK.addToDayAndTotal(-rec.duration, 'st');
+
+                    // unpause updating tracking chart when user returns back to where he started recording
+                    setTimeout(function() {
+                        paused_updating_tracking_charts = 0;
+                    }, 1000*rec.duration);
+                }
+                // play audio book
+                if (player.paused) {
+                    playPause();
+                }
+
+                was_playing = 0;
+            }
+        };
+
+        // RECORDING
+        $recording.on('click', function() {
+            // if not replaying right now
+            if (!$playback.hasClass('active')) {
+            
+                // // workaround to make sure that audio can be played on touch devices
+                // if (init_replay) {
+                //     rec.play();rec.pause();
+                //     init_replay = 0;
+                // }
+
+                // if audio book playing
+                if (player.currentTime && !player.paused && !player.ended) {
+                    // pause audio book
+                    playPause();
+
+                    // mark that the button was pressed when playing
+                    // the app will jump back in audio and start playing again
+                    was_playing = 1;
+                }
+
+                // if not already recording
+                if (!$recording.hasClass('active')) {
+                    // record my own voice
+                    Fr.voice.record(false, function() {
+                        $playback.removeClass('active');
+                        $recording.addClass('active');
+
+                        // new audio was recorded but not loaded or played yet
+                        recording_state = 0;
+                    });
+                }
+                // click on mic while already recording stops recording
+                else {
+                    // stop recording
+                    Fr.voice.stop();
+                    $recording.removeClass('active');
+                }
+            }
+        });
+
+        // REPLAYING
+        $playback.on('click', function() {
+
+            // if not replaying already
+            if (!$playback.hasClass('active')) {
+
+                // if already recording
+                if ($recording.hasClass('active')) {
+                    // stop it
+                    Fr.voice.stop();
+                    $recording.removeClass('active');
+                }
+
+                $playback.addClass('active');
+
+                // if audio already played (which means it was already created and loaded)
+                if (recording_state && rec.duration) {
+                    rec.play();
+                }
+                else {
+                    Fr.voice.replay(function(blobUrl){
+                        rec.src = blobUrl;
+                        rec.onloadedmetadata = function() {
+                            rec.play();
+                            recording_state = 1;
+                        };
+
+                        // // this workaround with xhr allows playing on Android
+                        // var xhrBlobUrl;
+                        // var xhr = new XMLHttpRequest();
+
+                        // xhr.open('GET', blobUrl, true);
+                        // xhr.responseType = 'blob';
+                        // xhr.overrideMimeType('audio/wav');
+
+                        // xhr.onreadystatechange = function () {
+                        //     if (xhr.readyState === 4 && xhr.status == 200) {
+                        //         xhrBlobUrl = window.URL.createObjectURL(xhr.response);
+                        //         rec.src = xhrBlobUrl;
+                        //         rec.onloadedmetadata = function() {
+                        //             rec.play();
+                        //             recording_state = 1;
+                        //         }
+                        //     }
+                        // };
+                        // xhr.send();
+                    }, "URL");
+                }
+            }
+            else {
+                // pause on click while playing
+                rec.pause();
+                $playback.removeClass('active');
+            }
+        });
+    }
+    else { // web audio API not supported
+        $('.rec').css({'color': "#c4c4c4", 'background-color': "transparent"}).click(function() {
+            alert('Audio recording does not work in this browser :-(');
+        });
+    }
 
 
     // email
@@ -1114,8 +1312,8 @@ $(document).ready(function() {
     // if object does not exist yet, create it
     TRACK.dataObjectExist(today); // 1
 
-    // set TODAY knob
-    TRACK.setTodayKnob(); // 2
+    // get and display today's goal
+    TRACK.displayDailyGoal(); // 2
 
     // show stored data on load
     TRACK.displayTrackingData(today); // 3
@@ -1148,14 +1346,6 @@ $(document).ready(function() {
         }
     }, 1000); // 1 sec
 
-    // slide page to show tracking
-    $idle.click(function(){
-        $body.animate({
-            // scroll to bottom of tracking element
-            scrollTop: $tracking[0].scrollHeight + ($tracking.offset().top - $(window).height())
-        });
-    });
-
     // set daily goal
     $('#minus').click(function(){
         // if daily goal bigger than 15 min
@@ -1163,7 +1353,8 @@ $(document).ready(function() {
             // subtract 15 min
             data[from].total.dg = data[from].total.dg - 900;
 
-            TRACK.setTodayKnob(); // 2
+            TRACK.displayDailyGoal(); // 2
+            TRACK.displayTrackingData(today); // 3
 
             TRACK.storeTrackingData();
         }
@@ -1172,7 +1363,8 @@ $(document).ready(function() {
         // add 15 min
         data[from].total.dg = data[from].total.dg + 900;
 
-        TRACK.setTodayKnob(); // 2
+        TRACK.displayDailyGoal(); // 2
+        TRACK.displayTrackingData(today); // 3
 
         TRACK.storeTrackingData();
     });

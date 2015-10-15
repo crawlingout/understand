@@ -81,3 +81,17 @@ h1 {
     text-align: center;
     width: 200px;
 }
+
+
+/* mobile */
+
+@media screen and (max-width: 725px) {
+    #envelope {
+        padding: 0 20px;
+    }
+
+    #envelope p {
+        font-size: 16px;
+        line-height: 30px;
+    }
+}
