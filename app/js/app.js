@@ -1037,8 +1037,9 @@ $(document).ready(function() {
             playPause();
         }
         else {
-            // play explainer video if visible
+            // if explainer video visible, slide to top and play it
             if ($videocover.is(':visible')) {
+                $body.animate({scrollTop: '0px'}, 300);
                 $videocover.click();
             }
         }
