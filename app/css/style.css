@@ -372,16 +372,26 @@ li {
     position: relative;
 }
 
-#links {
+#footer {
     border-top: 1px solid #edebeb;
-    color: #9c9c9c;
-    font-size: 13px;
-    padding: 40px 70px;
+}
+
+#links {
+    color: #5f5f5f;
+    float: left;
+    font-size: 12px;
+    line-height: 20px;
+    padding: 40px 70px 0;
 }
 
 #links a {
     color: #4ba3d9;
     text-decoration: none;
+}
+
+#badge {
+    float: right;
+    padding: 40px 70px;
 }
 
 

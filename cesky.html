@@ -37,44 +37,57 @@
 
 <body>
 
-    <div id="envelope">
-        <div id="letter">
-            <div id="other_languages">
-                <span class="other_lang">česky</span>
-                <a class="other_lang" href="./">english</a>
-                <!-- <a class="other_lang" href="">español</a> -->
-            </div>
-        
-            <h1 id="main">Učíte se cizí jazyk?</h1>
+    <div id="container">
+        <div id="envelope">
+            <div id="letter">
+                <div id="other_languages">
+                    <span class="other_lang">česky</span>
+                    <a class="other_lang" href="./">english</a>
+                    <!-- <a class="other_lang" href="">español</a> -->
+                </div>
             
-            <p>
-                Myslím, že spousta lidí tráví až příliš času šprtáním slovíček a gramatických pravidel. Některé věci se nedají naučit z učebnice. Třeba schopnost rozumět mluvenému slovu. Stíháte v plynulé řeči chytat jednotlivá slova a dokážete jim rozumět bez překládání v hlavě? To se dá naučit jen tak, že to budete nacvičovat tak dlouho, až vám to začne jít.
-            </p>
-
-            <p>
-                A právě k tomu slouží tahle aplikace. Otevřete si v ní nějaký zajímavý obsah dostupný ve zvukové i textové podobě - třeba nějakou napínavou audioknihu - a začnete se tím prokousávat. Budete tím rozvíjet vaši schopnost porozumění plynulé řeči, naučíte se spoustu slovíček a získáte cit pro gramatiku. Navíc, tenhle způsob učení je zábavnější než šprtání z učebnic.
-            </p>
-            </p>
+                <h1 id="main">Učíte se cizí jazyk?</h1>
+                
+                <p>
+                    Myslím, že spousta lidí tráví až příliš času šprtáním slovíček a gramatických pravidel. Některé věci se nedají naučit z učebnice. Třeba schopnost rozumět mluvenému slovu. Stíháte v plynulé řeči chytat jednotlivá slova a dokážete jim rozumět bez překládání v hlavě? To se dá naučit jen tak, že to budete nacvičovat tak dlouho, až vám to začne jít.
+                </p>
         
-        
-            <div id="getstarted">
-                <a href="app/cesky.html">Vyzkoušet &nbsp;<i class="fa fa-angle-right"></i></a>
-                <!-- <div id="norisk">Zkušební verze 14 dní zdarma.</div> -->
-                <div id="norisk">BETA verze, zatím zdarma.</div>
+                <p>
+                    A právě k tomu slouží tahle aplikace. Otevřete si v ní nějaký zajímavý obsah dostupný ve zvukové i textové podobě - třeba nějakou napínavou audioknihu - a začnete se tím prokousávat. Budete tím rozvíjet vaši schopnost porozumění plynulé řeči, naučíte se spoustu slovíček a získáte cit pro gramatiku. Navíc, tenhle způsob učení je zábavnější než šprtání z učebnic.
+                </p>
+                </p>
+            
+            
+                <div id="getstarted">
+                    <a href="app/cesky.html">Vyzkoušet &nbsp;<i class="fa fa-angle-right"></i></a>
+                    <!-- <div id="norisk">Zkušební verze 14 dní zdarma.</div> -->
+                    <div id="norisk">BETA verze, zatím zdarma.</div>
+                </div>
+            </div>
+        </div>
+        <div id="footer">
+            <div id="footer_content">
+                <div id="links">
+                    2015 &copy; Jan Bílek
+                    <br>
+                    <a href="http://www.simplyeasy.cz/cs/">simplyeasy.cz</a> &nbsp;/ &nbsp;
+                    <a style="color:#43bffb;" href="https://twitter.com/jan_bilek">@jan_bilek</a> &nbsp;/ &nbsp;
+                    <a href="http://www.simplyeasy.cz/" id="r">jan at simplyeasy dot cz</a><br />
+                </div>
+                <div id="badge">
+                    <a href="https://heapanalytics.com/?utm_source=badge"><img style="width:108px;height:41px" src="//heapanalytics.com/img/badgeLight.png" alt="Heap | Mobile and Web Analytics" /></a>
+                </div>
+                <div class="clear"></div>
             </div>
         </div>
     </div>
 
-<!-- Hotjar Tracking Code for understand.simplyeasy.cz -->
 <script>
-    (function(h,o,t,j,a,r){
-        h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};
-        h._hjSettings={hjid:79605,hjsv:5};
-        a=o.getElementsByTagName('head')[0];
-        r=o.createElement('script');r.async=1;
-        r.src=t+h._hjSettings.hjid+j+h._hjSettings.hjsv;
-        a.appendChild(r);
-    })(window,document,'//static.hotjar.com/c/hotjar-','.js?sv=');
+  var a=document.getElementById("r"),b=a.textContent;
+  b=b.replace(" at ",String.fromCharCode(64));
+  b=b.replace(" dot ",String.fromCharCode(46));
+  a.textContent=b;
+  a.setAttribute('href', "mai"+"lto:"+b);
 </script>
 </body>
 </html>

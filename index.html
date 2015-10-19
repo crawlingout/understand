@@ -37,40 +37,53 @@
 
 <body>
 
-    <div id="envelope">
-        <div id="other_languages">
-            <a class="other_lang" href="./cesky.html">česky</a>
-            <span class="other_lang">english</span>
-            <!-- <a class="other_lang" href="">español</a> -->
+    <div id="container">
+        <div id="envelope">
+            <div id="other_languages">
+                <a class="other_lang" href="./cesky.html">česky</a>
+                <span class="other_lang">english</span>
+                <!-- <a class="other_lang" href="">español</a> -->
+            </div>
+                    
+            <h1 id="main">Dear language learner,</h1>
+            
+            <p>
+                I think that many people trying to learn a language waste way too much time memorizing words and grammar rules. Some things cannot be learned from textbooks. For example your ability to understand spoken word - are you able to understand instantly without translating in your head? You can acquire this skill only through practice.
+            </p>
+                    
+            <p>
+                This app will help you practice with authentic audio content. You will improve your listening comprehension, learn many words from context, and develop your feel for grammar. In my experience, this is a lot more efficient way to learn languages than traditional textbook learning... and it's fun.
+            </p>
+                    
+            <div id="getstarted">
+                <a href="app">Try it now &nbsp;<i class="fa fa-angle-right"></i></a>
+                <!-- <div id="norisk">14-day free trial. No obligation.</div> -->
+                <div id="norisk">It's free while in BETA stage.</div>
+            </div>
         </div>
-                
-        <h1 id="main">Dear language learner,</h1>
-        
-        <p>
-            I think that many people trying to learn a language waste way too much time memorizing words and grammar rules. Some things cannot be learned from textbooks. For example your ability to understand spoken word - are you able to understand instantly without translating in your head? You can acquire this skill only through practice.
-        </p>
-                
-        <p>
-            This app will help you practice with authentic audio content. You will improve your listening comprehension, learn many words from context, and develop your feel for grammar. In my experience, this is a lot more efficient way to learn languages than traditional textbook learning... and it's fun.
-        </p>
-                
-        <div id="getstarted">
-            <a href="app">Try it now &nbsp;<i class="fa fa-angle-right"></i></a>
-            <!-- <div id="norisk">14-day free trial. No obligation.</div> -->
-            <div id="norisk">It's free while in BETA stage.</div>
+        <div id="footer">
+            <div id="footer_content">
+                <div id="links">
+                    2015 &copy; Jan Bilek
+                    <br>
+                    <a href="http://www.simplyeasy.cz/">simplyeasy.cz</a> &nbsp;/ &nbsp;
+                    <a style="color:#43bffb;" href="https://twitter.com/jan_bilek">@jan_bilek</a> &nbsp;/ &nbsp;
+                    <a href="http://www.simplyeasy.cz/" id="r">jan at simplyeasy dot cz</a><br />
+                </div>
+                <div id="badge">
+                    <a href="https://heapanalytics.com/?utm_source=badge"><img style="width:108px;height:41px" src="//heapanalytics.com/img/badgeLight.png" alt="Heap | Mobile and Web Analytics" /></a>
+                </div>
+                <div class="clear"></div>
+            </div>
         </div>
     </div>
 
-<!-- Hotjar Tracking Code for understand.simplyeasy.cz -->
 <script>
-    (function(h,o,t,j,a,r){
-        h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};
-        h._hjSettings={hjid:79605,hjsv:5};
-        a=o.getElementsByTagName('head')[0];
-        r=o.createElement('script');r.async=1;
-        r.src=t+h._hjSettings.hjid+j+h._hjSettings.hjsv;
-        a.appendChild(r);
-    })(window,document,'//static.hotjar.com/c/hotjar-','.js?sv=');
+  var a=document.getElementById("r"),b=a.textContent;
+  b=b.replace(" at ",String.fromCharCode(64));
+  b=b.replace(" dot ",String.fromCharCode(46));
+  a.textContent=b;
+  a.setAttribute('href', "mai"+"lto:"+b);
 </script>
 </body>
 </html>
