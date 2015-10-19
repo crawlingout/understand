@@ -1120,7 +1120,8 @@ $(document).ready(function() {
                 playPause();
             }
         }
-        else if (key == 13) { // enter
+        // enter pressed but not when HelpCrunch chat opened
+        else if ((key == 13) && !$('.helpcrunch-chat').is(':visible')) {
             // record/replay
             recordReplay();
         }
