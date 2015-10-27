@@ -1,0 +1,100 @@
+body {
+    font-family: Arial,sans-serif;
+    color: #9d9d9d;
+}
+
+/* remove ugly dotted lines around clicked links and buttons in FF */
+button::-moz-focus-inner { border: 0; }
+
+/* remove highlight border around selected controls in Chrome and Safari */
+* {
+    outline: none;
+    -webkit-tap-highlight-color:  rgba(255, 255, 255, 0);
+}
+
+h1 {
+    border-bottom: 1px solid #c1c1c1;
+    color: #c1c1c1;
+    font-size: 28px;
+    font-weight: normal;
+    line-height: 35px;
+    margin: 0 0 20px;
+    padding: 0 0 20px;
+}
+
+#backhome {
+    color: #4ba3d9;
+    display: block;
+    font-size: 16px;
+    font-weight: bold;
+    margin: 0 50px 20px;
+    padding: 18px;
+    width: 100px;
+}
+
+#demos {
+    font-size: 14px;
+    line-height: 30px;
+    max-width: 750px;
+    padding: 20px 70px 400px;
+}
+
+a {
+    color: #4ba3d9;
+    text-decoration: none;
+}
+
+.lang_title {
+    font-size: 28px;
+    font-weight: normal;
+    line-height: 38px;
+    padding: 0 0 20px;
+    width: 270px;
+}
+
+.lang_demos {
+    min-width: 500px;
+    padding-bottom: 30px;
+}
+
+.demo {
+    display: block;
+    font-size: 14px;
+    margin: 0 4px 4px 0;
+    padding: 5px 0 10px;
+}
+
+h3 {
+    color: #c1c1c1;
+    font-size: 28px;
+    font-weight: normal;
+    line-height: 38px;
+    margin: 25px 0;
+}
+
+.gap {
+    height: 15px;
+    width: 100%;
+}
+
+#shortcuts {
+    line-height: 35px;
+    margin-bottom: 60px;
+}
+
+#more {
+    color: gray;
+}
+
+
+
+/* mobile */
+
+@media screen and (max-width: 725px) {
+    #backhome {
+        margin: 0 0 20px;
+    }
+    #demos {
+        padding: 20px 20px 400px;
+    }
+}
