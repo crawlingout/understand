@@ -1,5 +1,6 @@
 body {
     font-family: Arial,sans-serif;
+    color: #9d9d9d;
 }
 
 /* remove ugly dotted lines around clicked links and buttons in FF */
@@ -12,8 +13,8 @@ button::-moz-focus-inner { border: 0; }
 }
 
 h1 {
-    border-bottom: 1px solid silver;
-    color: #9d9d9d;
+    border-bottom: 1px solid #c1c1c1;
+    color: #c1c1c1;
     font-size: 28px;
     font-weight: normal;
     line-height: 35px;
@@ -39,12 +40,11 @@ h1 {
 }
 
 a {
-    color: #71ba00;
+    color: #4ba3d9;
     text-decoration: none;
 }
 
 .lang_title {
-    color: #c1c1c1;
     font-size: 28px;
     font-weight: normal;
     line-height: 38px;
@@ -58,18 +58,10 @@ a {
 }
 
 .demo {
-    color: #4ba3d9;
     display: block;
     font-size: 14px;
     margin: 0 4px 4px 0;
     padding: 5px 0 10px;
-}
-
-.thanks {
-    color: #555454;
-    font-size: 13px;
-    font-style: italic;
-    padding: 5px 0;
 }
 
 h3 {
@@ -88,4 +80,21 @@ h3 {
 #shortcuts {
     line-height: 35px;
     margin-bottom: 60px;
+}
+
+#more {
+    color: gray;
+}
+
+
+
+/* mobile */
+
+@media screen and (max-width: 725px) {
+    #backhome {
+        margin: 0 0 20px;
+    }
+    #demos {
+        padding: 20px 20px 400px;
+    }
 }
