@@ -673,6 +673,40 @@ li {
     width: 700px;
 }
 
+
+/* keyboard shortcuts */
+
+#keyboard_shortcuts {
+    color: #b5b5b5;
+    font-size: 13px;
+    padding: 60px 0 0;
+}
+
+.shortcut {
+    float: left;
+    height: 40px;
+}
+
+.key {
+    border: 1px solid #b5b5b5;
+    border-radius: 4px;
+    float: left;
+    font-size: 10px;
+    height: 12px;
+    line-height: 12px;
+    margin-right: 10px;
+    padding: 6px;
+    text-align: center;
+    width: 12px;
+}
+
+.key_desc {
+    float: left;
+    padding: 5px;
+    margin-right: 40px;
+}
+
+
 #textinstructions {
     display: none;
 }
