@@ -17,7 +17,7 @@ var correct_progress_bar = 0;
 var $body, $audio_time, $session_time, $ratio, $session_audio_ratio, $audio_time_total, $session_time_total, $i_am_done, $backhome,
     $higher_than_ever, $translatedword, $selectedword, $translations, $whentoolong, $play_btn, $pause_btn, $play_pause, $jumpback, $from, $to, $idle,
     $goal_today, $streak, $record_ratio, $previous_translated_words, $linktodict, $googletranslate, $textFileSelect, $audioFileSelect, $content,
-    $content_wrapper, $instructions, $tracking, $videocover, $videoafter, $videoreplay, $listened, $progress;
+    $content_wrapper, $instructions, $tracking, $video, $videocover, $videoafter, $videoreplay, $listened, $progress;
 
 // cache recording/playback selectors
 var $playback, $recording;
@@ -917,6 +917,7 @@ $(document).ready(function() {
     $content_wrapper = $('#content_wrapper');
     $instructions = $('#instructions');
     $tracking = $('#tracking');
+    $video = $('#video');
     $videocover = $('#videocover');
     $videoafter = $('#videoafter');
     $videoreplay = $('#videoreplay');
@@ -1377,7 +1378,7 @@ $(document).ready(function() {
     // explainer video
     var video = document.getElementById('videofile');
 
-    $videocover.click(function() {
+    $video.click(function() {
 
         // hide cover
         $videocover.addClass('hidden');
