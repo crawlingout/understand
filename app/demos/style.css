@@ -57,11 +57,25 @@ a {
     padding-bottom: 30px;
 }
 
+.demowrap {
+    min-height: 50px;
+}
+
 .demo {
-    display: block;
+    background-color: #4ba3d9;
+    border-radius: 4px;
+    color: white;
     font-size: 14px;
-    margin: 0 4px 4px 0;
-    padding: 5px 0 10px;
+    padding: 9px 20px;
+}
+
+.courtesy {
+    font-size: 13px;
+    padding: 8px 20px 25px;
+}
+
+.courtesy a {
+    color: #137dbe;
 }
 
 h3 {
