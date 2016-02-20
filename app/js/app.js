@@ -1122,14 +1122,14 @@ $(document).ready(function() {
                 playPause();
             }
         }
-        // enter pressed but not when neither any select nor HelpCrunch chat opened
-        else if ((key == 13) && !$('.helpcrunch-chat').is(':visible') && !$("select").is(":focus")) {
+        // enter pressed but not when any select opened
+        else if ((key == 13) && !$("select").is(":focus")) {
             // record/replay
             recordReplay();
         }
-        // shift pressed but not with other keys (=browser keyboard shortcut), also HelpCrunch chat not opened
+        // shift pressed but not with other keys (=browser keyboard shortcut)
         // should stay undocumented feature?
-        else if ((key == 16) && !(e.ctrlKey || e.metaKey) && !$('.helpcrunch-chat').is(':visible')) {
+        else if ((key == 16) && !(e.ctrlKey || e.metaKey)) {
             // click on last translated word(s) link
             if ($googletranslate.is(':visible')) {
                 $googletranslate[0].click();
@@ -1410,27 +1410,4 @@ $(document).ready(function() {
         r.src=t+h._hjSettings.hjid+j+h._hjSettings.hjsv;
         a.appendChild(r);
     })(window,document,'//static.hotjar.com/c/hotjar-','.js?sv=');
-
-    // HelpCrunch
-    var helpcrunch_data =  {
-        applicationId: 117,
-        applicationSecret: 'kIpJ1ACkWUz2f8fR1drIfrTBRX1jVZRMdjSDmkPX+x8hciZvIvflfGXFa8zfg8D9aoHTPGDCsD0+F9V8I2xRiQ=='
-    };
-
-    // insert user ID if available
-    if (uploaded_file_id) {
-        helpcrunch_data.user = {
-            'user_id': uploaded_file_id
-        };
-    }
-
-    (function(w,d){
-        w.HelpCrunch=function(){w.HelpCrunch.q.push(arguments);};w.HelpCrunch.q=[];
-        var s=document.createElement('script');s.async=1;s.type='text/javascript';s.src='https://honzzz.helpcrunch.com/compiled/sdk.js';
-        d.body.appendChild(s);
-    })(window, document);
-
-    HelpCrunch('init', 'honzzz', helpcrunch_data);
-
-    HelpCrunch('showChatWidget', {position: 'right'});
 });

@@ -1128,14 +1128,14 @@ $(document).ready(function() {
                 playPause();
             }
         }
-        // enter pressed but not when neither any select nor HelpCrunch chat opened
-        else if ((key == 13) && !$('.helpcrunch-chat').is(':visible') && !$("select").is(":focus")) {
+        // enter pressed but not when any select opened
+        else if ((key == 13) && !$("select").is(":focus")) {
             // record/replay
             recordReplay();
         }
-        // shift pressed but not with other keys (=browser keyboard shortcut), also HelpCrunch chat not opened
+        // shift pressed but not with other keys (=browser keyboard shortcut)
         // should stay undocumented feature?
-        else if ((key == 16) && !(e.ctrlKey || e.metaKey) && !$('.helpcrunch-chat').is(':visible')) {
+        else if ((key == 16) && !(e.ctrlKey || e.metaKey)) {
             // click on last translated word(s) link
             if ($googletranslate.is(':visible')) {
                 $googletranslate[0].click();
@@ -1407,6 +1407,6 @@ $(document).ready(function() {
     });
 
 
-    // Hotjar and HelpCrunch not included in beta
+    // Hotjar not included in beta
 
 });
