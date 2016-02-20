@@ -47,6 +47,11 @@ var paused_updating_tracking_charts = 0; // pause updating tracking data (preven
 
 var data = JSON.parse(localStorage.getItem('data')) || {};
 
+// // export data
+// for (day in data.es.days) { // TODO: remove
+//     console.log(day+','+data.es.days[day].st+','+data.es.days[day].at);
+// }
+
 function convertSeconds(seconds) {
     var hours_minutes = '0 min', mmt, days, hours, minutes;
 
@@ -451,8 +456,9 @@ function handleSelectedText(text) {
         $translatedword.text('...');
 
         // regex to remove weird leading and trailing characters
-        // test quotation marks - „‚“‘'"test“‘”’'"
-        text = text.replace(/^[¿¡(„‚“‘'"‹›«»—-]+|[,.:;?!)“”‘’'"‹›«»—-]+$/g, ''); // hyphen needs to be at the end (or escaped \-)
+        // test quotation marks: „‚“‘'"test“‘”’'"
+        // test: -¿¡(„‚“‘'"‹›«»—It's a test-,.:;?!)“”‘’'"‹›«»—
+        text = text.replace(/^\W+|\W+$/g, '');
 
         // hide warning text shown when text is too long
         $whentoolong.addClass('hidden');
