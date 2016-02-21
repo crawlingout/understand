@@ -728,13 +728,6 @@ li {
     height: 5px;
 }
 
-@media screen and (max-width: 1300px) {
-
-    .helpcrunch-label {
-        display: none !important;
-    }
-}
-
 /* screen not wide enough */
 @media screen and (max-width: 1100px) {
 
@@ -776,12 +769,6 @@ li {
 
     #textinstructions {
         display: block;
-    }
-
-    .helpcrunch-status-bar {
-        top: 10px !important;
-        bottom: auto !important;
-        position: absolute !important;
     }
 
 }
@@ -900,10 +887,6 @@ li {
 
     #backhome {
         margin: 12px;
-    }
-
-    .helpcrunch-status-bar {
-        display: none !important;
     }
 
 }
