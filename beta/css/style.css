@@ -192,7 +192,7 @@ li {
 
 .open_file {
     background-color: #ffffff;
-    border: 1px solid #dedede;
+    border: 1px solid #c5c5c5;
     border-radius: 8px;
     color: #444444;
     cursor: pointer;
@@ -244,7 +244,7 @@ li {
 
 .circle {
     background-color: #ffffff;
-    border: 1px solid #dedede;
+    border: 1px solid #c5c5c5;
     border-radius: 60px;
     color: #9c9c9c;
     cursor: pointer;
@@ -281,7 +281,7 @@ li {
 
 .rec {
     background-color: white;
-    border: 1px solid #dadada;
+    border: 1px solid #c5c5c5;
     cursor: pointer;
     float: left;
     padding: 20px;
@@ -618,7 +618,7 @@ li {
 }
 
 #videofile {
-    border: 1px solid #dedede;
+    border: 1px solid #989898;
 }
 
 #videocover {
@@ -686,7 +686,7 @@ li {
 /* keyboard shortcuts */
 
 #keyboard_shortcuts {
-    color: #b5b5b5;
+    color: #9d9d9d;
     font-size: 13px;
     padding: 60px 0 0;
 }
