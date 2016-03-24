@@ -1397,7 +1397,6 @@ $(document).ready(function() {
 
     $videoreplay.click(function() {
         $videoafter.addClass('hidden');
-        $videocover.click();
     });
 
 

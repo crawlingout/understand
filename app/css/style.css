@@ -192,20 +192,20 @@ li {
 
 .open_file {
     background-color: #ffffff;
-    border: 1px solid #dedede;
+    border: 1px solid #c5c5c5;
     border-radius: 8px;
     color: #444444;
     cursor: pointer;
     font-size: 13px;
     line-height: 20px;
-    margin: 26px 0 4px;
+    margin: 26px 0 10px;
     padding: 10px 15px;
     text-align: center;
     width: 90px;
 }
 
 .filetypes {
-    font-size: 11px;
+    font-size: 12px;
     line-height: 14px;
     width: 125px;
 }
@@ -244,7 +244,7 @@ li {
 
 .circle {
     background-color: #ffffff;
-    border: 1px solid #dedede;
+    border: 1px solid #c5c5c5;
     border-radius: 60px;
     color: #9c9c9c;
     cursor: pointer;
@@ -281,7 +281,7 @@ li {
 
 .rec {
     background-color: white;
-    border: 1px solid #dadada;
+    border: 1px solid #c5c5c5;
     cursor: pointer;
     float: left;
     padding: 20px;
@@ -318,7 +318,7 @@ li {
 
 #languages {
     font-size: 13px;
-    padding: 10px 0 25px 30px;
+    padding: 12px 0 25px 30px;
     width: 210px;
 }
 
@@ -345,8 +345,7 @@ li {
 
 #menu {
     color: #c9c9c9;
-    font-size: 16px;
-    font-weight: bold;
+    font-size: 18px;
     text-align: right;
 }
 
@@ -612,31 +611,38 @@ li {
 /* VIDEO */
 
 #video {
+    border: 1px solid #989898;
+    height: 420px;
+    margin-top: 50px;
     position: relative;
     width: 710px;
 }
 
-#videofile {
-    border: 1px solid #dedede;
-}
-
 #videocover {
     height: 420px;
-    margin: 1px;
     position: absolute;
     width: 710px;
 }
 
+#videocover h3 {
+    background-color: rgba(52, 52, 52, 0.6);
+    color: white;
+    display: block;
+    font-size: 26px;
+    margin: 0;
+    padding: 8px 30px;
+}
+
 #videostart {
-    background-color: #4ba3d9;
-    border-radius: 10px;
+    background-color: rgba(52, 52, 52, 0.6);
+    border-radius: 100px;
     color: white;
     cursor: pointer;
     font-size: 40px;
     height: 40px;
     left: 300px;
     line-height: 40px;
-    padding: 15px 30px 15px 39px;
+    padding: 30px 26px 30px 34px;
     position: absolute;
     text-align: center;
     top: 165px;
@@ -667,7 +673,7 @@ li {
 
 #videothanks {
     color: #9f9f9f;
-    font-size: 11px;
+    font-size: 12px;
     padding: 4px;
     text-align: right;
     width: 700px;
@@ -677,7 +683,7 @@ li {
 /* keyboard shortcuts */
 
 #keyboard_shortcuts {
-    color: #b5b5b5;
+    color: #9d9d9d;
     font-size: 13px;
     padding: 60px 0 0;
 }

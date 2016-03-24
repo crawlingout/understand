@@ -1384,7 +1384,7 @@ $(document).ready(function() {
     // explainer video
     var video = document.getElementById('videofile');
 
-    $video.click(function() {
+    $video.click(function() {console.log('video');
 
         // hide cover
         $videocover.addClass('hidden');
@@ -1403,7 +1403,6 @@ $(document).ready(function() {
 
     $videoreplay.click(function() {
         $videoafter.addClass('hidden');
-        $videocover.click();
     });
 
 
