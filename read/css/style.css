@@ -89,21 +89,17 @@ li {
     position: relative;
 }
 
-.backhome {
-    color: silver;
+#backhome {
+    color: #4ba3d9;
     cursor: pointer;
-    font-size: 18px;
-    padding: 18px;
+    font-size: 22px;
+    left: 8px;
+    line-height: 20px;
+    margin: 18px;
     position: absolute;
     text-align: center;
-    top: 0;
-    width: 30px;
-}
-#back {
-    left: 0;
-}
-#closebook {
-    right: 10px;
+    top: 8px;
+    width: 20px;
 }
 
 .gap {
@@ -316,9 +312,9 @@ li {
 
     #content {
         background-color: #ffffff;
-        font-size: 24px;
-        line-height: 36px;
-        padding: 30px 40px 30px 70px;
+        font-size: 16px;
+        line-height: 35px;
+        padding: 30px 20px 30px 30px;
     }
 
     #languages {
@@ -340,6 +336,10 @@ li {
     .spacer {
         display: inline;
         float: none;
+    }
+
+    #backhome {
+        margin: 12px;
     }
 
 }

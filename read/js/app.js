@@ -37,7 +37,6 @@ function mycallback(response) {
     // if element with previously translated words NOT hidden (in mobile version)
     if ($('#previous_translated_words').is(":visible")) {
         previous_translated_words.push(new_word);
-        localStorage.setItem('read_previous_translated_words', JSON.stringify(previous_translated_words));
     }
 }
 
@@ -115,12 +114,8 @@ function handleSelectedText(text) {
             // hide warning text shown when text is too long
             $('#whentoolong').hide();
 
-            // remove trailing characters
-            var len = text.length;
-            var last = text.substr(len-1,1);
-            if (last === "," || last === "." || last === '"' || last === ")" || last === ":" || last === "!" || last === "?") {
-                text = text.substring(0,len-1);
-            }
+            // regex to remove weird leading and trailing characters
+            text = text.replace(/^[¿¡(„‚“‘'"‹›«»—-]+|[,.:;?!)“”‘’'"‹›«»—-]+$/g, '');
 
             // insert word to be translated into visible element
             $('#selectedword').text(text);
@@ -152,7 +147,7 @@ function handleSelectedText(text) {
 }
 
 function resetText() {
-    $('.backhome').hide();
+    $('#backhome').hide();
     $('#content').hide().html('');
     $('#instructions').show();
 
@@ -192,7 +187,7 @@ function loadText(text) {
 
     // hideinstructions on how to use the site
     $('#instructions').hide();
-    $('.backhome').show();
+    $('#backhome').show();
     $('#translated_words').show();
 
     $('#content').show().html(content);
@@ -242,7 +237,7 @@ $(document).ready(function() {
     else {
         // show instructions on how to use the site
         $('#instructions').show();
-        $('.backhome').hide();
+        $('#backhome').hide();
     }
 
 
@@ -323,25 +318,7 @@ $(document).ready(function() {
 
 
     // CLEAR EVERYTHING AND GO BACK TO THE MAIN PAGE
-    $('.backhome').click(function() {
+    $('#backhome').click(function() {
         resetText();
-    });
-
-
-    // load previously translated words
-    var i;
-    previous_translated_words = JSON.parse(localStorage.getItem('read_previous_translated_words')) || [];
-
-    for (i in previous_translated_words) {
-        if (previous_translated_words[i][from] && previous_translated_words[i][to]) {
-            prependPrevWord(previous_translated_words[i]);
-        }
-    }
-
-    // remove previously translated words
-    $('#remove_words').click(function() {
-        $('#previous_translated_words').empty();
-        previous_translated_words = [];
-        localStorage.setItem('read_previous_translated_words', '[]');
     });
 });
