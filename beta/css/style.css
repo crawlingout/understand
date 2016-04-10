@@ -51,7 +51,7 @@ h3 {
 }
 
 h3 i {
-    color: #75e600;
+    color: #21b51f;
 }
 
 ul {
@@ -133,7 +133,7 @@ li {
 }
 
 #selectedword {
-    background-color: #75e600;
+    background-color: #21b51f;
     color: #FFFFFF;
     float: left;
     height: 20px;
@@ -588,7 +588,7 @@ li {
 /* FAQ */
 
 .go_to_faq {
-    color: #75e600;
+    color: #21b51f;
     cursor: pointer;
     font-size: 15px;
     position: absolute;

@@ -228,9 +228,38 @@ function handleTextFileSelect(evt) {
     }
 }
 
+function setContentHeight() {
+    // calculate content height on smaller mobile devices
+    window_width = $(window).width();
+    window_height = $(window).height();
+    var content_wrapper_height = window_height;
+
+    if (window_width < 1100) {
+
+        if (window_width > 725) {
+            content_wrapper_height = window_height - 90;
+        }
+        else {
+            content_wrapper_height = window_height - 60;
+        }
+    }
+
+    $('#content_wrapper').css({'height': content_wrapper_height+'px'});
+}
+
 
 $(document).ready(function() {
 
+    // set content height
+    // on load
+    setContentHeight();
+    // and when mobile device orientation changes
+    window.addEventListener("orientationchange", function() {
+        setTimeout(setContentHeight, 400);
+    }, false);
+
+
+    // load textfile
     if (textfile) {
         loadText(textfile);
     }
