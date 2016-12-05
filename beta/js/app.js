@@ -1,5 +1,5 @@
-var server = 'https://www.simplyeasy.cz/understand-server/';
-//var server = '../understand-server/';
+//var server = 'https://www.simplyeasy.cz/understand-server/';
+var server = '../understand-server/';
 
 var from = localStorage.getItem('stored_lang_from') || 'es';
 var to = localStorage.getItem('stored_lang_to') || 'en';
@@ -17,7 +17,7 @@ var correct_progress_bar = 0;
 var $body, $audio_time, $session_time, $ratio, $session_audio_ratio, $audio_time_total, $session_time_total, $i_am_done, $backhome,
     $higher_than_ever, $translatedword, $selectedword, $translations, $whentoolong, $play_btn, $pause_btn, $play_pause, $jumpback, $from, $to, $idle,
     $goal_today, $streak, $record_ratio, $previous_translated_words, $linktodict, $googletranslate, $textFileSelect, $audioFileSelect, $content,
-    $content_wrapper, $instructions, $tracking, $video, $videocover, $videoafter, $videoreplay, $listened, $progress;
+    $content_wrapper, $instructions, $tracking, $video, $videocover, $videoafter, $videoreplay, $listened, qS_progress;
 
 // cache recording/playback selectors
 var $playback, $recording;
@@ -497,7 +497,7 @@ function handleSelectedText(text) {
 
 function setProgressBar() {
     var progress = (player.currentTime/player.duration)*100 || 0;
-    $progress.width(progress+'%');
+    qS_progress.style.width = progress+'%';
 }
 
 function loadAudioToPlayer(file) {
@@ -579,7 +579,7 @@ function resetPlayer() {
     $play_btn.removeClass('hidden');
 
     // reset audio progress bar
-    $progress.width('0%');
+    qS_progress.style.width = '0%';
 
     // reset color of play icon
     $play_pause.css('color', '#AEAEAE');
@@ -928,7 +928,7 @@ $(document).ready(function() {
     $videoafter = $('#videoafter');
     $videoreplay = $('#videoreplay');
     $listened = $('#listened');
-    $progress = $('#progress');
+    qS_progress = document.querySelector('#progress');
 
     $playback = $('#playback');
     $recording = $('#recording');
