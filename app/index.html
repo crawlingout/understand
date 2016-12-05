@@ -24,7 +24,7 @@
     <link href="css/ie.css" rel="stylesheet" type="text/css" />
     <![endif]-->
     
-    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
 
     <!-- sound recording -->
     <script type="text/javascript" src="js/recorder.js"></script>
@@ -165,10 +165,12 @@
                 <audio id="rec" title=" record/replay your own voice (keyboard shortcut: enter) ">
                     <source type="audio/wav" src="data:audio/wav;base64,UklGRigAAABXQVZFZm10IBIAAAABAAEARKwAAIhYAQACABAAAABkYXRhAgAAAAEA">
                 </audio>
-                <div id="recording" class="rec">
+                <div id="recording" class="rec" title=" record ">
                     <i class="fa fa-microphone"></i>
                 </div>
-                <div id="playback" class="rec"><i class="fa fa-volume-up"></i></div>
+                <div id="playback" class="rec" title=" replay ">
+                    <i class="fa fa-volume-up"></i>
+                </div>
                 <div class="clear"></div>
             </div>
         </div>
