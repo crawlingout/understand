@@ -272,35 +272,11 @@ li {
     width: 24px;
 }
 
-#recorder {
+#volume {
     color: #9c9c9c;
     left: 180px;
     position: absolute;
     top: 34px;
-}
-
-.rec {
-    background-color: white;
-    border: 1px solid #c5c5c5;
-    cursor: pointer;
-    float: left;
-    padding: 20px;
-    text-align: center;
-    width: 20px;
-}
-
-#recording {
-    border-radius: 35px 0 0 35px;
-    border-right: medium none;
-}
-
-#playback {
-    border-radius: 0 35px 35px 0;
-}
-
-.active {
-    background-color: #f9f9f9;
-    color: #4ba3d9;
 }
 
 #files {
@@ -831,7 +807,7 @@ li {
         width: 100%;
     }
 
-    #jumpback, #play_pause, #recording, #playback {
+    #jumpback, #play_pause {
         background-color: transparent;
         border: none;
     }
@@ -845,7 +821,7 @@ li {
         top: 8px;
     }
 
-    #recorder {
+    #volume {
         top: 12px;
     }
 
@@ -920,7 +896,7 @@ li {
         width: 100%;
     }
 
-    #jumpback, #play_pause, #recording, #playback {
+    #jumpback, #play_pause {
         background-color: transparent;
         border: none;
     }
@@ -934,7 +910,7 @@ li {
         top: 8px;
     }
 
-    #recorder {
+    #volume {
         top: 12px;
     }
 
