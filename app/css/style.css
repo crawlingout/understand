@@ -77,7 +77,6 @@ li {
 
 #content_wrapper {
     background-color: #FFFFFF;
-    border-bottom: 1px solid #e3e3e3;
     box-shadow: 0 10px 10px 0 #999999;
     height: 400px;
     min-height: 80px;
@@ -228,16 +227,20 @@ li {
 }
 
 #progressbar {
-    background-color: #f2f2f2;
-    height: 3px;
-    left: 60px;
+    background-image: linear-gradient(bottom, #f9f9f9 50%, #dedede 50%);
+    background-image: -webkit-linear-gradient(bottom, #f9f9f9 50%, #dedede 50%);
+    background-image: -o-linear-gradient(bottom, #f9f9f9 50%, #dedede 50%);
+    background-image: -ms-linear-gradient(bottom, #f9f9f9 50%, #dedede 50%);
+    background-image: -moz-linear-gradient(bottom, #f9f9f9 50%, #dedede 50%);
+    height: 10px;
     position: absolute;
-    top: 18px;
-    width: 300px;
+    left: 0;
+    top: 0;
+    width: 100%;
 }
 
 #progress {
-    height: 3px;
+    height: 4px;
     background-color: #4ba3d9;
     width: 0
 }
@@ -272,35 +275,46 @@ li {
     width: 24px;
 }
 
-#recorder {
+#volume {
     color: #9c9c9c;
-    left: 180px;
+    height: 40px;
+    left: 175px;
     position: absolute;
-    top: 34px;
+    top: 40px;
+    width: 120px;
 }
 
-.rec {
-    background-color: white;
-    border: 1px solid #c5c5c5;
+#vol {
     cursor: pointer;
     float: left;
-    padding: 20px;
-    text-align: center;
+    font-size: 20px;
+    height: 20px;
+    padding: 10px 5px 10px 10px;
     width: 20px;
 }
 
-#recording {
-    border-radius: 35px 0 0 35px;
-    border-right: medium none;
+
+/*
+DO NOT CHANGE WIDTH - IT IS HARDCODED IN VOLUME CONTROLING CODE!!!
+*/
+#volbar {
+    background-image: linear-gradient(bottom, #f9f9f9 50%, #dedede 50%);
+    background-image: -webkit-linear-gradient(bottom, #f9f9f9 50%, #dedede 50%);
+    background-image: -o-linear-gradient(bottom, #f9f9f9 50%, #dedede 50%);
+    background-image: -ms-linear-gradient(bottom, #f9f9f9 50%, #dedede 50%);
+    background-image: -moz-linear-gradient(bottom, #f9f9f9 50%, #dedede 50%);
+    bottom: 0;
+    float: left;
+    height: 10px;
+    left: 0;
+    margin: 18px 0 0 5px;
+    width: 80px;
 }
 
-#playback {
-    border-radius: 0 35px 35px 0;
-}
-
-.active {
-    background-color: #f9f9f9;
-    color: #4ba3d9;
+#vol_value {
+    height: 4px;
+    background-color: #4ba3d9;
+    width: 0;
 }
 
 #files {
@@ -825,18 +839,13 @@ li {
         height: 80px;
     }
 
-    #progressbar {
-        left: 0;
-        top: 0;
-        width: 100%;
-    }
-
-    #jumpback, #play_pause, #recording, #playback {
+    #jumpback, #play_pause {
         background-color: transparent;
         border: none;
     }
 
     #play_pause {
+        left: 75px;
         top: 5px;
         padding: 20px 30px;
     }
@@ -845,8 +854,8 @@ li {
         top: 8px;
     }
 
-    #recorder {
-        top: 12px;
+    #volume {
+        top: 19px;
     }
 
     #files {
@@ -914,18 +923,13 @@ li {
         height: 80px;
     }
 
-    #progressbar {
-        left: 0;
-        top: 0;
-        width: 100%;
-    }
-
-    #jumpback, #play_pause, #recording, #playback {
+    #jumpback, #play_pause {
         background-color: transparent;
         border: none;
     }
 
     #play_pause {
+        left: 75px;
         top: 5px;
         padding: 22px 30px;
     }
@@ -934,8 +938,8 @@ li {
         top: 8px;
     }
 
-    #recorder {
-        top: 12px;
+    #volume {
+        top: 19px;
     }
 
     #idle {

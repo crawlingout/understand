@@ -1,13 +1,14 @@
 var server = 'https://www.simplyeasy.cz/understand-server/';
 //var server = '../understand-server/';
 
+var player = 0;
 var from = localStorage.getItem('stored_lang_from') || 'es';
 var to = localStorage.getItem('stored_lang_to') || 'en';
 var scrollposition = Number(localStorage.getItem('scrollposition')) || 0;
 var textfile = localStorage.getItem('stored_text_file_content') || 0;
 var audiofile = localStorage.getItem('stored_audio_file_url') || 0;
-var player = 0;
 var stored_audio_time = Number(localStorage.getItem('stored_audio_time')) || 0;
+var stored_volume = Number(localStorage.getItem('stored_volume')) || 0;
 var uploaded_file_id = localStorage.getItem('uploaded_file_id') || 0;
 
 // workaround: some browsers do not load duration on canplay event; in that case this flag is raised so duration could be obtained later
@@ -17,10 +18,8 @@ var correct_progress_bar = 0;
 var $body, $audio_time, $session_time, $ratio, $session_audio_ratio, $audio_time_total, $session_time_total, $i_am_done, $backhome,
     $higher_than_ever, $translatedword, $selectedword, $translations, $whentoolong, $play_btn, $pause_btn, $play_pause, $jumpback, $from, $to, $idle,
     $goal_today, $streak, $record_ratio, $previous_translated_words, $linktodict, $googletranslate, $textFileSelect, $audioFileSelect, $content,
-    $content_wrapper, $instructions, $tracking, $video, $videocover, $videoafter, $videoreplay, $listened, $progress;
-
-// cache recording/playback selectors
-var $playback, $recording;
+    $content_wrapper, $instructions, $tracking, $video, $videocover, $videoafter, $videoreplay, $listened, $progressbar, qS_progress, $volbar,
+    $vol_value, $vol, $vol_on, $vol_off;
 
 
 // UI localization
@@ -42,10 +41,13 @@ var ui_loc = {
 var today = moment().format('YYYY-MM-DD');
 var allowed_idle = 300000; // 5 minutes in miliseconds
 var last_pause_time, pause_diff;
-var subtract_from_pause_time = 0; // this variable is used to subtract recording/replying time from pause time
-var paused_updating_tracking_charts = 0; // pause updating tracking data (prevent jumping when recording time is subtracted)
 
 var data = JSON.parse(localStorage.getItem('data')) || {};
+
+// // export data
+// for (day in data.es.days) { // TODO: remove
+//     console.log(day+','+data.es.days[day].st+','+data.es.days[day].at);
+// }
 
 function convertSeconds(seconds) {
     var hours_minutes = '0 min', mmt, days, hours, minutes;
@@ -153,42 +155,40 @@ TRACK.displayDailyGoal = function() {
 // 3
 // runs every second when player playing - needs to be lightweight!!!
 TRACK.displayTrackingData = function(day) {
-    if (!paused_updating_tracking_charts) {
-        $audio_time.text(convertSeconds(data[from].days[day].at));
+    $audio_time.text(convertSeconds(data[from].days[day].at));
 
-        var readable_session_time = convertSeconds(data[from].days[day].st);
-        $session_time.text(readable_session_time);
+    var readable_session_time = convertSeconds(data[from].days[day].st);
+    $session_time.text(readable_session_time);
 
-        var listened = calculateRatio(data[from].days[day].st, data[from].total.dg);
-        $listened.height((listened*1.5)+'px');
+    var listened = calculateRatio(data[from].days[day].st, data[from].total.dg);
+    $listened.height((listened*1.5)+'px');
 
-        var ratio = calculateRatio(data[from].days[day].at, data[from].days[day].st);
-        $session_audio_ratio.text(ratio);
-        $ratio.height((listened*ratio*0.015)+'px');
+    var ratio = calculateRatio(data[from].days[day].at, data[from].days[day].st);
+    $session_audio_ratio.text(ratio);
+    $ratio.height((listened*ratio*0.015)+'px');
 
-        $audio_time_total.text(convertSeconds(data[from].total.at));
-        $session_time_total.text(convertSeconds(data[from].total.st));
+    $audio_time_total.text(convertSeconds(data[from].total.at));
+    $session_time_total.text(convertSeconds(data[from].total.st));
 
-        // today's goal not yet marked as achieved
-        if (!data[from].days[day].ga) {
-            // if today's goal achieved JUST NOW
-            if (data[from].days[day].st > data[from].total.dg) {
-                $i_am_done.removeClass('hidden');
-                $idle.html('<i class="fa fa-check-circle"></i>');
-                data[from].days[day].ga = 1;
+    // today's goal not yet marked as achieved
+    if (!data[from].days[day].ga) {
+        // if today's goal achieved JUST NOW
+        if (data[from].days[day].st > data[from].total.dg) {
+            $i_am_done.removeClass('hidden');
+            $idle.html('<i class="fa fa-check-circle"></i>');
+            data[from].days[day].ga = 1;
 
-                TRACK.currentStreak();
-            }
+            TRACK.currentStreak();
         }
-        // goal already achieved
+    }
+    // goal already achieved
+    else {
+        // if ratio higher than record and record higher than default 0
+        if (data[from].total.rr && (ratio > data[from].total.rr)) {
+            $higher_than_ever.removeClass('hidden');
+        }
         else {
-            // if ratio higher than record and record higher than default 0
-            if (data[from].total.rr && (ratio > data[from].total.rr)) {
-                $higher_than_ever.removeClass('hidden');
-            }
-            else {
-                $higher_than_ever.addClass('hidden');
-            }
+            $higher_than_ever.addClass('hidden');
         }
     }
 };
@@ -327,7 +327,6 @@ TRACK.startPauseTimer = function() {
 TRACK.addPauseTime = function() {
     if (last_pause_time) {
         pause_diff = moment().diff(last_pause_time);
-        subtract_from_pause_time = 0; 
 
         if (pause_diff < allowed_idle) {
             TRACK.addToDayAndTotal((pause_diff/1000), 'st');
@@ -451,8 +450,9 @@ function handleSelectedText(text) {
         $translatedword.text('...');
 
         // regex to remove weird leading and trailing characters
-        // test quotation marks - „‚“‘'"test“‘”’'"
-        text = text.replace(/^[¿¡(„‚“‘'"‹›«»—-]+|[,.:;?!)“”‘’'"‹›«»—-]+$/g, ''); // hyphen needs to be at the end (or escaped \-)
+        // test quotation marks: „‚“‘'"test“‘”’'"
+        // test: -¿¡(„‚“‘'"‹›«»—It's a test-,.:;?!)“”‘’'"‹›«»—
+        text = text.replace(/^[¿¡(„‚“‘'"‹›«»—-]+|[,.:;?!)“”‘’'"‹›«»—-]+$/g, '');
 
         // hide warning text shown when text is too long
         $whentoolong.addClass('hidden');
@@ -491,7 +491,7 @@ function handleSelectedText(text) {
 
 function setProgressBar() {
     var progress = (player.currentTime/player.duration)*100 || 0;
-    $progress.width(progress+'%');
+    qS_progress.style.width = progress+'%';
 }
 
 function loadAudioToPlayer(file) {
@@ -523,6 +523,16 @@ function loadAudioToPlayer(file) {
                 // raise flag so duration can be obtained later
                 correct_progress_bar = 1;
             }
+
+            // if user previously changed volume, load stored volume value
+            if (stored_volume) {
+                player.volume = stored_volume;
+                $vol_value.width((stored_volume * 100)+'%');
+            }
+            else {
+                $vol_value.width('100%');
+            }
+
             canplay_fired = 1;
         }
     };
@@ -573,7 +583,7 @@ function resetPlayer() {
     $play_btn.removeClass('hidden');
 
     // reset audio progress bar
-    $progress.width('0%');
+    qS_progress.style.width = '0%';
 
     // reset color of play icon
     $play_pause.css('color', '#AEAEAE');
@@ -805,26 +815,6 @@ function playPause() {
     }
 }
 
-// recording state determines whether recorded audio has been replayed already
-// 0 - new audio created
-// 1 - new audio started playing
-// 2 - new audio finished playing
-var recording_state = 2;
-
-// if just recorded my own voice -> replay
-// if not, record
-function recordReplay() {
-    // if already played and finished
-    if (recording_state === 2) {
-        // record
-        $recording.click();
-    }
-    else {
-        // play
-        $playback.click();
-    }
-}
-
 function controlsToBottom() {
     var content_wrapper_height = 0;
     var window_height = $(window).height();
@@ -922,10 +912,13 @@ $(document).ready(function() {
     $videoafter = $('#videoafter');
     $videoreplay = $('#videoreplay');
     $listened = $('#listened');
-    $progress = $('#progress');
-
-    $playback = $('#playback');
-    $recording = $('#recording');
+    $progressbar = $('#progressbar');
+    qS_progress = document.querySelector('#progress');
+    $volbar = $('#volbar');
+    $vol_value = $('#vol_value');
+    $vol = $('#vol');
+    $vol_on = $('#vol_on');
+    $vol_off = $('#vol_off');
 
     // check CSS media query breaking points
     $widerthan725px = $('#widerthan725px');
@@ -1090,6 +1083,58 @@ $(document).ready(function() {
         resetText();
     });
 
+    // jump manually by clicking on progress bar
+    $progressbar.click(function(e) {
+        if (player) {
+            var where_to_jump = e.offsetX / $(this).width();
+            player.currentTime =  where_to_jump * player.duration;
+
+            // adjust progress bar
+            qS_progress.style.width = (where_to_jump * 100)+'%';
+        }
+    });
+
+    // set volume manually
+    $volbar.click(function(e) {
+        if (player) {
+            player.volume = e.offsetX / 80; // 80 is the width of volume bar
+
+            // adjust progress bar
+            $vol_value.width((player.volume * 100)+'%');
+
+            // store volume value
+            localStorage.setItem('stored_volume', player.volume);
+        }
+    });
+
+    // mute/unmute
+    var cached_volume = 1;
+    $vol.click(function() {
+        if (player && $vol_on.is(':visible')) {
+            // store volume before muting
+            cached_volume = player.volume;
+
+            // mute
+            player.volume = 0;
+
+            // adjust progress bar
+            $vol_value.width('0');
+
+            $vol_on.addClass('hidden');
+            $vol_off.removeClass('hidden');
+        }
+        else if (player && $vol_off.is(':visible')) {
+            // unmute
+            player.volume = cached_volume;
+
+            // adjust progress bar
+            $vol_value.width((cached_volume * 100)+'%');
+
+            $vol_off.addClass('hidden');
+            $vol_on.removeClass('hidden');
+        }
+    });
+
 
     // DEMO
 
@@ -1122,11 +1167,6 @@ $(document).ready(function() {
                 playPause();
             }
         }
-        // enter pressed but not when any select opened
-        else if ((key == 13) && !$("select").is(":focus")) {
-            // record/replay
-            recordReplay();
-        }
         // shift pressed but not with other keys (=browser keyboard shortcut)
         // should stay undocumented feature?
         else if ((key == 16) && !(e.ctrlKey || e.metaKey)) {
@@ -1139,158 +1179,6 @@ $(document).ready(function() {
             }
         }
     };
-
-
-    // RECORDING
-
-    // test audio API support
-    // TODO - currently also touch devices blocked via !('ontouchstart' in window) - debug on android and remove
-    if (!('ontouchstart' in window) && window.AudioContext || window.webkitAudioContext) {
-
-        var was_playing, init_replay = 1, rec = document.getElementById('rec');
-
-        // detect the end of recorded audio
-        rec.onended = function() {
-            $playback.removeClass('active');
-            recording_state = 2;
-
-            // suptract recording/replaying time from pause time (in ms)
-            subtract_from_pause_time = 2000*rec.duration;
-
-            // if audio was playing when recording button was pressed
-            if (was_playing) {
-                // jump in audiobook back the same amount of seconds
-                if (!isNaN(rec.duration)) {
-                    // pause updating tracking chart
-                    paused_updating_tracking_charts = 1;
-
-                    jumpBack(rec.duration);
-
-                    // if duration of recording (and therefore jumpback) > 7, subtract it from tracked audio time manually
-                    // only changes < 7 are subtracted by TRACK.addAudioTime (to prevent manual changes from changing audio time)
-                    if (rec.duration > 7) {
-                        TRACK.addToDayAndTotal(-rec.duration, 'at');
-                    }
-
-                    // subtract jumpback also from session time
-                    TRACK.addToDayAndTotal(-rec.duration, 'st');
-
-                    // unpause updating tracking chart when user returns back to where he started recording
-                    setTimeout(function() {
-                        paused_updating_tracking_charts = 0;
-                    }, 1000*rec.duration);
-                }
-                // play audio book
-                if (player.paused) {
-                    playPause();
-                }
-
-                was_playing = 0;
-            }
-        };
-
-        // RECORDING
-        $recording.on('click', function() {
-            // if not replaying right now
-            if (!$playback.hasClass('active')) {
-            
-                // // workaround to make sure that audio can be played on touch devices
-                // if (init_replay) {
-                //     rec.play();rec.pause();
-                //     init_replay = 0;
-                // }
-
-                // if audio book playing
-                if (player.currentTime && !player.paused && !player.ended) {
-                    // pause audio book
-                    playPause();
-
-                    // mark that the button was pressed when playing
-                    // the app will jump back in audio and start playing again
-                    was_playing = 1;
-                }
-
-                // if not already recording
-                if (!$recording.hasClass('active')) {
-                    // record my own voice
-                    Fr.voice.record(false, function() {
-                        $playback.removeClass('active');
-                        $recording.addClass('active');
-
-                        // new audio was recorded but not loaded or played yet
-                        recording_state = 0;
-                    });
-                }
-                // click on mic while already recording stops recording
-                else {
-                    // stop recording
-                    Fr.voice.stop();
-                    $recording.removeClass('active');
-                }
-            }
-        });
-
-        // REPLAYING
-        $playback.on('click', function() {
-
-            // if not replaying already
-            if (!$playback.hasClass('active')) {
-
-                // if already recording
-                if ($recording.hasClass('active')) {
-                    // stop it
-                    Fr.voice.stop();
-                    $recording.removeClass('active');
-                }
-
-                $playback.addClass('active');
-
-                // if audio already played (which means it was already created and loaded)
-                if (recording_state && rec.duration) {
-                    rec.play();
-                }
-                else {
-                    Fr.voice.replay(function(blobUrl){
-                        rec.src = blobUrl;
-                        rec.onloadedmetadata = function() {
-                            rec.play();
-                            recording_state = 1;
-                        };
-
-                        // // this workaround with xhr allows playing on Android
-                        // var xhrBlobUrl;
-                        // var xhr = new XMLHttpRequest();
-
-                        // xhr.open('GET', blobUrl, true);
-                        // xhr.responseType = 'blob';
-                        // xhr.overrideMimeType('audio/wav');
-
-                        // xhr.onreadystatechange = function () {
-                        //     if (xhr.readyState === 4 && xhr.status == 200) {
-                        //         xhrBlobUrl = window.URL.createObjectURL(xhr.response);
-                        //         rec.src = xhrBlobUrl;
-                        //         rec.onloadedmetadata = function() {
-                        //             rec.play();
-                        //             recording_state = 1;
-                        //         }
-                        //     }
-                        // };
-                        // xhr.send();
-                    }, "URL");
-                }
-            }
-            else {
-                // pause on click while playing
-                rec.pause();
-                $playback.removeClass('active');
-            }
-        });
-    }
-    else { // web audio API not supported
-        $('.rec').css({'color': "#c4c4c4", 'background-color': "transparent"}).click(function() {
-            alert('Audio recording does not work in this browser :-(');
-        });
-    }
 
 
     // email
@@ -1409,4 +1297,5 @@ $(document).ready(function() {
         r.src=t+h._hjSettings.hjid+j+h._hjSettings.hjsv;
         a.appendChild(r);
     })(window,document,'//static.hotjar.com/c/hotjar-','.js?sv=');
+
 });

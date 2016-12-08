@@ -18,17 +18,13 @@
     <link rel="stylesheet" href="css/style.css" />
 
     <!-- Font Awesome -->
-    <link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet" />
+    <link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
 
     <!--[if lte IE 9]>
     <link href="css/ie.css" rel="stylesheet" type="text/css" />
     <![endif]-->
     
     <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
-
-    <!-- sound recording -->
-    <script type="text/javascript" src="js/recorder.js"></script>
-    <script type="text/javascript" src="js/jquery.voice.js"></script>
 
     <!-- tracking -->
     <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.6/moment.min.js"></script>
@@ -160,18 +156,15 @@
                 <span title=" play / pause (klávesová zkratka: šipka vpravo) " id="play_btn" style="padding-left:5px;"><i class="fa fa-play"></i></span>
             </div>
 
-            <!-- recording -->
-            <div id="recorder">
-                <audio id="rec" title=" nahrát/přehrát vlastní audio (klávesová zkratka: enter) ">
-                    <source type="audio/wav" src="data:audio/wav;base64,UklGRigAAABXQVZFZm10IBIAAAABAAEARKwAAIhYAQACABAAAABkYXRhAgAAAAEA">
-                </audio>
-                <div id="recording" class="rec" title=" record ">
-                    <i class="fa fa-microphone"></i>
+            <!-- volume -->
+            <div id="volume">
+                <div id="vol">
+                    <span id="vol_on"><i class="fa fa-volume-up" title=" mute "></i></span>
+                    <span id="vol_off" class="hidden"><i class="fa fa-volume-off" title=" unmute "></i></span>
                 </div>
-                <div id="playback" class="rec" title=" replay ">
-                    <i class="fa fa-volume-up"></i>
+                <div id="volbar">
+                    <div id="vol_value"></div>
                 </div>
-                <div class="clear"></div>
             </div>
         </div>
 
