@@ -227,11 +227,11 @@ li {
 }
 
 #progressbar {
-    background-image: linear-gradient(bottom, #f9f9f9 50%, #f2f2f2 50%);
-    background-image: -webkit-linear-gradient(bottom, #f9f9f9 50%, #f2f2f2 50%);
-    background-image: -o-linear-gradient(bottom, #f9f9f9 50%, #f2f2f2 50%);
-    background-image: -ms-linear-gradient(bottom, #f9f9f9 50%, #f2f2f2 50%);
-    background-image: -moz-linear-gradient(bottom, #f9f9f9 50%, #f2f2f2 50%);
+    background-image: linear-gradient(bottom, #f9f9f9 50%, #dedede 50%);
+    background-image: -webkit-linear-gradient(bottom, #f9f9f9 50%, #dedede 50%);
+    background-image: -o-linear-gradient(bottom, #f9f9f9 50%, #dedede 50%);
+    background-image: -ms-linear-gradient(bottom, #f9f9f9 50%, #dedede 50%);
+    background-image: -moz-linear-gradient(bottom, #f9f9f9 50%, #dedede 50%);
     height: 10px;
     position: absolute;
     left: 0;
@@ -276,13 +276,45 @@ li {
 }
 
 #volume {
-    border: 1px solid silver;
     color: #9c9c9c;
-    height: 80px;
-    left: 180px;
+    height: 40px;
+    left: 175px;
     position: absolute;
-    top: 20px;
-    width: 150px;
+    top: 40px;
+    width: 120px;
+}
+
+#vol {
+    cursor: pointer;
+    float: left;
+    font-size: 20px;
+    height: 20px;
+    padding: 10px 5px 10px 10px;
+    width: 20px;
+}
+
+
+/*
+DO NOT CHANGE WIDTH - IT IS HARDCODED IN VOLUME CONTROLING CODE!!!
+*/
+#volbar {
+    background-image: linear-gradient(bottom, #f9f9f9 50%, #dedede 50%);
+    background-image: -webkit-linear-gradient(bottom, #f9f9f9 50%, #dedede 50%);
+    background-image: -o-linear-gradient(bottom, #f9f9f9 50%, #dedede 50%);
+    background-image: -ms-linear-gradient(bottom, #f9f9f9 50%, #dedede 50%);
+    background-image: -moz-linear-gradient(bottom, #f9f9f9 50%, #dedede 50%);
+    bottom: 0;
+    float: left;
+    height: 10px;
+    left: 0;
+    margin: 18px 0 0 5px;
+    width: 80px;
+}
+
+#vol_value {
+    height: 4px;
+    background-color: #4ba3d9;
+    width: 0;
 }
 
 #files {
@@ -813,6 +845,7 @@ li {
     }
 
     #play_pause {
+        left: 75px;
         top: 5px;
         padding: 20px 30px;
     }
@@ -822,7 +855,7 @@ li {
     }
 
     #volume {
-        top: 12px;
+        top: 19px;
     }
 
     #files {
@@ -896,6 +929,7 @@ li {
     }
 
     #play_pause {
+        left: 75px;
         top: 5px;
         padding: 22px 30px;
     }
@@ -905,7 +939,7 @@ li {
     }
 
     #volume {
-        top: 12px;
+        top: 19px;
     }
 
     #idle {

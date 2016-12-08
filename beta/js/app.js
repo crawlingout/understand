@@ -1,13 +1,14 @@
 var server = 'https://www.simplyeasy.cz/understand-server/';
 //var server = '../understand-server/';
 
+var player = 0;
 var from = localStorage.getItem('stored_lang_from') || 'es';
 var to = localStorage.getItem('stored_lang_to') || 'en';
 var scrollposition = Number(localStorage.getItem('scrollposition')) || 0;
 var textfile = localStorage.getItem('stored_text_file_content') || 0;
 var audiofile = localStorage.getItem('stored_audio_file_url') || 0;
-var player = 0;
 var stored_audio_time = Number(localStorage.getItem('stored_audio_time')) || 0;
+var stored_volume = Number(localStorage.getItem('stored_volume')) || 0;
 var uploaded_file_id = localStorage.getItem('uploaded_file_id') || 0;
 
 // workaround: some browsers do not load duration on canplay event; in that case this flag is raised so duration could be obtained later
@@ -17,7 +18,8 @@ var correct_progress_bar = 0;
 var $body, $audio_time, $session_time, $ratio, $session_audio_ratio, $audio_time_total, $session_time_total, $i_am_done, $backhome,
     $higher_than_ever, $translatedword, $selectedword, $translations, $whentoolong, $play_btn, $pause_btn, $play_pause, $jumpback, $from, $to, $idle,
     $goal_today, $streak, $record_ratio, $previous_translated_words, $linktodict, $googletranslate, $textFileSelect, $audioFileSelect, $content,
-    $content_wrapper, $instructions, $tracking, $video, $videocover, $videoafter, $videoreplay, $listened, $progressbar, qS_progress;
+    $content_wrapper, $instructions, $tracking, $video, $videocover, $videoafter, $videoreplay, $listened, $progressbar, qS_progress, $volbar,
+    $vol_value, $vol, $vol_on, $vol_off;
 
 
 // UI localization
@@ -521,6 +523,16 @@ function loadAudioToPlayer(file) {
                 // raise flag so duration can be obtained later
                 correct_progress_bar = 1;
             }
+
+            // if user previously changed volume, load stored volume value
+            if (stored_volume) {
+                player.volume = stored_volume;
+                $vol_value.width((stored_volume * 100)+'%');
+            }
+            else {
+                $vol_value.width('100%');
+            }
+
             canplay_fired = 1;
         }
     };
@@ -902,6 +914,11 @@ $(document).ready(function() {
     $listened = $('#listened');
     $progressbar = $('#progressbar');
     qS_progress = document.querySelector('#progress');
+    $volbar = $('#volbar');
+    $vol_value = $('#vol_value');
+    $vol = $('#vol');
+    $vol_on = $('#vol_on');
+    $vol_off = $('#vol_off');
 
     // check CSS media query breaking points
     $widerthan725px = $('#widerthan725px');
@@ -1068,11 +1085,54 @@ $(document).ready(function() {
 
     // jump manually by clicking on progress bar
     $progressbar.click(function(e) {
-        var where_to_jump = e.offsetX / $(this).width();
-        player.currentTime =  where_to_jump * player.duration;
+        if (player) {
+            var where_to_jump = e.offsetX / $(this).width();
+            player.currentTime =  where_to_jump * player.duration;
 
-        // adjust progress bar
-        qS_progress.style.width = (where_to_jump * 100)+'%';
+            // adjust progress bar
+            qS_progress.style.width = (where_to_jump * 100)+'%';
+        }
+    });
+
+    // set volume manually
+    $volbar.click(function(e) {
+        if (player) {
+            player.volume = e.offsetX / 80; // 80 is the width of volume bar
+
+            // adjust progress bar
+            $vol_value.width((player.volume * 100)+'%');
+
+            // store volume value
+            localStorage.setItem('stored_volume', player.volume);
+        }
+    });
+
+    // mute/unmute
+    var cached_volume = 1;
+    $vol.click(function() {
+        if (player && $vol_on.is(':visible')) {
+            // store volume before muting
+            cached_volume = player.volume;
+
+            // mute
+            player.volume = 0;
+
+            // adjust progress bar
+            $vol_value.width('0');
+
+            $vol_on.addClass('hidden');
+            $vol_off.removeClass('hidden');
+        }
+        else if (player && $vol_off.is(':visible')) {
+            // unmute
+            player.volume = cached_volume;
+
+            // adjust progress bar
+            $vol_value.width((cached_volume * 100)+'%');
+
+            $vol_off.addClass('hidden');
+            $vol_on.removeClass('hidden');
+        }
     });
 
 
