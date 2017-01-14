@@ -49,6 +49,19 @@ var data = JSON.parse(localStorage.getItem('data')) || {};
 //     console.log(day+','+data.es.days[day].st+','+data.es.days[day].at);
 // }
 
+// // add day done somewhere else
+// data.es.days['2017-01-12'] = {};
+// data.es.days['2017-01-12'].at = 1100;
+// data.es.days['2017-01-12'].ga = "added";
+// data.es.days['2017-01-12'].r = 61;
+// data.es.days['2017-01-12'].st = 1802;
+// data.es.total.s = data.es.total.s + 1;
+// data.es.total.at = data.es.total.at + data.es.days['2017-01-12'].at;
+// data.es.total.st = data.es.total.st + data.es.days['2017-01-12'].st;
+// console.log(data.es);
+// localStorage.setItem('data', JSON.stringify(data));
+
+
 function convertSeconds(seconds) {
     var hours_minutes = '0 min', mmt, days, hours, minutes;
 
@@ -264,7 +277,7 @@ TRACK.ratioStats = function() {
     }
 };
 
-// store data other than number of translated wor
+// store data
 TRACK.storeTrackingData = function() {
     localStorage.setItem('data', JSON.stringify(data));
 
@@ -309,7 +322,7 @@ TRACK.addAudioTime = function(difference) {
             TRACK.addToDayAndTotal(difference, 'at');
         }
         else {
-            // only deduce jumpbacks from audio time if audio time is not pushed to negative values by this
+            // deduce jumpbacks from audio time, but only if audio time is not pushed to negative values
             if (difference && (data[from].days[today].at + difference) > 0) {
                 TRACK.addToDayAndTotal(difference, 'at');
                 TRACK.displayTrackingData(today); // 3
@@ -1097,7 +1110,12 @@ $(document).ready(function() {
     // set volume manually
     $volbar.click(function(e) {
         if (player) {
-            player.volume = e.offsetX / 80; // 80 is the width of volume bar
+            if (e.offsetX > 80) { // 80 is the lenght of volume bar
+                player.volume = 1;
+            }
+            else {
+                player.volume = e.offsetX / 80;
+            }
 
             // adjust progress bar
             $vol_value.width((player.volume * 100)+'%');
@@ -1106,6 +1124,8 @@ $(document).ready(function() {
             localStorage.setItem('stored_volume', player.volume);
         }
     });
+
+
 
     // mute/unmute
     var cached_volume = 1;

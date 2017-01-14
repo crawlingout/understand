@@ -264,7 +264,7 @@ TRACK.ratioStats = function() {
     }
 };
 
-// store data other than number of translated wor
+// store data
 TRACK.storeTrackingData = function() {
     localStorage.setItem('data', JSON.stringify(data));
 
@@ -1097,7 +1097,12 @@ $(document).ready(function() {
     // set volume manually
     $volbar.click(function(e) {
         if (player) {
-            player.volume = e.offsetX / 80; // 80 is the width of volume bar
+            if (e.offsetX > 80) { // 80 is the lenght of volume bar
+                player.volume = 1;
+            }
+            else {
+                player.volume = e.offsetX / 80;
+            }
 
             // adjust progress bar
             $vol_value.width((player.volume * 100)+'%');
